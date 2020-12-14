@@ -3,3 +3,9 @@
 // Another alternative is to put these into the `types` array in `tsconfig.json`
 /// <reference types="lua-types/5.3"/>
 /// <reference types="ceres-decl/ceres"/>
+
+import { AllPlayers } from "./globals/constants";
+import { Unit } from "./handles/unit";
+
+const u = new Unit(AllPlayers[0], FourCC('hpea'), 0, 0, 0)
+print(u.name)

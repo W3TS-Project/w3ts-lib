@@ -1,5 +1,5 @@
 {
-    "name": "ceres-ts-template",
+    "name": "w3ts-lib",
     "version": "1.0.0",
     "scripts": {
         "watch": "ceres-tstl --watch",
