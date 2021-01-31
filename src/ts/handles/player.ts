@@ -3,7 +3,7 @@
 
 import { Force } from "./force"
 import { Handle } from "./handle"
-import { Point } from "./point"
+import { Point } from "./location"
 
 declare function Player(number: number): player
 declare function GetLocalPlayer(): player

@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 import { Handle } from "./handle"
-import { Point } from "./point"
+import { Point } from "./location"
 import { Rectangle } from "./rect"
 import { Unit } from "./unit"
 

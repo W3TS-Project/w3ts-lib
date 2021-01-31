@@ -3,7 +3,7 @@
 
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
-import { Point } from "./point"
+import { Point } from "./location"
 import { Widget } from "./widget"
 
 declare function BlzCreateItemWithSkin(itemid: number, x: number, y: number, skinId: number): item

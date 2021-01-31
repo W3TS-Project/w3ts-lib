@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 import { Handle } from "./handle"
-import { Point } from "./point"
+import { Point } from "./location"
 
 declare function Rect(minx: number, miny: number, maxx: number, maxy: number): rect
 declare function RectFromLoc(min: location, max: location): rect

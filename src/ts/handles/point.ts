@@ -1,57 +1,38 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { Handle } from "./handle"
+import { Location } from "./location"
 
-declare function Location(x: number, y: number): location
-declare function RemoveLocation(whichLocation: location): void
-declare function MoveLocation(whichLocation: location, newX: number, newY: number): void
-declare function GetLocationX(whichLocation: location): number
-declare function GetLocationY(whichLocation: location): number
-declare function GetLocationZ(whichLocation: location): number
+declare function IsPointBlighted(x: number, y: number): boolean
 
-export class Point extends Handle<location> {
-    constructor(x: number, y: number) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(Location(x, y))
-        }
+export class Point {
+    x: number
+    y: number
+    z: number
+
+    constructor(x: number, y: number, z: number) {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
     }
 
-    public get x(): number {
-        return GetLocationX(this.handle)
+    static fromLoc(loc: Location) {
+        return new Point(loc.x, loc.y, loc.z)
     }
 
-    public set x(value: number) {
-        MoveLocation(this.handle, value, this.y)
+    set(x: number, y: number, z: number) {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
     }
 
-    public get y(): number {
-        return GetLocationY(this.handle)
+    set(p: Point) {
+        return this.set(p.x, p.y, p.z)
     }
 
-    public set y(value: number) {
-        MoveLocation(this.handle, this.x, value)
-    }
-
-    /**
-     * This function is asynchronous. The values it returns are not guaranteed synchronous between each player.
-     * If you attempt to use it in a synchronous manner, it may cause a desync.
-     */
-    public get z(): number {
-        return GetLocationZ(this.handle)
-    }
-
-    public destroy() {
-        RemoveLocation(this.handle)
-    }
-
-    public setPosition(x: number, y: number) {
-        MoveLocation(this.handle, x, y)
-    }
-
-    public static fromHandle(handle: location): Point {
-        return this.getObject(handle)
+    get isBlighted(): boolean {
+        return IsPointBlighted(this.x, this.y)
     }
 }

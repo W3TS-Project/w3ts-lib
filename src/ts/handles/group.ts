@@ -3,7 +3,7 @@
 
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
-import { Point } from "./point"
+import { Point } from "./location"
 import { Rectangle } from "./rect"
 import { Unit } from "./unit"
 import { Widget } from "./widget"

@@ -4,8 +4,16 @@
 /// <reference types="lua-types/5.3"/>
 /// <reference types="ceres-decl/ceres"/>
 
+import { AutomationTest } from "./API/automation test";
+import { Blight } from "./API/blight";
 import { AllPlayers } from "./globals/constants";
+import { MapPlayer } from "./handles/player";
+import { Timer } from "./handles/timer";
 import { Unit } from "./handles/unit";
 
-const u = new Unit(AllPlayers[0], FourCC('hpea'), 0, 0, 0)
-print(u.name)
+export const setTimeout = (time: number, call: () => void) => new Timer().start(time, false, () => {
+  call()
+  Timer.fromExpired().pause().destroy()
+})
+
+export const setInterval = (time: number, call: () => void) => new Timer().start(time, true, call)

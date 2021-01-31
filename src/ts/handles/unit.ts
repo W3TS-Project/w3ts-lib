@@ -7,7 +7,7 @@ import { Group } from "./group"
 import { Handle } from "./handle"
 import { Item } from "./item"
 import { MapPlayer } from "./player"
-import { Point } from "./point"
+import { Point } from "./location"
 import { Sound } from "./sound"
 import { Widget } from "./widget"
 
