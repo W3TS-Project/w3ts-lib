@@ -4,16 +4,38 @@
 /// <reference types="lua-types/5.3"/>
 /// <reference types="ceres-decl/ceres"/>
 
-import { AutomationTest } from "./API/automation test";
-import { Blight } from "./API/blight";
-import { AllPlayers } from "./globals/constants";
-import { MapPlayer } from "./handles/player";
-import { Timer } from "./handles/timer";
-import { Unit } from "./handles/unit";
+import { AutomationTest } from "./API/automation test"
+import { Blight } from "./API/blight"
+import { AllPlayers } from "./globals/constants"
+import { Location } from "./handles/location"
+import { MapPlayer } from "./handles/player"
+import { Point } from "./handles/point"
+import { TerrainDeformation } from "./handles/terrain deformation"
+import { Timer } from "./handles/timer"
+import { Unit } from "./handles/unit"
 
-export const setTimeout = (time: number, call: () => void) => new Timer().start(time, false, () => {
-  call()
-  Timer.fromExpired().pause().destroy()
-})
+export type integer = number
+export type real = number
+export type code = Function
 
-export const setInterval = (time: number, call: () => void) => new Timer().start(time, true, call)
+export const setTimeout = (time: real, call: () => void) =>
+    new Timer().start(time, false, () => {
+        call()
+        Timer.fromExpired()
+            .pause()
+            .destroy()
+    })
+
+export const setInterval = (time: real, call: () => void) => new Timer().start(time, true, call)
+
+export type rawcode = integer | string
+
+export const formatCC = (id: rawcode): integer => (typeof id === "number" ? id : FourCC(id))
+
+export type Coords = {
+    x: real
+    y: real
+    z: real
+}
+
+export type Position = Coords | Location | Point

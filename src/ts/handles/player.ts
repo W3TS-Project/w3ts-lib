@@ -237,7 +237,7 @@ export class MapPlayer extends Handle<player> {
         CripplePlayer(this.handle, toWhichPlayers.handle, flag)
     }
 
-    public getScore(whichPlayerScore: playerscore) {
+    public getScore(whichPlayerScore: playerscore): number {
         return GetPlayerScore(this.handle, whichPlayerScore)
     }
 

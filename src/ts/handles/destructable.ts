@@ -1,42 +1,45 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
+import { formatCC, integer, Position, rawcode, real } from "../main"
 import { Handle } from "./handle"
+import { Location } from "./location"
+import { Point } from "./point"
 import { Widget } from "./widget"
 
 declare function CreateDestructable(
-    objectid: number,
-    x: number,
-    y: number,
-    face: number,
-    scale: number,
-    variation: number
+    objectid: integer,
+    x: real,
+    y: real,
+    face: real,
+    scale: real,
+    variation: integer
 ): destructable
 declare function CreateDestructableZ(
-    objectid: number,
-    x: number,
-    y: number,
-    z: number,
-    face: number,
-    scale: number,
-    variation: number
+    objectid: integer,
+    x: real,
+    y: real,
+    z: real,
+    face: real,
+    scale: real,
+    variation: integer
 ): destructable
 declare function CreateDeadDestructable(
-    objectid: number,
-    x: number,
-    y: number,
-    face: number,
-    scale: number,
-    variation: number
+    objectid: integer,
+    x: real,
+    y: real,
+    face: real,
+    scale: real,
+    variation: integer
 ): destructable
 declare function CreateDeadDestructableZ(
-    objectid: number,
-    x: number,
-    y: number,
-    z: number,
-    face: number,
-    scale: number,
-    variation: number
+    objectid: integer,
+    x: real,
+    y: real,
+    z: real,
+    face: real,
+    scale: real,
+    variation: integer
 ): destructable
 declare function RemoveDestructable(d: destructable): void
 declare function KillDestructable(d: destructable): void
@@ -47,123 +50,173 @@ declare function EnumDestructablesInRect(
     filter: boolexpr | null,
     actionFunc: () => void
 ): void
-declare function GetDestructableTypeId(d: destructable): number
-declare function GetDestructableX(d: destructable): number
-declare function GetDestructableY(d: destructable): number
-declare function SetDestructableLife(d: destructable, life: number): void
-declare function GetDestructableLife(d: destructable): number
-declare function SetDestructableMaxLife(d: destructable, max: number): void
+declare function GetDestructableTypeId(d: destructable): integer
+declare function GetDestructableX(d: destructable): real
+declare function GetDestructableY(d: destructable): real
+declare function SetDestructableLife(d: destructable, life: real): void
+declare function GetDestructableLife(d: destructable): real
+declare function SetDestructableMaxLife(d: destructable, max: real): void
 declare function GetDestructableMaxLife(d: destructable): number
-declare function DestructableRestoreLife(d: destructable, life: number, birth: boolean): void
+declare function DestructableRestoreLife(d: destructable, life: real, birth: boolean): void
 declare function QueueDestructableAnimation(d: destructable, whichAnimation: string): void
 declare function SetDestructableAnimation(d: destructable, whichAnimation: string): void
-declare function SetDestructableAnimationSpeed(d: destructable, speedFactor: number): void
+declare function SetDestructableAnimationSpeed(d: destructable, speedFactor: real): void
 declare function ShowDestructable(d: destructable, flag: boolean): void
-declare function GetDestructableOccluderHeight(d: destructable): number
-declare function SetDestructableOccluderHeight(d: destructable, height: number): void
+declare function GetDestructableOccluderHeight(d: destructable): real
+declare function SetDestructableOccluderHeight(d: destructable, height: real): void
 declare function GetDestructableName(d: destructable): string
 declare function GetTriggerDestructable(): destructable
 
-export class Destructable extends Widget {
+export class Destructable<T extends destructable> extends Handle<widget> {
     public readonly handle!: destructable
 
-    constructor(
-        objectId: number,
-        x: number,
-        y: number,
-        z: number,
-        face: number,
-        scale: number,
-        varation: number
-    ) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(CreateDestructableZ(objectId, x, y, z, face, scale, varation))
-        }
+    constructor(handle: T) {
+        super(Handle.initFromHandle() ? undefined : handle)
     }
 
-    public set invulnerable(flag: boolean) {
+    static createCoords(
+        objectid: rawcode,
+        x: real,
+        y: real,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
+        return new this(CreateDestructable(formatCC(objectid), x, y, face, scale, variation))
+    }
+
+    static createZCoords(
+        objectid: rawcode,
+        x: real,
+        y: real,
+        z: real,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
+        return new this(CreateDestructableZ(formatCC(objectid), x, y, z, face, scale, variation))
+    }
+
+    static createPos(objectid: rawcode, p: Position, face: real, scale: real, variation: integer) {
+        return this.createZCoords(objectid, p.x, p.y, p.z, face, scale, variation)
+    }
+
+    static createDeadCoords(
+        objectid: rawcode,
+        x: real,
+        y: real,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
+        return new this(CreateDeadDestructable(formatCC(objectid), x, y, face, scale, variation))
+    }
+
+    static createDeadZCoords(
+        objectid: rawcode,
+        x: real,
+        y: real,
+        z: real,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
+        return new this(
+            CreateDeadDestructableZ(formatCC(objectid), x, y, z, face, scale, variation)
+        )
+    }
+
+    static createDeadPos(
+        objectid: rawcode,
+        p: Position,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
+        return this.createDeadZCoords(objectid, p.x, p.y, p.z, face, scale, variation)
+    }
+
+    set invulnerable(flag: boolean) {
         SetDestructableInvulnerable(this.handle, flag)
     }
 
-    public get invulnerable() {
+    get invulnerable() {
         return IsDestructableInvulnerable(this.handle)
     }
 
-    public get life() {
+    get life() {
         return GetDestructableLife(this.handle)
     }
 
-    public set life(value: number) {
+    set life(value: real) {
         SetDestructableLife(this.handle, value)
     }
 
-    public get maxLife() {
+    get maxLife() {
         return GetDestructableMaxLife(this.handle)
     }
 
-    public set maxLife(value: number) {
+    set maxLife(value: real) {
         SetDestructableMaxLife(this.handle, value)
     }
 
-    public get name() {
+    get name() {
         return GetDestructableName(this.handle)
     }
 
-    public get occluderHeight() {
+    get occluderHeight() {
         return GetDestructableOccluderHeight(this.handle)
     }
 
-    public set occluderHeight(value: number) {
+    set occluderHeight(value: real) {
         SetDestructableOccluderHeight(this.handle, value)
     }
 
-    public get typeId() {
+    get typeId() {
         return GetDestructableTypeId(this.handle)
     }
 
-    public get x() {
+    get x() {
         return GetDestructableX(this.handle)
     }
 
-    public get y() {
+    get y() {
         return GetDestructableY(this.handle)
     }
 
-    public destroy() {
+    destroy() {
         RemoveDestructable(this.handle)
     }
 
-    public heal(life: number, birth: boolean) {
+    heal(life: number, birth: boolean) {
         DestructableRestoreLife(this.handle, life, birth)
     }
 
-    public kill() {
+    kill() {
         KillDestructable(this.handle)
     }
 
-    public queueAnim(whichAnimation: string) {
+    queueAnim(whichAnimation: string) {
         QueueDestructableAnimation(this.handle, whichAnimation)
     }
 
-    public setAnim(whichAnimation: string) {
+    setAnim(whichAnimation: string) {
         SetDestructableAnimation(this.handle, whichAnimation)
     }
 
-    public setAnimSpeed(speedFactor: number) {
+    setAnimSpeed(speedFactor: real) {
         SetDestructableAnimationSpeed(this.handle, speedFactor)
     }
 
-    public show(flag: boolean) {
+    show(flag: boolean) {
         ShowDestructable(this.handle, flag)
     }
 
-    public static fromEvent() {
+    static fromEvent(): ThisType<destructable> {
         return this.fromHandle(GetTriggerDestructable())
     }
 
-    public static fromHandle(handle: destructable): Destructable {
+    static fromHandle(handle: destructable): ThisType<destructable> {
         return this.getObject(handle)
     }
 }

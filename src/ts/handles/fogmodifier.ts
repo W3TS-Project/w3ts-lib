@@ -1,6 +1,7 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
+import { real } from "../main"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 import { Rectangle } from "./rect"
@@ -14,16 +15,16 @@ declare function SetFogStateRect(
 declare function SetFogStateRadius(
     forWhichPlayer: player,
     whichState: fogstate,
-    centerx: number,
-    centerY: number,
-    radius: number,
+    centerx: real,
+    centerY: real,
+    radius: real,
     useSharedVision: boolean
 ): void
 declare function SetFogStateRadiusLoc(
     forWhichPlayer: player,
     whichState: fogstate,
     center: location,
-    radius: number,
+    radius: real,
     useSharedVision: boolean
 ): void
 declare function FogMaskEnable(enable: boolean): void
@@ -40,9 +41,9 @@ declare function CreateFogModifierRect(
 declare function CreateFogModifierRadius(
     forWhichPlayer: player,
     whichState: fogstate,
-    centerx: number,
-    centerY: number,
-    radius: number,
+    centerx: real,
+    centerY: real,
+    radius: real,
     useSharedVision: boolean,
     afterUnits: boolean
 ): fogmodifier
@@ -50,7 +51,7 @@ declare function CreateFogModifierRadiusLoc(
     forWhichPlayer: player,
     whichState: fogstate,
     center: location,
-    radius: number,
+    radius: real,
     useSharedVision: boolean,
     afterUnits: boolean
 ): fogmodifier
@@ -59,12 +60,13 @@ declare function FogModifierStart(whichFogModifier: fogmodifier): void
 declare function FogModifierStop(whichFogModifier: fogmodifier): void
 
 export class FogModifier extends Handle<fogmodifier> {
+
     constructor(
         forWhichPlayer: MapPlayer,
         whichState: fogstate,
-        centerX: number,
-        centerY: number,
-        radius: number,
+        centerX: real,
+        centerY: real,
+        radius: real,
         useSharedVision: boolean,
         afterUnits: boolean
     ) {

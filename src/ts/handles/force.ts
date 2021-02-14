@@ -1,6 +1,8 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
+import { BoolExpr, CodeBoolExpr, formatBoolExpr } from "../API/boolean expr"
+import { code, integer } from "../main"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 
@@ -14,7 +16,7 @@ declare function ForceEnumPlayers(whichForce: force, filter: boolexpr | null): v
 declare function ForceEnumPlayersCounted(
     whichForce: force,
     filter: boolexpr | null,
-    countLimit: number
+    countLimit: integer
 ): void
 declare function ForceEnumAllies(
     whichForce: force,
@@ -26,59 +28,55 @@ declare function ForceEnumEnemies(
     whichPlayer: player,
     filter: boolexpr | null
 ): void
-declare function ForForce(whichForce: force, callback: () => void): void
+declare function ForForce(whichForce: force, callback: code): void
 declare function IsPlayerInForce(whichPlayer: player, whichForce: force): boolean
 
 export class Force extends Handle<force> {
     constructor() {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(CreateForce())
-        }
+        super(Handle.initFromHandle() ? undefined : CreateForce())
     }
 
-    public addPlayer(whichPlayer: MapPlayer) {
+    addPlayer(whichPlayer: MapPlayer) {
         ForceAddPlayer(this.handle, whichPlayer.handle)
     }
 
-    public clear() {
+    clear() {
         ForceClear(this.handle)
     }
 
-    public destroy() {
+    destroy() {
         DestroyForce(this.handle)
     }
 
-    public enumAllies(whichPlayer: MapPlayer, filter: boolexpr | (() => boolean)) {
-        ForceEnumAllies(this.handle, whichPlayer.handle, filter)
+    enumAllies(whichPlayer: MapPlayer, filter: CodeBoolExpr) {
+        ForceEnumAllies(this.handle, whichPlayer.handle, formatBoolExpr(filter))
     }
 
-    public enumEnemies(whichPlayer: MapPlayer, filter: boolexpr | (() => boolean)) {
-        ForceEnumEnemies(this.handle, whichPlayer.handle, filter)
+    enumEnemies(whichPlayer: MapPlayer, filter: CodeBoolExpr) {
+        ForceEnumEnemies(this.handle, whichPlayer.handle, formatBoolExpr(filter))
     }
 
-    public enumPlayers(filter: boolexpr | (() => boolean)) {
-        ForceEnumPlayers(this.handle, filter)
+    enumPlayers(filter: CodeBoolExpr) {
+        ForceEnumPlayers(this.handle, formatBoolExpr(filter))
     }
 
-    public enumPlayersCounted(filter: boolexpr | (() => boolean), countLimit: number) {
-        ForceEnumPlayersCounted(this.handle, filter, countLimit)
+    enumPlayersCounted(countLimit: integer, filter: CodeBoolExpr) {
+        ForceEnumPlayersCounted(this.handle, formatBoolExpr(filter), countLimit)
     }
 
-    public for(callback: () => void) {
+    for(callback: code) {
         ForForce(this.handle, callback)
     }
 
-    public hasPlayer(whichPlayer: MapPlayer) {
+    hasPlayer(whichPlayer: MapPlayer) {
         return IsPlayerInForce(whichPlayer.handle, this.handle)
     }
 
-    public removePlayer(whichPlayer: MapPlayer) {
+    removePlayer(whichPlayer: MapPlayer) {
         ForceRemovePlayer(this.handle, whichPlayer.handle)
     }
 
-    public static fromHandle(handle: force): Force {
+    static fromHandle(handle: force): Force {
         return this.getObject(handle)
     }
 }

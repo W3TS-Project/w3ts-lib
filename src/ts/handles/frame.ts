@@ -1,6 +1,3 @@
-/** @noSelfInFile **/
-// @ts-nocheck
-
 import { Handle } from "./handle"
 
 declare function BlzCreateFrame(
