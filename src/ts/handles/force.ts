@@ -1,11 +1,12 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { BoolExpr, CodeBoolExpr, formatBoolExpr } from "../API/boolean expr"
-import { code, integer } from "../main"
+import { code, codeboolexpr, integer } from "../main"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 
+declare function Condition(func: code): conditionfunc
+declare function DestroyCondition(c: conditionfunc): void
 declare function CreateForce(): force
 declare function DestroyForce(whichForce: force): void
 declare function ForceAddPlayer(whichForce: force, whichPlayer: player): void
@@ -48,20 +49,32 @@ export class Force extends Handle<force> {
         DestroyForce(this.handle)
     }
 
-    enumAllies(whichPlayer: MapPlayer, filter: CodeBoolExpr) {
-        ForceEnumAllies(this.handle, whichPlayer.handle, formatBoolExpr(filter))
+    enumAllies(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        ForceEnumAllies(this.handle, whichPlayer.handle, filter)
+        DestroyCondition(filter)
+        return this
     }
 
-    enumEnemies(whichPlayer: MapPlayer, filter: CodeBoolExpr) {
-        ForceEnumEnemies(this.handle, whichPlayer.handle, formatBoolExpr(filter))
+    enumEnemies(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        ForceEnumEnemies(this.handle, whichPlayer.handle, filter)
+        DestroyCondition(filter)
+        return this
     }
 
-    enumPlayers(filter: CodeBoolExpr) {
-        ForceEnumPlayers(this.handle, formatBoolExpr(filter))
+    enumPlayers(filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        ForceEnumPlayers(this.handle, filter)
+        DestroyCondition(filter)
+        return this
     }
 
-    enumPlayersCounted(countLimit: integer, filter: CodeBoolExpr) {
-        ForceEnumPlayersCounted(this.handle, formatBoolExpr(filter), countLimit)
+    enumPlayersCounted(countLimit: integer, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        ForceEnumPlayersCounted(this.handle, filter, countLimit)
+        DestroyCondition(filter)
+        return this
     }
 
     for(callback: code) {

@@ -1,22 +1,26 @@
+/** @noSelfInFile **/
+// @ts-nocheck
+
+import { integer, real } from "../main"
 import { Handle } from "./handle"
 
 declare function BlzCreateFrame(
     name: string,
     owner: framehandle,
-    priority: number,
-    createContext: number
+    priority: integer,
+    createContext: integer
 ): framehandle
 declare function BlzCreateSimpleFrame(
     name: string,
     owner: framehandle,
-    createContext: number
+    createContext: integer
 ): framehandle
 declare function BlzCreateFrameByType(
     typeName: string,
     name: string,
     owner: framehandle,
     inherits: string,
-    createContext: number
+    createContext: integer
 ): framehandle
 declare function BlzDestroyFrame(frame: framehandle): void
 declare function BlzFrameSetPoint(
@@ -24,374 +28,378 @@ declare function BlzFrameSetPoint(
     point: framepointtype,
     relative: framehandle,
     relativePoint: framepointtype,
-    x: number,
-    y: number
+    x: real,
+    y: real
 ): void
 declare function BlzFrameSetAbsPoint(
     frame: framehandle,
     point: framepointtype,
-    x: number,
-    y: number
+    x: real,
+    y: real
 ): void
 declare function BlzFrameClearAllPoints(frame: framehandle): void
 declare function BlzFrameSetAllPoints(frame: framehandle, relative: framehandle): void
 declare function BlzFrameSetVisible(frame: framehandle, visible: boolean): void
 declare function BlzFrameIsVisible(frame: framehandle): boolean
-declare function BlzGetFrameByName(name: string, createContext: number): framehandle
+declare function BlzGetFrameByName(name: string, createContext: integer): framehandle
 declare function BlzFrameGetName(frame: framehandle): string
 declare function BlzFrameClick(frame: framehandle): void
 declare function BlzFrameSetText(frame: framehandle, text: string): void
 declare function BlzFrameGetText(frame: framehandle): string
 declare function BlzFrameAddText(frame: framehandle, text: string): void
-declare function BlzFrameSetTextSizeLimit(frame: framehandle, size: number): void
-declare function BlzFrameGetTextSizeLimit(frame: framehandle): number
-declare function BlzFrameSetTextColor(frame: framehandle, color: number): void
+declare function BlzFrameSetTextSizeLimit(frame: framehandle, size: integer): void
+declare function BlzFrameGetTextSizeLimit(frame: framehandle): integer
+declare function BlzFrameSetTextColor(frame: framehandle, color: integer): void
 declare function BlzFrameSetFocus(frame: framehandle, flag: boolean): void
-declare function BlzFrameSetModel(frame: framehandle, modelFile: string, cameraIndex: number): void
+declare function BlzFrameSetModel(frame: framehandle, modelFile: string, cameraIndex: integer): void
 declare function BlzFrameSetEnable(frame: framehandle, enabled: boolean): void
 declare function BlzFrameGetEnable(frame: framehandle): boolean
-declare function BlzFrameSetAlpha(frame: framehandle, alpha: number): void
-declare function BlzFrameGetAlpha(frame: framehandle): number
+declare function BlzFrameSetAlpha(frame: framehandle, alpha: integer): void
+declare function BlzFrameGetAlpha(frame: framehandle): integer
 declare function BlzFrameSetSpriteAnimate(
     frame: framehandle,
-    primaryProp: number,
-    flags: number
+    primaryProp: integer,
+    flags: integer
 ): void
 declare function BlzFrameSetTexture(
     frame: framehandle,
     texFile: string,
-    flag: number,
+    flag: integer,
     blend: boolean
 ): void
-declare function BlzFrameSetScale(frame: framehandle, scale: number): void
+declare function BlzFrameSetScale(frame: framehandle, scale: real): void
 declare function BlzFrameSetTooltip(frame: framehandle, tooltip: framehandle): void
 declare function BlzFrameCageMouse(frame: framehandle, enable: boolean): void
-declare function BlzFrameSetValue(frame: framehandle, value: number): void
-declare function BlzFrameGetValue(frame: framehandle): number
-declare function BlzFrameSetMinMaxValue(
-    frame: framehandle,
-    minValue: number,
-    maxValue: number
-): void
-declare function BlzFrameSetStepSize(frame: framehandle, stepSize: number): void
-declare function BlzFrameSetSize(frame: framehandle, width: number, height: number): void
-declare function BlzFrameSetVertexColor(frame: framehandle, color: number): void
-declare function BlzFrameSetLevel(frame: framehandle, level: number): void
+declare function BlzFrameSetValue(frame: framehandle, value: real): void
+declare function BlzFrameGetValue(frame: framehandle): real
+declare function BlzFrameSetMinMaxValue(frame: framehandle, minValue: real, maxValue: real): void
+declare function BlzFrameSetStepSize(frame: framehandle, stepSize: real): void
+declare function BlzFrameSetSize(frame: framehandle, width: real, height: real): void
+declare function BlzFrameSetVertexColor(frame: framehandle, color: integer): void
+declare function BlzFrameSetLevel(frame: framehandle, level: integer): void
 declare function BlzFrameSetParent(frame: framehandle, parent: framehandle): void
 declare function BlzFrameGetParent(frame: framehandle): framehandle
-declare function BlzFrameGetHeight(frame: framehandle): number
-declare function BlzFrameGetWidth(frame: framehandle): number
+declare function BlzFrameGetHeight(frame: framehandle): real
+declare function BlzFrameGetWidth(frame: framehandle): real
 declare function BlzFrameSetFont(
     frame: framehandle,
     fileName: string,
-    height: number,
-    flags: number
+    height: real,
+    flags: integer
 ): void
 declare function BlzFrameSetTextAlignment(
     frame: framehandle,
     vert: textaligntype,
     horz: textaligntype
 ): void
-declare function BlzTriggerRegisterFrameEvent(
-    whichTrigger: trigger,
-    frame: framehandle,
-    eventId: frameeventtype
-): event
 declare function BlzGetTriggerFrame(): framehandle
 declare function BlzGetTriggerFrameEvent(): frameeventtype
-declare function BlzGetTriggerFrameValue(): number
+declare function BlzGetTriggerFrameValue(): real
 declare function BlzGetTriggerFrameText(): string
 declare function BlzEnableUIAutoPosition(enable: boolean): void
-declare function BlzGetOriginFrame(frameType: originframetype, index: number): framehandle
+declare function BlzGetOriginFrame(frameType: originframetype, index: integer): framehandle
 declare function BlzHideOriginFrames(enable: boolean): void
 declare function BlzLoadTOCFile(TOCFile: string): boolean
 
 export class Frame extends Handle<framehandle> {
-    constructor(name: string, owner: Frame, priority: number, createContext: number)
-    /**
-     * Creates a SimpleFrame.
-     * @param name
-     * @param owner
-     * @param createContext
-     */
-    constructor(name: string, owner: Frame, createContext: number)
-    constructor(name: string, owner: Frame, priority: number, createContext?: number) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            if (!createContext) {
-                super(BlzCreateSimpleFrame(name, owner.handle, priority))
-            } else {
-                super(BlzCreateFrame(name, owner.handle, priority, createContext))
-            }
-        }
+    constructor(handle: framehandle) {
+        super(Handle.initFromHandle() ? undefined : handle)
     }
 
-    public set alpha(alpha: number) {
-        BlzFrameSetAlpha(this.handle, alpha)
+    static create(name: string, owner: Frame, priority: integer, createContext: integer) {
+        return new this(BlzCreateFrame(name, owner.handle, priority, createContext))
     }
 
-    public get alpha() {
-        return BlzFrameGetAlpha(this.handle)
+    static simpleCreate(name: string, owner: Frame, createContext: integer) {
+        return new this(BlzCreateSimpleFrame(name, owner.handle, createContext))
     }
 
-    public set enabled(flag: boolean) {
-        BlzFrameSetEnable(this.handle, flag)
+    static byTypeCreate(
+        typeName: string,
+        name: string,
+        owner: Frame,
+        inherits: string,
+        createContext: integer
+    ) {
+        return new this(BlzCreateFrameByType(typeName, name, owner.handle, inherits, createContext))
     }
 
-    public get enabled() {
-        return BlzFrameGetEnable(this.handle)
+    static fromOrigin(frameType: originframetype, index: integer) {
+        return this.fromHandle(BlzGetOriginFrame(frameType, index))
     }
 
-    public set height(height: number) {
-        BlzFrameSetSize(this.handle, this.width, height)
-    }
-
-    public get height() {
-        return BlzFrameGetHeight(this.handle)
-    }
-
-    public set parent(parent: Frame) {
-        BlzFrameSetParent(this.handle, parent.handle)
-    }
-
-    public get parent() {
-        return Frame.fromHandle(BlzFrameGetParent(this.handle))
-    }
-
-    public set text(text: string) {
-        BlzFrameSetText(this.handle, text)
-    }
-
-    public get text() {
-        return BlzFrameGetText(this.handle)
-    }
-
-    public set textSizeLimit(size: number) {
-        BlzFrameSetTextSizeLimit(this.handle, size)
-    }
-
-    public get textSizeLimit() {
-        return BlzFrameGetTextSizeLimit(this.handle)
-    }
-
-    public set value(value: number) {
-        BlzFrameSetValue(this.handle, value)
-    }
-
-    public get value() {
-        return BlzFrameGetValue(this.handle)
-    }
-
-    public set visible(flag: boolean) {
-        BlzFrameSetVisible(this.handle, flag)
-    }
-
-    public get visible() {
-        return BlzFrameIsVisible(this.handle)
-    }
-
-    public set width(width: number) {
-        BlzFrameSetSize(this.handle, width, this.height)
-    }
-
-    public get width() {
-        return BlzFrameGetWidth(this.handle)
-    }
-
-    public setAlpha(alpha: number) {
-        BlzFrameSetAlpha(this.handle, alpha)
+    static autoPosition(enable: boolean) {
+        BlzEnableUIAutoPosition(enable)
         return this
     }
 
-    public setEnabled(flag: boolean) {
-        BlzFrameSetEnable(this.handle, flag)
+    static hideOrigin(enable: boolean) {
+        BlzHideOriginFrames(enable)
         return this
     }
 
-    public setHeight(height: number) {
-        BlzFrameSetSize(this.handle, this.width, height)
-        return this
-    }
-
-    public setParent(parent: Frame) {
-        BlzFrameSetParent(this.handle, parent.handle)
-        return this
-    }
-
-    public setText(text: string) {
-        BlzFrameSetText(this.handle, text)
-        return this
-    }
-
-    public setTextSizeLimit(size: number) {
-        BlzFrameSetTextSizeLimit(this.handle, size)
-        return this
-    }
-
-    public setValue(value: number) {
-        BlzFrameSetValue(this.handle, value)
-        return this
-    }
-
-    public setVisible(flag: boolean) {
-        BlzFrameSetVisible(this.handle, flag)
-        return this
-    }
-
-    public setWidth(width: number) {
-        BlzFrameSetSize(this.handle, width, this.height)
-        return this
-    }
-
-    public addText(text: string) {
-        BlzFrameAddText(this.handle, text)
-        return this
-    }
-
-    public cageMouse(enable: boolean) {
-        BlzFrameCageMouse(this.handle, enable)
-        return this
-    }
-
-    public clearPoints() {
-        BlzFrameClearAllPoints(this.handle)
-        return this
-    }
-
-    public click() {
-        BlzFrameClick(this.handle)
-        return this
-    }
-
-    public destroy() {
+    destroy() {
         BlzDestroyFrame(this.handle)
         return this
     }
 
-    public setAbsPoint(point: framepointtype, x: number, y: number) {
-        BlzFrameSetAbsPoint(this.handle, point, x, y)
-        return this
-    }
-
-    public setAllPoints(relative: Frame) {
-        BlzFrameSetAllPoints(this.handle, relative.handle)
-        return this
-    }
-
-    public setFocus(flag: boolean) {
-        BlzFrameSetFocus(this.handle, flag)
-        return this
-    }
-
-    public setFont(filename: string, height: number, flags: number) {
-        BlzFrameSetFont(this.handle, filename, height, flags)
-        return this
-    }
-
-    public setLevel(level: number) {
-        BlzFrameSetLevel(this.handle, level)
-        return this
-    }
-
-    public setMinMaxValue(minValue: number, maxValue: number) {
-        BlzFrameSetMinMaxValue(this.handle, minValue, maxValue)
-        return this
-    }
-
-    public setModel(modelFile: string, cameraIndex: number) {
-        BlzFrameSetModel(this.handle, modelFile, cameraIndex)
-        return this
-    }
-
-    public setPoint(
+    setPoint(
         point: framepointtype,
         relative: Frame,
         relativePoint: framepointtype,
-        x: number,
-        y: number
+        x: real,
+        y: real
     ) {
         BlzFrameSetPoint(this.handle, point, relative.handle, relativePoint, x, y)
         return this
     }
 
-    public setScale(scale: number) {
-        BlzFrameSetScale(this.handle, scale)
+    setAbsPoint(point: framepointtype, x: real, y: real) {
+        BlzFrameSetAbsPoint(this.handle, point, x, y)
         return this
     }
 
-    public setSize(width: number, height: number) {
-        BlzFrameSetSize(this.handle, width, height)
+    clearPoints() {
+        BlzFrameClearAllPoints(this.handle)
         return this
     }
 
-    public setSpriteAnimate(primaryProp: number, flags: number) {
-        BlzFrameSetSpriteAnimate(this.handle, primaryProp, flags)
+    setAllPoints(relative: Frame) {
+        BlzFrameSetAllPoints(this.handle, relative.handle)
         return this
     }
 
-    public setStepSize(stepSize: number) {
-        BlzFrameSetStepSize(this.handle, stepSize)
+    set visible(flag: boolean) {
+        BlzFrameSetVisible(this.handle, flag)
+    }
+
+    setVisible(flag: boolean) {
+        BlzFrameSetVisible(this.handle, flag)
         return this
     }
 
-    public setTextColor(color: number) {
+    get visible(): boolean {
+        return BlzFrameIsVisible(this.handle)
+    }
+
+    static fromName(name: string, createContext: integer) {
+        return this.fromHandle(BlzGetFrameByName(name, createContext))
+    }
+
+    get name(): string {
+        return BlzFrameGetName(this.handle)
+    }
+
+    click() {
+        BlzFrameClick(this.handle)
+        return this
+    }
+
+    set text(text: string) {
+        BlzFrameSetText(this.handle, text)
+    }
+
+    get text(): string {
+        return BlzFrameGetText(this.handle)
+    }
+
+    addText(text: string) {
+        BlzFrameAddText(this.handle, text)
+        return this
+    }
+
+    set sizeLimitText(size: integer) {
+        BlzFrameSetTextSizeLimit(this.handle, size)
+    }
+
+    get sizeLimitText(): integer {
+        return BlzFrameGetTextSizeLimit(this.handle)
+    }
+
+    setTextColor(color: integer) {
         BlzFrameSetTextColor(this.handle, color)
         return this
     }
 
-    public setTexture(texFile: string, flag: number, blend: boolean) {
+    setFocus(flag: boolean) {
+        BlzFrameSetFocus(this.handle, flag)
+        return this
+    }
+
+    setModel(modelFile: string, cameraIndex: integer) {
+        BlzFrameSetModel(this.handle, modelFile, cameraIndex)
+        return this
+    }
+
+    set enabled(flag: boolean) {
+        BlzFrameSetEnable(this.handle, flag)
+    }
+
+    setEnabled(flag: boolean) {
+        BlzFrameSetEnable(this.handle, flag)
+        return this
+    }
+
+    get enabled(): boolean {
+        return BlzFrameGetEnable(this.handle)
+    }
+
+    set alpha(alpha: integer) {
+        BlzFrameSetAlpha(this.handle, alpha)
+    }
+
+    setAlpha(alpha: integer) {
+        BlzFrameSetAlpha(this.handle, alpha)
+        return this
+    }
+
+    get alpha(): integer {
+        return BlzFrameGetAlpha(this.handle)
+    }
+
+    setSpriteAnimate(primaryProp: integer, flags: integer) {
+        BlzFrameSetSpriteAnimate(this.handle, primaryProp, flags)
+        return this
+    }
+
+    setTexture(texFile: string, flag: integer, blend: boolean) {
         BlzFrameSetTexture(this.handle, texFile, flag, blend)
         return this
     }
 
-    public setTooltip(tooltip: Frame) {
+    setScale(scale: real) {
+        BlzFrameSetScale(this.handle, scale)
+        return this
+    }
+
+    setTooltip(tooltip: Frame) {
         BlzFrameSetTooltip(this.handle, tooltip.handle)
         return this
     }
 
-    public setVertexColor(color: number) {
+    cageMouse(enable: boolean) {
+        BlzFrameCageMouse(this.handle, enable)
+        return this
+    }
+
+    set value(value: real) {
+        BlzFrameSetValue(this.handle, value)
+    }
+
+    setValue(value: real) {
+        BlzFrameSetValue(this.handle, value)
+        return this
+    }
+
+    get value(): real {
+        return BlzFrameGetValue(this.handle)
+    }
+
+    setMinMaxValue(minValue: real, maxValue: real) {
+        BlzFrameSetMinMaxValue(this.handle, minValue, maxValue)
+        return this
+    }
+
+    setStepSize(stepSize: real) {
+        BlzFrameSetStepSize(this.handle, stepSize)
+        return this
+    }
+
+    setSize(width: real, height: real) {
+        BlzFrameSetSize(this.handle, width, height)
+        return this
+    }
+
+    setVertexColor(color: integer) {
         BlzFrameSetVertexColor(this.handle, color)
         return this
     }
 
-    public static autoPosition(enable: boolean) {
-        BlzEnableUIAutoPosition(enable)
+    setLevel(level: integer) {
+        BlzFrameSetLevel(this.handle, level)
+        return this
     }
 
-    public static fromEvent() {
-        return this.fromHandle(BlzGetTriggerFrame())
+    set parent(parent: Frame) {
+        BlzFrameSetParent(this.handle, parent.handle)
     }
 
-    public static fromHandle(handle: framehandle): Frame {
+    get parent() {
+        return Frame.fromHandle(BlzFrameGetParent(this.handle))
+    }
+
+    set width(width: real) {
+        BlzFrameSetSize(this.handle, width, this.height)
+    }
+
+    setWidth(width: real) {
+        BlzFrameSetSize(this.handle, width, this.height)
+        return this
+    }
+
+    get width(): real {
+        return BlzFrameGetWidth(this.handle)
+    }
+
+    setFont(filename: string, height: real, flags: integer) {
+        BlzFrameSetFont(this.handle, filename, height, flags)
+        return this
+    }
+
+    setTextAlignment(vert: textaligntype, horz: textaligntype) {
+        BlzFrameSetTextAlignment(this.handle, vert, horz)
+        return this
+    }
+
+    set height(height: real) {
+        BlzFrameSetSize(this.handle, this.width, height)
+    }
+
+    setHeight(height: number) {
+        BlzFrameSetSize(this.handle, this.width, height)
+        return this
+    }
+
+    get height(): real {
+        return BlzFrameGetHeight(this.handle)
+    }
+
+    setParent(parent: Frame) {
+        BlzFrameSetParent(this.handle, parent.handle)
+        return this
+    }
+
+    setText(text: string) {
+        BlzFrameSetText(this.handle, text)
+        return this
+    }
+
+    setTextSizeLimit(size: number) {
+        BlzFrameSetTextSizeLimit(this.handle, size)
+        return this
+    }
+
+    static fromHandle(handle: framehandle): Frame {
         return this.getObject(handle)
     }
 
-    public static fromName(name: string, createContext: number) {
-        return this.fromHandle(BlzGetFrameByName(name, createContext))
+    static fromEvent() {
+        return this.fromHandle(BlzGetTriggerFrame())
     }
 
-    public static fromOrigin(frameType: originframetype, index: number) {
-        return this.fromHandle(BlzGetOriginFrame(frameType, index))
-    }
-
-    public static getEventHandle() {
+    static getEventHandle() {
         return BlzGetTriggerFrameEvent()
     }
 
-    public static getEventText() {
+    static getEventText() {
+        return BlzGetTriggerFrameText()
+    }
+
+    static getEventValue() {
         return BlzGetTriggerFrameValue()
     }
 
-    public static getEventValue() {
-        return BlzGetTriggerFrameValue()
-    }
-
-    public static hideOrigin(enable: boolean) {
-        BlzHideOriginFrames(enable)
-    }
-
-    public static loadTOC(filename: string) {
+    static loadTOC(filename: string) {
         return BlzLoadTOCFile(filename)
     }
 }

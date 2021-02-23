@@ -17,6 +17,7 @@ import { Unit } from "./handles/unit"
 export type integer = number
 export type real = number
 export type code = Function
+export type codeboolexpr = () => boolean
 
 export const setTimeout = (time: real, call: () => void) =>
     new Timer().start(time, false, () => {

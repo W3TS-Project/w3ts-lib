@@ -1,8 +1,10 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
+import { integer, real } from "../main"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
+import { Unit } from "./unit"
 
 declare function ReloadGameCachesFromDisk(): boolean
 declare function InitGameCache(campaignFile: string): gamecache
@@ -11,9 +13,9 @@ declare function StoreInteger(
     cache: gamecache,
     missionKey: string,
     key: string,
-    value: number
+    value: integer
 ): void
-declare function StoreReal(cache: gamecache, missionKey: string, key: string, value: number): void
+declare function StoreReal(cache: gamecache, missionKey: string, key: string, value: real): void
 declare function StoreBoolean(
     cache: gamecache,
     missionKey: string,
@@ -49,8 +51,8 @@ declare function FlushStoredReal(cache: gamecache, missionKey: string, key: stri
 declare function FlushStoredBoolean(cache: gamecache, missionKey: string, key: string): void
 declare function FlushStoredUnit(cache: gamecache, missionKey: string, key: string): void
 declare function FlushStoredString(cache: gamecache, missionKey: string, key: string): void
-declare function GetStoredInteger(cache: gamecache, missionKey: string, key: string): number
-declare function GetStoredReal(cache: gamecache, missionKey: string, key: string): number
+declare function GetStoredInteger(cache: gamecache, missionKey: string, key: string): integer
+declare function GetStoredReal(cache: gamecache, missionKey: string, key: string): real
 declare function GetStoredBoolean(cache: gamecache, missionKey: string, key: string): boolean
 declare function GetStoredString(cache: gamecache, missionKey: string, key: string): string
 declare function RestoreUnit(
@@ -63,131 +65,232 @@ declare function RestoreUnit(
     facing: number
 ): unit
 
+export type StoreValueType = integer | real | boolean | string | Unit
+
+export type StoreType = "integer" | "real" | "boolean" | "string" | "unit"
+
+export const formatStoreType = (value: StoreValueType, type?: StoreType): StoreType => {
+    return (
+        type ||
+        (typeof value === "number" ? "real" : typeof value === "boolean" ? "boolean" : "string")
+    )
+}
+
 export class GameCache extends Handle<gamecache> {
-    public readonly filename: string
+    readonly filename: string
 
     constructor(campaignFile: string) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(InitGameCache(campaignFile))
-        }
-
+        super(Handle.initFromHandle() ? undefined : InitGameCache(campaignFile))
         this.filename = campaignFile
     }
 
-    public flush() {
-        FlushGameCache(this.handle)
-    }
-
-    public flushBoolean(missionKey: string, key: string) {
-        FlushStoredBoolean(this.handle, missionKey, key)
-    }
-
-    public flushInteger(missionKey: string, key: string) {
-        FlushStoredInteger(this.handle, missionKey, key)
-    }
-
-    public flushMission(missionKey: string) {
-        FlushStoredMission(this.handle, missionKey)
-    }
-
-    public flushNumber(missionKey: string, key: string) {
-        FlushStoredInteger(this.handle, missionKey, key)
-    }
-
-    public flushString(missionKey: string, key: string) {
-        FlushStoredString(this.handle, missionKey, key)
-    }
-
-    public flushUnit(missionKey: string, key: string) {
-        FlushStoredUnit(this.handle, missionKey, key)
-    }
-
-    public getBoolean(missionKey: string, key: string) {
-        return GetStoredBoolean(this.handle, missionKey, key)
-    }
-
-    public getInteger(missionKey: string, key: string) {
-        return GetStoredInteger(this.handle, missionKey, key)
-    }
-
-    public getNumber(missionKey: string, key: string) {
-        return GetStoredReal(this.handle, missionKey, key)
-    }
-
-    public getString(missionKey: string, key: string) {
-        return GetStoredString(this.handle, missionKey, key)
-    }
-
-    public hasBoolean(missionKey: string, key: string) {
-        return HaveStoredBoolean(this.handle, missionKey, key)
-    }
-
-    public hasInteger(missionKey: string, key: string) {
-        return HaveStoredInteger(this.handle, missionKey, key)
-    }
-
-    public hasNumber(missionKey: string, key: string) {
-        return HaveStoredReal(this.handle, missionKey, key)
-    }
-
-    public hasString(missionKey: string, key: string) {
-        return HaveStoredString(this.handle, missionKey, key)
-    }
-
-    public restoreUnit(
-        missionKey: string,
-        key: string,
-        forWhichPlayer: MapPlayer,
-        x: number,
-        y: number,
-        face: number
-    ) {
-        return RestoreUnit(this.handle, missionKey, key, forWhichPlayer.handle, x, y, face)
-    }
-
-    public save(): boolean {
+    save(): boolean {
         return SaveGameCache(this.handle)
     }
 
-    public store(missionKey: string, key: string, value: number | string | boolean | unit) {
-        if (typeof value === "string") {
-            StoreString(this.handle, missionKey, key, value)
-        } else if (typeof value === "boolean") {
-            StoreBoolean(this.handle, missionKey, key, value)
-        } else if (typeof value === "number") {
-            StoreReal(this.handle, missionKey, key, value)
-        } else {
-            StoreUnit(this.handle, missionKey, key, value)
-        }
+    storeInteger(missionKey: string, key: string, value: integer) {
+        StoreInteger(this.handle, missionKey, key, value)
+        return this
     }
 
-    public syncBoolean(missionKey: string, key: string) {
-        return SyncStoredBoolean(this.handle, missionKey, key)
+    storeReal(missionKey: string, key: string, value: real) {
+        StoreReal(this.handle, missionKey, key, value)
+        return this
     }
 
-    public syncInteger(missionKey: string, key: string) {
-        return SyncStoredInteger(this.handle, missionKey, key)
+    storeBoolean(missionKey: string, key: string, value: boolean) {
+        StoreBoolean(this.handle, missionKey, key, value)
+        return this
     }
 
-    public syncNumber(missionKey: string, key: string) {
-        return SyncStoredReal(this.handle, missionKey, key)
+    storeUnit(missionKey: string, key: string, whichUnit: Unit) {
+        return StoreUnit(this.handle, missionKey, key, whichUnit.handle)
     }
 
-    public syncString(missionKey: string, key: string) {
-        return SyncStoredString(this.handle, missionKey, key)
+    storeString(missionKey: string, key: string, value: string) {
+        return StoreString(this.handle, missionKey, key, value)
     }
 
-    public syncUnit(missionKey: string, key: string) {
-        return SyncStoredUnit(this.handle, missionKey, key)
+    store(missionKey: string, key: string, value: StoreValueType, type?: StoreType) {
+        type = formatStoreType(value, type)
+        return type === "string"
+            ? this.storeString(missionKey, key, <string>value)
+            : type === "integer"
+            ? this.storeInteger(missionKey, key, <integer>value)
+            : type === "real"
+            ? this.storeReal(missionKey, key, <real>value)
+            : type === "boolean"
+            ? this.storeBoolean(missionKey, key, <boolean>value)
+            : this.storeUnit(missionKey, key, <Unit>value)
     }
 
-    public static fromHandle(handle: gamecache): GameCache {
+    syncInteger(missionKey: string, key: string) {
+        SyncStoredInteger(this.handle, missionKey, key)
+        return this
+    }
+
+    syncReal(missionKey: string, key: string) {
+        SyncStoredReal(this.handle, missionKey, key)
+        return this
+    }
+
+    syncBoolean(missionKey: string, key: string) {
+        SyncStoredBoolean(this.handle, missionKey, key)
+        return this
+    }
+
+    syncUnit(missionKey: string, key: string) {
+        SyncStoredUnit(this.handle, missionKey, key)
+        return this
+    }
+
+    syncString(missionKey: string, key: string) {
+        SyncStoredString(this.handle, missionKey, key)
+        return this
+    }
+
+    sync(missionKey: string, key: string, type: StoreType) {
+        const f =
+            type === "integer"
+                ? this.syncInteger
+                : type === "real"
+                ? this.syncReal
+                : type === "boolean"
+                ? this.syncBoolean
+                : type === "string"
+                ? this.syncString
+                : this.syncString
+        return f(missionKey, key)
+    }
+
+    hasInteger(missionKey: string, key: string): boolean {
+        return HaveStoredInteger(this.handle, missionKey, key)
+    }
+
+    hasReal(missionKey: string, key: string): boolean {
+        return HaveStoredReal(this.handle, missionKey, key)
+    }
+
+    hasBoolean(missionKey: string, key: string): boolean {
+        return HaveStoredBoolean(this.handle, missionKey, key)
+    }
+
+    hasUnit(missionKey: string, key: string): boolean {
+        return HaveStoredUnit(this.handle, missionKey, key)
+    }
+
+    hasString(missionKey: string, key: string): boolean {
+        return HaveStoredString(this.handle, missionKey, key)
+    }
+
+    has(missionKey: string, key: string, type: StoreType): boolean {
+        const f =
+            type === "boolean"
+                ? this.hasBoolean
+                : type === "integer"
+                ? this.hasInteger
+                : type === "real"
+                ? this.hasReal
+                : type === "string"
+                ? this.hasString
+                : this.hasUnit
+        return f(missionKey, key)
+    }
+
+    destroy() {
+        FlushGameCache(this.handle)
+    }
+
+    flushMission(missionKey: string) {
+        FlushStoredMission(this.handle, missionKey)
+        return this
+    }
+
+    flushInteger(missionKey: string, key: string) {
+        FlushStoredInteger(this.handle, missionKey, key)
+        return this
+    }
+
+    flushReal(missionKey: string, key: string) {
+        FlushStoredReal(this.handle, missionKey, key)
+        return this
+    }
+
+    flushBoolean(missionKey: string, key: string) {
+        FlushStoredBoolean(this.handle, missionKey, key)
+        return this
+    }
+
+    flushUnit(missionKey: string, key: string) {
+        FlushStoredUnit(this.handle, missionKey, key)
+        return this
+    }
+
+    flushString(missionKey: string, key: string) {
+        FlushStoredString(this.handle, missionKey, key)
+        return this
+    }
+
+    flush(missionKey: string, key: string, type: StoreType) {
+        const f =
+            type === "boolean"
+                ? this.flushBoolean
+                : type === "integer"
+                ? this.flushInteger
+                : type === "real"
+                ? this.flushReal
+                : type === "string"
+                ? this.flushString
+                : this.flushUnit
+        return f(missionKey, key)
+    }
+
+    getInteger(missionKey: string, key: string): integer {
+        return GetStoredInteger(this.handle, missionKey, key)
+    }
+
+    getReal(missionKey: string, key: string): real {
+        return GetStoredReal(this.handle, missionKey, key)
+    }
+
+    getBoolean(missionKey: string, key: string): boolean {
+        return GetStoredBoolean(this.handle, missionKey, key)
+    }
+
+    getString(missionKey: string, key: string): string {
+        return GetStoredString(this.handle, missionKey, key)
+    }
+
+    get(missionKey: string, key: string, type: StoreType): integer | real | boolean | string {
+        const f =
+            type === "boolean"
+                ? this.getBoolean
+                : type === "integer"
+                ? this.getInteger
+                : type === "real"
+                ? this.getReal
+                : this.getString
+        return f(missionKey, key)
+    }
+
+    restoreUnit(
+        missionKey: string,
+        key: string,
+        forWhichPlayer: MapPlayer,
+        x: real,
+        y: real,
+        face: real
+    ) {
+        return Unit.fromHandle(
+            RestoreUnit(this.handle, missionKey, key, forWhichPlayer.handle, x, y, face)
+        )
+    }
+
+    static fromHandle(handle: gamecache): GameCache {
         return this.getObject(handle)
     }
 
-    public static reloadFromDisk() {
+    static reloadFromDisk() {
         return ReloadGameCachesFromDisk()
     }
 }

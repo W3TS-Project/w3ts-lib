@@ -1,10 +1,8 @@
 /** @noSelfInFile **/
 
-declare abstract class handle {
-    __handle: never
-}
-
 declare function FourCC(str: string): number
+
+declare abstract class handle {}
 
 declare interface agent extends handle {
     __agent: never

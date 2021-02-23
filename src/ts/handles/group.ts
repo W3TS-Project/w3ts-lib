@@ -1,22 +1,22 @@
-/** @noSelfInFile **/
-// @ts-nocheck
-
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
-import { Point } from "./location"
+import { Location, Point } from "./location"
 import { Rectangle } from "./rect"
 import { Unit } from "./unit"
 import { Widget } from "./widget"
+import { code, codeboolexpr, integer, Position, real } from "../main"
 
+declare function Condition(func: code): conditionfunc
+declare function DestroyCondition(c: conditionfunc): void
 declare function CreateGroup(): group
 declare function DestroyGroup(whichGroup: group): void
 declare function GroupAddUnit(whichGroup: group, whichUnit: unit): boolean
 declare function GroupRemoveUnit(whichGroup: group, whichUnit: unit): boolean
-declare function BlzGroupAddGroupFast(whichGroup: group, addGroup: group): number
-declare function BlzGroupRemoveGroupFast(whichGroup: group, removeGroup: group): number
+declare function BlzGroupAddGroupFast(whichGroup: group, addGroup: group): integer
+declare function BlzGroupRemoveGroupFast(whichGroup: group, removeGroup: group): integer
 declare function GroupClear(whichGroup: group): void
-declare function BlzGroupGetSize(whichGroup: group): number
-declare function BlzGroupUnitAt(whichGroup: group, index: number): unit
+declare function BlzGroupGetSize(whichGroup: group): integer
+declare function BlzGroupUnitAt(whichGroup: group, index: integer): unit
 declare function GroupEnumUnitsOfType(
     whichGroup: group,
     unitname: string,
@@ -31,42 +31,42 @@ declare function GroupEnumUnitsOfTypeCounted(
     whichGroup: group,
     unitname: string,
     filter: boolexpr | null,
-    countLimit: number
+    countLimit: integer
 ): void
 declare function GroupEnumUnitsInRect(whichGroup: group, r: rect, filter: boolexpr | null): void
 declare function GroupEnumUnitsInRectCounted(
     whichGroup: group,
     r: rect,
     filter: boolexpr | null,
-    countLimit: number
+    countLimit: integer
 ): void
 declare function GroupEnumUnitsInRange(
     whichGroup: group,
-    x: number,
-    y: number,
-    radius: number,
+    x: real,
+    y: real,
+    radius: real,
     filter: boolexpr | null
 ): void
 declare function GroupEnumUnitsInRangeOfLoc(
     whichGroup: group,
     whichLocation: location,
-    radius: number,
+    radius: real,
     filter: boolexpr | null
 ): void
 declare function GroupEnumUnitsInRangeCounted(
     whichGroup: group,
-    x: number,
-    y: number,
-    radius: number,
+    x: real,
+    y: real,
+    radius: real,
     filter: boolexpr | null,
-    countLimit: number
+    countLimit: integer
 ): void
 declare function GroupEnumUnitsInRangeOfLocCounted(
     whichGroup: group,
     whichLocation: location,
-    radius: number,
+    radius: real,
     filter: boolexpr | null,
-    countLimit: number
+    countLimit: integer
 ): void
 declare function GroupEnumUnitsSelected(
     whichGroup: group,
@@ -74,28 +74,23 @@ declare function GroupEnumUnitsSelected(
     filter: boolexpr | null
 ): void
 declare function GroupImmediateOrder(whichGroup: group, order: string): boolean
-declare function GroupImmediateOrderById(whichGroup: group, order: number): boolean
-declare function GroupPointOrder(whichGroup: group, order: string, x: number, y: number): boolean
+declare function GroupImmediateOrderById(whichGroup: group, order: integer): boolean
+declare function GroupPointOrder(whichGroup: group, order: string, x: real, y: real): boolean
 declare function GroupPointOrderLoc(
     whichGroup: group,
     order: string,
     whichLocation: location
 ): boolean
-declare function GroupPointOrderById(
-    whichGroup: group,
-    order: number,
-    x: number,
-    y: number
-): boolean
+declare function GroupPointOrderById(whichGroup: group, order: integer, x: real, y: real): boolean
 declare function GroupPointOrderByIdLoc(
     whichGroup: group,
-    order: number,
+    order: integer,
     whichLocation: location
 ): boolean
 declare function GroupTargetOrder(whichGroup: group, order: string, targetWidget: widget): boolean
 declare function GroupTargetOrderById(
     whichGroup: group,
-    order: number,
+    order: integer,
     targetWidget: widget
 ): boolean
 declare function ForGroup(whichGroup: group, callback: () => void): void
@@ -106,128 +101,155 @@ declare function GetEnumUnit(): unit
 
 export class Group extends Handle<group> {
     constructor() {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(CreateGroup())
-        }
+        super(Handle.initFromHandle() ? undefined : CreateGroup())
     }
 
-    public addGroupFast(addGroup: Group): number {
-        return BlzGroupAddGroupFast(this.handle, addGroup.handle)
-    }
-
-    public addUnit(whichUnit: Unit): boolean {
-        return GroupAddUnit(this.handle, whichUnit.handle)
-    }
-
-    public clear() {
-        GroupClear(this.handle)
-    }
-
-    public destroy() {
+    destroy() {
         DestroyGroup(this.handle)
     }
 
-    public enumUnitsInRange(
-        x: number,
-        y: number,
-        radius: number,
-        filter: boolexpr | (() => boolean)
-    ) {
+    addUnit(whichUnit: Unit): boolean {
+        return GroupAddUnit(this.handle, whichUnit.handle)
+    }
+
+    removeUnit(whichUnit: Unit): boolean {
+        return GroupRemoveUnit(this.handle, whichUnit.handle)
+    }
+
+    fastAddGroup(addGroup: Group): integer {
+        return BlzGroupAddGroupFast(this.handle, addGroup.handle)
+    }
+
+    fastRemoveGroup(removeGroup: Group): integer {
+        return BlzGroupRemoveGroupFast(this.handle, removeGroup.handle)
+    }
+
+    clear() {
+        GroupClear(this.handle)
+        return this
+    }
+
+    get size(): integer {
+        return BlzGroupGetSize(this.handle)
+    }
+
+    getUnitAt(index: integer): Unit {
+        return Unit.fromHandle(BlzGroupUnitAt(this.handle, index))
+    }
+
+    enumOfType(unitname: string, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        GroupEnumUnitsOfType(this.handle, unitname, filter)
+        DestroyCondition(filter)
+        return this
+    }
+
+    enumOfPlayer(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        GroupEnumUnitsOfPlayer(this.handle, whichPlayer.handle, filter)
+        DestroyCondition(filter)
+        return this
+    }
+
+    enumCountedOfType(unitname: string, countLimit: integer, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        GroupEnumUnitsOfTypeCounted(this.handle, unitname, filter, countLimit)
+        DestroyCondition(filter)
+        return this
+    }
+
+    enumInRect(r: Rectangle, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        GroupEnumUnitsInRect(this.handle, r.handle, filter)
+        DestroyCondition(filter)
+        return this
+    }
+
+    enumCountedInRect(r: Rectangle, countLimit: integer, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        GroupEnumUnitsInRectCounted(this.handle, r.handle, filter, countLimit)
+        DestroyCondition(filter)
+        return this
+    }
+
+    enumCoordsInRange(x: real, y: real, radius: real, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
         GroupEnumUnitsInRange(this.handle, x, y, radius, filter)
+        DestroyCondition(filter)
+        return this
     }
 
-    public enumUnitsInRangeCounted(
-        x: number,
-        y: number,
-        radius: number,
-        filter: boolexpr | (() => boolean),
-        countLimit: number
+    enumPosInRange(p: Position, radius: real, filterFunc: codeboolexpr) {
+        return this.enumCoordsInRange(p.x, p.y, radius, filterFunc)
+    }
+
+    enumLocInRange(whichLocation: Location, radius: real, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
+        GroupEnumUnitsInRangeOfLoc(this.handle, whichLocation.handle, radius, filter)
+        DestroyCondition(filter)
+        return this
+    }
+
+    enumCoordsCountedInRange(
+        x: real,
+        y: real,
+        radius: real,
+        countLimit: integer,
+        filterFunc: codeboolexpr
     ) {
+        const filter = Condition(filterFunc)
         GroupEnumUnitsInRangeCounted(this.handle, x, y, radius, filter, countLimit)
+        DestroyCondition(filter)
+        return this
     }
 
-    public enumUnitsInRangeOfPoint(
-        whichPoint: Point,
-        radius: number,
-        filter: boolexpr | (() => boolean)
+    enumPosCountedInRange(
+        p: Position,
+        radius: real,
+        countLimit: integer,
+        filterFunc: codeboolexpr
     ) {
-        GroupEnumUnitsInRangeOfLoc(this.handle, whichPoint.handle, radius, filter)
+        return this.enumCoordsCountedInRange(p.x, p.y, radius, countLimit, filterFunc)
     }
 
-    public enumUnitsInRangeOfPointCounted(
-        whichPoint: Point,
-        radius: number,
-        filter: boolexpr | (() => boolean),
-        countLimit: number
+    enumLocCountedInRange(
+        whichLocation: Location,
+        radius: real,
+        countLimit: integer,
+        filterFunc: codeboolexpr
     ) {
+        const filter = Condition(filterFunc)
         GroupEnumUnitsInRangeOfLocCounted(
             this.handle,
-            whichPoint.handle,
+            whichLocation.handle,
             radius,
             filter,
             countLimit
         )
+        DestroyCondition(filter)
+        return this
     }
 
-    public enumUnitsInRect(r: Rectangle, filter: boolexpr | (() => boolean)) {
-        GroupEnumUnitsInRect(this.handle, r.handle, filter)
-    }
-
-    public enumUnitsInRectCounted(
-        r: Rectangle,
-        filter: boolexpr | (() => boolean),
-        countLimit: number
-    ) {
-        GroupEnumUnitsInRectCounted(this.handle, r.handle, filter, countLimit)
-    }
-
-    public enumUnitsOfPlayer(whichPlayer: MapPlayer, filter: boolexpr | (() => boolean)) {
-        GroupEnumUnitsOfPlayer(this.handle, whichPlayer.handle, filter)
-    }
-
-    public enumUnitsOfType(unitName: string, filter: boolexpr | (() => boolean)) {
-        GroupEnumUnitsOfType(this.handle, unitName, filter)
-    }
-
-    public enumUnitsOfTypeCounted(
-        unitName: string,
-        filter: boolexpr | (() => boolean),
-        countLimit: number
-    ) {
-        GroupEnumUnitsOfTypeCounted(this.handle, unitName, filter, countLimit)
-    }
-
-    public enumUnitsSelected(
-        whichPlayer: MapPlayer,
-        radius: number,
-        filter: boolexpr | (() => boolean)
-    ) {
+    enumSelected(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
+        const filter = Condition(filterFunc)
         GroupEnumUnitsSelected(this.handle, whichPlayer.handle, filter)
+        DestroyCondition(filter)
     }
+    
 
-    public for(callback: () => void) {
+    for(callback: () => void) {
         ForGroup(this.handle, callback)
     }
 
-    public get first() {
+    get first() {
         return Unit.fromHandle(FirstOfGroup(this.handle))
     }
 
-    public get size(): number {
-        return BlzGroupGetSize(this.handle)
-    }
-
-    public getUnitAt(index: number): Unit {
-        return Unit.fromHandle(BlzGroupUnitAt(this.handle, index))
-    }
-
-    public hasUnit(whichUnit: Unit) {
+    hasUnit(whichUnit: Unit) {
         return IsUnitInGroup(whichUnit.handle, this.handle)
     }
 
-    public orderCoords(order: string | number, x: number, y: number) {
+    orderCoords(order: string | number, x: number, y: number) {
         if (typeof order === "string") {
             GroupPointOrder(this.handle, order, x, y)
         } else {
@@ -235,7 +257,7 @@ export class Group extends Handle<group> {
         }
     }
 
-    public orderImmediate(order: string | number) {
+    orderImmediate(order: string | number) {
         if (typeof order === "string") {
             GroupImmediateOrder(this.handle, order)
         } else {
@@ -243,7 +265,7 @@ export class Group extends Handle<group> {
         }
     }
 
-    public orderPoint(order: string | number, whichPoint: Point) {
+    orderPoint(order: string | number, whichPoint: Point) {
         if (typeof order === "string") {
             GroupPointOrderLoc(this.handle, order, whichPoint.handle)
         } else {
@@ -251,7 +273,7 @@ export class Group extends Handle<group> {
         }
     }
 
-    public orderTarget(order: string | number, targetWidget: Widget | Unit) {
+    orderTarget(order: string | number, targetWidget: Widget | Unit) {
         if (typeof order === "string") {
             GroupTargetOrder(this.handle, order, targetWidget.handle)
         } else {
@@ -259,23 +281,23 @@ export class Group extends Handle<group> {
         }
     }
 
-    public removeGroupFast(removeGroup: Group): number {
+    removeGroupFast(removeGroup: Group): number {
         return BlzGroupRemoveGroupFast(this.handle, removeGroup.handle)
     }
 
-    public removeUnit(whichUnit: Unit): boolean {
+    removeUnit(whichUnit: Unit): boolean {
         return GroupRemoveUnit(this.handle, whichUnit.handle)
     }
 
-    public static fromHandle(handle: group): Group {
+    static fromHandle(handle: group): Group {
         return this.getObject(handle)
     }
 
-    public static getEnumUnit(): Unit {
+    static getEnumUnit(): Unit {
         return Unit.fromHandle(GetEnumUnit())
     }
 
-    public static getFilterUnit(): Unit {
+    static getFilterUnit(): Unit {
         return Unit.fromHandle(GetFilterUnit())
     }
 }
