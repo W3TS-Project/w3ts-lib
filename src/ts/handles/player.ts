@@ -1,9 +1,8 @@
-/** @noSelfInFile **/
-// @ts-nocheck
-
+import { integer } from "../main"
 import { Force } from "./force"
 import { Handle } from "./handle"
-import { Point } from "./location"
+import { Leaderboard } from "./leaderboard"
+import { Location } from "./location"
 
 declare function Player(number: number): player
 declare function GetLocalPlayer(): player
@@ -121,14 +120,12 @@ declare function RemoveAllGuardPositions(num: player): void
 declare function GetFilterPlayer(): player
 declare function GetEnumPlayer(): player
 declare function GetTriggerPlayer(): player
+declare function PlayerSetLeaderboard(toPlayer: player, lb: leaderboard): void
+declare function PlayerGetLeaderboard(toPlayer: player): leaderboard
 
 export class MapPlayer extends Handle<player> {
-    private constructor(index: number) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(Player(index))
-        }
+    private constructor(index: integer) {
+        super(Handle.initFromHandle() ? undefined : Player(index))
     }
 
     public set color(color: playercolor) {
@@ -351,6 +348,15 @@ export class MapPlayer extends Handle<player> {
 
     public setUnitsOwner(newOwner: number) {
         SetPlayerUnitsOwner(this.handle, newOwner)
+    }
+
+    setLeaderboard(lb: Leaderboard) {
+        PlayerSetLeaderboard(this.handle, lb.handle)
+        return this
+    }
+
+    getleaderboard(toPlayer: MapPlayer) {
+        return Leaderboard.fromHandle(PlayerGetLeaderboard(toPlayer.handle))
     }
 
     public static fromEnum() {

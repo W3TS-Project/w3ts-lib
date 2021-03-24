@@ -1,6 +1,10 @@
 /** @noSelfInFile **/
 
 declare function FourCC(str: string): number
+declare function OrderId(orderIdString: string): number
+
+declare function Condition(func: () => void): conditionfunc
+declare function DestroyCondition(c: conditionfunc): void
 
 declare abstract class handle {}
 

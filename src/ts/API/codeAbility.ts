@@ -1,8 +1,6 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { Destructable } from "../handles/destructable";
-
 declare function BlzSetAbilityTooltip(abilCode:number,tooltip:string,level:number):void
 declare function BlzSetAbilityActivatedTooltip(abilCode:number,tooltip:string,level:number):void
 declare function BlzSetAbilityExtendedTooltip(abilCode:number,extendedTooltip:string,level:number):void

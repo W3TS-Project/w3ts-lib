@@ -4,7 +4,7 @@
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 import { Widget } from "./widget"
-import { formatCC, integer, Position, rawcode, real } from "../main"
+import { formatCC, integer, Position, RawCode, real } from "../main"
 import { Location } from "./location"
 import { Point } from "./point"
 
@@ -80,8 +80,8 @@ declare function BlzPlaySpecialEffectWithTimeScale(
     timeScale: real
 ): void
 
-export class Effect<T extends effect> extends Handle<effect> {
-    constructor(handle: T) {
+export class Effect extends Handle<effect> {
+    constructor(handle: effect) {
         super(Handle.initFromHandle() ? undefined : handle)
     }
 
@@ -115,16 +115,16 @@ export class Effect<T extends effect> extends Handle<effect> {
         return new this(AddSpellEffectLoc(abilityString, t, loc.handle))
     }
 
-    static addSpellByIdCoords(abilityId: rawcode, t: effecttype, x: real, y: real) {
+    static addSpellByIdCoords(abilityId: RawCode, t: effecttype, x: real, y: real) {
         return new this(AddSpellEffectById(formatCC(abilityId), t, x, y))
     }
 
-    static addSpellByIdPos(abilityId: rawcode, t: effecttype, p: Position) {
+    static addSpellByIdPos(abilityId: RawCode, t: effecttype, p: Position) {
         p = <Point>p
         return this.addSpellByIdCoords(abilityId, t, p.x, p.y)
     }
 
-    static addSpellByIdLoc(abilityId: rawcode, t: effecttype, loc: Location) {
+    static addSpellByIdLoc(abilityId: RawCode, t: effecttype, loc: Location) {
         return new this(AddSpellEffectByIdLoc(formatCC(abilityId), t, loc.handle))
     }
 
@@ -138,7 +138,7 @@ export class Effect<T extends effect> extends Handle<effect> {
     }
 
     static addSpellByIdTarget(
-        abilityId: rawcode,
+        abilityId: RawCode,
         t: effecttype,
         targetWidget: Widget,
         attachPoint: string
@@ -294,7 +294,7 @@ export class Effect<T extends effect> extends Handle<effect> {
         return this
     }
 
-    static fromHandle(handle: effect): ThisType<effect> {
+    static fromHandle(handle: effect): Effect {
         return this.getObject(handle)
     }
 }

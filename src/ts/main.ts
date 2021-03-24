@@ -4,19 +4,20 @@
 /// <reference types="lua-types/5.3"/>
 /// <reference types="ceres-decl/ceres"/>
 
-import { AutomationTest } from "./API/automation test"
+import { AutomationTest } from "./API/automationTest"
 import { Blight } from "./API/blight"
+import { FourCC, OrderId } from "./decl"
 import { AllPlayers } from "./globals/constants"
 import { Location } from "./handles/location"
 import { MapPlayer } from "./handles/player"
 import { Point } from "./handles/point"
-import { TerrainDeformation } from "./handles/terrain deformation"
+import { TerrainDeformation } from "./handles/terrainDeformation"
 import { Timer } from "./handles/timer"
 import { Unit } from "./handles/unit"
 
 export type integer = number
 export type real = number
-export type code = Function
+export type code = () => void
 export type codeboolexpr = () => boolean
 
 export const setTimeout = (time: real, call: () => void) =>
@@ -29,9 +30,14 @@ export const setTimeout = (time: real, call: () => void) =>
 
 export const setInterval = (time: real, call: () => void) => new Timer().start(time, true, call)
 
-export type rawcode = integer | string
+export type RawCode = integer | string
 
-export const formatCC = (id: rawcode): integer => (typeof id === "number" ? id : FourCC(id))
+export type Order = integer | string | "attack"
+
+export const formatCC = (id: RawCode): integer => (typeof id === "number" ? id : FourCC(id))
+
+export const formatOrder = (order: Order): integer =>
+    typeof order === "number" ? order : OrderId(order)
 
 export type Coords = {
     x: real

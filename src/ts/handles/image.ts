@@ -1,36 +1,37 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
+import { integer, Position, real } from "../main"
 import { Handle } from "./handle"
 
 declare function CreateImage(
     file: string,
-    sizeX: number,
-    sizeY: number,
-    sizeZ: number,
-    posX: number,
-    posY: number,
-    posZ: number,
-    originX: number,
-    originY: number,
-    originZ: number,
-    imageType: number
+    sizeX: real,
+    sizeY: real,
+    sizeZ: real,
+    posX: real,
+    posY: real,
+    posZ: real,
+    originX: real,
+    originY: real,
+    originZ: real,
+    imageType: integer
 ): image
 declare function DestroyImage(whichImage: image): void
 declare function ShowImage(whichImage: image, flag: boolean): void
-declare function SetImageConstantHeight(whichImage: image, flag: boolean, height: number): void
-declare function SetImagePosition(whichImage: image, x: number, y: number, z: number): void
+declare function SetImageConstantHeight(whichImage: image, flag: boolean, height: real): void
+declare function SetImagePosition(whichImage: image, x: real, y: real, z: real): void
 declare function SetImageColor(
     whichImage: image,
-    red: number,
-    green: number,
-    blue: number,
-    alpha: number
+    red: integer,
+    green: integer,
+    blue: integer,
+    alpha: integer
 ): void
 declare function SetImageRender(whichImage: image, flag: boolean): void
 declare function SetImageRenderAlways(whichImage: image, flag: boolean): void
 declare function SetImageAboveWater(whichImage: image, flag: boolean, useWaterAlpha: boolean): void
-declare function SetImageType(whichImage: image, imageType: number): void
+declare function SetImageType(whichImage: image, imageType: integer): void
 
 export enum ImageType {
     Selection = 1,
@@ -42,68 +43,127 @@ export enum ImageType {
 export class Image extends Handle<image> {
     constructor(
         file: string,
-        sizeX: number,
-        sizeY: number,
-        sizeZ: number,
-        posX: number,
-        posY: number,
-        posZ: number,
-        originX: number,
-        originY: number,
-        originZ: number,
+        sizeX: real,
+        sizeY: real,
+        sizeZ: real,
+        posX: real,
+        posY: real,
+        posZ: real,
+        originX: real,
+        originY: real,
+        originZ: real,
         imageType: ImageType
     ) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(
-                CreateImage(
-                    file,
-                    sizeX,
-                    sizeY,
-                    sizeZ,
-                    posX,
-                    posY,
-                    posZ,
-                    originX,
-                    originY,
-                    originZ,
-                    imageType
-                )
-            )
-        }
+        super(
+            Handle.initFromHandle()
+                ? undefined
+                : CreateImage(
+                      file,
+                      sizeX,
+                      sizeY,
+                      sizeZ,
+                      posX,
+                      posY,
+                      posZ,
+                      originX,
+                      originY,
+                      originZ,
+                      imageType
+                  )
+        )
     }
 
-    public destroy() {
+    static coordsCreate(
+        file: string,
+        sizeX: real,
+        sizeY: real,
+        sizeZ: real,
+        posX: real,
+        posY: real,
+        posZ: real,
+        originX: real,
+        originY: real,
+        originZ: real,
+        imageType: ImageType
+    ) {
+        return new this(
+            file,
+            sizeX,
+            sizeY,
+            sizeZ,
+            posX,
+            posY,
+            posZ,
+            originX,
+            originY,
+            originZ,
+            imageType
+        )
+    }
+
+    static posCreate(
+        file: string,
+        size: Position,
+        pos: Position,
+        originPos: Position,
+        imageType: ImageType
+    ) {
+        return this.coordsCreate(
+            file,
+            size.x,
+            size.y,
+            size.z,
+            pos.x,
+            pos.y,
+            pos.z,
+            originPos.x,
+            originPos.y,
+            originPos.z,
+            imageType
+        )
+    }
+
+    destroy() {
         DestroyImage(this.handle)
     }
 
-    public setAboveWater(flag: boolean, useWaterAlpha: boolean) {
-        SetImageAboveWater(this.handle, flag, useWaterAlpha)
-    }
-
-    public setColor(red: number, green: number, blue: number, alpha: number) {
-        SetImageColor(this.handle, red, green, blue, alpha)
-    }
-
-    public setConstantHeight(flag: boolean, height: number) {
-        SetImageConstantHeight(this.handle, flag, height)
-    }
-
-    public setPosition(x: number, y: number, z: number) {
-        SetImagePosition(this.handle, x, y, z)
-    }
-
-    public setRender(flag: boolean) {
-        SetImageRenderAlways(this.handle, flag)
-    }
-
-    public setType(imageType: ImageType) {
-        SetImageType(this.handle, imageType)
-    }
-
-    public show(flag: boolean) {
+    show(flag: boolean) {
         ShowImage(this.handle, flag)
+        return this
+    }
+
+    setConstantHeight(flag: boolean, height: real) {
+        SetImageConstantHeight(this.handle, flag, height)
+        return this
+    }
+
+    setCoords(x: real, y: real, z: real) {
+        SetImagePosition(this.handle, x, y, z)
+        return this
+    }
+
+    setPos(pos: Position) {
+        return this.setCoords(pos.x, pos.y, pos.z)
+    }
+
+    setColor(red: integer, green: integer, blue: integer, alpha: integer) {
+        SetImageColor(this.handle, red, green, blue, alpha)
+        return this
+    }
+
+    setRender(flag: boolean) {
+        SetImageRenderAlways(this.handle, flag)
+        return this
+    }
+
+    setAboveWater(flag: boolean, useWaterAlpha: boolean) {
+        SetImageAboveWater(this.handle, flag, useWaterAlpha)
+        return this
+    }
+
+    setType(imageType: ImageType) {
+        SetImageType(this.handle, imageType)
+        return this
     }
 
     public static fromHandle(handle: image): Image {

@@ -1673,4 +1673,12 @@ export class Unit extends Widget {
     public static isUnitIdType(unitId: number, whichUnitType: unittype) {
         return IsUnitIdType(unitId, whichUnitType)
     }
+
+    static getEnumUnit(): Unit {
+        return Unit.fromHandle(GetEnumUnit())
+    }
+
+    static getFilterUnit(): Unit {
+        return Unit.fromHandle(GetFilterUnit())
+    }
 }

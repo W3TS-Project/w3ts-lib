@@ -1,6 +1,7 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
+import { integer } from "../main"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 
@@ -8,34 +9,32 @@ declare function CreateLeaderboard(): leaderboard
 declare function DestroyLeaderboard(lb: leaderboard): void
 declare function LeaderboardDisplay(lb: leaderboard, show: boolean): void
 declare function IsLeaderboardDisplayed(lb: leaderboard): boolean
-declare function LeaderboardGetItemCount(lb: leaderboard): number
-declare function LeaderboardSetSizeByItemCount(lb: leaderboard, count: number): void
-declare function LeaderboardAddItem(lb: leaderboard, label: string, value: number, p: player): void
-declare function LeaderboardRemoveItem(lb: leaderboard, index: number): void
+declare function LeaderboardGetItemCount(lb: leaderboard): integer
+declare function LeaderboardSetSizeByItemCount(lb: leaderboard, count: integer): void
+declare function LeaderboardAddItem(lb: leaderboard, label: string, value: integer, p: player): void
+declare function LeaderboardRemoveItem(lb: leaderboard, index: integer): void
 declare function LeaderboardRemovePlayerItem(lb: leaderboard, p: player): void
 declare function LeaderboardClear(lb: leaderboard): void
 declare function LeaderboardSortItemsByValue(lb: leaderboard, ascending: boolean): void
 declare function LeaderboardSortItemsByPlayer(lb: leaderboard, ascending: boolean): void
 declare function LeaderboardSortItemsByLabel(lb: leaderboard, ascending: boolean): void
 declare function LeaderboardHasPlayerItem(lb: leaderboard, p: player): boolean
-declare function LeaderboardGetPlayerIndex(lb: leaderboard, p: player): number
+declare function LeaderboardGetPlayerIndex(lb: leaderboard, p: player): integer
 declare function LeaderboardSetLabel(lb: leaderboard, label: string): void
 declare function LeaderboardGetLabelText(lb: leaderboard): string
-declare function PlayerSetLeaderboard(toPlayer: player, lb: leaderboard): void
-declare function PlayerGetLeaderboard(toPlayer: player): leaderboard
 declare function LeaderboardSetLabelColor(
     lb: leaderboard,
-    red: number,
-    green: number,
-    blue: number,
-    alpha: number
+    red: integer,
+    green: integer,
+    blue: integer,
+    alpha: integer
 ): void
 declare function LeaderboardSetValueColor(
     lb: leaderboard,
-    red: number,
-    green: number,
-    blue: number,
-    alpha: number
+    red: integer,
+    green: integer,
+    blue: integer,
+    alpha: integer
 ): void
 declare function LeaderboardSetStyle(
     lb: leaderboard,
@@ -44,168 +43,172 @@ declare function LeaderboardSetStyle(
     showValues: boolean,
     showIcons: boolean
 ): void
-declare function LeaderboardSetItemValue(lb: leaderboard, whichItem: number, val: number): void
-declare function LeaderboardSetItemLabel(lb: leaderboard, whichItem: number, val: string): void
+declare function LeaderboardSetItemValue(lb: leaderboard, whichItem: integer, val: integer): void
+declare function LeaderboardSetItemLabel(lb: leaderboard, whichItem: integer, val: string): void
 declare function LeaderboardSetItemStyle(
     lb: leaderboard,
-    whichItem: number,
+    whichItem: integer,
     showLabel: boolean,
     showValue: boolean,
     showIcon: boolean
 ): void
 declare function LeaderboardSetItemLabelColor(
     lb: leaderboard,
-    whichItem: number,
-    red: number,
-    green: number,
-    blue: number,
-    alpha: number
+    whichItem: integer,
+    red: integer,
+    green: integer,
+    blue: integer,
+    alpha: integer
 ): void
 declare function LeaderboardSetItemValueColor(
     lb: leaderboard,
-    whichItem: number,
-    red: number,
-    green: number,
-    blue: number,
-    alpha: number
+    whichItem: integer,
+    red: integer,
+    green: integer,
+    blue: integer,
+    alpha: integer
 ): void
 
 export class Leaderboard extends Handle<leaderboard> {
     constructor() {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(CreateLeaderboard())
-        }
+        super(Handle.initFromHandle() ? undefined : CreateLeaderboard())
     }
 
-    public addItem(label: string, value: number, p: MapPlayer) {
-        LeaderboardAddItem(this.handle, label, value, p.handle)
-    }
-
-    public clear() {
-        LeaderboardClear(this.handle)
-    }
-
-    public destroy() {
+    destroy() {
         DestroyLeaderboard(this.handle)
     }
 
-    public display(flag: boolean = true) {
+    display(flag: boolean = true) {
         LeaderboardDisplay(this.handle, flag)
+        return this
     }
 
-    public get displayed() {
+    get displayed() {
         return IsLeaderboardDisplayed(this.handle)
     }
 
-    public get itemCount() {
+    get itemCount() {
         return LeaderboardGetItemCount(this.handle)
     }
 
-    public set itemCount(count: number) {
+    set itemCount(count: integer) {
         LeaderboardSetSizeByItemCount(this.handle, count)
     }
 
-    public getPlayerIndex(p: MapPlayer) {
+    addItem(label: string, value: integer, p: MapPlayer) {
+        LeaderboardAddItem(this.handle, label, value, p.handle)
+        return this
+    }
+
+    removeItem(index: integer) {
+        LeaderboardRemoveItem(this.handle, index)
+        return this
+    }
+
+    removePlayerItem(p: MapPlayer) {
+        LeaderboardRemovePlayerItem(this.handle, p.handle)
+        return this
+    }
+
+    clear() {
+        LeaderboardClear(this.handle)
+        return this
+    }
+
+    sortByValue(asc: boolean = true) {
+        LeaderboardSortItemsByValue(this.handle, asc)
+        return this
+    }
+
+    sortByPlayer(asc: boolean = true) {
+        LeaderboardSortItemsByPlayer(this.handle, asc)
+        return this
+    }
+
+    sortByLabel(asc: boolean = true) {
+        LeaderboardSortItemsByLabel(this.handle, asc)
+        return this
+    }
+
+    hasPlayerItem(p: MapPlayer) {
+        return LeaderboardHasPlayerItem(this.handle, p.handle)
+    }
+
+    getPlayerIndex(p: MapPlayer): integer {
         return LeaderboardGetPlayerIndex(this.handle, p.handle)
     }
 
-    public hasPlayerItem(p: MapPlayer) {
-        LeaderboardHasPlayerItem(this.handle, p.handle)
+    set label(value: string) {
+        LeaderboardSetLabel(this.handle, value)
     }
 
-    public removeItem(index: number) {
-        LeaderboardRemoveItem(this.handle, index)
+    get label() {
+        return LeaderboardGetLabelText(this.handle)
     }
 
-    public removePlayerItem(p: MapPlayer) {
-        LeaderboardRemovePlayerItem(this.handle, p.handle)
-    }
-
-    public setItemLabel(item: number, label: string) {
-        LeaderboardSetItemLabel(this.handle, item, label)
-    }
-
-    public setItemLabelColor(
-        item: number,
-        red: number,
-        green: number,
-        blue: number,
-        alpha: number
-    ) {
-        LeaderboardSetItemLabelColor(this.handle, item, red, green, blue, alpha)
-    }
-
-    public setItemStyle(
-        item: number,
-        showLabel: boolean = true,
-        showValues: boolean = true,
-        showIcons: boolean = true
-    ) {
-        LeaderboardSetItemStyle(this.handle, item, showLabel, showValues, showIcons)
-    }
-
-    public setItemValue(item: number, value: number) {
-        LeaderboardSetItemValue(this.handle, item, value)
-    }
-
-    public setItemValueColor(
-        item: number,
-        red: number,
-        green: number,
-        blue: number,
-        alpha: number
-    ) {
-        LeaderboardSetItemValueColor(this.handle, item, red, green, blue, alpha)
-    }
-
-    public setLabelColor(red: number, green: number, blue: number, alpha: number) {
+    setLabelColor(red: integer, green: integer, blue: integer, alpha: integer) {
         LeaderboardSetLabelColor(this.handle, red, green, blue, alpha)
+        return this
     }
 
-    public setPlayerBoard(p: MapPlayer) {
-        PlayerSetLeaderboard(p.handle, this.handle)
+    setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
+        LeaderboardSetValueColor(this.handle, red, green, blue, alpha)
+        return this
     }
 
-    public setStyle(
+    setStyle(
         showLabel: boolean = true,
         showNames: boolean = true,
         showValues: boolean = true,
         showIcons: boolean = true
     ) {
         LeaderboardSetStyle(this.handle, showLabel, showNames, showValues, showIcons)
+        return this
     }
 
-    public setValueColor(red: number, green: number, blue: number, alpha: number) {
-        LeaderboardSetValueColor(this.handle, red, green, blue, alpha)
+    setItemValue(item: integer, value: integer) {
+        LeaderboardSetItemValue(this.handle, item, value)
+        return this
     }
 
-    public sortByLabel(asc: boolean = true) {
-        LeaderboardSortItemsByLabel(this.handle, asc)
+    setItemLabel(item: integer, label: string) {
+        LeaderboardSetItemLabel(this.handle, item, label)
+        return this
     }
 
-    public sortByPlayer(asc: boolean = true) {
-        LeaderboardSortItemsByPlayer(this.handle, asc)
+    setItemStyle(
+        item: integer,
+        showLabel: boolean = true,
+        showValues: boolean = true,
+        showIcons: boolean = true
+    ) {
+        LeaderboardSetItemStyle(this.handle, item, showLabel, showValues, showIcons)
+        return this
     }
 
-    public sortByValue(asc: boolean = true) {
-        LeaderboardSortItemsByValue(this.handle, asc)
+    setItemLabelColor(
+        item: integer,
+        red: integer,
+        green: integer,
+        blue: integer,
+        alpha: integer
+    ) {
+        LeaderboardSetItemLabelColor(this.handle, item, red, green, blue, alpha)
+        return this
     }
 
-    public set label(value: string) {
-        LeaderboardSetLabel(this.handle, value)
+    setItemValueColor(
+        item: integer,
+        red: integer,
+        green: integer,
+        blue: integer,
+        alpha: integer
+    ) {
+        LeaderboardSetItemValueColor(this.handle, item, red, green, blue, alpha)
+        return this
     }
 
-    public get label() {
-        return LeaderboardGetLabelText(this.handle)
-    }
-
-    public static fromHandle(handle: leaderboard): Leaderboard {
+    static fromHandle(handle: leaderboard): Leaderboard {
         return this.getObject(handle)
-    }
-
-    public static fromPlayer(p: MapPlayer) {
-        return this.fromHandle(PlayerGetLeaderboard(p.handle))
     }
 }

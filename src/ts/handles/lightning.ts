@@ -53,8 +53,8 @@ declare function SetLightningColor(
     a: real
 ): boolean
 
-export class Lightning<T extends lightning> extends Handle<lightning> {
-    constructor(handle: T) {
+export class Lightning extends Handle<lightning> {
+    constructor(handle: lightning) {
         Handle.initFromHandle() ? super() : super(handle)
     }
 

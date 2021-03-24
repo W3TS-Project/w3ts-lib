@@ -3,17 +3,19 @@
 
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
-import { Point } from "./location"
 import { Widget } from "./widget"
+import { code, codeboolexpr, formatCC, integer, Position, RawCode, real } from "../main"
+import { Rectangle } from "./rect"
+import { Ability } from "./ability"
 
-declare function BlzCreateItemWithSkin(itemid: number, x: number, y: number, skinId: number): item
-declare function CreateItem(itemid: number, x: number, y: number): item
+declare function BlzCreateItemWithSkin(itemid: integer, x: real, y: real, skinId: integer): item
+declare function CreateItem(itemid: integer, x: real, y: real): item
 declare function RemoveItem(whichItem: item): void
 declare function GetItemPlayer(whichItem: item): player
-declare function GetItemTypeId(i: item): number
-declare function GetItemX(i: item): number
-declare function GetItemY(i: item): number
-declare function SetItemPosition(i: item, x: number, y: number): void
+declare function GetItemTypeId(i: item): integer
+declare function GetItemX(i: item): real
+declare function GetItemY(i: item): real
+declare function SetItemPosition(i: item, x: real, y: real): void
 declare function SetItemDropOnDeath(whichItem: item, flag: boolean): void
 declare function SetItemDroppable(i: item, flag: boolean): void
 declare function SetItemPawnable(i: item, flag: boolean): void
@@ -26,27 +28,27 @@ declare function IsItemOwned(whichItem: item): boolean
 declare function IsItemPowerup(whichItem: item): boolean
 declare function IsItemSellable(whichItem: item): boolean
 declare function IsItemPawnable(whichItem: item): boolean
-declare function IsItemIdPowerup(itemId: number): boolean
-declare function IsItemIdSellable(itemId: number): boolean
-declare function IsItemIdPawnable(itemId: number): boolean
-declare function EnumItemsInRect(r: rect, filter: boolexpr | null, actionFunc: () => void): void
-declare function GetItemLevel(whichItem: item): number
+declare function IsItemIdPowerup(itemId: integer): boolean
+declare function IsItemIdSellable(itemId: integer): boolean
+declare function IsItemIdPawnable(itemId: integer): boolean
+declare function EnumItemsInRect(r: rect, filter: boolexpr | null, actionFunc: code | null): void
+declare function GetItemLevel(whichItem: item): integer
 declare function GetItemType(whichItem: item): itemtype
-declare function SetItemDropID(whichItem: item, unitId: number): void
+declare function SetItemDropID(whichItem: item, unitId: integer): void
 declare function GetItemName(whichItem: item): string
-declare function GetItemCharges(whichItem: item): number
-declare function SetItemCharges(whichItem: item, charges: number): void
-declare function GetItemUserData(whichItem: item): number
-declare function SetItemUserData(whichItem: item, data: number): void
+declare function GetItemCharges(whichItem: item): integer
+declare function SetItemCharges(whichItem: item, charges: integer): void
+declare function GetItemUserData(whichItem: item): integer
+declare function SetItemUserData(whichItem: item, data: integer): void
 declare function BlzSetItemName(whichItem: item, name: string): void
-declare function BlzGetItemSkin(whichItem: item): number
-declare function BlzSetItemSkin(whichItem: item, skinId: number): void
-declare function BlzGetItemAbilityByIndex(whichItem: item, index: number): ability
-declare function BlzGetItemAbility(whichItem: item, abilCode: number): ability
-declare function BlzItemAddAbility(whichItem: item, abilCode: number): boolean
+declare function BlzGetItemSkin(whichItem: item): integer
+declare function BlzSetItemSkin(whichItem: item, skinId: integer): void
+declare function BlzGetItemAbilityByIndex(whichItem: item, index: integer): ability
+declare function BlzGetItemAbility(whichItem: item, abilCode: integer): ability
+declare function BlzItemAddAbility(whichItem: item, abilCode: integer): boolean
 declare function BlzGetItemBooleanField(whichItem: item, whichField: itembooleanfield): boolean
-declare function BlzGetItemIntegerField(whichItem: item, whichField: itemintegerfield): number
-declare function BlzGetItemRealField(whichItem: item, whichField: itemrealfield): number
+declare function BlzGetItemIntegerField(whichItem: item, whichField: itemintegerfield): integer
+declare function BlzGetItemRealField(whichItem: item, whichField: itemrealfield): real
 declare function BlzGetItemStringField(whichItem: item, whichField: itemstringfield): string
 declare function BlzSetItemBooleanField(
     whichItem: item,
@@ -56,24 +58,24 @@ declare function BlzSetItemBooleanField(
 declare function BlzSetItemIntegerField(
     whichItem: item,
     whichField: itemintegerfield,
-    value: number
+    value: integer
 ): boolean
 declare function BlzSetItemRealField(
     whichItem: item,
     whichField: itemrealfield,
-    value: number
+    value: real
 ): boolean
 declare function BlzSetItemStringField(
     whichItem: item,
     whichField: itemstringfield,
     value: string
 ): boolean
-declare function BlzItemRemoveAbility(whichItem: item, abilCode: number): boolean
+declare function BlzItemRemoveAbility(whichItem: item, abilCode: integer): boolean
 
 export class Item extends Widget {
-    public readonly handle!: item
+    readonly handle!: item
 
-    constructor(itemId: number, x: number, y: number, skinId?: number) {
+    constructor(itemId: integer, x: real, y: real, skinId?: integer) {
         if (Handle.initFromHandle()) {
             super()
         } else {
@@ -81,99 +83,186 @@ export class Item extends Widget {
         }
     }
 
-    public get charges() {
-        return GetItemCharges(this.handle)
+    destroy() {
+        RemoveItem(this.handle)
+        return this
     }
 
-    public set charges(value: number) {
-        SetItemCharges(this.handle, value)
+    getOwner() {
+        return MapPlayer.fromHandle(GetItemPlayer(this.handle))
     }
 
-    public set invulnerable(flag: boolean) {
-        SetItemInvulnerable(this.handle, true)
+    get typeId() {
+        return GetItemTypeId(this.handle)
     }
 
-    public get invulnerable() {
+    get x() {
+        return GetItemX(this.handle)
+    }
+
+    get y() {
+        return GetItemY(this.handle)
+    }
+
+    setCoords(x: real, y: real) {
+        SetItemPosition(this.handle, x, y)
+        return this
+    }
+
+    set x(x: real) {
+        this.setCoords(x, this.y)
+    }
+
+    set y(y: real) {
+        this.setCoords(this.x, y)
+    }
+
+    setPos(pos: Position) {
+        return this.setCoords(pos.x, pos.y)
+    }
+
+    setDropOnDeath(flag: boolean) {
+        SetItemDropOnDeath(this.handle, flag)
+        return this
+    }
+
+    set dropOnDeath(flag: boolean) {
+        this.setDropOnDeath(flag)
+    }
+
+    setDroppable(flag: boolean) {
+        SetItemDroppable(this.handle, flag)
+        return this
+    }
+
+    set droppable(flag: boolean) {
+        this.setDroppable(flag)
+    }
+
+    setPawnable(flag: boolean) {
+        SetItemPawnable(this.handle, flag)
+        return this
+    }
+
+    set pawnable(flag: boolean) {
+        this.setPawnable(flag)
+    }
+
+    setPlayer(whichPlayer: MapPlayer, changeColor: boolean) {
+        SetItemPlayer(this.handle, whichPlayer.handle, changeColor)
+        return this
+    }
+
+    set invulnerable(flag: boolean) {
+        SetItemInvulnerable(this.handle, flag)
+    }
+
+    get invulnerable() {
         return IsItemInvulnerable(this.handle)
     }
 
-    public get level() {
+    set visible(show: boolean) {
+        SetItemVisible(this.handle, show)
+    }
+
+    get visible() {
+        return IsItemVisible(this.handle)
+    }
+
+    isOwned() {
+        return IsItemOwned(this.handle)
+    }
+
+    isPowerup() {
+        return IsItemPowerup(this.handle)
+    }
+
+    isSellable() {
+        return IsItemSellable(this.handle)
+    }
+
+    isPawnable() {
+        return IsItemPawnable(this.handle)
+    }
+
+    static isPowerup(itemId: RawCode) {
+        return IsItemIdPowerup(formatCC(itemId))
+    }
+
+    static isSellable(itemId: RawCode) {
+        return IsItemIdSellable(formatCC(itemId))
+    }
+
+    static isPawnable(itemId: RawCode) {
+        return IsItemIdPawnable(formatCC(itemId))
+    }
+
+    static enumInRect(r: Rectangle, filterFunc: codeboolexpr, actionFunc: code) {
+        const filter = Condition(filterFunc)
+        EnumItemsInRect(r.handle, filter, actionFunc)
+    }
+
+    getLevel() {
         return GetItemLevel(this.handle)
     }
 
-    get name() {
-        return GetItemName(this.handle)
+    get type() {
+        return GetItemType(this.handle)
+    }
+
+    set dropID(unitId: RawCode) {
+        SetItemDropID(this.handle, formatCC(unitId))
+    }
+
+    setDropID(unitId: number) {
+        SetItemDropID(this.handle, unitId)
     }
 
     set name(value: string) {
         BlzSetItemName(this.handle, value)
     }
 
-    public get pawnable() {
-        return IsItemPawnable(this.handle)
+    get name() {
+        return GetItemName(this.handle)
     }
 
-    public set pawnable(flag: boolean) {
-        SetItemPawnable(this.handle, flag)
+    get charges() {
+        return GetItemCharges(this.handle)
     }
 
-    public get player() {
-        return GetItemPlayer(this.handle)
+    set charges(value: integer) {
+        SetItemCharges(this.handle, value)
     }
 
-    public get type() {
-        return GetItemType(this.handle)
-    }
-
-    public get typeId() {
-        return GetItemTypeId(this.handle)
-    }
-
-    public get userData() {
+    get userData() {
         return GetItemUserData(this.handle)
     }
 
-    public set userData(value: number) {
-        SetItemUserData(this.handle, value)
+    set userData(data: integer) {
+        SetItemUserData(this.handle, data)
     }
 
-    public get visible() {
-        return IsItemVisible(this.handle)
+    getByIndexAbility(index: integer) {
+        return Ability.fromHandle(BlzGetItemAbilityByIndex(this.handle, index))
     }
 
-    public set visible(flag: boolean) {
-        SetItemVisible(this.handle, flag)
+    getAbility(abilCode: RawCode) {
+        return Ability.fromHandle(BlzGetItemAbility(this.handle, formatCC(abilCode)))
     }
 
-    public get skin() {
+    addAbility(abilCode:RawCode){
+        return BlzItemAddAbility(this.handle,formatCC(abilCode))
+    }
+
+    get skin() {
         return BlzGetItemSkin(this.handle)
     }
 
-    public set skin(skinId: number) {
+    set skin(skinId: integer) {
         BlzSetItemSkin(this.handle, skinId)
     }
 
-    public get x() {
-        return GetItemX(this.handle)
-    }
-
-    public set x(value: number) {
-        SetItemPosition(this.handle, value, this.y)
-    }
-
-    public get y() {
-        return GetItemY(this.handle)
-    }
-
-    public set y(value: number) {
-        SetItemPosition(this.handle, this.x, value)
-    }
-
-    public destroy() {
-        RemoveItem(this.handle)
-    }
-
-    public getField(field: itembooleanfield | itemintegerfield | itemrealfield | itemstringfield) {
+    getField(field: itembooleanfield | itemintegerfield | itemrealfield | itemstringfield) {
         const fieldType = field.toString().substr(0, field.toString().indexOf(":"))
 
         switch (fieldType) {
@@ -190,35 +279,7 @@ export class Item extends Widget {
         }
     }
 
-    public isOwned() {
-        return IsItemOwned(this.handle)
-    }
-
-    public isPawnable() {
-        return IsItemPawnable(this.handle)
-    }
-
-    public isPowerup() {
-        return IsItemPowerup(this.handle)
-    }
-
-    public isSellable() {
-        return IsItemSellable(this.handle)
-    }
-
-    public setDropId(unitId: number) {
-        SetItemDropID(this.handle, unitId)
-    }
-
-    public setDropOnDeath(flag: boolean) {
-        SetItemDropOnDeath(this.handle, flag)
-    }
-
-    public setDroppable(flag: boolean) {
-        SetItemDroppable(this.handle, flag)
-    }
-
-    public setField(
+    setField(
         field: itembooleanfield | itemintegerfield | itemrealfield | itemstringfield,
         value: boolean | number | string
     ) {
@@ -237,31 +298,11 @@ export class Item extends Widget {
         return false
     }
 
-    public setOwner(whichPlayer: MapPlayer, changeColor: boolean) {
-        SetItemPlayer(this.handle, whichPlayer.handle, changeColor)
+    removeAbility(abilCode:RawCode){
+        return BlzItemRemoveAbility(this.handle,formatCC(abilCode))
     }
 
-    public setPoint(whichPoint: Point) {
-        SetItemPosition(this.handle, whichPoint.x, whichPoint.y)
-    }
-
-    public setPosition(x: number, y: number) {
-        SetItemPosition(this.handle, x, y)
-    }
-
-    public static fromHandle(handle: item): Item {
+    static fromHandle(handle: item): Item {
         return this.getObject(handle)
-    }
-
-    public static isIdPawnable(itemId: number) {
-        return IsItemIdPawnable(itemId)
-    }
-
-    public static isIdPowerup(itemId: number) {
-        return IsItemIdPowerup(itemId)
-    }
-
-    public static isIdSellable(itemId: number) {
-        return IsItemIdSellable(itemId)
     }
 }

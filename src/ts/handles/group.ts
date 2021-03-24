@@ -1,13 +1,14 @@
+/** @noSelfInFile **/
+// @ts-nocheck
+
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
-import { Location, Point } from "./location"
+import { Location } from "./location"
 import { Rectangle } from "./rect"
 import { Unit } from "./unit"
 import { Widget } from "./widget"
-import { code, codeboolexpr, integer, Position, real } from "../main"
+import { code, codeboolexpr, formatOrder, integer, Order, Position, real } from "../main"
 
-declare function Condition(func: code): conditionfunc
-declare function DestroyCondition(c: conditionfunc): void
 declare function CreateGroup(): group
 declare function DestroyGroup(whichGroup: group): void
 declare function GroupAddUnit(whichGroup: group, whichUnit: unit): boolean
@@ -234,70 +235,59 @@ export class Group extends Handle<group> {
         const filter = Condition(filterFunc)
         GroupEnumUnitsSelected(this.handle, whichPlayer.handle, filter)
         DestroyCondition(filter)
+        return this
     }
-    
 
-    for(callback: () => void) {
+    immediateOrder(order: Order): boolean {
+        order = formatOrder(order)
+        if (typeof order === "string") {
+            return GroupImmediateOrder(this.handle, order)
+        } else {
+            return GroupImmediateOrderById(this.handle, order)
+        }
+    }
+
+    coordsOrder(order: Order, x: real, y: real): boolean {
+        order = formatOrder(order)
+        if (typeof order === "string") {
+            return GroupPointOrder(this.handle, order, x, y)
+        } else {
+            return GroupPointOrderById(this.handle, order, x, y)
+        }
+    }
+
+    posOrder(order: Order, pos: Position): boolean {
+        return this.coordsOrder(order, pos.x, pos.y)
+    }
+
+    locOrder(order: Order, whichLocation: Location): boolean {
+        order = formatOrder(order)
+        if (typeof order === "string") {
+            return GroupPointOrderLoc(this.handle, order, whichLocation.handle)
+        } else {
+            return GroupPointOrderByIdLoc(this.handle, order, whichLocation.handle)
+        }
+    }
+
+    targetOrder(order: Order, targetWidget: Widget): boolean {
+        order = formatOrder(order)
+        if (typeof order === "string") {
+            return GroupTargetOrder(this.handle, order, targetWidget.handle)
+        } else {
+            return GroupTargetOrderById(this.handle, order, targetWidget.handle)
+        }
+    }
+
+    for(callback: code) {
         ForGroup(this.handle, callback)
+        return this
     }
 
     get first() {
         return Unit.fromHandle(FirstOfGroup(this.handle))
     }
 
-    hasUnit(whichUnit: Unit) {
-        return IsUnitInGroup(whichUnit.handle, this.handle)
-    }
-
-    orderCoords(order: string | number, x: number, y: number) {
-        if (typeof order === "string") {
-            GroupPointOrder(this.handle, order, x, y)
-        } else {
-            GroupPointOrderById(this.handle, order, x, y)
-        }
-    }
-
-    orderImmediate(order: string | number) {
-        if (typeof order === "string") {
-            GroupImmediateOrder(this.handle, order)
-        } else {
-            GroupImmediateOrderById(this.handle, order)
-        }
-    }
-
-    orderPoint(order: string | number, whichPoint: Point) {
-        if (typeof order === "string") {
-            GroupPointOrderLoc(this.handle, order, whichPoint.handle)
-        } else {
-            GroupPointOrderByIdLoc(this.handle, order, whichPoint.handle)
-        }
-    }
-
-    orderTarget(order: string | number, targetWidget: Widget | Unit) {
-        if (typeof order === "string") {
-            GroupTargetOrder(this.handle, order, targetWidget.handle)
-        } else {
-            GroupTargetOrderById(this.handle, order, targetWidget.handle)
-        }
-    }
-
-    removeGroupFast(removeGroup: Group): number {
-        return BlzGroupRemoveGroupFast(this.handle, removeGroup.handle)
-    }
-
-    removeUnit(whichUnit: Unit): boolean {
-        return GroupRemoveUnit(this.handle, whichUnit.handle)
-    }
-
     static fromHandle(handle: group): Group {
         return this.getObject(handle)
-    }
-
-    static getEnumUnit(): Unit {
-        return Unit.fromHandle(GetEnumUnit())
-    }
-
-    static getFilterUnit(): Unit {
-        return Unit.fromHandle(GetFilterUnit())
     }
 }

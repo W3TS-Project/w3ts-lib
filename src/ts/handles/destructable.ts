@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { formatCC, integer, Position, rawcode, real } from "../main"
+import { formatCC, integer, Position, RawCode, real } from "../main"
 import { Handle } from "./handle"
 import { Location } from "./location"
 import { Point } from "./point"
@@ -67,15 +67,15 @@ declare function SetDestructableOccluderHeight(d: destructable, height: real): v
 declare function GetDestructableName(d: destructable): string
 declare function GetTriggerDestructable(): destructable
 
-export class Destructable<T extends destructable> extends Handle<widget> {
+export class Destructable extends Handle<widget> {
     public readonly handle!: destructable
 
-    constructor(handle: T) {
+    constructor(handle: destructable) {
         super(Handle.initFromHandle() ? undefined : handle)
     }
 
     static createCoords(
-        objectid: rawcode,
+        objectid: RawCode,
         x: real,
         y: real,
         face: real,
@@ -86,7 +86,7 @@ export class Destructable<T extends destructable> extends Handle<widget> {
     }
 
     static createZCoords(
-        objectid: rawcode,
+        objectid: RawCode,
         x: real,
         y: real,
         z: real,
@@ -97,12 +97,12 @@ export class Destructable<T extends destructable> extends Handle<widget> {
         return new this(CreateDestructableZ(formatCC(objectid), x, y, z, face, scale, variation))
     }
 
-    static createPos(objectid: rawcode, p: Position, face: real, scale: real, variation: integer) {
+    static createPos(objectid: RawCode, p: Position, face: real, scale: real, variation: integer) {
         return this.createZCoords(objectid, p.x, p.y, p.z, face, scale, variation)
     }
 
     static createDeadCoords(
-        objectid: rawcode,
+        objectid: RawCode,
         x: real,
         y: real,
         face: real,
@@ -113,7 +113,7 @@ export class Destructable<T extends destructable> extends Handle<widget> {
     }
 
     static createDeadZCoords(
-        objectid: rawcode,
+        objectid: RawCode,
         x: real,
         y: real,
         z: real,
@@ -127,7 +127,7 @@ export class Destructable<T extends destructable> extends Handle<widget> {
     }
 
     static createDeadPos(
-        objectid: rawcode,
+        objectid: RawCode,
         p: Position,
         face: real,
         scale: real,
@@ -212,11 +212,11 @@ export class Destructable<T extends destructable> extends Handle<widget> {
         ShowDestructable(this.handle, flag)
     }
 
-    static fromEvent(): ThisType<destructable> {
+    static fromEvent() {
         return this.fromHandle(GetTriggerDestructable())
     }
 
-    static fromHandle(handle: destructable): ThisType<destructable> {
+    static fromHandle(handle: destructable): Destructable {
         return this.getObject(handle)
     }
 }

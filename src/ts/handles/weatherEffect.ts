@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { formatCC } from "../main"
+import { formatCC, RawCode } from "../main"
 import { Handle } from "./handle"
 import { Rectangle } from "./rect"
 
@@ -10,15 +10,13 @@ declare function RemoveWeatherEffect(whichEffect: weathereffect): void
 declare function EnableWeatherEffect(whichEffect: weathereffect, enable: boolean): void
 
 export class WeatherEffect extends Handle<weathereffect> {
-    constructor(where: Rectangle, effectID: rawcode) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(AddWeatherEffect(where.handle, formatCC(effectID)))
-        }
+    constructor(where: Rectangle, effectID: RawCode) {
+        super(
+            Handle.initFromHandle() ? undefined : AddWeatherEffect(where.handle, formatCC(effectID))
+        )
     }
 
-    remove() {
+    destroy() {
         RemoveWeatherEffect(this.handle)
     }
 

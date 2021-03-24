@@ -1,16 +1,17 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
+import { integer, real } from "../main"
 import { Handle } from "./handle"
 
 declare function CreateUbersplat(
-    x: number,
-    y: number,
+    x: real,
+    y: real,
     name: string,
-    red: number,
-    green: number,
-    blue: number,
-    alpha: number,
+    red: integer,
+    green: integer,
+    blue: integer,
+    alpha: integer,
     forcePaused: boolean,
     noBirthTime: boolean
 ): ubersplat
@@ -23,48 +24,52 @@ declare function SetUbersplatRenderAlways(whichSplat: ubersplat, flag: boolean):
 
 export class Ubersplat extends Handle<ubersplat> {
     constructor(
-        x: number,
-        y: number,
+        x: real,
+        y: real,
         name: string,
-        red: number,
-        green: number,
-        blue: number,
-        alpha: number,
+        red: integer,
+        green: integer,
+        blue: integer,
+        alpha: integer,
         forcePaused: boolean,
         noBirthTime: boolean
     ) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(CreateUbersplat(x, y, name, red, green, blue, alpha, forcePaused, noBirthTime))
-        }
+        super(
+            Handle.initFromHandle()
+                ? undefined
+                : CreateUbersplat(x, y, name, red, green, blue, alpha, forcePaused, noBirthTime)
+        )
     }
 
-    public destroy() {
+    destroy() {
         DestroyUbersplat(this.handle)
     }
 
-    public finish() {
+    finish() {
         FinishUbersplat(this.handle)
+        return this
     }
 
-    public render(flag: boolean, always = false) {
+    render(flag: boolean, always = false) {
         if (always) {
             SetUbersplatRenderAlways(this.handle, flag)
         } else {
             SetUbersplatRender(this.handle, flag)
         }
+        return this
     }
 
-    public reset() {
+    reset() {
         ResetUbersplat(this.handle)
+        return this
     }
 
-    public show(flag: boolean) {
+    show(flag: boolean) {
         ShowUbersplat(this.handle, flag)
+        return this
     }
 
-    public static fromHandle(handle: ubersplat): Ubersplat {
+    static fromHandle(handle: ubersplat): Ubersplat {
         return this.getObject(handle)
     }
 }
