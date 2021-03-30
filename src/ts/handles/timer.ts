@@ -14,13 +14,16 @@ declare function ResumeTimer(whichTimer: timer): void;
 declare function GetExpiredTimer(): timer;
 
 export class Timer extends Handle<timer> {
+  // constructor() {
+  //   if (Handle.initFromHandle()) {
+  //     super();
+  //   } else {
+  //     super(CreateTimer());
+  //   }
+  // }
 
-  constructor() {
-    if (Handle.initFromHandle()) {
-      super();
-    } else {
-      super(CreateTimer());
-    }
+  public constructor() {
+    super(CreateTimer())
   }
 
   public get elapsed(): number {

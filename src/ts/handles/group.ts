@@ -102,7 +102,11 @@ declare function GetEnumUnit(): unit
 
 export class Group extends Handle<group> {
     constructor() {
-        super(Handle.initFromHandle() ? undefined : CreateGroup())
+        if (Handle.initFromHandle()) {
+            super(undefined)
+        } else {
+            super(CreateGroup())
+        }
     }
 
     destroy() {

@@ -103,7 +103,11 @@ declare function BlzLoadTOCFile(TOCFile: string): boolean
 
 export class Frame extends Handle<framehandle> {
     constructor(handle: framehandle) {
-        super(Handle.initFromHandle() ? undefined : handle)
+        if (Handle.initFromHandle()) {
+            super(undefined)
+        } else {
+            super(handle)
+        }
     }
 
     static create(name: string, owner: Frame, priority: integer, createContext: integer) {

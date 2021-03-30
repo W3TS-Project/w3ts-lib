@@ -1,4 +1,4 @@
-import { integer } from "../main"
+import { integer } from "../utils"
 import { Force } from "./force"
 import { Handle } from "./handle"
 import { Leaderboard } from "./leaderboard"
@@ -125,7 +125,7 @@ declare function PlayerGetLeaderboard(toPlayer: player): leaderboard
 
 export class MapPlayer extends Handle<player> {
     private constructor(index: integer) {
-        super(Handle.initFromHandle() ? undefined : Player(index))
+        super(Player(index))
     }
 
     public set color(color: playercolor) {
@@ -298,17 +298,17 @@ export class MapPlayer extends Handle<player> {
         return GetPlayerSelectable(this.handle)
     }
 
-    public pointFogged(whichPoint: Point) {
-        return IsLocationFoggedToPlayer(whichPoint.handle, this.handle)
-    }
+    // public pointFogged(whichPoint: Point) {
+    //     return IsLocationFoggedToPlayer(whichPoint.handle, this.handle)
+    // }
 
-    public pointMasked(whichPoint: Point) {
-        return IsLocationMaskedToPlayer(whichPoint.handle, this.handle)
-    }
+    // public pointMasked(whichPoint: Point) {
+    //     return IsLocationMaskedToPlayer(whichPoint.handle, this.handle)
+    // }
 
-    public pointVisible(whichPoint: Point) {
-        return IsLocationVisibleToPlayer(whichPoint.handle, this.handle)
-    }
+    // public pointVisible(whichPoint: Point) {
+    //     return IsLocationVisibleToPlayer(whichPoint.handle, this.handle)
+    // }
 
     public remove(gameResult: playergameresult) {
         RemovePlayer(this.handle, gameResult)

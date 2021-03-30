@@ -19,7 +19,7 @@ declare function DialogAddQuitButton(
 declare function DialogDisplay(whichPlayer: player, whichDialog: dialog, flag: boolean): void
 
 export class DialogButton extends Handle<button> {
-    constructor(
+    public constructor(
         whichDialog: Dialog,
         text: string,
         hotkey: integer = 0,
@@ -35,17 +35,17 @@ export class DialogButton extends Handle<button> {
         }
     }
 
-    static fromHandle(handle: button): DialogButton {
+    public static fromHandle(handle: button): DialogButton {
         return this.getObject(handle)
     }
 }
 
 export class Dialog extends Handle<dialog> {
-    constructor() {
-        super(Handle.initFromHandle() ? undefined : DialogCreate())
+    public constructor() {
+        super(Handle.initialized(DialogCreate()))
     }
 
-    addButton(
+    public addButton(
         text: string,
         hotkey: integer = 0,
         quit: boolean = false,
@@ -54,26 +54,26 @@ export class Dialog extends Handle<dialog> {
         return new DialogButton(this, text, hotkey, quit, score)
     }
 
-    clear() {
+    public clear() {
         DialogClear(this.handle)
         return this
     }
 
-    destroy() {
+    public destroy() {
         DialogDestroy(this.handle)
     }
 
-    display(whichPlayer: MapPlayer, flag: boolean) {
+    public display(whichPlayer: MapPlayer, flag: boolean) {
         DialogDisplay(whichPlayer.handle, this.handle, flag)
         return this
     }
 
-    setMessage(whichMessage: string) {
+    public setMessage(whichMessage: string) {
         DialogSetMessage(this.handle, whichMessage)
         return this
     }
 
-    static fromHandle(handle: dialog): Dialog {
+    public static fromHandle(handle: dialog): Dialog {
         return this.getObject(handle)
     }
 }

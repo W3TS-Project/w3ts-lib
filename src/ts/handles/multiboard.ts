@@ -65,6 +65,10 @@ export class Multiboard extends Handle<multiboard> {
         super(Handle.initFromHandle() ? undefined : CreateMultiboard())
     }
 
+    static fromHandle(handle: multiboard): Multiboard {
+        return this.getObject(handle)
+    }
+
     destroy() {
         DestroyMultiboard(this.handle)
     }

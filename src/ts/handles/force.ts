@@ -33,11 +33,11 @@ declare function ForForce(whichForce: force, callback: code): void
 declare function IsPlayerInForce(whichPlayer: player, whichForce: force): boolean
 
 export class Force extends Handle<force> {
-    constructor() {
+    public constructor() {
         super(Handle.initFromHandle() ? undefined : CreateForce())
     }
 
-    addPlayer(whichPlayer: MapPlayer) {
+    public addPlayer(whichPlayer: MapPlayer) {
         ForceAddPlayer(this.handle, whichPlayer.handle)
     }
 

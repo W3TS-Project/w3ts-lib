@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { integer, real } from "../main"
 import { Ability } from "./ability"
 import { Destructable } from "./destructable"
@@ -439,9 +441,9 @@ declare function FlushParentHashtable(table: hashtable): void
 declare function FlushChildHashtable(table: hashtable, parentKey: integer): void
 
 export class Hashtable extends Handle<hashtable> {
-    constructor() {
-        super(Handle.initFromHandle() ? undefined : InitHashtable())
-    }
+    // constructor() {
+    //     super(Handle.initFromHandle() ? undefined : InitHashtable())
+    // }
 
     saveInt(parentKey: integer, childKey: integer, value: integer) {
         SaveInteger(this.handle, parentKey, childKey, value)
@@ -635,7 +637,226 @@ export class Hashtable extends Handle<hashtable> {
         return SaveFrameHandle(this.handle, parentKey, childKey, whichFrameHandle.handle)
     }
 
-    saveHandle<T extends handle>(parentKey: integer, childKey: integer, whichHandle: Handle<T>) {
-        
+    loadInt(parentKey: integer, childKey: integer): integer {
+        return LoadInteger(this.handle, parentKey, childKey)
+    }
+
+    loadReal(parentKey: integer, childKey: integer): real {
+        return LoadReal(this.handle, parentKey, childKey)
+    }
+
+    loadBool(parentKey: integer, childKey: integer): boolean {
+        return LoadBoolean(this.handle, parentKey, childKey)
+    }
+
+    loadStr(parentKey: integer, childKey: integer): string {
+        return LoadStr(this.handle, parentKey, childKey)
+    }
+
+    loadPlayer(parentKey: integer, childKey: integer): MapPlayer {
+        return MapPlayer.fromHandle(LoadPlayerHandle(this.handle, parentKey, childKey))
+    }
+
+    loadWidget(parentKey: integer, childKey: integer): Widget {
+        return Widget.fromHandle(LoadWidgetHandle(this.handle, parentKey, childKey))
+    }
+
+    loadDestructable(parentKey: integer, childKey: integer): Destructable {
+        return Destructable.fromHandle(LoadDestructableHandle(this.handle, parentKey, childKey))
+    }
+
+    loadItem(parentKey: integer, childKey: integer): Item {
+        return Item.fromHandle(LoadItemHandle(this.handle, parentKey, childKey))
+    }
+
+    loadUnit(parentKey: integer, childKey: integer): Unit {
+        return Unit.fromHandle(LoadUnitHandle(this.handle, parentKey, childKey))
+    }
+
+    loadAbility(parentKey: integer, childKey: integer): Ability {
+        return Ability.fromHandle(LoadAbilityHandle(this.handle, parentKey, childKey))
+    }
+
+    loadTimer(parentKey: integer, childKey: integer): Timer {
+        return Timer.fromHandle(LoadTimerHandle(this.handle, parentKey, childKey))
+    }
+
+    loadTrigger(parentKey: integer, childKey: integer): Trigger {
+        return Trigger.fromHandle(LoadTriggerHandle(this.handle, parentKey, childKey))
+    }
+
+    loadTriggerCondition(parentKey: integer, childKey: integer): triggercondition {
+        return LoadTriggerConditionHandle(this.handle, parentKey, childKey)
+    }
+
+    loadTriggerAction(parentKey: integer, childKey: integer): triggeraction {
+        return LoadTriggerActionHandle(this.handle, parentKey, childKey)
+    }
+
+    loadTriggerEvent(parentKey: integer, childKey: integer): event {
+        return LoadTriggerEventHandle(this.handle, parentKey, childKey)
+    }
+
+    loadForce(parentKey: integer, childKey: integer): Force {
+        return Force.fromHandle(LoadForceHandle(this.handle, parentKey, childKey))
+    }
+
+    loadGroup(parentKey: integer, childKey: integer): Group {
+        return Group.fromHandle(LoadGroupHandle(this.handle, parentKey, childKey))
+    }
+
+    loadLocation(parentKey: integer, childKey: integer): Location {
+        return Location.fromHandle(LoadLocationHandle(this.handle, parentKey, childKey))
+    }
+
+    loadRect(parentKey: integer, childKey: integer): Rectangle {
+        return Rectangle.fromHandle(LoadRectHandle(this.handle, parentKey, childKey))
+    }
+
+    loadBoolExpr(parentKey: integer, childKey: integer): boolexpr {
+        return LoadBooleanExprHandle(this.handle, parentKey, childKey)
+    }
+
+    loadSound(parentKey: integer, childKey: integer): Sound {
+        return Sound.fromHandle(LoadSoundHandle(this.handle, parentKey, childKey))
+    }
+
+    loadEffect(parentKey: integer, childKey: integer): Effect {
+        return Effect.fromHandle(LoadEffectHandle(this.handle, parentKey, childKey))
+    }
+
+    loadUnitPool(parentKey: integer, childKey: integer): unitpool {
+        return LoadUnitPoolHandle(this.handle, parentKey, childKey)
+    }
+
+    loadItemPool(parentKey: integer, childKey: integer): itempool {
+        return LoadItemPoolHandle(this.handle, parentKey, childKey)
+    }
+
+    loadQuest(parentKey: integer, childKey: integer): Quest {
+        return Quest.fromHandle(LoadQuestHandle(this.handle, parentKey, childKey))
+    }
+
+    loadDefeatCondition(parentKey: integer, childKey: integer): defeatcondition {
+        return LoadDefeatConditionHandle(this.handle, parentKey, childKey)
+    }
+
+    loadTimerDialog(parentKey: integer, childKey: integer): TimerDialog {
+        return TimerDialog.fromHandle(LoadTimerDialogHandle(this.handle, parentKey, childKey))
+    }
+
+    loadLeaderboard(parentKey: integer, childKey: integer): Leaderboard {
+        return Leaderboard.fromHandle(LoadLeaderboardHandle(this.handle, parentKey, childKey))
+    }
+
+    loadMultiboard(parentKey: integer, childKey: integer): Multiboard {
+        return Multiboard.fromHandle(LoadMultiboardHandle(this.handle, parentKey, childKey))
+    }
+
+    loadMultiboardItem(parentKey: integer, childKey: integer): MultiboardItem {
+        return MultiboardItem.getObject(LoadMultiboardItemHandle(this.handle, parentKey, childKey))
+    }
+
+    loadTrackable(parentKey: integer, childKey: integer): Trackable {
+        return Trackable.getObject(LoadTrackableHandle(this.handle, parentKey, childKey))
+    }
+
+    loadDialog(parentKey: integer, childKey: integer): Dialog {
+        return Dialog.fromHandle(LoadDialogHandle(this.handle, parentKey, childKey))
+    }
+
+    loadButton(parentKey: integer, childKey: integer): DialogButton {
+        return DialogButton.fromHandle(LoadButtonHandle(this.handle, parentKey, childKey))
+    }
+
+    loadTextTag(parentKey: integer, childKey: integer): TextTag {
+        return TextTag.getObject(LoadTextTagHandle(this.handle, parentKey, childKey))
+    }
+
+    loadLightning(parentKey: integer, childKey: integer): Lightning {
+        return Lightning.getObject(LoadLightningHandle(this.handle, parentKey, childKey))
+    }
+
+    loadImage(parentKey: integer, childKey: integer): Image {
+        return Image.fromHandle(LoadImageHandle(this.handle, parentKey, childKey))
+    }
+
+    loadUbersplat(parentKey: integer, childKey: integer): ubersplat {
+        return LoadUbersplatHandle(this.handle, parentKey, childKey)
+    }
+
+    loadRegion(parentKey: integer, childKey: integer): Region {
+        return Region.fromHandle(LoadRegionHandle(this.handle, parentKey, childKey))
+    }
+
+    loadFogState(parentKey: integer, childKey: integer): fogstate {
+        return LoadFogStateHandle(this.handle, parentKey, childKey)
+    }
+
+    loadFogModifier(parentKey: integer, childKey: integer): FogModifier {
+        return FogModifier.fromHandle(LoadFogModifierHandle(this.handle, parentKey, childKey))
+    }
+
+    loadHashtable(parentKey: integer, childKey: integer): Hashtable {
+        return Hashtable.getObject(LoadHashtableHandle(this.handle, parentKey, childKey))
+    }
+
+    loadFrameHandle(parentKey: integer, childKey: integer): Frame {
+        return Frame.fromHandle(LoadFrameHandle(this.handle, parentKey, childKey))
+    }
+
+    haveInt(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedInteger(this.handle, parentKey, childKey)
+    }
+
+    haveReal(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedReal(this.handle, parentKey, childKey)
+    }
+
+    haveBool(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedBoolean(this.handle, parentKey, childKey)
+    }
+
+    haveStr(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedString(this.handle, parentKey, childKey)
+    }
+
+    haveHandle(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedHandle(this.handle, parentKey, childKey)
+    }
+
+    removeInt(parentKey: integer, childKey: integer) {
+        RemoveSavedInteger(this.handle, parentKey, childKey)
+        return this
+    }
+
+    removeReal(parentKey: integer, childKey: integer) {
+        RemoveSavedReal(this.handle, parentKey, childKey)
+        return this
+    }
+
+    removeBool(parentKey: integer, childKey: integer) {
+        RemoveSavedBoolean(this.handle, parentKey, childKey)
+        return this
+    }
+
+    removeStr(parentKey: integer, childKey: integer) {
+        RemoveSavedString(this.handle, parentKey, childKey)
+        return this
+    }
+
+    removeHandle(parentKey: integer, childKey: integer) {
+        RemoveSavedHandle(this.handle, parentKey, childKey)
+        return this
+    }
+
+    flush() {
+        FlushParentHashtable(this.handle)
+        return this
+    }
+
+    flushChild(parentKey: integer) {
+        FlushChildHashtable(this.handle, parentKey)
+        return this
     }
 }

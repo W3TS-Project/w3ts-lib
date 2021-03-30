@@ -7,7 +7,6 @@ declare function Condition(func: () => void): conditionfunc
 declare function DestroyCondition(c: conditionfunc): void
 
 declare abstract class handle {}
-
 declare interface agent extends handle {
     __agent: never
 }

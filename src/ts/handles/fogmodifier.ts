@@ -60,8 +60,7 @@ declare function FogModifierStart(whichFogModifier: fogmodifier): void
 declare function FogModifierStop(whichFogModifier: fogmodifier): void
 
 export class FogModifier extends Handle<fogmodifier> {
-
-    constructor(
+    public constructor(
         forWhichPlayer: MapPlayer,
         whichState: fogstate,
         centerX: real,
@@ -70,10 +69,8 @@ export class FogModifier extends Handle<fogmodifier> {
         useSharedVision: boolean,
         afterUnits: boolean
     ) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(
+        super(
+            Handle.initialized(
                 CreateFogModifierRadius(
                     forWhichPlayer.handle,
                     whichState,
@@ -84,7 +81,7 @@ export class FogModifier extends Handle<fogmodifier> {
                     afterUnits
                 )
             )
-        }
+        )
     }
 
     public destroy() {

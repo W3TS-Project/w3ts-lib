@@ -1,11 +1,8 @@
 /** @noSelfInFile **/
-// @ts-nocheck
 
-import { formatCC, integer, Position, RawCode, real } from "../main"
+
+import { formatCC, integer, Position, RawCode, real } from "../utils"
 import { Handle } from "./handle"
-import { Location } from "./location"
-import { Point } from "./point"
-import { Widget } from "./widget"
 
 declare function CreateDestructable(
     objectid: integer,
@@ -67,14 +64,14 @@ declare function SetDestructableOccluderHeight(d: destructable, height: real): v
 declare function GetDestructableName(d: destructable): string
 declare function GetTriggerDestructable(): destructable
 
-export class Destructable extends Handle<widget> {
-    public readonly handle!: destructable
+export class Destructable extends Handle<destructable> {
+    // public readonly handle!: destructable
 
-    constructor(handle: destructable) {
-        super(Handle.initFromHandle() ? undefined : handle)
-    }
+    // public constructor(handle: destructable) {
+    //     super(Handle.initialized(handle))
+    // }
 
-    static createCoords(
+    public static createCoords(
         objectid: RawCode,
         x: real,
         y: real,
@@ -85,7 +82,7 @@ export class Destructable extends Handle<widget> {
         return new this(CreateDestructable(formatCC(objectid), x, y, face, scale, variation))
     }
 
-    static createZCoords(
+    public static createZCoords(
         objectid: RawCode,
         x: real,
         y: real,
@@ -97,11 +94,17 @@ export class Destructable extends Handle<widget> {
         return new this(CreateDestructableZ(formatCC(objectid), x, y, z, face, scale, variation))
     }
 
-    static createPos(objectid: RawCode, p: Position, face: real, scale: real, variation: integer) {
+    public static createPos(
+        objectid: RawCode,
+        p: Position,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
         return this.createZCoords(objectid, p.x, p.y, p.z, face, scale, variation)
     }
 
-    static createDeadCoords(
+    public static createDeadCoords(
         objectid: RawCode,
         x: real,
         y: real,
@@ -112,7 +115,7 @@ export class Destructable extends Handle<widget> {
         return new this(CreateDeadDestructable(formatCC(objectid), x, y, face, scale, variation))
     }
 
-    static createDeadZCoords(
+    public static createDeadZCoords(
         objectid: RawCode,
         x: real,
         y: real,
@@ -126,7 +129,7 @@ export class Destructable extends Handle<widget> {
         )
     }
 
-    static createDeadPos(
+    public static createDeadPos(
         objectid: RawCode,
         p: Position,
         face: real,
@@ -136,87 +139,87 @@ export class Destructable extends Handle<widget> {
         return this.createDeadZCoords(objectid, p.x, p.y, p.z, face, scale, variation)
     }
 
-    set invulnerable(flag: boolean) {
+    public set invulnerable(flag: boolean) {
         SetDestructableInvulnerable(this.handle, flag)
     }
 
-    get invulnerable() {
+    public get invulnerable() {
         return IsDestructableInvulnerable(this.handle)
     }
 
-    get life() {
+    public get life() {
         return GetDestructableLife(this.handle)
     }
 
-    set life(value: real) {
+    public set life(value: real) {
         SetDestructableLife(this.handle, value)
     }
 
-    get maxLife() {
+    public get maxLife() {
         return GetDestructableMaxLife(this.handle)
     }
 
-    set maxLife(value: real) {
+    public set maxLife(value: real) {
         SetDestructableMaxLife(this.handle, value)
     }
 
-    get name() {
+    public get name() {
         return GetDestructableName(this.handle)
     }
 
-    get occluderHeight() {
+    public get occluderHeight() {
         return GetDestructableOccluderHeight(this.handle)
     }
 
-    set occluderHeight(value: real) {
+    public set occluderHeight(value: real) {
         SetDestructableOccluderHeight(this.handle, value)
     }
 
-    get typeId() {
+    public get typeId() {
         return GetDestructableTypeId(this.handle)
     }
 
-    get x() {
+    public get x() {
         return GetDestructableX(this.handle)
     }
 
-    get y() {
+    public get y() {
         return GetDestructableY(this.handle)
     }
 
-    destroy() {
+    public destroy() {
         RemoveDestructable(this.handle)
     }
 
-    heal(life: number, birth: boolean) {
+    public heal(life: number, birth: boolean) {
         DestructableRestoreLife(this.handle, life, birth)
     }
 
-    kill() {
+    public kill() {
         KillDestructable(this.handle)
     }
 
-    queueAnim(whichAnimation: string) {
+    public queueAnim(whichAnimation: string) {
         QueueDestructableAnimation(this.handle, whichAnimation)
     }
 
-    setAnim(whichAnimation: string) {
+    public setAnim(whichAnimation: string) {
         SetDestructableAnimation(this.handle, whichAnimation)
     }
 
-    setAnimSpeed(speedFactor: real) {
+    public setAnimSpeed(speedFactor: real) {
         SetDestructableAnimationSpeed(this.handle, speedFactor)
     }
 
-    show(flag: boolean) {
+    public show(flag: boolean) {
         ShowDestructable(this.handle, flag)
     }
 
-    static fromEvent() {
+    public static fromEvent() {
         return this.fromHandle(GetTriggerDestructable())
     }
 
-    static fromHandle(handle: destructable): Destructable {
+    public static fromHandle(handle: destructable): Destructable {
         return this.getObject(handle)
     }
 }
