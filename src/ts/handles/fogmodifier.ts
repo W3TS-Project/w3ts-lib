@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { real } from "../main"
+import { real } from "../utils"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 import { Rectangle } from "./rect"
@@ -70,34 +70,28 @@ export class FogModifier extends Handle<fogmodifier> {
         afterUnits: boolean
     ) {
         super(
-            Handle.initialized(
-                CreateFogModifierRadius(
-                    forWhichPlayer.handle,
-                    whichState,
-                    centerX,
-                    centerY,
-                    radius,
-                    useSharedVision,
-                    afterUnits
-                )
+            CreateFogModifierRadius(
+                forWhichPlayer.getHandle,
+                whichState,
+                centerX,
+                centerY,
+                radius,
+                useSharedVision,
+                afterUnits
             )
         )
     }
 
     public destroy() {
-        DestroyFogModifier(this.handle)
+        DestroyFogModifier(this.getHandle)
     }
 
     public start() {
-        FogModifierStart(this.handle)
+        FogModifierStart(this.getHandle)
     }
 
     public stop() {
-        FogModifierStop(this.handle)
-    }
-
-    public static fromHandle(handle: fogmodifier): FogModifier {
-        return this.getObject(handle)
+        FogModifierStop(this.getHandle)
     }
 
     public static fromRect(
@@ -109,12 +103,20 @@ export class FogModifier extends Handle<fogmodifier> {
     ): FogModifier {
         return this.fromHandle(
             CreateFogModifierRect(
-                forWhichPlayer.handle,
+                forWhichPlayer.getHandle,
                 whichState,
-                where.handle,
+                where.getHandle,
                 useSharedVision,
                 afterUnits
             )
         )
+    }
+
+    public static fromHandle(handle: fogmodifier): FogModifier {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(handleObject: FogModifier): fogmodifier {
+        return this.getHandle(handleObject)
     }
 }

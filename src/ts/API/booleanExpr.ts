@@ -2,7 +2,7 @@
 // // @ts-nocheck
 
 // import { Handle } from "../handles/handle"
-// import { code } from "../main"
+// import { code } from "../utils"
 
 // declare function And(operandA: boolexpr, operandB: boolexpr): boolexpr
 // declare function Or(operandA: boolexpr, operandB: boolexpr): boolexpr

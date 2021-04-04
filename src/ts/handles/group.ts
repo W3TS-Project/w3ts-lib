@@ -1,13 +1,13 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
-import { Location } from "./location"
+import { MapLocation } from "./location"
 import { Rectangle } from "./rect"
 import { Unit } from "./unit"
 import { Widget } from "./widget"
-import { code, codeboolexpr, formatOrder, integer, Order, Position, real } from "../main"
+import { code, codeboolexpr, formatOrder, integer, Order, Position, real } from "../utils"
 
 declare function CreateGroup(): group
 declare function DestroyGroup(whichGroup: group): void
@@ -101,101 +101,97 @@ declare function GetFilterUnit(): unit
 declare function GetEnumUnit(): unit
 
 export class Group extends Handle<group> {
-    constructor() {
-        if (Handle.initFromHandle()) {
-            super(undefined)
-        } else {
-            super(CreateGroup())
-        }
+    public constructor() {
+        super(CreateGroup())
     }
 
-    destroy() {
-        DestroyGroup(this.handle)
+    public destroy() {
+        DestroyGroup(this.getHandle)
     }
 
-    addUnit(whichUnit: Unit): boolean {
-        return GroupAddUnit(this.handle, whichUnit.handle)
+    public addUnit(whichUnit: Unit): boolean {
+        return GroupAddUnit(this.getHandle, whichUnit.getHandle)
     }
 
-    removeUnit(whichUnit: Unit): boolean {
-        return GroupRemoveUnit(this.handle, whichUnit.handle)
+    public removeUnit(whichUnit: Unit): boolean {
+        return GroupRemoveUnit(this.getHandle, whichUnit.getHandle)
     }
 
-    fastAddGroup(addGroup: Group): integer {
-        return BlzGroupAddGroupFast(this.handle, addGroup.handle)
+    public fastAddGroup(addGroup: Group): integer {
+        return BlzGroupAddGroupFast(this.getHandle, addGroup.getHandle)
     }
 
-    fastRemoveGroup(removeGroup: Group): integer {
-        return BlzGroupRemoveGroupFast(this.handle, removeGroup.handle)
+    public fastRemoveGroup(removeGroup: Group): integer {
+        return BlzGroupRemoveGroupFast(this.getHandle, removeGroup.getHandle)
     }
 
-    clear() {
-        GroupClear(this.handle)
+    public clear() {
+        GroupClear(this.getHandle)
         return this
     }
 
-    get size(): integer {
-        return BlzGroupGetSize(this.handle)
+    public get size(): integer {
+        return BlzGroupGetSize(this.getHandle)
     }
 
-    getUnitAt(index: integer): Unit {
-        return Unit.fromHandle(BlzGroupUnitAt(this.handle, index))
+    public getUnitAt(index: integer): Unit {
+        return Unit.fromHandle(BlzGroupUnitAt(this.getHandle, index))
     }
 
-    enumOfType(unitname: string, filterFunc: codeboolexpr) {
+    public enumOfType(unitname: string, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsOfType(this.handle, unitname, filter)
+        GroupEnumUnitsOfType(this.getHandle, unitname, filter)
         DestroyCondition(filter)
         return this
     }
 
-    enumOfPlayer(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
+    public enumOfPlayer(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsOfPlayer(this.handle, whichPlayer.handle, filter)
+        GroupEnumUnitsOfPlayer(this.getHandle, whichPlayer.getHandle, filter)
         DestroyCondition(filter)
         return this
     }
 
-    enumCountedOfType(unitname: string, countLimit: integer, filterFunc: codeboolexpr) {
+    public enumCountedOfType(unitname: string, countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsOfTypeCounted(this.handle, unitname, filter, countLimit)
+        GroupEnumUnitsOfTypeCounted(this.getHandle, unitname, filter, countLimit)
         DestroyCondition(filter)
         return this
     }
 
-    enumInRect(r: Rectangle, filterFunc: codeboolexpr) {
+    public enumInRect(r: Rectangle, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRect(this.handle, r.handle, filter)
+        GroupEnumUnitsInRect(this.getHandle, r.getHandle, filter)
         DestroyCondition(filter)
         return this
     }
 
-    enumCountedInRect(r: Rectangle, countLimit: integer, filterFunc: codeboolexpr) {
+    public enumCountedInRect(r: Rectangle, countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRectCounted(this.handle, r.handle, filter, countLimit)
+        GroupEnumUnitsInRectCounted(this.getHandle, r.getHandle, filter, countLimit)
         DestroyCondition(filter)
         return this
     }
 
-    enumCoordsInRange(x: real, y: real, radius: real, filterFunc: codeboolexpr) {
+    public enumCoordsInRange(x: real, y: real, radius: real, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRange(this.handle, x, y, radius, filter)
+        GroupEnumUnitsInRange(this.getHandle, x, y, radius, filter)
         DestroyCondition(filter)
         return this
     }
 
-    enumPosInRange(p: Position, radius: real, filterFunc: codeboolexpr) {
+    public enumPosInRange(p: Position, radius: real, filterFunc: codeboolexpr) {
         return this.enumCoordsInRange(p.x, p.y, radius, filterFunc)
     }
 
-    enumLocInRange(whichLocation: Location, radius: real, filterFunc: codeboolexpr) {
+    public enumLocInRange(whichLocation: MapLocation, radius: real, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRangeOfLoc(this.handle, whichLocation.handle, radius, filter)
+        GroupEnumUnitsInRangeOfLoc(this.getHandle, whichLocation.getHandle, radius, filter)
         DestroyCondition(filter)
         return this
     }
 
-    enumCoordsCountedInRange(
+    public enumCoordsCountedInRange(
         x: real,
         y: real,
         radius: real,
@@ -203,12 +199,12 @@ export class Group extends Handle<group> {
         filterFunc: codeboolexpr
     ) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRangeCounted(this.handle, x, y, radius, filter, countLimit)
+        GroupEnumUnitsInRangeCounted(this.getHandle, x, y, radius, filter, countLimit)
         DestroyCondition(filter)
         return this
     }
 
-    enumPosCountedInRange(
+    public enumPosCountedInRange(
         p: Position,
         radius: real,
         countLimit: integer,
@@ -217,16 +213,16 @@ export class Group extends Handle<group> {
         return this.enumCoordsCountedInRange(p.x, p.y, radius, countLimit, filterFunc)
     }
 
-    enumLocCountedInRange(
-        whichLocation: Location,
+    public enumLocCountedInRange(
+        whichLocation: MapLocation,
         radius: real,
         countLimit: integer,
         filterFunc: codeboolexpr
     ) {
         const filter = Condition(filterFunc)
         GroupEnumUnitsInRangeOfLocCounted(
-            this.handle,
-            whichLocation.handle,
+            this.getHandle,
+            whichLocation.getHandle,
             radius,
             filter,
             countLimit
@@ -235,63 +231,67 @@ export class Group extends Handle<group> {
         return this
     }
 
-    enumSelected(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
+    public enumSelected(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsSelected(this.handle, whichPlayer.handle, filter)
+        GroupEnumUnitsSelected(this.getHandle, whichPlayer.getHandle, filter)
         DestroyCondition(filter)
         return this
     }
 
-    immediateOrder(order: Order): boolean {
+    public immediateOrder(order: Order): boolean {
         order = formatOrder(order)
         if (typeof order === "string") {
-            return GroupImmediateOrder(this.handle, order)
+            return GroupImmediateOrder(this.getHandle, order)
         } else {
-            return GroupImmediateOrderById(this.handle, order)
+            return GroupImmediateOrderById(this.getHandle, order)
         }
     }
 
-    coordsOrder(order: Order, x: real, y: real): boolean {
+    public coordsOrder(order: Order, x: real, y: real): boolean {
         order = formatOrder(order)
         if (typeof order === "string") {
-            return GroupPointOrder(this.handle, order, x, y)
+            return GroupPointOrder(this.getHandle, order, x, y)
         } else {
-            return GroupPointOrderById(this.handle, order, x, y)
+            return GroupPointOrderById(this.getHandle, order, x, y)
         }
     }
 
-    posOrder(order: Order, pos: Position): boolean {
+    public posOrder(order: Order, pos: Position): boolean {
         return this.coordsOrder(order, pos.x, pos.y)
     }
 
-    locOrder(order: Order, whichLocation: Location): boolean {
+    public locOrder(order: Order, whichLocation: MapLocation): boolean {
         order = formatOrder(order)
         if (typeof order === "string") {
-            return GroupPointOrderLoc(this.handle, order, whichLocation.handle)
+            return GroupPointOrderLoc(this.getHandle, order, whichLocation.getHandle)
         } else {
-            return GroupPointOrderByIdLoc(this.handle, order, whichLocation.handle)
+            return GroupPointOrderByIdLoc(this.getHandle, order, whichLocation.getHandle)
         }
     }
 
-    targetOrder(order: Order, targetWidget: Widget): boolean {
+    public targetOrder(order: Order, targetWidget: Widget): boolean {
         order = formatOrder(order)
         if (typeof order === "string") {
-            return GroupTargetOrder(this.handle, order, targetWidget.handle)
+            return GroupTargetOrder(this.getHandle, order, targetWidget.getHandle)
         } else {
-            return GroupTargetOrderById(this.handle, order, targetWidget.handle)
+            return GroupTargetOrderById(this.getHandle, order, targetWidget.getHandle)
         }
     }
 
-    for(callback: code) {
-        ForGroup(this.handle, callback)
+    public for(callback: code) {
+        ForGroup(this.getHandle, callback)
         return this
     }
 
-    get first() {
-        return Unit.fromHandle(FirstOfGroup(this.handle))
+    public get first() {
+        return Unit.fromHandle(FirstOfGroup(this.getHandle))
     }
 
-    static fromHandle(handle: group): Group {
+    public static fromHandle(handle: group): Group {
         return this.getObject(handle)
+    }
+
+    public static fromObject(handleObject: Group): group {
+        return this.getHandle(handleObject)
     }
 }

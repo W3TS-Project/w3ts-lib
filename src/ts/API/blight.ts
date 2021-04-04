@@ -18,7 +18,7 @@ declare function SetBlightLoc(
 declare function SetBlightPoint(whichPlayer: player, x: number, y: number, addBlight: boolean): void
 
 import { MapPlayer } from "../handles/player"
-import { Location, Point } from "../handles/location"
+import { MapLocation, Point } from "../handles/location"
 import { Rectangle } from "../handles/rect"
 
 export class Blight {
@@ -41,7 +41,7 @@ export class Blight {
 
     public static setArea(
         whichPlayer: MapPlayer,
-        loc: Location,
+        loc: MapLocation,
         radius: number,
         addBlight: boolean
     ) {
@@ -63,7 +63,7 @@ export class Blight {
         return this.setCoords(whichPlayer, p.x, p.y, addBlight)
     }
 
-    public static setLoc(whichPlayer: MapPlayer, loc: Location, addBlight: boolean) {
+    public static setLoc(whichPlayer: MapPlayer, loc: MapLocation, addBlight: boolean) {
         return this.setCoords(whichPlayer, loc.x, loc.y, addBlight)
     }
 }

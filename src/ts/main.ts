@@ -17,9 +17,3 @@ const timer = setTimeout(1.00, () => {
     print(d.name)
     print('время 1 сек.')
 })
-
-// print(timer)
-
-// setTimeout(1.00, () => {
-//     print(timer)
-// }, true)

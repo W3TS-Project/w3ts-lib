@@ -1,28 +1,24 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
+import { code, codeboolexpr, real } from "../utils"
 import { Handle } from "./handle"
-import { Point } from "./location"
+import { MapLocation } from "./location"
+import { Point } from "./point"
 
-declare function Rect(minx: number, miny: number, maxx: number, maxy: number): rect
+declare function Rect(minx: real, miny: real, maxx: real, maxy: real): rect
 declare function RectFromLoc(min: location, max: location): rect
 declare function RemoveRect(whichRect: rect): void
-declare function SetRect(
-    whichRect: rect,
-    minx: number,
-    miny: number,
-    maxx: number,
-    maxy: number
-): void
+declare function SetRect(whichRect: rect, minx: real, miny: real, maxx: real, maxy: real): void
 declare function SetRectFromLoc(whichRect: rect, min: location, max: location): void
-declare function MoveRectTo(whichRect: rect, newCenterX: number, newCenterY: number): void
+declare function MoveRectTo(whichRect: rect, newCenterX: real, newCenterY: real): void
 declare function MoveRectToLoc(whichRect: rect, newCenterLoc: location): void
-declare function GetRectCenterX(whichRect: rect): number
-declare function GetRectCenterY(whichRect: rect): number
-declare function GetRectMinX(whichRect: rect): number
-declare function GetRectMinY(whichRect: rect): number
-declare function GetRectMaxX(whichRect: rect): number
-declare function GetRectMaxY(whichRect: rect): number
+declare function GetRectCenterX(whichRect: rect): real
+declare function GetRectCenterY(whichRect: rect): real
+declare function GetRectMinX(whichRect: rect): real
+declare function GetRectMinY(whichRect: rect): real
+declare function GetRectMaxX(whichRect: rect): real
+declare function GetRectMaxY(whichRect: rect): real
 declare function EnumDestructablesInRect(
     r: rect,
     filter: boolexpr | null,
@@ -32,76 +28,91 @@ declare function EnumItemsInRect(r: rect, filter: boolexpr | null, actionFunc: (
 declare function GetWorldBounds(): rect
 
 export class Rectangle extends Handle<rect> {
-    constructor(minX: number, minY: number, maxX: number, maxY: number) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(Rect(minX, minY, maxX, maxY))
-        }
+    public constructor(minX: real, minY: real, maxX: real, maxY: real) {
+        super(Rect(minX, minY, maxX, maxY))
     }
 
     public get centerX() {
-        return GetRectCenterX(this.handle)
+        return GetRectCenterX(this.getHandle)
     }
 
     public get centerY() {
-        return GetRectCenterY(this.handle)
+        return GetRectCenterY(this.getHandle)
     }
 
     public get maxX() {
-        return GetRectMaxX(this.handle)
+        return GetRectMaxX(this.getHandle)
     }
 
     public get maxY() {
-        return GetRectMaxY(this.handle)
+        return GetRectMaxY(this.getHandle)
     }
 
     public get minX() {
-        return GetRectMinX(this.handle)
+        return GetRectMinX(this.getHandle)
     }
 
     public get minY() {
-        return GetRectMinY(this.handle)
+        return GetRectMinY(this.getHandle)
     }
 
     public destroy() {
-        RemoveRect(this.handle)
+        RemoveRect(this.getHandle)
     }
 
-    public enumDestructables(filter: boolexpr | (() => boolean), actionFunc: () => void) {
-        EnumDestructablesInRect(this.handle, filter, actionFunc)
+    public enumDestructables(filterFunc: codeboolexpr, actionFunc: code) {
+        const filter = Condition(filterFunc)
+        EnumDestructablesInRect(this.getHandle, filter, actionFunc)
+        DestroyCondition(filter)
+        return this
     }
 
-    public enumItems(filter: boolexpr | (() => boolean), actionFunc: () => void) {
-        EnumItemsInRect(this.handle, filter, actionFunc)
+    public enumItems(filterFunc: codeboolexpr, actionFunc: code) {
+        const filter = Condition(filterFunc)
+        EnumItemsInRect(this.getHandle, filter, actionFunc)
+        DestroyCondition(filter)
+        return this
     }
 
-    public move(newCenterX: number, newCenterY: number) {
-        MoveRectTo(this.handle, newCenterX, newCenterY)
+    public move(newCenterX: real, newCenterY: real) {
+        MoveRectTo(this.getHandle, newCenterX, newCenterY)
+        return this
     }
 
-    public movePoint(newCenterPoint: Point) {
-        MoveRectToLoc(this.handle, newCenterPoint.handle)
+    public moveLoc(newCenterPoint: MapLocation) {
+        MoveRectToLoc(this.getHandle, newCenterPoint.getHandle)
+        return this
     }
 
-    public setRect(minX: number, minY: number, maxX: number, maxY: number) {
+    public setRect(minX: real, minY: real, maxX: real, maxY: real) {
         SetRect(this.handle, minX, minY, maxX, maxY)
+        return this
     }
 
-    public setRectFromPoint(min: Point, max: Point) {
-        SetRectFromLoc(this.handle, min.handle, max.handle)
+    public setRectFromLoc(min: MapLocation, max: MapLocation) {
+        SetRectFromLoc(this.getHandle, min.getHandle, max.getHandle)
+        return this
     }
 
     public static fromHandle(handle: rect): Rectangle {
         return this.getObject(handle)
     }
 
+    public static fromLoc(min: MapLocation, max: MapLocation) {
+        return this.fromHandle(RectFromLoc(min.getHandle, max.getHandle))
+    }
+
     public static fromPoint(min: Point, max: Point) {
-        return this.fromHandle(RectFromLoc(min.handle, max.handle))
+        return this.fromHandle(Rect(min.x, min.y, max.x, max.y))
     }
 
     // Returns full map bounds, including unplayable borders, in world coordinates
     public static getWorldBounds() {
-        return Rectangle.fromHandle(GetWorldBounds())
+        return this.fromHandle(GetWorldBounds())
     }
+
+    public static fromObject(object: Rectangle): rect {
+        return this.getHandle(object)
+    }
+    
 }

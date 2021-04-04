@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { integer, Position, real } from "../main"
+import { integer, Position, real } from "../utils"
 import { Handle } from "./handle"
 
 declare function CreateImage(
@@ -41,7 +41,7 @@ export enum ImageType {
 }
 
 export class Image extends Handle<image> {
-    constructor(
+    public constructor(
         file: string,
         sizeX: real,
         sizeY: real,
@@ -55,25 +55,23 @@ export class Image extends Handle<image> {
         imageType: ImageType
     ) {
         super(
-            Handle.initFromHandle()
-                ? undefined
-                : CreateImage(
-                      file,
-                      sizeX,
-                      sizeY,
-                      sizeZ,
-                      posX,
-                      posY,
-                      posZ,
-                      originX,
-                      originY,
-                      originZ,
-                      imageType
-                  )
+            CreateImage(
+                file,
+                sizeX,
+                sizeY,
+                sizeZ,
+                posX,
+                posY,
+                posZ,
+                originX,
+                originY,
+                originZ,
+                imageType
+            )
         )
     }
 
-    static coordsCreate(
+    public static coordsCreate(
         file: string,
         sizeX: real,
         sizeY: real,
@@ -101,7 +99,7 @@ export class Image extends Handle<image> {
         )
     }
 
-    static posCreate(
+    public static posCreate(
         file: string,
         size: Position,
         pos: Position,
@@ -123,50 +121,54 @@ export class Image extends Handle<image> {
         )
     }
 
-    destroy() {
-        DestroyImage(this.handle)
+    public destroy() {
+        DestroyImage(this.getHandle)
     }
 
-    show(flag: boolean) {
-        ShowImage(this.handle, flag)
+    public show(flag: boolean) {
+        ShowImage(this.getHandle, flag)
         return this
     }
 
-    setConstantHeight(flag: boolean, height: real) {
-        SetImageConstantHeight(this.handle, flag, height)
+    public setConstantHeight(flag: boolean, height: real) {
+        SetImageConstantHeight(this.getHandle, flag, height)
         return this
     }
 
-    setCoords(x: real, y: real, z: real) {
-        SetImagePosition(this.handle, x, y, z)
+    public setCoords(x: real, y: real, z: real) {
+        SetImagePosition(this.getHandle, x, y, z)
         return this
     }
 
-    setPos(pos: Position) {
+    public setPos(pos: Position) {
         return this.setCoords(pos.x, pos.y, pos.z)
     }
 
-    setColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        SetImageColor(this.handle, red, green, blue, alpha)
+    public setColor(red: integer, green: integer, blue: integer, alpha: integer) {
+        SetImageColor(this.getHandle, red, green, blue, alpha)
         return this
     }
 
-    setRender(flag: boolean) {
-        SetImageRenderAlways(this.handle, flag)
+    public setRender(flag: boolean) {
+        SetImageRenderAlways(this.getHandle, flag)
         return this
     }
 
-    setAboveWater(flag: boolean, useWaterAlpha: boolean) {
-        SetImageAboveWater(this.handle, flag, useWaterAlpha)
+    public setAboveWater(flag: boolean, useWaterAlpha: boolean) {
+        SetImageAboveWater(this.getHandle, flag, useWaterAlpha)
         return this
     }
 
-    setType(imageType: ImageType) {
-        SetImageType(this.handle, imageType)
+    public setType(imageType: ImageType) {
+        SetImageType(this.getHandle, imageType)
         return this
     }
 
     public static fromHandle(handle: image): Image {
         return this.getObject(handle)
+    }
+
+    public static fromObject(object: Image): image {
+        return this.getHandle(object)
     }
 }

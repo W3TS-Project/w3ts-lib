@@ -1,6 +1,7 @@
+/** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../main"
+import { integer, real } from "../utils"
 import { Ability } from "./ability"
 import { Destructable } from "./destructable"
 import { Dialog, DialogButton } from "./dialog"
@@ -14,7 +15,7 @@ import { Image } from "./image"
 import { Item } from "./item"
 import { Leaderboard } from "./leaderboard"
 import { Lightning } from "./lightning"
-import { Location } from "./location"
+import { MapLocation } from "./location"
 import { Multiboard, MultiboardItem } from "./multiboard"
 import { MapPlayer } from "./player"
 import { Quest, QuestItem } from "./quest"
@@ -441,422 +442,442 @@ declare function FlushParentHashtable(table: hashtable): void
 declare function FlushChildHashtable(table: hashtable, parentKey: integer): void
 
 export class Hashtable extends Handle<hashtable> {
-    // constructor() {
-    //     super(Handle.initFromHandle() ? undefined : InitHashtable())
-    // }
+    public constructor() {
+        super(InitHashtable())
+    }
 
-    saveInt(parentKey: integer, childKey: integer, value: integer) {
-        SaveInteger(this.handle, parentKey, childKey, value)
+    public saveInt(parentKey: integer, childKey: integer, value: integer) {
+        SaveInteger(this.getHandle, parentKey, childKey, value)
         return this
     }
 
-    saveReal(parentKey: integer, childKey: integer, value: real) {
-        SaveReal(this.handle, parentKey, childKey, value)
+    public saveReal(parentKey: integer, childKey: integer, value: real) {
+        SaveReal(this.getHandle, parentKey, childKey, value)
         return this
     }
 
-    saveBool(parentKey: integer, childKey: integer, value: boolean) {
-        SaveBoolean(this.handle, parentKey, childKey, value)
+    public saveBool(parentKey: integer, childKey: integer, value: boolean) {
+        SaveBoolean(this.getHandle, parentKey, childKey, value)
         return this
     }
 
-    saveStr(parentKey: integer, childKey: integer, value: string) {
-        return SaveStr(this.handle, parentKey, childKey, value)
+    public saveStr(parentKey: integer, childKey: integer, value: string) {
+        return SaveStr(this.getHandle, parentKey, childKey, value)
     }
 
-    savePlayer(parentKey: integer, childKey: integer, whichPlayer: MapPlayer) {
-        return SavePlayerHandle(this.handle, parentKey, childKey, whichPlayer.handle)
+    public savePlayer(parentKey: integer, childKey: integer, whichPlayer: MapPlayer) {
+        return SavePlayerHandle(this.getHandle, parentKey, childKey, whichPlayer.getHandle)
     }
 
-    saveWidget(parentKey: integer, childKey: integer, whichWidget: Widget) {
-        return SaveWidgetHandle(this.handle, parentKey, childKey, whichWidget.handle)
+    public saveWidget(parentKey: integer, childKey: integer, whichWidget: Widget) {
+        return SaveWidgetHandle(this.getHandle, parentKey, childKey, whichWidget.getHandle)
     }
 
-    saveDestructable(parentKey: integer, childKey: integer, whichDestructable: Destructable) {
-        return SaveDestructableHandle(this.handle, parentKey, childKey, whichDestructable.handle)
+    public saveDestructable(
+        parentKey: integer,
+        childKey: integer,
+        whichDestructable: Destructable
+    ) {
+        return SaveDestructableHandle(this.getHandle, parentKey, childKey, whichDestructable.getHandle)
     }
 
-    saveItem(parentKey: integer, childKey: integer, whichItem: Item) {
-        return SaveItemHandle(this.handle, parentKey, childKey, whichItem.handle)
+    public saveItem(parentKey: integer, childKey: integer, whichItem: Item) {
+        return SaveItemHandle(this.getHandle, parentKey, childKey, whichItem.getHandle)
     }
 
-    saveUnit(parentKey: integer, childKey: integer, whichUnit: Unit) {
-        return SaveUnitHandle(this.handle, parentKey, childKey, whichUnit.handle)
+    public saveUnit(parentKey: integer, childKey: integer, whichUnit: Unit) {
+        return SaveUnitHandle(this.getHandle, parentKey, childKey, whichUnit.getHandle)
     }
 
-    saveAbility(parentKey: integer, childKey: integer, whichAbility: Ability) {
-        return SaveAbilityHandle(this.handle, parentKey, childKey, whichAbility.handle)
+    public saveAbility(parentKey: integer, childKey: integer, whichAbility: Ability) {
+        return SaveAbilityHandle(this.getHandle, parentKey, childKey, whichAbility.getHandle)
     }
 
-    saveTimer(parentKey: integer, childKey: integer, whichTimer: Timer) {
-        return SaveTimerHandle(this.handle, parentKey, childKey, whichTimer.handle)
+    public saveTimer(parentKey: integer, childKey: integer, whichTimer: Timer) {
+        return SaveTimerHandle(this.getHandle, parentKey, childKey, whichTimer.getHandle)
     }
 
-    saveTrigger(parentKey: integer, childKey: integer, whichTrigger: Trigger) {
-        return SaveTriggerHandle(this.handle, parentKey, childKey, whichTrigger.handle)
+    public saveTrigger(parentKey: integer, childKey: integer, whichTrigger: Trigger) {
+        return SaveTriggerHandle(this.getHandle, parentKey, childKey, whichTrigger.getHandle)
     }
 
-    saveConditionTrigger(
+    public saveConditionTrigger(
         parentKey: integer,
         childKey: integer,
         whichTriggercondition: triggercondition
     ) {
-        return SaveTriggerConditionHandle(this.handle, parentKey, childKey, whichTriggercondition)
+        return SaveTriggerConditionHandle(this.getHandle, parentKey, childKey, whichTriggercondition)
     }
 
-    saveActionTrigger(parentKey: integer, childKey: integer, whichTriggeraction: triggeraction) {
-        return SaveTriggerActionHandle(this.handle, parentKey, childKey, whichTriggeraction)
+    public saveActionTrigger(
+        parentKey: integer,
+        childKey: integer,
+        whichTriggeraction: triggeraction
+    ) {
+        return SaveTriggerActionHandle(this.getHandle, parentKey, childKey, whichTriggeraction)
     }
 
-    saveEventTrigger(parentKey: integer, childKey: integer, whichEvent: event) {
-        return SaveTriggerEventHandle(this.handle, parentKey, childKey, whichEvent)
+    public saveEventTrigger(parentKey: integer, childKey: integer, whichEvent: event) {
+        return SaveTriggerEventHandle(this.getHandle, parentKey, childKey, whichEvent)
     }
 
-    saveForce(parentKey: integer, childKey: integer, whichForce: Force) {
-        return SaveForceHandle(this.handle, parentKey, childKey, whichForce.handle)
+    public saveForce(parentKey: integer, childKey: integer, whichForce: Force) {
+        return SaveForceHandle(this.getHandle, parentKey, childKey, whichForce.getHandle)
     }
 
-    saveGroup(parentKey: integer, childKey: integer, whichGroup: Group) {
-        return SaveGroupHandle(this.handle, parentKey, childKey, whichGroup.handle)
+    public saveGroup(parentKey: integer, childKey: integer, whichGroup: Group) {
+        return SaveGroupHandle(this.getHandle, parentKey, childKey, whichGroup.getHandle)
     }
 
-    saveLocation(parentKey: integer, childKey: integer, whichLocation: Location) {
-        return SaveLocationHandle(this.handle, parentKey, childKey, whichLocation.handle)
+    public saveLocation(parentKey: integer, childKey: integer, whichLocation: MapLocation) {
+        return SaveLocationHandle(this.getHandle, parentKey, childKey, whichLocation.getHandle)
     }
 
-    saveRect(parentKey: integer, childKey: integer, whichRect: Rectangle) {
-        return SaveRectHandle(this.handle, parentKey, childKey, whichRect.handle)
+    public saveRect(parentKey: integer, childKey: integer, whichRect: Rectangle) {
+        return SaveRectHandle(this.getHandle, parentKey, childKey, whichRect.getHandle)
     }
 
-    saveBooleanExpr(parentKey: integer, childKey: integer, whichBoolexpr: boolexpr) {
-        return SaveBooleanExprHandle(this.handle, parentKey, childKey, whichBoolexpr)
+    public saveBooleanExpr(parentKey: integer, childKey: integer, whichBoolexpr: boolexpr) {
+        return SaveBooleanExprHandle(this.getHandle, parentKey, childKey, whichBoolexpr)
     }
 
-    saveSound(parentKey: integer, childKey: integer, whichSound: Sound) {
-        return SaveSoundHandle(this.handle, parentKey, childKey, whichSound.handle)
+    public saveSound(parentKey: integer, childKey: integer, whichSound: Sound) {
+        return SaveSoundHandle(this.getHandle, parentKey, childKey, whichSound.getHandle)
     }
 
-    saveEffect(parentKey: integer, childKey: integer, whichEffect: Effect) {
-        return SaveEffectHandle(this.handle, parentKey, childKey, whichEffect.handle)
+    public saveEffect(parentKey: integer, childKey: integer, whichEffect: Effect) {
+        return SaveEffectHandle(this.getHandle, parentKey, childKey, whichEffect.getHandle)
     }
 
-    saveUnitPool(parentKey: integer, childKey: integer, whichUnitpool: unitpool) {
-        return SaveUnitPoolHandle(this.handle, parentKey, childKey, whichUnitpool)
+    public saveUnitPool(parentKey: integer, childKey: integer, whichUnitpool: unitpool) {
+        return SaveUnitPoolHandle(this.getHandle, parentKey, childKey, whichUnitpool)
     }
 
-    saveItemPool(parentKey: integer, childKey: integer, whichItempool: itempool) {
-        return SaveItemPoolHandle(this.handle, parentKey, childKey, whichItempool)
+    public saveItemPool(parentKey: integer, childKey: integer, whichItempool: itempool) {
+        return SaveItemPoolHandle(this.getHandle, parentKey, childKey, whichItempool)
     }
 
-    saveQuest(parentKey: integer, childKey: integer, whichQuest: Quest) {
-        return SaveQuestHandle(this.handle, parentKey, childKey, whichQuest.handle)
+    public saveQuest(parentKey: integer, childKey: integer, whichQuest: Quest) {
+        return SaveQuestHandle(this.getHandle, parentKey, childKey, whichQuest.getHandle)
     }
 
-    saveQuestItem(parentKey: integer, childKey: integer, whichQuestitem: QuestItem) {
-        return SaveQuestItemHandle(this.handle, parentKey, childKey, whichQuestitem.handle)
+    public saveQuestItem(parentKey: integer, childKey: integer, whichQuestitem: QuestItem) {
+        return SaveQuestItemHandle(this.getHandle, parentKey, childKey, whichQuestitem.getHandle)
     }
 
-    saveDefeatCondition(
+    public saveDefeatCondition(
         parentKey: integer,
         childKey: integer,
         whichDefeatcondition: defeatcondition
     ) {
-        return SaveDefeatConditionHandle(this.handle, parentKey, childKey, whichDefeatcondition)
+        return SaveDefeatConditionHandle(this.getHandle, parentKey, childKey, whichDefeatcondition)
     }
 
-    saveTimerDialog(parentKey: integer, childKey: integer, whichTimerdialog: TimerDialog) {
-        return SaveTimerDialogHandle(this.handle, parentKey, childKey, whichTimerdialog.handle)
+    public saveTimerDialog(parentKey: integer, childKey: integer, whichTimerdialog: TimerDialog) {
+        return SaveTimerDialogHandle(this.getHandle, parentKey, childKey, whichTimerdialog.getHandle)
     }
 
-    saveLeaderboard(parentKey: integer, childKey: integer, whichLeaderboard: Leaderboard) {
-        return SaveLeaderboardHandle(this.handle, parentKey, childKey, whichLeaderboard.handle)
+    public saveLeaderboard(parentKey: integer, childKey: integer, whichLeaderboard: Leaderboard) {
+        return SaveLeaderboardHandle(this.getHandle, parentKey, childKey, whichLeaderboard.getHandle)
     }
 
-    saveMultiboard(parentKey: integer, childKey: integer, whichMultiboard: Multiboard) {
-        return SaveMultiboardHandle(this.handle, parentKey, childKey, whichMultiboard.handle)
+    public saveMultiboard(parentKey: integer, childKey: integer, whichMultiboard: Multiboard) {
+        return SaveMultiboardHandle(this.getHandle, parentKey, childKey, whichMultiboard.getHandle)
     }
 
-    saveMultiboardItem(parentKey: integer, childKey: integer, whichMultiboardItem: MultiboardItem) {
+    public saveMultiboardItem(
+        parentKey: integer,
+        childKey: integer,
+        whichMultiboardItem: MultiboardItem
+    ) {
         return SaveMultiboardItemHandle(
-            this.handle,
+            this.getHandle,
             parentKey,
             childKey,
-            whichMultiboardItem.handle
+            whichMultiboardItem.getHandle
         )
     }
 
-    saveTrackable(parentKey: integer, childKey: integer, whichTrackable: Trackable) {
-        return SaveTrackableHandle(this.handle, parentKey, childKey, whichTrackable.handle)
+    public saveTrackable(parentKey: integer, childKey: integer, whichTrackable: Trackable) {
+        return SaveTrackableHandle(this.getHandle, parentKey, childKey, whichTrackable.getHandle)
     }
 
-    saveDialog(parentKey: integer, childKey: integer, whichDialog: Dialog) {
-        return SaveDialogHandle(this.handle, parentKey, childKey, whichDialog.handle)
+    public saveDialog(parentKey: integer, childKey: integer, whichDialog: Dialog) {
+        return SaveDialogHandle(this.getHandle, parentKey, childKey, whichDialog.getHandle)
     }
 
-    saveButton(parentKey: integer, childKey: integer, whichButton: DialogButton) {
-        return SaveButtonHandle(this.handle, parentKey, childKey, whichButton.handle)
+    public saveButton(parentKey: integer, childKey: integer, whichButton: DialogButton) {
+        return SaveButtonHandle(this.getHandle, parentKey, childKey, whichButton.getHandle)
     }
 
-    saveTextTag(parentKey: integer, childKey: integer, whichTexttag: TextTag) {
-        return SaveTextTagHandle(this.handle, parentKey, childKey, whichTexttag.handle)
+    public saveTextTag(parentKey: integer, childKey: integer, whichTexttag: TextTag) {
+        return SaveTextTagHandle(this.getHandle, parentKey, childKey, whichTexttag.getHandle)
     }
 
-    saveLightning(parentKey: integer, childKey: integer, whichLightning: Lightning) {
-        return SaveLightningHandle(this.handle, parentKey, childKey, whichLightning.handle)
+    public saveLightning(parentKey: integer, childKey: integer, whichLightning: Lightning) {
+        return SaveLightningHandle(this.getHandle, parentKey, childKey, whichLightning.getHandle)
     }
 
-    saveImage(parentKey: integer, childKey: integer, whichImage: Image) {
-        return SaveImageHandle(this.handle, parentKey, childKey, whichImage.handle)
+    public saveImage(parentKey: integer, childKey: integer, whichImage: Image) {
+        return SaveImageHandle(this.getHandle, parentKey, childKey, whichImage.getHandle)
     }
 
-    saveUbersplat(parentKey: integer, childKey: integer, whichUbersplat: Ubersplat) {
-        return SaveUbersplatHandle(this.handle, parentKey, childKey, whichUbersplat.handle)
+    public saveUbersplat(parentKey: integer, childKey: integer, whichUbersplat: Ubersplat) {
+        return SaveUbersplatHandle(this.getHandle, parentKey, childKey, whichUbersplat.getHandle)
     }
 
-    saveRegion(parentKey: integer, childKey: integer, whichRegion: Region) {
-        return SaveRegionHandle(this.handle, parentKey, childKey, whichRegion.handle)
+    public saveRegion(parentKey: integer, childKey: integer, whichRegion: Region) {
+        return SaveRegionHandle(this.getHandle, parentKey, childKey, whichRegion.getHandle)
     }
 
-    saveFogState(parentKey: integer, childKey: integer, whichFogState: fogstate) {
-        return SaveFogStateHandle(this.handle, parentKey, childKey, whichFogState)
+    public saveFogState(parentKey: integer, childKey: integer, whichFogState: fogstate) {
+        return SaveFogStateHandle(this.getHandle, parentKey, childKey, whichFogState)
     }
 
-    saveFogModifier(parentKey: integer, childKey: integer, whichFogModifier: FogModifier) {
-        return SaveFogModifierHandle(this.handle, parentKey, childKey, whichFogModifier.handle)
+    public saveFogModifier(parentKey: integer, childKey: integer, whichFogModifier: FogModifier) {
+        return SaveFogModifierHandle(this.getHandle, parentKey, childKey, whichFogModifier.getHandle)
     }
 
-    saveAgent(parentKey: integer, childKey: integer, whichAgent: agent) {
-        return SaveAgentHandle(this.handle, parentKey, childKey, whichAgent)
+    public saveAgent(parentKey: integer, childKey: integer, whichAgent: agent) {
+        return SaveAgentHandle(this.getHandle, parentKey, childKey, whichAgent)
     }
 
-    saveHashtable(parentKey: integer, childKey: integer, whichHashtable: Hashtable) {
-        return SaveHashtableHandle(this.handle, parentKey, childKey, whichHashtable.handle)
+    public saveHashtable(parentKey: integer, childKey: integer, whichHashtable: Hashtable) {
+        return SaveHashtableHandle(this.getHandle, parentKey, childKey, whichHashtable.getHandle)
     }
 
-    saveFrame(parentKey: integer, childKey: integer, whichFrameHandle: Frame) {
-        return SaveFrameHandle(this.handle, parentKey, childKey, whichFrameHandle.handle)
+    public saveFrame(parentKey: integer, childKey: integer, whichFrameHandle: Frame) {
+        return SaveFrameHandle(this.getHandle, parentKey, childKey, whichFrameHandle.getHandle)
     }
 
-    loadInt(parentKey: integer, childKey: integer): integer {
-        return LoadInteger(this.handle, parentKey, childKey)
+    public loadInt(parentKey: integer, childKey: integer): integer {
+        return LoadInteger(this.getHandle, parentKey, childKey)
     }
 
-    loadReal(parentKey: integer, childKey: integer): real {
-        return LoadReal(this.handle, parentKey, childKey)
+    public loadReal(parentKey: integer, childKey: integer): real {
+        return LoadReal(this.getHandle, parentKey, childKey)
     }
 
-    loadBool(parentKey: integer, childKey: integer): boolean {
-        return LoadBoolean(this.handle, parentKey, childKey)
+    public loadBool(parentKey: integer, childKey: integer): boolean {
+        return LoadBoolean(this.getHandle, parentKey, childKey)
     }
 
-    loadStr(parentKey: integer, childKey: integer): string {
-        return LoadStr(this.handle, parentKey, childKey)
+    public loadStr(parentKey: integer, childKey: integer): string {
+        return LoadStr(this.getHandle, parentKey, childKey)
     }
 
-    loadPlayer(parentKey: integer, childKey: integer): MapPlayer {
-        return MapPlayer.fromHandle(LoadPlayerHandle(this.handle, parentKey, childKey))
+    public loadPlayer(parentKey: integer, childKey: integer): MapPlayer {
+        return MapPlayer.fromHandle(LoadPlayerHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadWidget(parentKey: integer, childKey: integer): Widget {
-        return Widget.fromHandle(LoadWidgetHandle(this.handle, parentKey, childKey))
+    public loadWidget(parentKey: integer, childKey: integer): Widget {
+        return Widget.fromHandle(LoadWidgetHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadDestructable(parentKey: integer, childKey: integer): Destructable {
-        return Destructable.fromHandle(LoadDestructableHandle(this.handle, parentKey, childKey))
+    public loadDestructable(parentKey: integer, childKey: integer): Destructable {
+        return Destructable.fromHandle(LoadDestructableHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadItem(parentKey: integer, childKey: integer): Item {
-        return Item.fromHandle(LoadItemHandle(this.handle, parentKey, childKey))
+    public loadItem(parentKey: integer, childKey: integer): Item {
+        return Item.fromHandle(LoadItemHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadUnit(parentKey: integer, childKey: integer): Unit {
-        return Unit.fromHandle(LoadUnitHandle(this.handle, parentKey, childKey))
+    public loadUnit(parentKey: integer, childKey: integer): Unit {
+        return Unit.fromHandle(LoadUnitHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadAbility(parentKey: integer, childKey: integer): Ability {
-        return Ability.fromHandle(LoadAbilityHandle(this.handle, parentKey, childKey))
+    public loadAbility(parentKey: integer, childKey: integer): Ability {
+        return Ability.fromHandle(LoadAbilityHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadTimer(parentKey: integer, childKey: integer): Timer {
-        return Timer.fromHandle(LoadTimerHandle(this.handle, parentKey, childKey))
+    public loadTimer(parentKey: integer, childKey: integer): Timer {
+        return Timer.fromHandle(LoadTimerHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadTrigger(parentKey: integer, childKey: integer): Trigger {
-        return Trigger.fromHandle(LoadTriggerHandle(this.handle, parentKey, childKey))
+    public loadTrigger(parentKey: integer, childKey: integer): Trigger {
+        return Trigger.fromHandle(LoadTriggerHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadTriggerCondition(parentKey: integer, childKey: integer): triggercondition {
-        return LoadTriggerConditionHandle(this.handle, parentKey, childKey)
+    public loadTriggerCondition(parentKey: integer, childKey: integer): triggercondition {
+        return LoadTriggerConditionHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadTriggerAction(parentKey: integer, childKey: integer): triggeraction {
-        return LoadTriggerActionHandle(this.handle, parentKey, childKey)
+    public loadTriggerAction(parentKey: integer, childKey: integer): triggeraction {
+        return LoadTriggerActionHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadTriggerEvent(parentKey: integer, childKey: integer): event {
-        return LoadTriggerEventHandle(this.handle, parentKey, childKey)
+    public loadTriggerEvent(parentKey: integer, childKey: integer): event {
+        return LoadTriggerEventHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadForce(parentKey: integer, childKey: integer): Force {
-        return Force.fromHandle(LoadForceHandle(this.handle, parentKey, childKey))
+    public loadForce(parentKey: integer, childKey: integer): Force {
+        return Force.fromHandle(LoadForceHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadGroup(parentKey: integer, childKey: integer): Group {
-        return Group.fromHandle(LoadGroupHandle(this.handle, parentKey, childKey))
+    public loadGroup(parentKey: integer, childKey: integer): Group {
+        return Group.fromHandle(LoadGroupHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadLocation(parentKey: integer, childKey: integer): Location {
-        return Location.fromHandle(LoadLocationHandle(this.handle, parentKey, childKey))
+    public loadLocation(parentKey: integer, childKey: integer): MapLocation {
+        return MapLocation.fromHandle(LoadLocationHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadRect(parentKey: integer, childKey: integer): Rectangle {
-        return Rectangle.fromHandle(LoadRectHandle(this.handle, parentKey, childKey))
+    public loadRect(parentKey: integer, childKey: integer): Rectangle {
+        return Rectangle.fromHandle(LoadRectHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadBoolExpr(parentKey: integer, childKey: integer): boolexpr {
-        return LoadBooleanExprHandle(this.handle, parentKey, childKey)
+    public loadBoolExpr(parentKey: integer, childKey: integer): boolexpr {
+        return LoadBooleanExprHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadSound(parentKey: integer, childKey: integer): Sound {
-        return Sound.fromHandle(LoadSoundHandle(this.handle, parentKey, childKey))
+    public loadSound(parentKey: integer, childKey: integer): Sound {
+        return Sound.fromHandle(LoadSoundHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadEffect(parentKey: integer, childKey: integer): Effect {
-        return Effect.fromHandle(LoadEffectHandle(this.handle, parentKey, childKey))
+    public loadEffect(parentKey: integer, childKey: integer): Effect {
+        return Effect.fromHandle(LoadEffectHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadUnitPool(parentKey: integer, childKey: integer): unitpool {
-        return LoadUnitPoolHandle(this.handle, parentKey, childKey)
+    public loadUnitPool(parentKey: integer, childKey: integer): unitpool {
+        return LoadUnitPoolHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadItemPool(parentKey: integer, childKey: integer): itempool {
-        return LoadItemPoolHandle(this.handle, parentKey, childKey)
+    public loadItemPool(parentKey: integer, childKey: integer): itempool {
+        return LoadItemPoolHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadQuest(parentKey: integer, childKey: integer): Quest {
-        return Quest.fromHandle(LoadQuestHandle(this.handle, parentKey, childKey))
+    public loadQuest(parentKey: integer, childKey: integer): Quest {
+        return Quest.fromHandle(LoadQuestHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadDefeatCondition(parentKey: integer, childKey: integer): defeatcondition {
-        return LoadDefeatConditionHandle(this.handle, parentKey, childKey)
+    public loadDefeatCondition(parentKey: integer, childKey: integer): defeatcondition {
+        return LoadDefeatConditionHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadTimerDialog(parentKey: integer, childKey: integer): TimerDialog {
-        return TimerDialog.fromHandle(LoadTimerDialogHandle(this.handle, parentKey, childKey))
+    public loadTimerDialog(parentKey: integer, childKey: integer): TimerDialog {
+        return TimerDialog.fromHandle(LoadTimerDialogHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadLeaderboard(parentKey: integer, childKey: integer): Leaderboard {
-        return Leaderboard.fromHandle(LoadLeaderboardHandle(this.handle, parentKey, childKey))
+    public loadLeaderboard(parentKey: integer, childKey: integer): Leaderboard {
+        return Leaderboard.fromHandle(LoadLeaderboardHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadMultiboard(parentKey: integer, childKey: integer): Multiboard {
-        return Multiboard.fromHandle(LoadMultiboardHandle(this.handle, parentKey, childKey))
+    public loadMultiboard(parentKey: integer, childKey: integer): Multiboard {
+        return Multiboard.fromHandle(LoadMultiboardHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadMultiboardItem(parentKey: integer, childKey: integer): MultiboardItem {
-        return MultiboardItem.getObject(LoadMultiboardItemHandle(this.handle, parentKey, childKey))
+    public loadMultiboardItem(parentKey: integer, childKey: integer): MultiboardItem {
+        return MultiboardItem.getObject(LoadMultiboardItemHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadTrackable(parentKey: integer, childKey: integer): Trackable {
-        return Trackable.getObject(LoadTrackableHandle(this.handle, parentKey, childKey))
+    public loadTrackable(parentKey: integer, childKey: integer): Trackable {
+        return Trackable.getObject(LoadTrackableHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadDialog(parentKey: integer, childKey: integer): Dialog {
-        return Dialog.fromHandle(LoadDialogHandle(this.handle, parentKey, childKey))
+    public loadDialog(parentKey: integer, childKey: integer): Dialog {
+        return Dialog.fromHandle(LoadDialogHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadButton(parentKey: integer, childKey: integer): DialogButton {
-        return DialogButton.fromHandle(LoadButtonHandle(this.handle, parentKey, childKey))
+    public loadButton(parentKey: integer, childKey: integer): DialogButton {
+        return DialogButton.fromHandle(LoadButtonHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadTextTag(parentKey: integer, childKey: integer): TextTag {
-        return TextTag.getObject(LoadTextTagHandle(this.handle, parentKey, childKey))
+    public loadTextTag(parentKey: integer, childKey: integer): TextTag {
+        return TextTag.getObject(LoadTextTagHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadLightning(parentKey: integer, childKey: integer): Lightning {
-        return Lightning.getObject(LoadLightningHandle(this.handle, parentKey, childKey))
+    public loadLightning(parentKey: integer, childKey: integer): Lightning {
+        return Lightning.getObject(LoadLightningHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadImage(parentKey: integer, childKey: integer): Image {
-        return Image.fromHandle(LoadImageHandle(this.handle, parentKey, childKey))
+    public loadImage(parentKey: integer, childKey: integer): Image {
+        return Image.fromHandle(LoadImageHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadUbersplat(parentKey: integer, childKey: integer): ubersplat {
-        return LoadUbersplatHandle(this.handle, parentKey, childKey)
+    public loadUbersplat(parentKey: integer, childKey: integer): ubersplat {
+        return LoadUbersplatHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadRegion(parentKey: integer, childKey: integer): Region {
-        return Region.fromHandle(LoadRegionHandle(this.handle, parentKey, childKey))
+    public loadRegion(parentKey: integer, childKey: integer): Region {
+        return Region.fromHandle(LoadRegionHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadFogState(parentKey: integer, childKey: integer): fogstate {
-        return LoadFogStateHandle(this.handle, parentKey, childKey)
+    public loadFogState(parentKey: integer, childKey: integer): fogstate {
+        return LoadFogStateHandle(this.getHandle, parentKey, childKey)
     }
 
-    loadFogModifier(parentKey: integer, childKey: integer): FogModifier {
-        return FogModifier.fromHandle(LoadFogModifierHandle(this.handle, parentKey, childKey))
+    public loadFogModifier(parentKey: integer, childKey: integer): FogModifier {
+        return FogModifier.fromHandle(LoadFogModifierHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadHashtable(parentKey: integer, childKey: integer): Hashtable {
-        return Hashtable.getObject(LoadHashtableHandle(this.handle, parentKey, childKey))
+    public loadHashtable(parentKey: integer, childKey: integer): Hashtable {
+        return Hashtable.getObject(LoadHashtableHandle(this.getHandle, parentKey, childKey))
     }
 
-    loadFrameHandle(parentKey: integer, childKey: integer): Frame {
-        return Frame.fromHandle(LoadFrameHandle(this.handle, parentKey, childKey))
+    public loadFrameHandle(parentKey: integer, childKey: integer): Frame {
+        return Frame.fromHandle(LoadFrameHandle(this.getHandle, parentKey, childKey))
     }
 
-    haveInt(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedInteger(this.handle, parentKey, childKey)
+    public haveInt(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedInteger(this.getHandle, parentKey, childKey)
     }
 
-    haveReal(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedReal(this.handle, parentKey, childKey)
+    public haveReal(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedReal(this.getHandle, parentKey, childKey)
     }
 
-    haveBool(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedBoolean(this.handle, parentKey, childKey)
+    public haveBool(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedBoolean(this.getHandle, parentKey, childKey)
     }
 
-    haveStr(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedString(this.handle, parentKey, childKey)
+    public haveStr(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedString(this.getHandle, parentKey, childKey)
     }
 
-    haveHandle(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedHandle(this.handle, parentKey, childKey)
+    public haveHandle(parentKey: integer, childKey: integer): boolean {
+        return HaveSavedHandle(this.getHandle, parentKey, childKey)
     }
 
-    removeInt(parentKey: integer, childKey: integer) {
-        RemoveSavedInteger(this.handle, parentKey, childKey)
+    public removeInt(parentKey: integer, childKey: integer) {
+        RemoveSavedInteger(this.getHandle, parentKey, childKey)
         return this
     }
 
-    removeReal(parentKey: integer, childKey: integer) {
-        RemoveSavedReal(this.handle, parentKey, childKey)
+    public removeReal(parentKey: integer, childKey: integer) {
+        RemoveSavedReal(this.getHandle, parentKey, childKey)
         return this
     }
 
-    removeBool(parentKey: integer, childKey: integer) {
-        RemoveSavedBoolean(this.handle, parentKey, childKey)
+    public removeBool(parentKey: integer, childKey: integer) {
+        RemoveSavedBoolean(this.getHandle, parentKey, childKey)
         return this
     }
 
-    removeStr(parentKey: integer, childKey: integer) {
-        RemoveSavedString(this.handle, parentKey, childKey)
+    public removeStr(parentKey: integer, childKey: integer) {
+        RemoveSavedString(this.getHandle, parentKey, childKey)
         return this
     }
 
-    removeHandle(parentKey: integer, childKey: integer) {
-        RemoveSavedHandle(this.handle, parentKey, childKey)
+    public removeHandle(parentKey: integer, childKey: integer) {
+        RemoveSavedHandle(this.getHandle, parentKey, childKey)
         return this
     }
 
-    flush() {
-        FlushParentHashtable(this.handle)
+    public flush() {
+        FlushParentHashtable(this.getHandle)
         return this
     }
 
-    flushChild(parentKey: integer) {
-        FlushChildHashtable(this.handle, parentKey)
+    public flushChild(parentKey: integer) {
+        FlushChildHashtable(this.getHandle, parentKey)
         return this
+    }
+
+    public static fromHandle(handle: hashtable): Hashtable {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: Hashtable): hashtable {
+        return this.getHandle(object)
     }
 }

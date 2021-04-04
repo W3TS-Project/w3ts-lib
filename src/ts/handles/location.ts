@@ -1,56 +1,60 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { real } from "../main"
+import { real } from "../utils"
 import { Handle } from "./handle"
 
-declare function location(x: real, y: real): location
+declare function Location(x: real, y: real): location
 declare function RemoveLocation(whichLocation: location): void
 declare function MoveLocation(whichLocation: location, newX: real, newY: real): void
 declare function GetLocationX(whichLocation: location): real
 declare function GetLocationY(whichLocation: location): real
 declare function GetLocationZ(whichLocation: location): real
 
-export class Location extends Handle<location> {
-    constructor(x: number, y: number, z?: number) {
-        super(Handle.initFromHandle() ? undefined : location(x, y))
+export class MapLocation extends Handle<location> {
+    public constructor(x: number, y: number, z?: number) {
+        super(Location(x, y))
     }
 
-    destroy() {
-        RemoveLocation(this.handle)
+    public destroy() {
+        RemoveLocation(this.getHandle)
         return this
     }
 
-    move(x: real, y: real) {
-        MoveLocation(this.handle, x, y)
+    public move(x: real, y: real) {
+        MoveLocation(this.getHandle, x, y)
         return this
     }
 
-    set x(value: real) {
+    public set x(value: real) {
         this.move(value, this.y)
     }
 
-    get x(): real {
-        return GetLocationX(this.handle)
+    public get x(): real {
+        return GetLocationX(this.getHandle)
     }
 
-    set y(value: real) {
+    public set y(value: real) {
         this.move(this.x, value)
     }
 
-    get y(): real {
-        return GetLocationY(this.handle)
+    public get y(): real {
+        return GetLocationY(this.getHandle)
     }
 
     /**
      * This function is asynchronous. The values it returns are not guaranteed synchronous between each player.
      * If you attempt to use it in a synchronous manner, it may cause a desync.
      */
-    get z(): real {
-        return GetLocationZ(this.handle)
+    public get z(): real {
+        return GetLocationZ(this.getHandle)
     }
 
-    static fromHandle(handle: location): Location {
+    public static fromHandle(handle: location): MapLocation {
         return this.getObject(handle)
+    }
+
+    public static fromObject(object: MapLocation): location {
+        return this.getHandle(object)
     }
 }

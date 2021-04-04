@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { integer, real } from "../main"
+import { integer, real } from "../utils"
 import { Handle } from "./handle"
 
 declare function CreateUbersplat(
@@ -23,7 +23,7 @@ declare function SetUbersplatRender(whichSplat: ubersplat, flag: boolean): void
 declare function SetUbersplatRenderAlways(whichSplat: ubersplat, flag: boolean): void
 
 export class Ubersplat extends Handle<ubersplat> {
-    constructor(
+    public constructor(
         x: real,
         y: real,
         name: string,
@@ -34,23 +34,19 @@ export class Ubersplat extends Handle<ubersplat> {
         forcePaused: boolean,
         noBirthTime: boolean
     ) {
-        super(
-            Handle.initFromHandle()
-                ? undefined
-                : CreateUbersplat(x, y, name, red, green, blue, alpha, forcePaused, noBirthTime)
-        )
+        super(CreateUbersplat(x, y, name, red, green, blue, alpha, forcePaused, noBirthTime))
     }
 
-    destroy() {
+    public destroy() {
         DestroyUbersplat(this.handle)
     }
 
-    finish() {
+    public finish() {
         FinishUbersplat(this.handle)
         return this
     }
 
-    render(flag: boolean, always = false) {
+    public render(flag: boolean, always = false) {
         if (always) {
             SetUbersplatRenderAlways(this.handle, flag)
         } else {
@@ -59,17 +55,17 @@ export class Ubersplat extends Handle<ubersplat> {
         return this
     }
 
-    reset() {
+    public reset() {
         ResetUbersplat(this.handle)
         return this
     }
 
-    show(flag: boolean) {
+    public show(flag: boolean) {
         ShowUbersplat(this.handle, flag)
         return this
     }
 
-    static fromHandle(handle: ubersplat): Ubersplat {
+    public static fromHandle(handle: ubersplat): Ubersplat {
         return this.getObject(handle)
     }
 }

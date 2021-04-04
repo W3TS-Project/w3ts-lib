@@ -1,5 +1,5 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
 import { Handle } from "./handle"
 
@@ -27,69 +27,66 @@ declare function ForceQuestDialogUpdate(): void
 
 export class QuestItem extends Handle<questitem> {
     constructor(whichQuest: Quest) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(QuestCreateItem(whichQuest.handle))
-        }
+        super(QuestCreateItem(whichQuest.getHandle))
     }
 
     public setDescription(description: string) {
-        QuestItemSetDescription(this.handle, description)
+        QuestItemSetDescription(this.getHandle, description)
+        return this
     }
 
-    public get completed() {
-        return IsQuestItemCompleted(this.handle)
+    public get completed(): boolean {
+        return IsQuestItemCompleted(this.getHandle)
     }
 
     public set completed(completed: boolean) {
-        QuestItemSetCompleted(this.handle, completed)
+        QuestItemSetCompleted(this.getHandle, completed)
     }
 }
 
 export class Quest extends Handle<quest> {
     constructor() {
-        super(Handle.initFromHandle() ? undefined : CreateQuest())
+        super(CreateQuest())
     }
 
-    public get completed() {
-        return IsQuestCompleted(this.handle)
+    public get completed(): boolean {
+        return IsQuestCompleted(this.getHandle)
     }
 
     public set completed(completed: boolean) {
-        QuestSetCompleted(this.handle, completed)
+        QuestSetCompleted(this.getHandle, completed)
     }
 
-    public get discovered() {
-        return IsQuestDiscovered(this.handle)
+    public get discovered(): boolean {
+        return IsQuestDiscovered(this.getHandle)
     }
 
     public set discovered(discovered: boolean) {
-        QuestSetDiscovered(this.handle, discovered)
+        QuestSetDiscovered(this.getHandle, discovered)
     }
 
-    public get enabled() {
-        return IsQuestEnabled(this.handle)
+    public get enabled(): boolean {
+        return IsQuestEnabled(this.getHandle)
     }
 
     public set enabled(enabled: boolean) {
-        QuestSetEnabled(this.handle, enabled)
+        QuestSetEnabled(this.getHandle, enabled)
     }
 
-    public get failed() {
-        return IsQuestFailed(this.handle)
+    public get failed(): boolean {
+        return IsQuestFailed(this.getHandle)
     }
 
     public set failed(failed: boolean) {
-        QuestSetFailed(this.handle, failed)
+        QuestSetFailed(this.getHandle, failed)
     }
 
-    public get required() {
-        return IsQuestRequired(this.handle)
+    public get required(): boolean {
+        return IsQuestRequired(this.getHandle)
     }
 
     public set required(required: boolean) {
-        QuestSetRequired(this.handle, required)
+        QuestSetRequired(this.getHandle, required)
     }
 
     public addItem(description: string) {
@@ -101,30 +98,39 @@ export class Quest extends Handle<quest> {
     }
 
     public destroy() {
-        DestroyQuest(this.handle)
+        DestroyQuest(this.getHandle)
     }
 
     public setDescription(description: string) {
-        QuestSetDescription(this.handle, description)
+        QuestSetDescription(this.getHandle, description)
+        return this
     }
 
     public setIcon(iconPath: string) {
-        QuestSetIconPath(this.handle, iconPath)
+        QuestSetIconPath(this.getHandle, iconPath)
+        return this
     }
 
     public setTitle(title: string) {
-        QuestSetTitle(this.handle, title)
+        QuestSetTitle(this.getHandle, title)
+        return this
     }
 
     public static flashQuestDialogButton() {
         FlashQuestDialogButton()
+        return this
     }
 
     public static forceQuestDialogUpdate() {
         ForceQuestDialogUpdate()
+        return this
     }
 
     public static fromHandle(handle: quest): Quest {
         return this.getObject(handle)
+    }
+
+    public static fromObject(object: Quest): quest {
+        return this.getHandle(object)
     }
 }

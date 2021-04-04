@@ -2,7 +2,7 @@
 // @ts-nocheck
 
 import { Handle } from "../handles/handle"
-import { Location, Point } from "../handles/location"
+import { MapLocation, Point } from "../handles/location"
 import { Unit } from "../handles/unit"
 
 declare function SetCameraPosition(x: number, y: number): void
@@ -130,7 +130,7 @@ export class Camera {
         return this.setPos(p.x, p.y)
     }
 
-    static setPos(loc: Location): void {
+    static setPos(loc: MapLocation): void {
         return this.setPos(loc.x, loc.y)
     }
 
@@ -139,7 +139,7 @@ export class Camera {
         return this
     }
 
-    static setQuickPos(p: Point | Location): void {
+    static setQuickPos(p: Point | MapLocation): void {
         return this.setQuickPos(p.x, p.y)
     }
 
@@ -158,10 +158,10 @@ export class Camera {
     }
 
     static setBounds(
-        p1: Point | Location,
-        p2: Point | Location,
-        p3: Point | Location,
-        p4: Point | Location
+        p1: Point | MapLocation,
+        p2: Point | MapLocation,
+        p3: Point | MapLocation,
+        p4: Point | MapLocation
     ) {
         return this.setBounds(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y)
     }
@@ -185,7 +185,7 @@ export class Camera {
         return this
     }
 
-    static pan(p: Point | Location) {
+    static pan(p: Point | MapLocation) {
         return this.pan(p.x, p.y, p.z)
     }
 
@@ -198,7 +198,7 @@ export class Camera {
         return this
     }
 
-    static panTimed(p: Point | Location, duration: number) {
+    static panTimed(p: Point | MapLocation, duration: number) {
         return this.panTimed(p.x, p.y, duration, p.z)
     }
 
@@ -236,7 +236,7 @@ export class Camera {
         return this
     }
 
-    static setOrientController(whichUnit: Unit, p: Point | Location) {
+    static setOrientController(whichUnit: Unit, p: Point | MapLocation) {
         return this.setOrientController(whichUnit, p.x, p.y)
     }
 
@@ -268,8 +268,8 @@ export class Camera {
         return new Point(this.boundMinX, this.boundMinY)
     }
 
-    static get boundMinLoc(): Location {
-        return new Location(this.boundMinX, this.boundMinY)
+    static get boundMinLoc(): MapLocation {
+        return new MapLocation(this.boundMinX, this.boundMinY)
     }
 
     static get boundMaxX(): number {
@@ -284,8 +284,8 @@ export class Camera {
         return new Point(this.boundMaxX, this.boundMaxY)
     }
 
-    static get boundMaxLoc(): Location {
-        return new Location(this.boundMaxX, this.boundMaxY)
+    static get boundMaxLoc(): MapLocation {
+        return new MapLocation(this.boundMaxX, this.boundMaxY)
     }
 
     static getField(whichField: camerafield): number {
@@ -324,8 +324,8 @@ export class Camera {
         return GetCameraEyePositionZ()
     }
 
-    static get eyeLoc(): Location {
-        return Location.fromHandle(GetCameraEyePositionLoc())
+    static get eyeLoc(): MapLocation {
+        return MapLocation.fromHandle(GetCameraEyePositionLoc())
     }
 
     static get eyePoint(): Point {

@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { integer, Position, real } from "../main"
+import { integer, Position, real } from "../utils"
 import { Handle } from "./handle"
 import { Point } from "./point"
 
@@ -49,12 +49,8 @@ declare function TerrainDeformRandom(
 declare function TerrainDeformStop(deformation: terraindeformation, duration: number): void
 declare function TerrainDeformStopAll(): void
 
-export class TerrainDeformation<T extends terraindeformation> extends Handle<terraindeformation> {
-    constructor(handle: T) {
-        super(Handle.initFromHandle() ? undefined : handle)
-    }
-
-    static createCraterCoords(
+export class TerrainDeformation extends Handle<terraindeformation> {
+    public static createCraterCoords(
         x: real,
         y: real,
         radius: real,
@@ -65,7 +61,7 @@ export class TerrainDeformation<T extends terraindeformation> extends Handle<ter
         return new this(TerrainDeformCrater(x, y, radius, depth, duration, permanent))
     }
 
-    static createCraterPos(
+    public static createCraterPos(
         p: Position,
         radius: real,
         depth: real,
@@ -76,7 +72,7 @@ export class TerrainDeformation<T extends terraindeformation> extends Handle<ter
         return this.createCraterCoords(p.x, p.y, radius, depth, duration, permanent)
     }
 
-    static createRippleCoords(
+    public static createRippleCoords(
         x: real,
         y: real,
         radius: real,
@@ -104,7 +100,7 @@ export class TerrainDeformation<T extends terraindeformation> extends Handle<ter
         )
     }
 
-    static createRipplePos(
+    public static createRipplePos(
         p: Position,
         radius: real,
         depth: real,
@@ -130,7 +126,7 @@ export class TerrainDeformation<T extends terraindeformation> extends Handle<ter
         )
     }
 
-    static createWaveCoords(
+    public static createWaveCoords(
         x: real,
         y: real,
         dirX: real,
@@ -147,7 +143,7 @@ export class TerrainDeformation<T extends terraindeformation> extends Handle<ter
         )
     }
 
-    static createWavePos(
+    public static createWavePos(
         p: Position,
         dirPos: Position,
         distance: real,
@@ -173,7 +169,7 @@ export class TerrainDeformation<T extends terraindeformation> extends Handle<ter
         )
     }
 
-    static createRandomCoords(
+    public static createRandomCoords(
         x: real,
         y: real,
         radius: real,
@@ -187,7 +183,7 @@ export class TerrainDeformation<T extends terraindeformation> extends Handle<ter
         )
     }
 
-    static createRandomPos(
+    public static createRandomPos(
         p: Position,
         radius: real,
         minDelta: real,
@@ -207,16 +203,16 @@ export class TerrainDeformation<T extends terraindeformation> extends Handle<ter
         )
     }
 
-    stop(duration: integer) {
+    public stop(duration: integer) {
         TerrainDeformStop(this.handle, duration)
         return this
     }
 
-    static fromHandle(handle: terraindeformation): ThisType<terraindeformation> {
+    public static fromHandle(handle: terraindeformation): ThisType<terraindeformation> {
         return this.getObject(handle)
     }
 
-    static stopAll() {
+    public static stopAll() {
         TerrainDeformStopAll()
         return this
     }

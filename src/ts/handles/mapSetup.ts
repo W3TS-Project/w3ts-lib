@@ -1,9 +1,9 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { integer, Position, real } from "../main"
+import { integer, Position, real } from "../utils"
 import { Handle } from "./handle"
-import { Location } from "./location"
+import { MapLocation } from "./location"
 
 declare function SetMapName(name: string): void
 declare function SetMapDescription(description: string): void
@@ -44,50 +44,50 @@ declare function GetStartLocationLoc(whichStartLocation: integer): location
 export class MapSetup {
     private constructor() {}
 
-    static setName(name: string) {
+    public static setName(name: string) {
         SetMapName(name)
         return this
     }
 
-    static setDescription(description: string) {
+    public static setDescription(description: string) {
         SetMapDescription(description)
         return this
     }
 
-    static setTeams(teamcount: integer) {
+    public static setTeams(teamcount: integer) {
         SetTeams(teamcount)
         return this
     }
 
-    static setPlayers(playercount: integer) {
+    public static setPlayers(playercount: integer) {
         SetPlayers(playercount)
         return this
     }
 
-    static setFlag(whichMapFlag: mapflag, value: boolean) {
+    public static setFlag(whichMapFlag: mapflag, value: boolean) {
         SetMapFlag(whichMapFlag, value)
         return this
     }
 
-    static setResourceDensity(whichdensity: mapdensity) {
+    public static setResourceDensity(whichdensity: mapdensity) {
         SetResourceDensity(whichdensity)
         return this
     }
 
-    static setCreatureDensity(whichdensity: mapdensity) {
+    public static setCreatureDensity(whichdensity: mapdensity) {
         SetCreatureDensity(whichdensity)
         return this
     }
 
-    static getTeams(): integer {
+    public static getTeams(): integer {
         return GetTeams()
     }
 
-    static getPlayers(): integer {
+    public static getPlayers(): integer {
         return GetPlayers()
     }
 
-    static isFlagSet(whichMapFlag: mapflag) {
+    public static isFlagSet(whichMapFlag: mapflag): boolean {
         return IsMapFlagSet(whichMapFlag)
     }
 }
@@ -95,58 +95,58 @@ export class MapSetup {
 export class GameSetup {
     private constructor() {}
 
-    static setSpeed(whichspeed: gamespeed) {
+    public static setSpeed(whichspeed: gamespeed) {
         SetGameSpeed(whichspeed)
         return this
     }
 
-    static setDifficulty(whichdifficulty: gamedifficulty) {
+    public static setDifficulty(whichdifficulty: gamedifficulty) {
         SetGameDifficulty(whichdifficulty)
         return this
     }
 
-    static get placement() {
+    public static get placement(): placement {
         return GetGamePlacement()
     }
 
-    static get speed() {
+    public static get speed(): gamespeed {
         return GetGameSpeed()
     }
 
-    static get difficulty() {
+    public static get difficulty(): gamedifficulty {
         return GetGameDifficulty()
     }
 
-    static get resourceDensity() {
+    public static get resourceDensity(): mapdensity {
         return GetResourceDensity()
     }
 
-    static get creatureDensity() {
+    public static get creatureDensity(): mapdensity {
         return GetCreatureDensity()
     }
 }
 
 export class StartLocPrio {
-    static defineCoords(whichStartLoc: integer, x: real, y: real) {
+    public static defineCoords(whichStartLoc: integer, x: real, y: real) {
         DefineStartLocation(whichStartLoc, x, y)
         return this
     }
 
-    static definePos(whichStartLoc: integer, p: Position) {
+    public static definePos(whichStartLoc: integer, p: Position) {
         return this.defineCoords(whichStartLoc, p.x, p.y)
     }
 
-    static defineLoc(whichStartLoc: integer, whichLocation: Location) {
-        DefineStartLocationLoc(whichStartLoc, whichLocation.handle)
+    public static defineLoc(whichStartLoc: integer, whichLocation: MapLocation) {
+        DefineStartLocationLoc(whichStartLoc, whichLocation.getHandle)
         return this
     }
 
-    static setCount(whichStartLoc: integer, prioSlotCount: integer) {
+    public static setCount(whichStartLoc: integer, prioSlotCount: integer) {
         SetStartLocPrioCount(whichStartLoc, prioSlotCount)
         return this
     }
 
-    static set(
+    public static set(
         whichStartLoc: integer,
         prioSlotIndex: integer,
         otherStartLocIndex: integer,
@@ -156,45 +156,45 @@ export class StartLocPrio {
         return this
     }
 
-    static getSlot(whichStartLoc: integer, prioSlotIndex: integer): integer {
+    public static getSlot(whichStartLoc: integer, prioSlotIndex: integer): integer {
         return GetStartLocPrioSlot(whichStartLoc, prioSlotIndex)
     }
 
-    static get(whichStartLoc: integer, prioSlotIndex: integer) {
+    public static get(whichStartLoc: integer, prioSlotIndex: integer) {
         return GetStartLocPrio(whichStartLoc, prioSlotIndex)
     }
 
-    static getX(whichStartLocation: integer): real {
+    public static getX(whichStartLocation: integer): real {
         return GetStartLocationX(whichStartLocation)
     }
 
-    static getY(whichStartLocation: integer): real {
+    public static getY(whichStartLocation: integer): real {
         return GetStartLocationY(whichStartLocation)
     }
 
-    static getLoc(whichStartLocation: integer): Location {
-        return Location.fromHandle(GetStartLocationLoc(whichStartLocation))
+    static getLoc(whichStartLocation: integer): MapLocation {
+        return MapLocation.fromHandle(GetStartLocationLoc(whichStartLocation))
     }
 }
 
 export class GameType extends Handle<gametype> {
-    private constructor(handle: gametype) {
-        super(Handle.initFromHandle() ? undefined : handle)
+    public set supported(value: boolean) {
+        SetGameTypeSupported(this.getHandle, value)
     }
 
-    set supported(value: boolean) {
-        SetGameTypeSupported(this.handle, value)
+    public get supported(): boolean {
+        return IsGameTypeSupported(this.getHandle)
     }
 
-    get supported() {
-        return IsGameTypeSupported(this.handle)
-    }
-
-    static fromHandle(handle: gametype): GameType {
+    public static fromHandle(handle: gametype): GameType {
         return this.getObject(handle)
     }
 
-    static selected() {
+    public static selected() {
         return this.fromHandle(GetGameTypeSelected())
+    }
+
+    public static fromObject(object: GameType): gametype {
+        return this.getHandle(object)
     }
 }

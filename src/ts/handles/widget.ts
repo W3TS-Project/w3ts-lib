@@ -1,5 +1,5 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
 import { Handle } from "./handle"
 
@@ -11,19 +11,19 @@ declare function GetTriggerWidget(): widget
 
 export class Widget extends Handle<widget> {
     public get life() {
-        return GetWidgetLife(this.handle)
+        return GetWidgetLife(this.getHandle)
     }
 
     public set life(value: number) {
-        SetWidgetLife(this.handle, value)
+        SetWidgetLife(this.getHandle, value)
     }
 
     public get x() {
-        return GetWidgetX(this.handle)
+        return GetWidgetX(this.getHandle)
     }
 
     public get y() {
-        return GetWidgetY(this.handle)
+        return GetWidgetY(this.getHandle)
     }
 
     public static fromEvent() {
@@ -32,5 +32,9 @@ export class Widget extends Handle<widget> {
 
     public static fromHandle(handle: widget): Widget {
         return this.getObject(handle)
+    }
+
+    public static fromObject(handleObject: Widget): widget {
+        return this.getHandle(handleObject)
     }
 }

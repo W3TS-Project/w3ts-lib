@@ -1,27 +1,28 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { Location } from "./location"
+import { real } from "../utils"
+import { MapLocation } from "./location"
 
-declare function IsPointBlighted(x: number, y: number): boolean
+declare function IsPointBlighted(x: real, y: real): boolean
 
 export class Point {
-    x: number
-    y: number
-    z: number
+    x: real
+    y: real
+    z: real
 
-    constructor(x: number, y: number, z: number) {
+    constructor(x: real, y: real, z?: real) {
         this.x = x
         this.y = y
-        this.z = z
+        this.z = z || 0
         return this
     }
 
-    static fromLoc(loc: Location) {
+    static fromLoc(loc: MapLocation) {
         return new Point(loc.x, loc.y, loc.z)
     }
 
-    set(x: number, y: number, z: number) {
+    set(x: real, y: real, z: real) {
         this.x = x
         this.y = y
         this.z = z

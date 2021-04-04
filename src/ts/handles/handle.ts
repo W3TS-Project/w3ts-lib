@@ -1,4 +1,7 @@
 /** @noSelfInFile **/
+//@ts-nocheck
+
+import { integer } from "../utils"
 
 const map: WeakMap<handle, any> = new WeakMap<handle, any>()
 
@@ -6,32 +9,15 @@ declare function GetHandleId(h: handle): number
 
 export class Handle<T extends handle> {
     public readonly handle: T
-    // private static initHandle: handle | undefined
 
-    public constructor(handle: T) {
+    protected constructor(handle: T) {
         this.handle = handle
-        try {
-            map.set(this.handle, this)
-        } catch (error) {
-            print("ОШИБКА: нулевой хендл! Объект: ", this)
-            throw error
-        }
-
-        // if (handle === undefined) {
-        //     this.handle = Handle.initHandle as T
-        // } else {
-        //     this.handle = handle
-        // }
-        // map.set(this.handle, this)
+        map.set(this.getHandle, this)
     }
 
-    public get id() {
-        return GetHandleId(this.handle)
+    public get id(): integer {
+        return GetHandleId(this.getHandle)
     }
-
-    // public static initFromHandle(): boolean {
-    //     return Handle.initHandle !== undefined
-    // }
 
     protected static getObject(handle: handle) {
         const obj = map.get(handle)
@@ -40,17 +26,17 @@ export class Handle<T extends handle> {
         } else {
             return new this(handle)
         }
-        // Handle.initHandle = handle
-        // const newObj = new this()
-        // Handle.initHandle = undefined
-        // return newObj
+    }
+
+    public get getHandle() {
+        return Handle.getHandle(this)
+    }
+
+    protected static getHandle(handleObject: any) {
+        const handle = handleObject.handle
+        if (handle === null || handle === undefined) {
+            throw new Error(`ОШИБКА: нулевой хендл! Объект: ${this}`)
+        }
+        return handle
     }
 }
-
-// protected static initialized(handle: T): T | undefined {
-//     if (Handle.initFromHandle()) {
-//         return undefined
-//     } else {
-//         return handle
-//     }
-// }

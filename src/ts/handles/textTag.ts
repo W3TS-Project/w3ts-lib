@@ -1,7 +1,6 @@
 /** @noSelfInFile **/
-// @ts-nocheck
 
-import { integer, real } from "../main"
+import { integer, real } from "../utils"
 import { Handle } from "./handle"
 import { Unit } from "./unit"
 
@@ -26,60 +25,60 @@ declare function SetTextTagLifespan(t: texttag, lifespan: real): void
 declare function SetTextTagFadepoint(t: texttag, fadepoint: real): void
 
 export class TextTag extends Handle<texttag> {
-    constructor() {
-        super(Handle.initFromHandle() ? undefined : CreateTextTag())
+    public constructor() {
+        super(CreateTextTag())
     }
 
-    destroy() {
+    public destroy() {
         DestroyTextTag(this.handle)
     }
 
-    setText(s: string, height: real) {
+    public setText(s: string, height: real) {
         SetTextTagText(this.handle, s, height)
         return this
     }
 
-    setPos(x: real, y: real, heightOffset: real) {
+    public setPos(x: real, y: real, heightOffset: real) {
         SetTextTagPos(this.handle, x, y, heightOffset)
         return this
     }
 
-    setPosUnit(whichUnit: Unit, heightOffset: real) {
+    public setPosUnit(whichUnit: Unit, heightOffset: real) {
         SetTextTagPosUnit(this.handle, whichUnit.handle, heightOffset)
         return this
     }
 
-    setColor(red: integer, green: integer, blue: integer, alpha: integer) {
+    public setColor(red: integer, green: integer, blue: integer, alpha: integer) {
         SetTextTagColor(this.handle, red, green, blue, alpha)
         return this
     }
 
-    setVelocity(xvel: real, yvel: real) {
+    public setVelocity(xvel: real, yvel: real) {
         SetTextTagVelocity(this.handle, xvel, yvel)
         return this
     }
 
-    set visibility(flag: boolean) {
+    public set visibility(flag: boolean) {
         SetTextTagVisibility(this.handle, flag)
     }
 
-    set suspended(flag: boolean) {
+    public set suspended(flag: boolean) {
         SetTextTagSuspended(this.handle, flag)
     }
 
-    set permanent(flag: boolean) {
+    public set permanent(flag: boolean) {
         SetTextTagPermanent(this.handle, flag)
     }
 
-    set age(age: real) {
+    public set age(age: real) {
         SetTextTagAge(this.handle, age)
     }
 
-    set lifespan(lifespan: real) {
+    public set lifespan(lifespan: real) {
         SetTextTagLifespan(this.handle, lifespan)
     }
 
-    set fadepoint(fadepoint: real) {
+    public set fadepoint(fadepoint: real) {
         SetTextTagFadepoint(this.handle, fadepoint)
     }
 }

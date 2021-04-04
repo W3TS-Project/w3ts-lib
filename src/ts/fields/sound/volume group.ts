@@ -1,7 +1,11 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-declare const ConvertVolumeGroup = (i: number) => volumegroup
+import { integer, real } from "../../utils"
+
+declare function ConvertVolumeGroup(i: integer): volumegroup
+declare function VolumeGroupSetVolume(vgroup: volumegroup, scale: real): void
+declare function VolumeGroupReset(): void
 
 const c = ConvertVolumeGroup
 
@@ -13,5 +17,15 @@ export const SoundVolumeGroup = {
     UI: c(4),
     Music: c(5),
     AmbientSounds: c(6),
-    Fire: c(7)
+    Fire: c(7),
+
+    setVolume(vgroup: volumegroup, scale: real) {
+        VolumeGroupSetVolume(vgroup, scale)
+        return this
+    },
+
+    reset() {
+        VolumeGroupReset()
+        return this
+    }
 }

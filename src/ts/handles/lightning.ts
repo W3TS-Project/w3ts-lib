@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { Position, real } from "../main"
+import { Position, real } from "../utils"
 import { Handle } from "./handle"
 
 declare function AddLightning(
@@ -54,11 +54,7 @@ declare function SetLightningColor(
 ): boolean
 
 export class Lightning extends Handle<lightning> {
-    constructor(handle: lightning) {
-        Handle.initFromHandle() ? super() : super(handle)
-    }
-
-    static addCoords(
+    public static addCoords(
         codeName: string,
         checkVisibility: boolean,
         x1: real,
@@ -69,7 +65,7 @@ export class Lightning extends Handle<lightning> {
         return new this(AddLightning(codeName, checkVisibility, x1, y1, x2, y2))
     }
 
-    static addExCoords(
+    public static addExCoords(
         codeName: string,
         checkVisibility: boolean,
         x1: real,
@@ -82,19 +78,19 @@ export class Lightning extends Handle<lightning> {
         return new this(AddLightningEx(codeName, checkVisibility, x1, y1, z1, x2, y2, z2))
     }
 
-    static addPos(codeName: string, checkVisibility: boolean, p1: Position, p2: Position) {
+    public static addPos(codeName: string, checkVisibility: boolean, p1: Position, p2: Position) {
         return this.addExCoords(codeName, checkVisibility, p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
     }
 
-    destroy(): boolean {
-        return DestroyLightning(this.handle)
+    public destroy(): boolean {
+        return DestroyLightning(this.getHandle)
     }
 
-    moveCoords(checkVisibility: boolean, x1: real, y1: real, x2: real, y2: real): boolean {
-        return MoveLightning(this.handle, checkVisibility, x1, y1, x2, y2)
+    public moveCoords(checkVisibility: boolean, x1: real, y1: real, x2: real, y2: real): boolean {
+        return MoveLightning(this.getHandle, checkVisibility, x1, y1, x2, y2)
     }
 
-    moveExCoords(
+    public moveExCoords(
         checkVisibility: boolean,
         x1: real,
         y1: real,
@@ -103,30 +99,38 @@ export class Lightning extends Handle<lightning> {
         y2: real,
         z2: real
     ): boolean {
-        return MoveLightningEx(this.handle, checkVisibility, x1, y1, z1, x2, y2, z2)
+        return MoveLightningEx(this.getHandle, checkVisibility, x1, y1, z1, x2, y2, z2)
     }
 
-    movePos(checkVisibility: boolean, p1: Position, p2: Position): boolean {
+    public movePos(checkVisibility: boolean, p1: Position, p2: Position): boolean {
         return this.moveExCoords(checkVisibility, p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
     }
 
-    get colorAlpha(): real {
-        return GetLightningColorA(this.handle)
+    public get colorAlpha(): real {
+        return GetLightningColorA(this.getHandle)
     }
 
-    get colorRed(): real {
-        return GetLightningColorR(this.handle)
+    public get colorRed(): real {
+        return GetLightningColorR(this.getHandle)
     }
 
-    get colorGreen(): real {
-        return GetLightningColorG(this.handle)
+    public get colorGreen(): real {
+        return GetLightningColorG(this.getHandle)
     }
 
-    get colorBlue(): real {
-        return GetLightningColorB(this.handle)
+    public get colorBlue(): real {
+        return GetLightningColorB(this.getHandle)
     }
 
-    setColor(r: real, g: real, b: real, a: real): boolean {
-        return SetLightningColor(this.handle, r, g, b, a)
+    public setColor(r: real, g: real, b: real, a: real): boolean {
+        return SetLightningColor(this.getHandle, r, g, b, a)
+    }
+
+    public static fromHandle(handle: lightning): Lightning {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: Lightning): lightning {
+        return this.getHandle(object)
     }
 }

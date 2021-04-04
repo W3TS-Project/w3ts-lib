@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { integer } from "../main"
+import { integer } from "../utils"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 
@@ -26,23 +26,25 @@ export class DialogButton extends Handle<button> {
         quit: boolean = false,
         score: boolean = false
     ) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else if (!quit) {
-            super(DialogAddButton(whichDialog.handle, text, hotkey))
+        if (!quit) {
+            super(DialogAddButton(whichDialog.getHandle, text, hotkey))
         } else {
-            super(DialogAddQuitButton(whichDialog.handle, score, text, hotkey))
+            super(DialogAddQuitButton(whichDialog.getHandle, score, text, hotkey))
         }
     }
 
     public static fromHandle(handle: button): DialogButton {
         return this.getObject(handle)
     }
+
+    public static fromObject(handleObject: DialogButton): button {
+        return this.getHandle(handleObject)
+    }
 }
 
 export class Dialog extends Handle<dialog> {
     public constructor() {
-        super(Handle.initialized(DialogCreate()))
+        super(DialogCreate())
     }
 
     public addButton(
@@ -55,25 +57,29 @@ export class Dialog extends Handle<dialog> {
     }
 
     public clear() {
-        DialogClear(this.handle)
+        DialogClear(this.getHandle)
         return this
     }
 
     public destroy() {
-        DialogDestroy(this.handle)
+        DialogDestroy(this.getHandle)
     }
 
     public display(whichPlayer: MapPlayer, flag: boolean) {
-        DialogDisplay(whichPlayer.handle, this.handle, flag)
+        DialogDisplay(whichPlayer.getHandle, this.getHandle, flag)
         return this
     }
 
     public setMessage(whichMessage: string) {
-        DialogSetMessage(this.handle, whichMessage)
+        DialogSetMessage(this.getHandle, whichMessage)
         return this
     }
 
     public static fromHandle(handle: dialog): Dialog {
         return this.getObject(handle)
+    }
+
+    public static fromObject(handleObject: Dialog): dialog {
+        return this.getHandle(handleObject)
     }
 }

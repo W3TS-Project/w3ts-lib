@@ -1,5 +1,5 @@
 /** @noSelfInFile **/
-
+//@ts-nocheck
 
 import { formatCC, integer, Position, RawCode, real } from "../utils"
 import { Handle } from "./handle"
@@ -65,12 +65,6 @@ declare function GetDestructableName(d: destructable): string
 declare function GetTriggerDestructable(): destructable
 
 export class Destructable extends Handle<destructable> {
-    // public readonly handle!: destructable
-
-    // public constructor(handle: destructable) {
-    //     super(Handle.initialized(handle))
-    // }
-
     public static createCoords(
         objectid: RawCode,
         x: real,
@@ -140,86 +134,90 @@ export class Destructable extends Handle<destructable> {
     }
 
     public set invulnerable(flag: boolean) {
-        SetDestructableInvulnerable(this.handle, flag)
+        SetDestructableInvulnerable(this.getHandle, flag)
     }
 
     public get invulnerable() {
-        return IsDestructableInvulnerable(this.handle)
+        return IsDestructableInvulnerable(this.getHandle)
     }
 
     public get life() {
-        return GetDestructableLife(this.handle)
+        return GetDestructableLife(this.getHandle)
     }
 
     public set life(value: real) {
-        SetDestructableLife(this.handle, value)
+        SetDestructableLife(this.getHandle, value)
     }
 
     public get maxLife() {
-        return GetDestructableMaxLife(this.handle)
+        return GetDestructableMaxLife(this.getHandle)
     }
 
     public set maxLife(value: real) {
-        SetDestructableMaxLife(this.handle, value)
+        SetDestructableMaxLife(this.getHandle, value)
     }
 
     public get name() {
-        return GetDestructableName(this.handle)
+        return GetDestructableName(this.getHandle)
     }
 
     public get occluderHeight() {
-        return GetDestructableOccluderHeight(this.handle)
+        return GetDestructableOccluderHeight(this.getHandle)
     }
 
     public set occluderHeight(value: real) {
-        SetDestructableOccluderHeight(this.handle, value)
+        SetDestructableOccluderHeight(this.getHandle, value)
     }
 
     public get typeId() {
-        return GetDestructableTypeId(this.handle)
+        return GetDestructableTypeId(this.getHandle)
     }
 
     public get x() {
-        return GetDestructableX(this.handle)
+        return GetDestructableX(this.getHandle)
     }
 
     public get y() {
-        return GetDestructableY(this.handle)
+        return GetDestructableY(this.getHandle)
     }
 
     public destroy() {
-        RemoveDestructable(this.handle)
+        RemoveDestructable(this.getHandle)
     }
 
     public heal(life: number, birth: boolean) {
-        DestructableRestoreLife(this.handle, life, birth)
+        DestructableRestoreLife(this.getHandle, life, birth)
     }
 
     public kill() {
-        KillDestructable(this.handle)
+        KillDestructable(this.getHandle)
     }
 
     public queueAnim(whichAnimation: string) {
-        QueueDestructableAnimation(this.handle, whichAnimation)
+        QueueDestructableAnimation(this.getHandle, whichAnimation)
     }
 
     public setAnim(whichAnimation: string) {
-        SetDestructableAnimation(this.handle, whichAnimation)
+        SetDestructableAnimation(this.getHandle, whichAnimation)
     }
 
     public setAnimSpeed(speedFactor: real) {
-        SetDestructableAnimationSpeed(this.handle, speedFactor)
+        SetDestructableAnimationSpeed(this.getHandle, speedFactor)
     }
 
     public show(flag: boolean) {
-        ShowDestructable(this.handle, flag)
+        ShowDestructable(this.getHandle, flag)
+    }
+
+    public static fromHandle(handle: destructable): Destructable {
+        return this.getObject(handle)
     }
 
     public static fromEvent() {
         return this.fromHandle(GetTriggerDestructable())
     }
 
-    public static fromHandle(handle: destructable): Destructable {
-        return this.getObject(handle)
+    public static fromObject(handleObject: Destructable): destructable {
+        return this.getHandle(handleObject)
     }
 }

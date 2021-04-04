@@ -1,17 +1,15 @@
+/** @noSelfInFile **/
+//@ts-nocheck
+
 import { Handle } from "./handle"
 
 export class Ability extends Handle<ability> {
-    // public constructor(handle: ability) {
-    //     if (Handle.initFromHandle()) {
-    //         super(undefined)
-    //     } else {
-    //         super(handle)
-    //     }
-    //     super(Handle.initialized(handle))
-    // }
-
     public static fromHandle(handle: ability): Ability {
         return this.getObject(handle)
+    }
+
+    public static fromObject(handleObject: Ability): ability {
+        return this.getHandle(handleObject)
     }
 }
 

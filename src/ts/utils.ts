@@ -1,14 +1,14 @@
-import { Location } from "./handles/location"
+import { MapLocation } from "./handles/location"
 import { Point } from "./handles/point"
 import { Timer } from "./handles/timer"
 
 export type integer = number
 export type real = number
 export type code = () => void
-export type codeboolexpr = () => boolean
+export type codeboolexpr = () => boolean | null
 
 export const getExpiredTimer = Timer.fromExpired
-export const setTimeout = (time: real, call: () => void, isDestroy: boolean = false): Timer => {
+export const setTimeout = (time: real, call: code, isDestroy: boolean = false): Timer => {
     return new Timer().start(time, false, () => {
         call()
         if (isDestroy) {
@@ -19,7 +19,7 @@ export const setTimeout = (time: real, call: () => void, isDestroy: boolean = fa
     })
 }
 
-export const setInterval = (time: real, call: () => void): Timer => {
+export const setInterval = (time: real, call: code): Timer => {
     return new Timer().start(time, true, call)
 }
 
@@ -49,10 +49,7 @@ export type Coords = {
     z: real
 }
 
-export type Position = Coords | Location | Point
-
-
-
+export type Position = Coords | MapLocation | Point
 
 // function forHandle(handle: handle) {
 //     print(handle)

@@ -1,5 +1,5 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
 import { Handle } from "./handle"
 import { Timer } from "./timer"
@@ -30,12 +30,8 @@ declare function TimerDialogSetRealTimeRemaining(
 ): void
 
 export class TimerDialog extends Handle<timerdialog> {
-    constructor(t: Timer) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(CreateTimerDialog(t.handle))
-        }
+    public constructor(t: Timer) {
+        super(CreateTimerDialog(t.handle))
     }
 
     public get display() {
@@ -52,14 +48,17 @@ export class TimerDialog extends Handle<timerdialog> {
 
     public setSpeed(speedMultFactor: number) {
         TimerDialogSetSpeed(this.handle, speedMultFactor)
+        return this
     }
 
     public setTimeRemaining(value: number) {
         TimerDialogSetRealTimeRemaining(this.handle, value)
+        return this
     }
 
     public setTitle(title: string) {
         TimerDialogSetTitle(this.handle, title)
+        return this
     }
 
     public static fromHandle(handle: timerdialog): TimerDialog {

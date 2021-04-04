@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { integer } from "../main"
+import { integer } from "../utils"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 
@@ -70,145 +70,149 @@ declare function LeaderboardSetItemValueColor(
 ): void
 
 export class Leaderboard extends Handle<leaderboard> {
-    constructor() {
-        super(Handle.initFromHandle() ? undefined : CreateLeaderboard())
+    public constructor() {
+        super(CreateLeaderboard())
     }
 
-    destroy() {
-        DestroyLeaderboard(this.handle)
+    public destroy() {
+        DestroyLeaderboard(this.getHandle)
     }
 
-    display(flag: boolean = true) {
-        LeaderboardDisplay(this.handle, flag)
+    public display(flag: boolean = true) {
+        LeaderboardDisplay(this.getHandle, flag)
         return this
     }
 
-    get displayed() {
-        return IsLeaderboardDisplayed(this.handle)
+    public get displayed(): boolean {
+        return IsLeaderboardDisplayed(this.getHandle)
     }
 
-    get itemCount() {
-        return LeaderboardGetItemCount(this.handle)
+    public get itemCount(): integer {
+        return LeaderboardGetItemCount(this.getHandle)
     }
 
-    set itemCount(count: integer) {
-        LeaderboardSetSizeByItemCount(this.handle, count)
+    public set itemCount(count: integer) {
+        LeaderboardSetSizeByItemCount(this.getHandle, count)
     }
 
-    addItem(label: string, value: integer, p: MapPlayer) {
-        LeaderboardAddItem(this.handle, label, value, p.handle)
+    public addItem(label: string, value: integer, p: MapPlayer) {
+        LeaderboardAddItem(this.getHandle, label, value, p.getHandle)
         return this
     }
 
-    removeItem(index: integer) {
-        LeaderboardRemoveItem(this.handle, index)
+    public removeItem(index: integer) {
+        LeaderboardRemoveItem(this.getHandle, index)
         return this
     }
 
-    removePlayerItem(p: MapPlayer) {
-        LeaderboardRemovePlayerItem(this.handle, p.handle)
+    public removePlayerItem(p: MapPlayer) {
+        LeaderboardRemovePlayerItem(this.getHandle, p.getHandle)
         return this
     }
 
-    clear() {
-        LeaderboardClear(this.handle)
+    public clear() {
+        LeaderboardClear(this.getHandle)
         return this
     }
 
-    sortByValue(asc: boolean = true) {
-        LeaderboardSortItemsByValue(this.handle, asc)
+    public sortByValue(asc: boolean = true) {
+        LeaderboardSortItemsByValue(this.getHandle, asc)
         return this
     }
 
-    sortByPlayer(asc: boolean = true) {
-        LeaderboardSortItemsByPlayer(this.handle, asc)
+    public sortByPlayer(asc: boolean = true) {
+        LeaderboardSortItemsByPlayer(this.getHandle, asc)
         return this
     }
 
-    sortByLabel(asc: boolean = true) {
-        LeaderboardSortItemsByLabel(this.handle, asc)
+    public sortByLabel(asc: boolean = true) {
+        LeaderboardSortItemsByLabel(this.getHandle, asc)
         return this
     }
 
-    hasPlayerItem(p: MapPlayer) {
-        return LeaderboardHasPlayerItem(this.handle, p.handle)
+    public hasPlayerItem(p: MapPlayer): boolean {
+        return LeaderboardHasPlayerItem(this.getHandle, p.getHandle)
     }
 
-    getPlayerIndex(p: MapPlayer): integer {
-        return LeaderboardGetPlayerIndex(this.handle, p.handle)
+    public getPlayerIndex(p: MapPlayer): integer {
+        return LeaderboardGetPlayerIndex(this.getHandle, p.getHandle)
     }
 
-    set label(value: string) {
-        LeaderboardSetLabel(this.handle, value)
+    public set label(value: string) {
+        LeaderboardSetLabel(this.getHandle, value)
     }
 
-    get label() {
-        return LeaderboardGetLabelText(this.handle)
+    public get label(): string {
+        return LeaderboardGetLabelText(this.getHandle)
     }
 
-    setLabelColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        LeaderboardSetLabelColor(this.handle, red, green, blue, alpha)
+    public setLabelColor(red: integer, green: integer, blue: integer, alpha: integer) {
+        LeaderboardSetLabelColor(this.getHandle, red, green, blue, alpha)
         return this
     }
 
-    setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        LeaderboardSetValueColor(this.handle, red, green, blue, alpha)
+    public setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
+        LeaderboardSetValueColor(this.getHandle, red, green, blue, alpha)
         return this
     }
 
-    setStyle(
+    public setStyle(
         showLabel: boolean = true,
         showNames: boolean = true,
         showValues: boolean = true,
         showIcons: boolean = true
     ) {
-        LeaderboardSetStyle(this.handle, showLabel, showNames, showValues, showIcons)
+        LeaderboardSetStyle(this.getHandle, showLabel, showNames, showValues, showIcons)
         return this
     }
 
-    setItemValue(item: integer, value: integer) {
-        LeaderboardSetItemValue(this.handle, item, value)
+    public setItemValue(item: integer, value: integer) {
+        LeaderboardSetItemValue(this.getHandle, item, value)
         return this
     }
 
-    setItemLabel(item: integer, label: string) {
-        LeaderboardSetItemLabel(this.handle, item, label)
+    public setItemLabel(item: integer, label: string) {
+        LeaderboardSetItemLabel(this.getHandle, item, label)
         return this
     }
 
-    setItemStyle(
+    public setItemStyle(
         item: integer,
         showLabel: boolean = true,
         showValues: boolean = true,
         showIcons: boolean = true
     ) {
-        LeaderboardSetItemStyle(this.handle, item, showLabel, showValues, showIcons)
+        LeaderboardSetItemStyle(this.getHandle, item, showLabel, showValues, showIcons)
         return this
     }
 
-    setItemLabelColor(
+    public setItemLabelColor(
         item: integer,
         red: integer,
         green: integer,
         blue: integer,
         alpha: integer
     ) {
-        LeaderboardSetItemLabelColor(this.handle, item, red, green, blue, alpha)
+        LeaderboardSetItemLabelColor(this.getHandle, item, red, green, blue, alpha)
         return this
     }
 
-    setItemValueColor(
+    public setItemValueColor(
         item: integer,
         red: integer,
         green: integer,
         blue: integer,
         alpha: integer
     ) {
-        LeaderboardSetItemValueColor(this.handle, item, red, green, blue, alpha)
+        LeaderboardSetItemValueColor(this.getHandle, item, red, green, blue, alpha)
         return this
     }
 
-    static fromHandle(handle: leaderboard): Leaderboard {
+    public static fromHandle(handle: leaderboard): Leaderboard {
         return this.getObject(handle)
+    }
+
+    public static fromObject(object: Leaderboard): leaderboard {
+        return this.getHandle(object)
     }
 }

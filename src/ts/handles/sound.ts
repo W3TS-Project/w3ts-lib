@@ -1,15 +1,17 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
+import { integer, real } from "../utils"
 import { Handle } from "./handle"
+import { Unit } from "./unit"
 
 declare function CreateSound(
     fileName: string,
     looping: boolean,
     is3D: boolean,
     stopwhenoutofrange: boolean,
-    fadeInRate: number,
-    fadeOutRate: number,
+    fadeInRate: integer,
+    fadeOutRate: integer,
     eaxSetting: string
 ): sound
 declare function CreateSoundFilenameWithLabel(
@@ -17,8 +19,8 @@ declare function CreateSoundFilenameWithLabel(
     looping: boolean,
     is3D: boolean,
     stopwhenoutofrange: boolean,
-    fadeInRate: number,
-    fadeOutRate: number,
+    fadeInRate: integer,
+    fadeOutRate: integer,
     SLKEntryName: string
 ): sound
 declare function CreateSoundFromLabel(
@@ -26,44 +28,34 @@ declare function CreateSoundFromLabel(
     looping: boolean,
     is3D: boolean,
     stopwhenoutofrange: boolean,
-    fadeInRate: number,
-    fadeOutRate: number
+    fadeInRate: integer,
+    fadeOutRate: integer
 ): sound
-declare function CreateMIDISound(soundLabel: string, fadeInRate: number, fadeOutRate: number): sound
+declare function CreateMIDISound(
+    soundLabel: string,
+    fadeInRate: integer,
+    fadeOutRate: integer
+): sound
 declare function SetSoundParamsFromLabel(soundHandle: sound, soundLabel: string): void
-declare function SetSoundDistanceCutoff(soundHandle: sound, cutoff: number): void
-declare function SetSoundChannel(soundHandle: sound, channel: number): void
-declare function SetSoundVolume(soundHandle: sound, volume: number): void
-declare function SetSoundPitch(soundHandle: sound, pitch: number): void
-declare function SetSoundPlayPosition(soundHandle: sound, millisecs: number): void
-declare function SetSoundDistances(soundHandle: sound, minDist: number, maxDist: number): void
+declare function SetSoundDistanceCutoff(soundHandle: sound, cutoff: real): void
+declare function SetSoundChannel(soundHandle: sound, channel: integer): void
+declare function SetSoundVolume(soundHandle: sound, volume: integer): void
+declare function SetSoundPitch(soundHandle: sound, pitch: real): void
+declare function SetSoundPlayPosition(soundHandle: sound, millisecs: integer): void
+declare function SetSoundDistances(soundHandle: sound, minDist: real, maxDist: real): void
 declare function SetSoundConeAngles(
     soundHandle: sound,
-    inside: number,
-    outside: number,
-    outsideVolume: number
+    inside: real,
+    outside: real,
+    outsideVolume: integer
 ): void
-declare function SetSoundConeOrientation(soundHandle: sound, x: number, y: number, z: number): void
-declare function SetSoundPosition(soundHandle: sound, x: number, y: number, z: number): void
-declare function SetSoundVelocity(soundHandle: sound, x: number, y: number, z: number): void
+declare function SetSoundConeOrientation(soundHandle: sound, x: real, y: real, z: real): void
+declare function SetSoundPosition(soundHandle: sound, x: real, y: real, z: real): void
+declare function SetSoundVelocity(soundHandle: sound, x: real, y: real, z: real): void
 declare function AttachSoundToUnit(soundHandle: sound, whichUnit: unit): void
 declare function StartSound(soundHandle: sound): void
 declare function StopSound(soundHandle: sound, killWhenDone: boolean, fadeOut: boolean): void
 declare function KillSoundWhenDone(soundHandle: sound): void
-declare function GetSoundIsPlaying(soundHandle: sound): boolean
-declare function GetSoundIsLoading(soundHandle: sound): boolean
-declare function RegisterStackedSound(
-    soundHandle: sound,
-    byPosition: boolean,
-    rectwidth: number,
-    rectheight: number
-): void
-declare function UnregisterStackedSound(
-    soundHandle: sound,
-    byPosition: boolean,
-    rectwidth: number,
-    rectheight: number
-): void
 declare function SetSoundFacialAnimationLabel(soundHandle: sound, animationLabel: string): boolean
 declare function SetSoundFacialAnimationGroupLabel(soundHandle: sound, groupLabel: string): boolean
 declare function SetSoundFacialAnimationSetFilepath(
@@ -74,154 +66,237 @@ declare function SetDialogueSpeakerNameKey(soundHandle: sound, speakerName: stri
 declare function GetDialogueSpeakerNameKey(soundHandle: sound): string
 declare function SetDialogueTextKey(soundHandle: sound, dialogueText: string): boolean
 declare function GetDialogueTextKey(soundHandle: sound): string
-declare function SetSoundDuration(soundHandle: sound, duration: number): void
-declare function GetSoundDuration(soundHandle: sound): number
-declare function GetSoundFileDuration(musicFileName: string): number
+declare function SetSoundDuration(soundHandle: sound, duration: integer): void
+declare function GetSoundDuration(soundHandle: sound): integer
+declare function GetSoundFileDuration(musicFileName: string): integer
+declare function GetSoundIsPlaying(soundHandle: sound): boolean
+declare function GetSoundIsLoading(soundHandle: sound): boolean
+declare function RegisterStackedSound(
+    soundHandle: sound,
+    byPosition: boolean,
+    rectwidth: real,
+    rectheight: real
+): void
+declare function UnregisterStackedSound(
+    soundHandle: sound,
+    byPosition: boolean,
+    rectwidth: real,
+    rectheight: real
+): void
 
 export class Sound extends Handle<sound> {
-    constructor(
+    public static create(
         fileName: string,
         looping: boolean,
         is3D: boolean,
         stopWhenOutOfRange: boolean,
-        fadeInRate: number,
-        fadeOutRate: number,
+        fadeInRate: integer,
+        fadeOutRate: integer,
         eaxSetting: string
     ) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(
-                CreateSound(
-                    fileName,
-                    looping,
-                    is3D,
-                    stopWhenOutOfRange,
-                    fadeInRate,
-                    fadeOutRate,
-                    eaxSetting
-                )
+        return new this(
+            CreateSound(
+                fileName,
+                looping,
+                is3D,
+                stopWhenOutOfRange,
+                fadeInRate,
+                fadeOutRate,
+                eaxSetting
             )
-        }
+        )
     }
 
-    public get dialogueSpeakerNameKey() {
-        return GetDialogueSpeakerNameKey(this.handle)
+    public static createFromFileWithLabel(
+        fileName: string,
+        looping: boolean,
+        is3D: boolean,
+        stopWhenOutOfRange: boolean,
+        fadeInRate: integer,
+        fadeOutRate: integer,
+        SLKEntryName: string
+    ) {
+        return new this(
+            CreateSoundFilenameWithLabel(
+                fileName,
+                looping,
+                is3D,
+                stopWhenOutOfRange,
+                fadeInRate,
+                fadeOutRate,
+                SLKEntryName
+            )
+        )
     }
 
-    public set dialogueSpeakerNameKey(speakerName: string) {
-        SetDialogueSpeakerNameKey(this.handle, speakerName)
+    public static createFromLabel(
+        soundLabel: string,
+        looping: boolean,
+        is3D: boolean,
+        stopWhenOutOfRange: boolean,
+        fadeInRate: integer,
+        fadeOutRate: integer
+    ) {
+        return new this(
+            CreateSoundFromLabel(
+                soundLabel,
+                looping,
+                is3D,
+                stopWhenOutOfRange,
+                fadeInRate,
+                fadeOutRate
+            )
+        )
     }
 
-    public get dialogueTextKey() {
-        return GetDialogueTextKey(this.handle)
-    }
-
-    public set dialogueTextKey(dialogueText: string) {
-        SetDialogueTextKey(this.handle, dialogueText)
-    }
-
-    public get duration() {
-        return GetSoundDuration(this.handle)
-    }
-
-    public set duration(duration: number) {
-        SetSoundDuration(this.handle, duration)
-    }
-
-    public get loading() {
-        return GetSoundIsLoading(this.handle)
-    }
-
-    public get playing() {
-        return GetSoundIsPlaying(this.handle)
-    }
-
-    public killWhenDone() {
-        KillSoundWhenDone(this.handle)
-    }
-
-    public registerStacked(byPosition: boolean, rectWidth: number, rectHeight: number) {
-        RegisterStackedSound(this.handle, byPosition, rectWidth, rectHeight)
-    }
-
-    public setChannel(channel: number) {
-        SetSoundDistanceCutoff(this.handle, channel)
-    }
-
-    public setConeAngles(inside: number, outside: number, outsideVolume: number) {
-        SetSoundConeAngles(this.handle, inside, outside, outsideVolume)
-    }
-
-    public setConeOrientation(x: number, y: number, z: number) {
-        SetSoundConeOrientation(this.handle, x, y, z)
-    }
-
-    public setDistanceCutoff(cutoff: number) {
-        SetSoundDistanceCutoff(this.handle, cutoff)
-    }
-
-    public setDistances(minDist: number, maxDist: number) {
-        SetSoundDistances(this.handle, minDist, maxDist)
-    }
-
-    public setFacialAnimationFilepath(animationSetFilepath: string) {
-        SetSoundFacialAnimationSetFilepath(this.handle, animationSetFilepath)
-    }
-
-    public setFacialAnimationGroupLabel(groupLabel: string) {
-        SetSoundFacialAnimationGroupLabel(this.handle, groupLabel)
-    }
-
-    public setFacialAnimationLabel(animationLabel: string) {
-        SetSoundFacialAnimationLabel(this.handle, animationLabel)
+    public static createMIDI(soundLabel: string, fadeInRate: integer, fadeOutRate: integer) {
+        return new this(CreateMIDISound(soundLabel, fadeInRate, fadeOutRate))
     }
 
     public setParamsFromLabel(soundLabel: string) {
-        SetSoundParamsFromLabel(this.handle, soundLabel)
+        SetSoundParamsFromLabel(this.getHandle, soundLabel)
+        return this
     }
 
-    public setPitch(pitch: number) {
-        SetSoundPitch(this.handle, pitch)
+    public setDistanceCutoff(cutoff: real) {
+        SetSoundDistanceCutoff(this.getHandle, cutoff)
+        return this
+    }
+
+    public setChannel(channel: integer) {
+        SetSoundChannel(this.getHandle, channel)
+        return this
+    }
+
+    public setVolume(volume: integer) {
+        SetSoundVolume(this.getHandle, volume)
+        return this
+    }
+
+    public setPitch(pitch: real) {
+        SetSoundPitch(this.getHandle, pitch)
+        return this
     }
 
     /**
      * Must be called immediately after starting the sound
      * @param millisecs
      */
-    public setPlayPosition(millisecs: number) {
-        SetSoundPlayPosition(this.handle, millisecs)
+    public setPlayPosition(millisecs: integer) {
+        SetSoundPlayPosition(this.getHandle, millisecs)
+        return this
     }
 
-    public setPosition(x: number, y: number, z: number) {
-        SetSoundPosition(this.handle, x, y, z)
+    public setDistances(minDist: real, maxDist: real) {
+        SetSoundDistances(this.getHandle, minDist, maxDist)
+        return this
     }
 
-    public setVelocity(x: number, y: number, z: number) {
-        SetSoundVelocity(this.handle, x, y, z)
+    public setConeAngles(inside: real, outside: real, outsideVolume: integer) {
+        SetSoundConeAngles(this.getHandle, inside, outside, outsideVolume)
+        return this
     }
 
-    public setVolume(volume: number) {
-        SetSoundVolume(this.handle, volume)
+    public setConeOrientation(x: real, y: real, z: real) {
+        SetSoundConeOrientation(this.getHandle, x, y, z)
+        return this
+    }
+
+    public setPosition(x: real, y: real, z: real) {
+        SetSoundPosition(this.getHandle, x, y, z)
+        return this
+    }
+
+    public setVelocity(x: real, y: real, z: real) {
+        SetSoundVelocity(this.getHandle, x, y, z)
+        return this
+    }
+
+    public attachToUnit(whichUnit: Unit) {
+        AttachSoundToUnit(this.getHandle, whichUnit.getHandle)
+        return this
     }
 
     public start() {
-        StartSound(this.handle)
+        StartSound(this.getHandle)
+        return this
     }
 
     public stop(killWhenDone: boolean, fadeOut: boolean) {
-        StopSound(this.handle, killWhenDone, fadeOut)
+        StopSound(this.getHandle, killWhenDone, fadeOut)
+        return this
     }
 
-    public unregisterStacked(byPosition: boolean, rectWidth: number, rectHeight: number) {
-        UnregisterStackedSound(this.handle, byPosition, rectWidth, rectHeight)
+    public killWhenDone() {
+        KillSoundWhenDone(this.getHandle)
+    }
+
+    public get duration(): integer {
+        return GetSoundDuration(this.getHandle)
+    }
+
+    public set duration(duration: integer) {
+        SetSoundDuration(this.getHandle, duration)
+    }
+
+    public static getFileDuration(fileName: string): integer {
+        return GetSoundFileDuration(fileName)
+    }
+
+    public get playing(): boolean {
+        return GetSoundIsPlaying(this.getHandle)
+    }
+
+    public get loading(): boolean {
+        return GetSoundIsLoading(this.getHandle)
+    }
+
+    public registerStacked(byPosition: boolean, rectWidth: real, rectHeight: real) {
+        RegisterStackedSound(this.getHandle, byPosition, rectWidth, rectHeight)
+        return this
+    }
+
+    public unregisterStacked(byPosition: boolean, rectWidth: real, rectHeight: real) {
+        UnregisterStackedSound(this.getHandle, byPosition, rectWidth, rectHeight)
+        return this
+    }
+
+    public get dialogueSpeakerNameKey(): string {
+        return GetDialogueSpeakerNameKey(this.getHandle)
+    }
+
+    public set dialogueSpeakerNameKey(speakerName: string) {
+        SetDialogueSpeakerNameKey(this.getHandle, speakerName)
+    }
+
+    public get dialogueTextKey(): string {
+        return GetDialogueTextKey(this.getHandle)
+    }
+
+    public set dialogueTextKey(dialogueText: string) {
+        SetDialogueTextKey(this.getHandle, dialogueText)
+    }
+
+    public setFacialAnimationFilepath(animationSetFilepath: string) {
+        SetSoundFacialAnimationSetFilepath(this.getHandle, animationSetFilepath)
+        return this
+    }
+
+    public setFacialAnimationGroupLabel(groupLabel: string) {
+        SetSoundFacialAnimationGroupLabel(this.getHandle, groupLabel)
+        return this
+    }
+
+    public setFacialAnimationLabel(animationLabel: string) {
+        SetSoundFacialAnimationLabel(this.getHandle, animationLabel)
+        return this
     }
 
     public static fromHandle(handle: sound): Sound {
         return this.getObject(handle)
     }
 
-    public static getFileDuration(fileName: string) {
-        return GetSoundFileDuration(fileName)
+    public static fromObject(object: Sound): sound {
+        return this.getHandle(object)
     }
 }

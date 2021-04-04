@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
-import { integer, real } from "../main"
+import { integer, real } from "../utils"
 import { Handle } from "./handle"
 
 declare function BlzCreateFrame(
@@ -102,308 +102,303 @@ declare function BlzHideOriginFrames(enable: boolean): void
 declare function BlzLoadTOCFile(TOCFile: string): boolean
 
 export class Frame extends Handle<framehandle> {
-    constructor(handle: framehandle) {
-        if (Handle.initFromHandle()) {
-            super(undefined)
-        } else {
-            super(handle)
-        }
+    public static create(name: string, owner: Frame, priority: integer, createContext: integer) {
+        return new this(BlzCreateFrame(name, owner.getHandle, priority, createContext))
     }
 
-    static create(name: string, owner: Frame, priority: integer, createContext: integer) {
-        return new this(BlzCreateFrame(name, owner.handle, priority, createContext))
+    public static simpleCreate(name: string, owner: Frame, createContext: integer) {
+        return new this(BlzCreateSimpleFrame(name, owner.getHandle, createContext))
     }
 
-    static simpleCreate(name: string, owner: Frame, createContext: integer) {
-        return new this(BlzCreateSimpleFrame(name, owner.handle, createContext))
-    }
-
-    static byTypeCreate(
+    public static byTypeCreate(
         typeName: string,
         name: string,
         owner: Frame,
         inherits: string,
         createContext: integer
     ) {
-        return new this(BlzCreateFrameByType(typeName, name, owner.handle, inherits, createContext))
+        return new this(BlzCreateFrameByType(typeName, name, owner.getHandle, inherits, createContext))
     }
 
-    static fromOrigin(frameType: originframetype, index: integer) {
+    public static fromOrigin(frameType: originframetype, index: integer) {
         return this.fromHandle(BlzGetOriginFrame(frameType, index))
     }
 
-    static autoPosition(enable: boolean) {
+    public static autoPosition(enable: boolean) {
         BlzEnableUIAutoPosition(enable)
         return this
     }
 
-    static hideOrigin(enable: boolean) {
+    public static hideOrigin(enable: boolean) {
         BlzHideOriginFrames(enable)
         return this
     }
 
-    destroy() {
-        BlzDestroyFrame(this.handle)
-        return this
+    public destroy() {
+        BlzDestroyFrame(this.getHandle)
     }
 
-    setPoint(
+    public setPoint(
         point: framepointtype,
         relative: Frame,
         relativePoint: framepointtype,
         x: real,
         y: real
     ) {
-        BlzFrameSetPoint(this.handle, point, relative.handle, relativePoint, x, y)
+        BlzFrameSetPoint(this.getHandle, point, relative.getHandle, relativePoint, x, y)
         return this
     }
 
-    setAbsPoint(point: framepointtype, x: real, y: real) {
-        BlzFrameSetAbsPoint(this.handle, point, x, y)
+    public setAbsPoint(point: framepointtype, x: real, y: real) {
+        BlzFrameSetAbsPoint(this.getHandle, point, x, y)
         return this
     }
 
-    clearPoints() {
-        BlzFrameClearAllPoints(this.handle)
+    public clearPoints() {
+        BlzFrameClearAllPoints(this.getHandle)
         return this
     }
 
-    setAllPoints(relative: Frame) {
-        BlzFrameSetAllPoints(this.handle, relative.handle)
+    public setAllPoints(relative: Frame) {
+        BlzFrameSetAllPoints(this.getHandle, relative.getHandle)
         return this
     }
 
-    set visible(flag: boolean) {
-        BlzFrameSetVisible(this.handle, flag)
+    public set visible(flag: boolean) {
+        BlzFrameSetVisible(this.getHandle, flag)
     }
 
-    setVisible(flag: boolean) {
-        BlzFrameSetVisible(this.handle, flag)
+    public setVisible(flag: boolean) {
+        BlzFrameSetVisible(this.getHandle, flag)
         return this
     }
 
-    get visible(): boolean {
-        return BlzFrameIsVisible(this.handle)
+    public get visible(): boolean {
+        return BlzFrameIsVisible(this.getHandle)
     }
 
-    static fromName(name: string, createContext: integer) {
+    public static fromName(name: string, createContext: integer) {
         return this.fromHandle(BlzGetFrameByName(name, createContext))
     }
 
-    get name(): string {
-        return BlzFrameGetName(this.handle)
+    public get name(): string {
+        return BlzFrameGetName(this.getHandle)
     }
 
-    click() {
-        BlzFrameClick(this.handle)
+    public click() {
+        BlzFrameClick(this.getHandle)
         return this
     }
 
-    set text(text: string) {
-        BlzFrameSetText(this.handle, text)
+    public set text(text: string) {
+        BlzFrameSetText(this.getHandle, text)
     }
 
-    get text(): string {
-        return BlzFrameGetText(this.handle)
+    public get text(): string {
+        return BlzFrameGetText(this.getHandle)
     }
 
-    addText(text: string) {
-        BlzFrameAddText(this.handle, text)
+    public addText(text: string) {
+        BlzFrameAddText(this.getHandle, text)
         return this
     }
 
-    set sizeLimitText(size: integer) {
-        BlzFrameSetTextSizeLimit(this.handle, size)
+    public set sizeLimitText(size: integer) {
+        BlzFrameSetTextSizeLimit(this.getHandle, size)
     }
 
-    get sizeLimitText(): integer {
-        return BlzFrameGetTextSizeLimit(this.handle)
+    public get sizeLimitText(): integer {
+        return BlzFrameGetTextSizeLimit(this.getHandle)
     }
 
-    setTextColor(color: integer) {
-        BlzFrameSetTextColor(this.handle, color)
+    public setTextColor(color: integer) {
+        BlzFrameSetTextColor(this.getHandle, color)
         return this
     }
 
-    setFocus(flag: boolean) {
-        BlzFrameSetFocus(this.handle, flag)
+    public setFocus(flag: boolean) {
+        BlzFrameSetFocus(this.getHandle, flag)
         return this
     }
 
-    setModel(modelFile: string, cameraIndex: integer) {
-        BlzFrameSetModel(this.handle, modelFile, cameraIndex)
+    public setModel(modelFile: string, cameraIndex: integer) {
+        BlzFrameSetModel(this.getHandle, modelFile, cameraIndex)
         return this
     }
 
-    set enabled(flag: boolean) {
-        BlzFrameSetEnable(this.handle, flag)
+    public set enabled(flag: boolean) {
+        BlzFrameSetEnable(this.getHandle, flag)
     }
 
-    setEnabled(flag: boolean) {
-        BlzFrameSetEnable(this.handle, flag)
+    public setEnabled(flag: boolean) {
+        BlzFrameSetEnable(this.getHandle, flag)
         return this
     }
 
-    get enabled(): boolean {
-        return BlzFrameGetEnable(this.handle)
+    public get enabled(): boolean {
+        return BlzFrameGetEnable(this.getHandle)
     }
 
-    set alpha(alpha: integer) {
-        BlzFrameSetAlpha(this.handle, alpha)
+    public set alpha(alpha: integer) {
+        BlzFrameSetAlpha(this.getHandle, alpha)
     }
 
-    setAlpha(alpha: integer) {
-        BlzFrameSetAlpha(this.handle, alpha)
+    public setAlpha(alpha: integer) {
+        BlzFrameSetAlpha(this.getHandle, alpha)
         return this
     }
 
-    get alpha(): integer {
-        return BlzFrameGetAlpha(this.handle)
+    public get alpha(): integer {
+        return BlzFrameGetAlpha(this.getHandle)
     }
 
-    setSpriteAnimate(primaryProp: integer, flags: integer) {
-        BlzFrameSetSpriteAnimate(this.handle, primaryProp, flags)
+    public setSpriteAnimate(primaryProp: integer, flags: integer) {
+        BlzFrameSetSpriteAnimate(this.getHandle, primaryProp, flags)
         return this
     }
 
-    setTexture(texFile: string, flag: integer, blend: boolean) {
-        BlzFrameSetTexture(this.handle, texFile, flag, blend)
+    public setTexture(texFile: string, flag: integer, blend: boolean) {
+        BlzFrameSetTexture(this.getHandle, texFile, flag, blend)
         return this
     }
 
-    setScale(scale: real) {
-        BlzFrameSetScale(this.handle, scale)
+    public setScale(scale: real) {
+        BlzFrameSetScale(this.getHandle, scale)
         return this
     }
 
-    setTooltip(tooltip: Frame) {
-        BlzFrameSetTooltip(this.handle, tooltip.handle)
+    public setTooltip(tooltip: Frame) {
+        BlzFrameSetTooltip(this.getHandle, tooltip.getHandle)
         return this
     }
 
-    cageMouse(enable: boolean) {
-        BlzFrameCageMouse(this.handle, enable)
+    public cageMouse(enable: boolean) {
+        BlzFrameCageMouse(this.getHandle, enable)
         return this
     }
 
-    set value(value: real) {
-        BlzFrameSetValue(this.handle, value)
+    public set value(value: real) {
+        BlzFrameSetValue(this.getHandle, value)
     }
 
-    setValue(value: real) {
-        BlzFrameSetValue(this.handle, value)
+    public setValue(value: real) {
+        BlzFrameSetValue(this.getHandle, value)
         return this
     }
 
-    get value(): real {
-        return BlzFrameGetValue(this.handle)
+    public get value(): real {
+        return BlzFrameGetValue(this.getHandle)
     }
 
-    setMinMaxValue(minValue: real, maxValue: real) {
-        BlzFrameSetMinMaxValue(this.handle, minValue, maxValue)
+    public setMinMaxValue(minValue: real, maxValue: real) {
+        BlzFrameSetMinMaxValue(this.getHandle, minValue, maxValue)
         return this
     }
 
-    setStepSize(stepSize: real) {
-        BlzFrameSetStepSize(this.handle, stepSize)
+    public setStepSize(stepSize: real) {
+        BlzFrameSetStepSize(this.getHandle, stepSize)
         return this
     }
 
-    setSize(width: real, height: real) {
-        BlzFrameSetSize(this.handle, width, height)
+    public setSize(width: real, height: real) {
+        BlzFrameSetSize(this.getHandle, width, height)
         return this
     }
 
-    setVertexColor(color: integer) {
-        BlzFrameSetVertexColor(this.handle, color)
+    public setVertexColor(color: integer) {
+        BlzFrameSetVertexColor(this.getHandle, color)
         return this
     }
 
-    setLevel(level: integer) {
-        BlzFrameSetLevel(this.handle, level)
+    public setLevel(level: integer) {
+        BlzFrameSetLevel(this.getHandle, level)
         return this
     }
 
-    set parent(parent: Frame) {
-        BlzFrameSetParent(this.handle, parent.handle)
+    public set parent(parent: Frame) {
+        BlzFrameSetParent(this.getHandle, parent.getHandle)
     }
 
-    get parent() {
-        return Frame.fromHandle(BlzFrameGetParent(this.handle))
+    public get parent() {
+        return Frame.fromHandle(BlzFrameGetParent(this.getHandle))
     }
 
-    set width(width: real) {
-        BlzFrameSetSize(this.handle, width, this.height)
+    public set width(width: real) {
+        BlzFrameSetSize(this.getHandle, width, this.height)
     }
 
-    setWidth(width: real) {
-        BlzFrameSetSize(this.handle, width, this.height)
+    public setWidth(width: real) {
+        BlzFrameSetSize(this.getHandle, width, this.height)
         return this
     }
 
-    get width(): real {
-        return BlzFrameGetWidth(this.handle)
+    public get width(): real {
+        return BlzFrameGetWidth(this.getHandle)
     }
 
-    setFont(filename: string, height: real, flags: integer) {
-        BlzFrameSetFont(this.handle, filename, height, flags)
+    public setFont(filename: string, height: real, flags: integer) {
+        BlzFrameSetFont(this.getHandle, filename, height, flags)
         return this
     }
 
-    setTextAlignment(vert: textaligntype, horz: textaligntype) {
-        BlzFrameSetTextAlignment(this.handle, vert, horz)
+    public setTextAlignment(vert: textaligntype, horz: textaligntype) {
+        BlzFrameSetTextAlignment(this.getHandle, vert, horz)
         return this
     }
 
-    set height(height: real) {
-        BlzFrameSetSize(this.handle, this.width, height)
+    public set height(height: real) {
+        BlzFrameSetSize(this.getHandle, this.width, height)
     }
 
-    setHeight(height: number) {
-        BlzFrameSetSize(this.handle, this.width, height)
+    public setHeight(height: number) {
+        BlzFrameSetSize(this.getHandle, this.width, height)
         return this
     }
 
-    get height(): real {
-        return BlzFrameGetHeight(this.handle)
+    public get height(): real {
+        return BlzFrameGetHeight(this.getHandle)
     }
 
-    setParent(parent: Frame) {
-        BlzFrameSetParent(this.handle, parent.handle)
+    public setParent(parent: Frame) {
+        BlzFrameSetParent(this.getHandle, parent.getHandle)
         return this
     }
 
-    setText(text: string) {
-        BlzFrameSetText(this.handle, text)
+    public setText(text: string) {
+        BlzFrameSetText(this.getHandle, text)
         return this
     }
 
-    setTextSizeLimit(size: number) {
-        BlzFrameSetTextSizeLimit(this.handle, size)
+    public setTextSizeLimit(size: number) {
+        BlzFrameSetTextSizeLimit(this.getHandle, size)
         return this
     }
 
-    static fromHandle(handle: framehandle): Frame {
+    public static fromHandle(handle: framehandle): Frame {
         return this.getObject(handle)
     }
 
-    static fromEvent() {
+    public static fromEvent() {
         return this.fromHandle(BlzGetTriggerFrame())
     }
 
-    static getEventHandle() {
+    public static fromObject(handleObject: Frame): framehandle {
+        return this.getHandle(handleObject)
+    }
+
+    public static getEventType(): frameeventtype {
         return BlzGetTriggerFrameEvent()
     }
 
-    static getEventText() {
+    public static getEventText(): string {
         return BlzGetTriggerFrameText()
     }
 
-    static getEventValue() {
+    public static getEventValue(): real {
         return BlzGetTriggerFrameValue()
     }
 
-    static loadTOC(filename: string) {
+    public static loadTOC(filename: string): boolean {
         return BlzLoadTOCFile(filename)
     }
 }
