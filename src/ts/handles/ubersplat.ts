@@ -38,34 +38,38 @@ export class Ubersplat extends Handle<ubersplat> {
     }
 
     public destroy() {
-        DestroyUbersplat(this.handle)
+        DestroyUbersplat(this.getHandle)
     }
 
     public finish() {
-        FinishUbersplat(this.handle)
+        FinishUbersplat(this.getHandle)
         return this
     }
 
     public render(flag: boolean, always = false) {
         if (always) {
-            SetUbersplatRenderAlways(this.handle, flag)
+            SetUbersplatRenderAlways(this.getHandle, flag)
         } else {
-            SetUbersplatRender(this.handle, flag)
+            SetUbersplatRender(this.getHandle, flag)
         }
         return this
     }
 
     public reset() {
-        ResetUbersplat(this.handle)
+        ResetUbersplat(this.getHandle)
         return this
     }
 
     public show(flag: boolean) {
-        ShowUbersplat(this.handle, flag)
+        ShowUbersplat(this.getHandle, flag)
         return this
     }
 
     public static fromHandle(handle: ubersplat): Ubersplat {
         return this.getObject(handle)
+    }
+
+    public static fromObject(object: Ubersplat): ubersplat {
+        return this.getHandle(object)
     }
 }

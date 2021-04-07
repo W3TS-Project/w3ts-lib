@@ -134,6 +134,7 @@ declare function GetEnumPlayer(): player
 declare function GetTriggerPlayer(): player
 declare function PlayerSetLeaderboard(toPlayer: player, lb: leaderboard): void
 declare function PlayerGetLeaderboard(toPlayer: player): leaderboard
+declare function GetWinningPlayer(): player
 
 export class MapPlayer extends Handle<player> {
     private constructor(index: integer) {
@@ -439,6 +440,11 @@ export class MapPlayer extends Handle<player> {
         return this.fromHandle(GetEnumPlayer())
     }
 
+    /**
+     * EVENT_PLAYER_DEFEAT - EventPlayer.Defeat
+     * EVENT_PLAYER_VICTORY - EventPlayer.Victory
+     * @returns MapPlayer
+     */
     public static fromEvent(): MapPlayer {
         return this.fromHandle(GetTriggerPlayer())
     }
@@ -453,6 +459,10 @@ export class MapPlayer extends Handle<player> {
 
     public static fromLocal(): MapPlayer {
         return this.fromHandle(GetLocalPlayer())
+    }
+
+    public static fromWinning(): MapPlayer {
+        return this.fromHandle(GetWinningPlayer())
     }
 
     public static fromObject(object: MapPlayer): player {

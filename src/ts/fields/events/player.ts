@@ -5,7 +5,7 @@ declare const ConvertPlayerEvent = (i: number) => playerevent
 
 const c = ConvertPlayerEvent
 
-export const PlayerEvent = {
+export const EventPlayer = {
     StateLimit: c(11),
     AllianceChanged: c(12),
 

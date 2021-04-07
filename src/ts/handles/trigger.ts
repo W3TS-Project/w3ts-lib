@@ -1,6 +1,7 @@
 /** @noSelfInFile **/
-// @ts-nocheck
+//@ts-nocheck
 
+import { integer } from "../utils"
 import { Dialog, DialogButton } from "./dialog"
 import { Frame } from "./frame"
 import { Handle } from "./handle"
@@ -8,6 +9,7 @@ import { MapPlayer } from "./player"
 import { Unit } from "./unit"
 import { Widget } from "./widget"
 
+// trigger
 declare function CreateTrigger(): trigger
 declare function DestroyTrigger(whichTrigger: trigger): void
 declare function ResetTrigger(whichTrigger: trigger): void
@@ -18,14 +20,8 @@ declare function TriggerWaitOnSleeps(whichTrigger: trigger, flag: boolean): void
 declare function IsTriggerWaitOnSleeps(whichTrigger: trigger): boolean
 declare function GetTriggeringTrigger(): trigger
 declare function GetTriggerEventId(): eventid
-declare function GetTriggerEvalCount(whichTrigger: trigger): number
-declare function GetTriggerExecCount(whichTrigger: trigger): number
-declare function TriggerRegisterUnitInRange(
-    whichTrigger: trigger,
-    whichUnit: unit,
-    range: number,
-    filter: boolexpr | null
-): event
+declare function GetTriggerEvalCount(whichTrigger: trigger): integer
+declare function GetTriggerExecCount(whichTrigger: trigger): integer
 declare function TriggerAddCondition(
     whichTrigger: trigger,
     condition: boolexpr | null
@@ -41,6 +37,65 @@ declare function TriggerClearActions(whichTrigger: trigger): void
 declare function TriggerEvaluate(whichTrigger: trigger): boolean
 declare function TriggerExecute(whichTrigger: trigger): void
 declare function TriggerExecuteWait(whichTrigger: trigger): void
+declare function TriggerSyncStart(): void
+declare function TriggerSyncReady(): void
+
+// trigger game event
+declare function TriggerRegisterVariableEvent(
+    whichTrigger: trigger,
+    varName: string,
+    opcode: limitop,
+    limitval: number
+): event
+declare function TriggerRegisterTimerEvent(
+    whichTrigger: trigger,
+    timeout: number,
+    periodic: boolean
+): event
+declare function TriggerRegisterTimerExpireEvent(whichTrigger: trigger, t: timer): event
+declare function TriggerRegisterGameStateEvent(
+    whichTrigger: trigger,
+    whichState: gamestate,
+    opcode: limitop,
+    limitval: number
+): event
+declare function TriggerRegisterDialogEvent(whichTrigger: trigger, whichDialog: dialog): event
+declare function TriggerRegisterDialogButtonEvent(whichTrigger: trigger, whichButton: button): event
+declare function TriggerRegisterGameEvent(whichTrigger: trigger, whichGameEvent: gameevent): event
+declare function TriggerRegisterEnterRegion(
+    whichTrigger: trigger,
+    whichRegion: region,
+    filter: boolexpr | null
+): event
+declare function TriggerRegisterLeaveRegion(
+    whichTrigger: trigger,
+    whichRegion: region,
+    filter: boolexpr | null
+): event
+declare function TriggerRegisterTrackableHitEvent(whichTrigger: trigger, t: trackable): event
+declare function TriggerRegisterTrackableTrackEvent(whichTrigger: trigger, t: trackable): event
+
+// trigger player based event
+declare function TriggerRegisterPlayerEvent(
+    whichTrigger: trigger,
+    whichPlayer: player,
+    whichPlayerEvent: playerevent
+): event
+declare function TriggerRegisterPlayerUnitEvent(
+    whichTrigger: trigger,
+    whichPlayer: player,
+    whichPlayerUnitEvent: playerunitevent,
+    filter: boolexpr | null
+): event
+
+// trigger unit based event
+
+declare function TriggerRegisterUnitInRange(
+    whichTrigger: trigger,
+    whichUnit: unit,
+    range: number,
+    filter: boolexpr | null
+): event
 declare function TriggerRegisterTimerEventPeriodic(trig: trigger, timeout: number): event
 declare function TriggerRegisterTimerEventSingle(trig: trigger, timeout: number): event
 declare function TriggerRegisterTimerExpireEventBJ(trig: trigger, t: timer): event
@@ -117,8 +172,7 @@ declare function TriggerRegisterGameLoadedEventBJ(trig: trigger): event
 declare function TriggerRegisterGameSavedEventBJ(trig: trigger): event
 declare function RegisterDestDeathInRegionEnum(): void
 declare function TriggerRegisterDestDeathInRegionEvent(trig: trigger, r: rect): void
-declare function TriggerRegisterTrackableHitEvent(whichTrigger: trigger, t: trackable): event
-declare function TriggerRegisterTrackableTrackEvent(whichTrigger: trigger, t: trackable): event
+
 declare function TriggerRegisterCommandEvent(
     whichTrigger: trigger,
     whichAbility: number,
@@ -129,41 +183,11 @@ declare function TriggerRegisterUpgradeCommandEvent(
     whichUpgrade: number
 ): event
 declare function TriggerRegisterDeathEvent(whichTrigger: trigger, whichWidget: widget): event
-declare function TriggerRegisterVariableEvent(
-    whichTrigger: trigger,
-    varName: string,
-    opcode: limitop,
-    limitval: number
-): event
-declare function TriggerRegisterTimerEvent(
-    whichTrigger: trigger,
-    timeout: number,
-    periodic: boolean
-): event
-declare function TriggerRegisterTimerExpireEvent(whichTrigger: trigger, t: timer): event
-declare function TriggerRegisterGameStateEvent(
-    whichTrigger: trigger,
-    whichState: gamestate,
-    opcode: limitop,
-    limitval: number
-): event
-declare function TriggerRegisterDialogEvent(whichTrigger: trigger, whichDialog: dialog): event
-declare function TriggerRegisterDialogButtonEvent(whichTrigger: trigger, whichButton: button): event
-declare function TriggerRegisterEnterRegion(
-    whichTrigger: trigger,
-    whichRegion: region,
-    filter: boolexpr | null
-): event
+
 declare function TriggerRegisterFilterUnitEvent(
     whichTrigger: trigger,
     whichUnit: unit,
     whichEvent: unitevent,
-    filter: boolexpr | null
-): event
-declare function TriggerRegisterGameEvent(whichTrigger: trigger, whichGameEvent: gameevent): event
-declare function TriggerRegisterLeaveRegion(
-    whichTrigger: trigger,
-    whichRegion: region,
     filter: boolexpr | null
 ): event
 declare function TriggerRegisterPlayerAllianceChange(
@@ -184,17 +208,7 @@ declare function TriggerRegisterPlayerChatEvent(
     chatMessageToDetect: string,
     exactMatchOnly: boolean
 ): event
-declare function TriggerRegisterPlayerEvent(
-    whichTrigger: trigger,
-    whichPlayer: player,
-    whichPlayerEvent: playerevent
-): event
-declare function TriggerRegisterPlayerUnitEvent(
-    whichTrigger: trigger,
-    whichPlayer: player,
-    whichPlayerUnitEvent: playerunitevent,
-    filter: boolexpr | null
-): event
+
 declare function BlzTriggerRegisterPlayerKeyEvent(
     whichTrigger: trigger,
     whichPlayer: player,
@@ -227,12 +241,8 @@ declare function BlzTriggerRegisterFrameEvent(
 ): event
 
 export class Trigger extends Handle<trigger> {
-    constructor() {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            super(CreateTrigger())
-        }
+    public constructor() {
+        super(CreateTrigger())
     }
 
     public set enabled(flag: boolean) {

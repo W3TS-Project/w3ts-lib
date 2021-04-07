@@ -19,6 +19,7 @@ declare function RegionClearCellAtLoc(whichRegion: region, whichLocation: locati
 declare function IsUnitInRegion(whichRegion: region, whichUnit: unit): boolean
 declare function IsPointInRegion(whichRegion: region, x: real, y: real): boolean
 declare function IsLocationInRegion(whichRegion: region, whichLocation: location): boolean
+declare function GetTriggeringRegion(): region
 
 export class Region extends Handle<region> {
     public constructor() {
@@ -85,6 +86,10 @@ export class Region extends Handle<region> {
 
     public static fromHandle(handle: region): Region {
         return this.getObject(handle)
+    }
+
+    public static fromEvent() {
+        return this.fromHandle(GetTriggeringRegion())
     }
 
     public static fromObject(object: Region): region {

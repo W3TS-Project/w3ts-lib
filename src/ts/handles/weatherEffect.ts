@@ -11,18 +11,22 @@ declare function EnableWeatherEffect(whichEffect: weathereffect, enable: boolean
 
 export class WeatherEffect extends Handle<weathereffect> {
     public constructor(where: Rectangle, effectID: RawCode) {
-        super(AddWeatherEffect(where.handle, formatCC(effectID)))
+        super(AddWeatherEffect(where.getHandle, formatCC(effectID)))
     }
 
     public destroy() {
-        RemoveWeatherEffect(this.handle)
+        RemoveWeatherEffect(this.getHandle)
     }
 
     public set enable(enable: boolean) {
-        EnableWeatherEffect(this.handle, enable)
+        EnableWeatherEffect(this.getHandle, enable)
     }
 
     public static fromHandle(handle: weathereffect): WeatherEffect {
         return this.getObject(handle)
+    }
+
+    public static fromObject(object: WeatherEffect): weathereffect {
+        return this.getHandle(object)
     }
 }

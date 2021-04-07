@@ -1,4 +1,5 @@
 /** @noSelfInFile **/
+//@ts-nocheck
 
 import { integer, real } from "../utils"
 import { Handle } from "./handle"
@@ -30,55 +31,63 @@ export class TextTag extends Handle<texttag> {
     }
 
     public destroy() {
-        DestroyTextTag(this.handle)
+        DestroyTextTag(this.getHandle)
     }
 
     public setText(s: string, height: real) {
-        SetTextTagText(this.handle, s, height)
+        SetTextTagText(this.getHandle, s, height)
         return this
     }
 
     public setPos(x: real, y: real, heightOffset: real) {
-        SetTextTagPos(this.handle, x, y, heightOffset)
+        SetTextTagPos(this.getHandle, x, y, heightOffset)
         return this
     }
 
     public setPosUnit(whichUnit: Unit, heightOffset: real) {
-        SetTextTagPosUnit(this.handle, whichUnit.handle, heightOffset)
+        SetTextTagPosUnit(this.getHandle, whichUnit.getHandle, heightOffset)
         return this
     }
 
     public setColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        SetTextTagColor(this.handle, red, green, blue, alpha)
+        SetTextTagColor(this.getHandle, red, green, blue, alpha)
         return this
     }
 
     public setVelocity(xvel: real, yvel: real) {
-        SetTextTagVelocity(this.handle, xvel, yvel)
+        SetTextTagVelocity(this.getHandle, xvel, yvel)
         return this
     }
 
     public set visibility(flag: boolean) {
-        SetTextTagVisibility(this.handle, flag)
+        SetTextTagVisibility(this.getHandle, flag)
     }
 
     public set suspended(flag: boolean) {
-        SetTextTagSuspended(this.handle, flag)
+        SetTextTagSuspended(this.getHandle, flag)
     }
 
     public set permanent(flag: boolean) {
-        SetTextTagPermanent(this.handle, flag)
+        SetTextTagPermanent(this.getHandle, flag)
     }
 
     public set age(age: real) {
-        SetTextTagAge(this.handle, age)
+        SetTextTagAge(this.getHandle, age)
     }
 
     public set lifespan(lifespan: real) {
-        SetTextTagLifespan(this.handle, lifespan)
+        SetTextTagLifespan(this.getHandle, lifespan)
     }
 
     public set fadepoint(fadepoint: real) {
-        SetTextTagFadepoint(this.handle, fadepoint)
+        SetTextTagFadepoint(this.getHandle, fadepoint)
+    }
+
+    public static fromHandle(handle: TextTag): texttag {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: texttag): TextTag {
+        return this.getHandle(object)
     }
 }

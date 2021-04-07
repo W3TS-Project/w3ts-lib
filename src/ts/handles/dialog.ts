@@ -17,6 +17,8 @@ declare function DialogAddQuitButton(
     hotkey: integer
 ): button
 declare function DialogDisplay(whichPlayer: player, whichDialog: dialog, flag: boolean): void
+declare function GetClickedButtion(): button
+declare function GetClickedDialog(): dialog
 
 export class DialogButton extends Handle<button> {
     public constructor(
@@ -35,6 +37,10 @@ export class DialogButton extends Handle<button> {
 
     public static fromHandle(handle: button): DialogButton {
         return this.getObject(handle)
+    }
+
+    public static getClicked() {
+        return this.fromHandle(GetClickedButtion())
     }
 
     public static fromObject(handleObject: DialogButton): button {
@@ -77,6 +83,10 @@ export class Dialog extends Handle<dialog> {
 
     public static fromHandle(handle: dialog): Dialog {
         return this.getObject(handle)
+    }
+
+    public static getClicked() {
+        return this.fromHandle(GetClickedDialog())
     }
 
     public static fromObject(handleObject: Dialog): dialog {

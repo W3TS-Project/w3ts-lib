@@ -5,7 +5,7 @@ declare const ConvertUnitEvent = (i: number) => unitevent
 
 const c = ConvertUnitEvent
 
-export const UnitEvent = {
+export const EventUnit = {
     Damaged: c(52),
     Damaging: c(314),
     Death: c(53),

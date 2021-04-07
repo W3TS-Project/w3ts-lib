@@ -204,16 +204,20 @@ export class TerrainDeformation extends Handle<terraindeformation> {
     }
 
     public stop(duration: integer) {
-        TerrainDeformStop(this.handle, duration)
+        TerrainDeformStop(this.getHandle, duration)
         return this
-    }
-
-    public static fromHandle(handle: terraindeformation): ThisType<terraindeformation> {
-        return this.getObject(handle)
     }
 
     public static stopAll() {
         TerrainDeformStopAll()
         return this
+    }
+
+    public static fromHandle(handle: terraindeformation): TerrainDeformation {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: TerrainDeformation): terraindeformation {
+        return this.getHandle(object)
     }
 }

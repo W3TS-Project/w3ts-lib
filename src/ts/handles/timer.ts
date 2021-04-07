@@ -1,19 +1,20 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { real } from "../utils"
 import { Handle } from "./handle"
 
 declare function CreateTimer(): timer
 declare function DestroyTimer(whichTimer: timer): void
 declare function TimerStart(
     whichTimer: timer,
-    timeout: number,
+    timeout: real,
     periodic: boolean,
     handlerFunc: () => void
 ): void
-declare function TimerGetElapsed(whichTimer: timer): number
-declare function TimerGetRemaining(whichTimer: timer): number
-declare function TimerGetTimeout(whichTimer: timer): number
+declare function TimerGetElapsed(whichTimer: timer): real
+declare function TimerGetRemaining(whichTimer: timer): real
+declare function TimerGetTimeout(whichTimer: timer): real
 declare function PauseTimer(whichTimer: timer): void
 declare function ResumeTimer(whichTimer: timer): void
 declare function GetExpiredTimer(): timer
@@ -23,43 +24,47 @@ export class Timer extends Handle<timer> {
         super(CreateTimer())
     }
 
-    public get elapsed(): number {
-        return TimerGetElapsed(this.handle)
+    public get elapsed(): real {
+        return TimerGetElapsed(this.getHandle)
     }
 
-    public get remaining(): number {
-        return TimerGetRemaining(this.handle)
+    public get remaining(): real {
+        return TimerGetRemaining(this.getHandle)
     }
 
-    public get timeout(): number {
-        return TimerGetTimeout(this.handle)
+    public get timeout(): real {
+        return TimerGetTimeout(this.getHandle)
     }
 
     public destroy() {
-        DestroyTimer(this.handle)
+        DestroyTimer(this.getHandle)
         return this
     }
 
     public pause() {
-        PauseTimer(this.handle)
+        PauseTimer(this.getHandle)
         return this
     }
 
     public resume() {
-        ResumeTimer(this.handle)
+        ResumeTimer(this.getHandle)
         return this
     }
 
-    public start(timeout: number, periodic: boolean, handlerFunc: () => void) {
-        TimerStart(this.handle, timeout, periodic, handlerFunc)
+    public start(timeout: real, periodic: boolean, handlerFunc: () => void) {
+        TimerStart(this.getHandle, timeout, periodic, handlerFunc)
         return this
+    }
+
+    public static fromHandle(handle: timer): Timer {
+        return this.getObject(handle)
     }
 
     public static fromExpired(): Timer {
         return this.fromHandle(GetExpiredTimer())
     }
 
-    public static fromHandle(handle: timer): Timer {
-        return this.getObject(handle)
+    public static fromObject(object: Timer): timer {
+        return this.getHandle(object)
     }
 }

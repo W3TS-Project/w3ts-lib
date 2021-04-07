@@ -534,6 +534,10 @@ declare function GetFoodUsed(unitId: number): number
 declare function GetFoodMade(unitId: number): number
 declare function GetTriggerUnit(): unit
 declare function IsUnitIdType(unitId: number, whichUnitType: unittype): boolean
+declare function GetEnteringUnit(): unit
+declare function GetLeavingUnit(): unit
+declare function GetLevelingUnit(): unit
+declare function GetLearningUnit(): unit
 
 export class Unit extends Widget {
     public readonly handle!: unit
@@ -1654,12 +1658,12 @@ export class Unit extends Widget {
         return GetFoodUsed(unitId)
     }
 
-    public static fromEvent() {
-        return this.fromHandle(GetTriggerUnit())
-    }
-
     public static fromHandle(handle: unit): Unit {
         return this.getObject(handle)
+    }
+
+    public static fromEvent() {
+        return this.fromHandle(GetTriggerUnit())
     }
 
     public static getPointValueByType(unitType: number) {
@@ -1674,11 +1678,22 @@ export class Unit extends Widget {
         return IsUnitIdType(unitId, whichUnitType)
     }
 
-    static getEnumUnit(): Unit {
-        return Unit.fromHandle(GetEnumUnit())
+    public static getEnum(): Unit {
+        return this.fromHandle(GetEnumUnit())
     }
 
-    static getFilterUnit(): Unit {
-        return Unit.fromHandle(GetFilterUnit())
+    public static getFilter(): Unit {
+        return this.fromHandle(GetFilterUnit())
     }
+
+    /**
+     * EVENT_PLAYER_HERO_LEVEL - EventPlayer.HeroLevel
+     * EVENT_UNIT_HERO_LEVEL - EventUnit.HeroLevel
+     * @returns Unit
+     */
+    public static getLeveling(): Unit {
+        return this.fromHandle(GetLevelingUnit())
+    }
+
+
 }
