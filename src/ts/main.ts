@@ -8,12 +8,8 @@ import { Destructable } from "./handles/destructable"
 import { Timer } from "./handles/timer"
 import { real, setTimeout } from "./utils"
 
-
-const timer = setTimeout(1.00, () => {
-    // print(timer)
-    // print(Timer.fromExpired())
-    const d = Destructable.fromEvent()
-    print(d)
-    print(d.name)
-    print('время 1 сек.')
+const timer = setTimeout(1.0, () => {
+    assert(null, "получен нил")
 })
+
+assert(undefined, "получен нил")
