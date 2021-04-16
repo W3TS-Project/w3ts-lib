@@ -3,23 +3,33 @@
 
 declare function SetBlight(
     whichPlayer: player,
-    x: number,
-    y: number,
-    radius: number,
+    x: real,
+    y: real,
+    radius: real,
     addBlight: boolean
 ): void
 declare function SetBlightRect(whichPlayer: player, r: rect, addBlight: boolean): void
 declare function SetBlightLoc(
     whichPlayer: player,
     whichLocation: location,
-    radius: number,
+    radius: real,
     addBlight: boolean
 ): void
-declare function SetBlightPoint(whichPlayer: player, x: number, y: number, addBlight: boolean): void
+declare function SetBlightPoint(whichPlayer: player, x: real, y: real, addBlight: boolean): void
+declare function CreateBlightedGoldmine(id: player, x: real, y: real, face: real): unit
+declare function IsPointBlighted(x: real, y: real): boolean
+
+export const Blight = {
+    setCoords(whichPlayer: player, x: real, y: real, radius: real, addBlight: boolean) {
+        SetBlight(whichPlayer, x, y, radius, addBlight)
+    },
+
+}
 
 import { MapPlayer } from "../handles/player"
 import { MapLocation, Point } from "../handles/location"
 import { Rectangle } from "../handles/rect"
+import { real } from "../utils"
 
 export class Blight {
     private constructor() {}

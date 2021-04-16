@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { MapLocation } from "./handles/location"
 import { Point } from "./handles/point"
 import { Timer } from "./handles/timer"

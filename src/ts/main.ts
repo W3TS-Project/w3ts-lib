@@ -4,12 +4,14 @@
 /// <reference types="lua-types/5.3"/>
 /// <reference types="ceres-decl/ceres"/>
 
-import { Destructable } from "./handles/destructable"
-import { Timer } from "./handles/timer"
-import { real, setTimeout } from "./utils"
+// import { Destructable } from "./handles/destructable"
+// import { Timer } from "./handles/timer"
+// import { real, setTimeout } from "./utils"
 
-const timer = setTimeout(1.0, () => {
-    assert(null, "получен нил")
-})
+declare function GetEnumUnit(): unit
+declare function GetUnitName(whichUnit: unit): string
 
-assert(undefined, "получен нил")
+const sum = (a: number, b: number) => a + b
+
+//@ts-ignore
+sum(null)
