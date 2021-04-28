@@ -1,43 +1,38 @@
 /** @noSelfInFile **/
 
 import { real } from "../utils"
-import { ModuleLocation } from "./location"
+import { MapLocation } from "./location"
 
-export type point = {
-    x: real
-    y: real
-    z: real
-}
+declare function IsPointBlighted(x: real, y: real): boolean
 
-export const Point = {
-    get(x: real, y: real, z?: real) {
-        return { x, y, z }
-    },
+export class Point {
+    public x: real
+    public y: real
+    public z: real
 
-    fromLoc(loc: location) {
-        return this.get(
-            ModuleLocation.getX(loc),
-            ModuleLocation.getY(loc),
-            ModuleLocation.getZ(loc)
-        )
-    },
+    public constructor(x: real, y: real, z?: real) {
+        this.x = x
+        this.y = y
+        this.z = z || 0
+        return this
+    }
 
-    setFromCoords(whichPoint: point, x: real, y: real, z?: real) {
-        whichPoint.x = x
-        whichPoint.y = y
-        whichPoint.z = z || whichPoint.z
-    },
+    public static fromLoc(loc: MapLocation) {
+        return new Point(loc.x, loc.y, loc.z)
+    }
 
-    setFromLoc(whichPoint: point, whichLoc: location) {
-        this.setFromCoords(
-            whichPoint,
-            ModuleLocation.getX(whichLoc),
-            ModuleLocation.getY(whichLoc),
-            ModuleLocation.getZ(whichLoc)
-        )
-    },
+    public setCoords(x: real, y: real, z: real) {
+        this.x = x
+        this.y = y
+        this.z = z
+        return this
+    }
 
-    setFromPoint(whichPoint: point, newPoint: point) {
-        this.setFromCoords(whichPoint, newPoint.x, newPoint.y, newPoint.z)
+    public setPoint(p: Point) {
+        return this.setCoords(p.x, p.y, p.z)
+    }
+
+    public get isBlighted(): boolean {
+        return IsPointBlighted(this.x, this.y)
     }
 }

@@ -6,6 +6,8 @@ declare function OrderId(orderIdString: string): number
 declare function Condition(func: () => void): conditionfunc
 declare function DestroyCondition(c: conditionfunc): void
 
+declare function ExecuteFunc(funcName: string): void
+
 declare abstract class handle {}
 declare abstract class agent extends handle {
     __agent: never

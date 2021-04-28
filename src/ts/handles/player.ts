@@ -129,12 +129,12 @@ declare function BlzDecPlayerTechResearched(
     levels: integer
 ): void
 declare function RemoveAllGuardPositions(num: player): void
-declare function GetFilterPlayer(): player
-declare function GetEnumPlayer(): player
 declare function GetTriggerPlayer(): player
 declare function PlayerSetLeaderboard(toPlayer: player, lb: leaderboard): void
 declare function PlayerGetLeaderboard(toPlayer: player): leaderboard
 declare function GetWinningPlayer(): player
+declare function GetFilterPlayer(): player
+declare function GetEnumPlayer(): player
 
 export class MapPlayer extends Handle<player> {
     private constructor(index: integer) {

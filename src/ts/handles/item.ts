@@ -70,6 +70,8 @@ declare function BlzSetItemStringField(
     value: string
 ): boolean
 declare function BlzItemRemoveAbility(whichItem: item, abilCode: integer): boolean
+declare function GetFilterItem(): item
+declare function GetEnumItem(): item
 
 export class Item extends Widget {
     public readonly handle!: item
@@ -308,6 +310,14 @@ export class Item extends Widget {
 
     public static fromHandle(handle: item): Item {
         return this.getObject(handle)
+    }
+
+    public static fromFilter() {
+        return this.fromHandle(GetFilterItem())
+    }
+
+    public static fromEnum() {
+        return this.fromHandle(GetEnumItem())
     }
 
     public static fromObject(object: Item): item {

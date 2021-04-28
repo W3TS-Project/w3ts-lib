@@ -7,12 +7,12 @@ import { Handle } from "./handle"
 
 declare function CreateTimer(): timer
 declare function DestroyTimer(whichTimer: timer): void
-declare function TimerStart(
+declare let TimerStart: (
     whichTimer: timer,
     timeout: real,
     periodic: boolean,
     handlerFunc: () => void
-): void
+) => void
 declare function TimerGetElapsed(whichTimer: timer): real
 declare function TimerGetRemaining(whichTimer: timer): real
 declare function TimerGetTimeout(whichTimer: timer): real

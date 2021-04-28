@@ -63,6 +63,8 @@ declare function GetDestructableOccluderHeight(d: destructable): real
 declare function SetDestructableOccluderHeight(d: destructable, height: real): void
 declare function GetDestructableName(d: destructable): string
 declare function GetTriggerDestructable(): destructable
+declare function GetFilterDestructable(): destructable
+declare function GetEnumDestructable(): destructable
 
 export class Destructable extends Handle<destructable> {
     public static createCoords(
@@ -215,6 +217,14 @@ export class Destructable extends Handle<destructable> {
 
     public static fromEvent() {
         return this.fromHandle(GetTriggerDestructable())
+    }
+
+    public static fromFilter() {
+        return this.fromHandle(GetFilterDestructable())
+    }
+
+    public static fromEnum() {
+        return this.fromHandle(GetEnumDestructable())
     }
 
     public static fromObject(handleObject: Destructable): destructable {

@@ -1,5 +1,4 @@
 /** @noSelfInFile **/
-// @ts-nocheck
 
 import { Destructable } from "./destructable"
 import { Force } from "./force"
@@ -7,9 +6,10 @@ import { Group } from "./group"
 import { Handle } from "./handle"
 import { Item } from "./item"
 import { MapPlayer } from "./player"
-import { Point } from "./location"
+import { MapLocation } from "./location"
 import { Sound } from "./sound"
 import { Widget } from "./widget"
+import { integer, real } from "../utils"
 
 declare function CreateUnit(id: player, unitid: number, x: number, y: number, face: number): unit
 declare function CreateUnitByName(
@@ -538,28 +538,21 @@ declare function GetEnteringUnit(): unit
 declare function GetLeavingUnit(): unit
 declare function GetLevelingUnit(): unit
 declare function GetLearningUnit(): unit
+declare function GetFilterUnit(): unit
+declare function GetEnumUnit(): unit
 
 export class Unit extends Widget {
     public readonly handle!: unit
 
     constructor(
-        owner: MapPlayer | number,
-        unitId: number,
-        x: number,
-        y: number,
-        face: number,
-        skinId?: number
+        owner: MapPlayer,
+        unitId: integer,
+        x: real,
+        y: real,
+        face: real,
+        skinId?: integer
     ) {
-        if (Handle.initFromHandle()) {
-            super()
-        } else {
-            const p = typeof owner === "number" ? Player(owner) : owner.handle
-            super(
-                skinId
-                    ? BlzCreateUnitWithSkin(p, unitId, x, y, face, skinId)
-                    : CreateUnit(p, unitId, x, y, face)
-            )
-        }
+        super(skinId ? BlzCreateUnitWithSkin(owner.getHandle, unitId, x, y, face, skinId) : CreateUnit(owner.getHandle, unitId, x, y, face))
     }
 
     public set acquireRange(value: number) {
@@ -746,11 +739,11 @@ export class Unit extends Widget {
         return IsUnitPaused(this.handle)
     }
 
-    public get point() {
-        return Point.fromHandle(GetUnitLoc(this.handle))
+    public get MapLocation() {
+        return MapLocation.fromHandle(GetUnitLoc(this.handle))
     }
 
-    public set point(whichPoint: Point) {
+    public set MapLocation(whichPoint: MapLocation) {
         SetUnitPositionLoc(this.handle, whichPoint.handle)
     }
 
@@ -775,7 +768,7 @@ export class Unit extends Widget {
     }
 
     public get rallyPoint() {
-        return Point.fromHandle(GetUnitRallyPoint(this.handle))
+        return MapLocation.fromHandle(GetUnitRallyPoint(this.handle))
     }
 
     public get rallyUnit() {
@@ -1191,7 +1184,7 @@ export class Unit extends Widget {
         return IsUnitInRangeXY(this.handle, x, y, distance)
     }
 
-    public inRangeOfPoint(whichPoint: Point, distance: number) {
+    public inRangeOfPoint(whichPoint: MapLocation, distance: number) {
         return IsUnitInRangeLoc(this.handle, whichPoint.handle, distance)
     }
 
@@ -1296,7 +1289,7 @@ export class Unit extends Widget {
             : IssuePointOrderById(this.handle, order, x, y)
     }
 
-    public issuePointOrder(order: string | number, whichPoint: Point) {
+    public issuePointOrder(order: string | number, whichPoint: MapLocation) {
         return typeof order === "string"
             ? IssuePointOrderLoc(this.handle, order, whichPoint.handle)
             : IssuePointOrderByIdLoc(this.handle, order, whichPoint.handle)
@@ -1423,7 +1416,7 @@ export class Unit extends Widget {
         return ReviveHero(this.handle, x, y, doEyecandy)
     }
 
-    public reviveAtPoint(whichPoint: Point, doEyecandy: boolean) {
+    public reviveAtPoint(whichPoint: MapLocation, doEyecandy: boolean) {
         return ReviveHeroLoc(this.handle, whichPoint.handle, doEyecandy)
     }
 
@@ -1678,22 +1671,27 @@ export class Unit extends Widget {
         return IsUnitIdType(unitId, whichUnitType)
     }
 
-    public static getEnum(): Unit {
+    public static fromEnum(): Unit {
         return this.fromHandle(GetEnumUnit())
     }
 
-    public static getFilter(): Unit {
+    public static fromFilter(): Unit {
         return this.fromHandle(GetFilterUnit())
     }
 
-    /**
-     * EVENT_PLAYER_HERO_LEVEL - EventPlayer.HeroLevel
-     * EVENT_UNIT_HERO_LEVEL - EventUnit.HeroLevel
-     * @returns Unit
-     */
+    public static getEntering(): Unit {
+        return this.fromHandle(GetEnteringUnit())
+    }
+
+    public static getLeaving(): Unit {
+        return this.fromHandle(GetLeavingUnit())
+    }
+
     public static getLeveling(): Unit {
         return this.fromHandle(GetLevelingUnit())
     }
 
-
+    public static getLearning(): Unit {
+        return this.fromHandle(GetLearningUnit())
+    }
 }
