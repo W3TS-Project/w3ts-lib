@@ -1,6 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { getHandledCallback } from "../errorHandling"
 import { real } from "../utils"
 import { Handle } from "./handle"
 
@@ -18,6 +19,10 @@ declare function TimerGetTimeout(whichTimer: timer): real
 declare function PauseTimer(whichTimer: timer): void
 declare function ResumeTimer(whichTimer: timer): void
 declare function GetExpiredTimer(): timer
+
+const realTimerStart = TimerStart
+TimerStart = (whichTimer: timer, timeout: real, periodic: boolean, handlerFunc: () => void) =>
+    realTimerStart(whichTimer, timeout, periodic, getHandledCallback(handlerFunc))
 
 export class Timer extends Handle<timer> {
     public constructor() {

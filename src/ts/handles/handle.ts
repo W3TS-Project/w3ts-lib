@@ -33,9 +33,9 @@ export class Handle<T extends handle> {
     }
 
     protected static getHandle(handleObject: any) {
-        const handle = handleObject.handle
+        let handle = handleObject.handle
         if (handle === null || handle === undefined) {
-            throw new Error(`ОШИБКА: нулевой хендл! Объект: ${this}`)
+            handle = 0
         }
         return handle
     }

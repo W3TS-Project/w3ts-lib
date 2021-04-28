@@ -4,14 +4,13 @@
 /// <reference types="lua-types/5.3"/>
 /// <reference types="ceres-decl/ceres"/>
 
-// import { Destructable } from "./handles/destructable"
-// import { Timer } from "./handles/timer"
-// import { real, setTimeout } from "./utils"
+import { Timer } from "./handles/timer";
 
-declare function GetEnumUnit(): unit
-declare function GetUnitName(whichUnit: unit): string
+const timer = new Timer()
 
-const sum = (a: number, b: number) => a + b
+declare function KillUnit(whichUnit: unit): void
 
-//@ts-ignore
-sum(null)
+timer.start(1.0, false, () => {
+  //@ts-ignore
+  KillUnit(0)
+})

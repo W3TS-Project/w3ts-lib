@@ -1,6 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { getHandledCallback } from "../errorHandling"
 import { integer } from "../utils"
 import { Dialog, DialogButton } from "./dialog"
 import { Frame } from "./frame"
@@ -239,6 +240,10 @@ declare function BlzTriggerRegisterFrameEvent(
     frame: framehandle,
     eventId: frameeventtype
 ): event
+
+const realTriggerAddACtion = TriggerAddAction
+TriggerAddAction = (whichTrigger: trigger, actionFunc: () => void) =>
+    realTriggerAddACtion(whichTrigger, getHandledCallback(actionFunc))
 
 export class Trigger extends Handle<trigger> {
     public constructor() {
