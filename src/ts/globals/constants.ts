@@ -17,5 +17,5 @@ export const JASS_MAX_ARRAY_SIZE = 32768
 declare const GetPlayerNeutralPassive = () => number
 declare const GetPlayerNeutralAggressive = () => number
 
-MapPlayer.NEUTRAL_PASSIVE = GetPlayerNeutralPassive()
-MapPlayer.NEUTRAL_AGGRESSIVE = GetPlayerNeutralAggressive()
+MapPlayer.NeutralPassive = GetPlayerNeutralPassive()
+MapPlayer.NeutralAggressive = GetPlayerNeutralAggressive()

@@ -1687,10 +1687,20 @@ export class Unit extends Widget {
         return this.fromHandle(GetLeavingUnit())
     }
 
+    /**
+     * EVENT_PLAYER_HERO_LEVEL
+     * EVENT_UNIT_HERO_LEVEL
+     * @returns Unit
+     */
     public static getLeveling(): Unit {
         return this.fromHandle(GetLevelingUnit())
     }
 
+    /**
+     * EVENT_PLAYER_HERO_SKILL
+     * EVENT_UNIT_HERO_SKILL
+     * @returns Unit
+     */
     public static getLearning(): Unit {
         return this.fromHandle(GetLearningUnit())
     }

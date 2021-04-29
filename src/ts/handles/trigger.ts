@@ -68,6 +68,7 @@ declare function TriggerRegisterGameStateEvent(
 ): event
 declare function TriggerRegisterDialogEvent(whichTrigger: trigger, whichDialog: dialog): event
 declare function TriggerRegisterDialogButtonEvent(whichTrigger: trigger, whichButton: button): event
+declare function GetEventGameState(): gamestate
 declare function TriggerRegisterGameEvent(whichTrigger: trigger, whichGameEvent: gameevent): event
 declare function TriggerRegisterEnterRegion(
     whichTrigger: trigger,
@@ -81,6 +82,11 @@ declare function TriggerRegisterLeaveRegion(
 ): event
 declare function TriggerRegisterTrackableHitEvent(whichTrigger: trigger, t: trackable): event
 declare function TriggerRegisterTrackableTrackEvent(whichTrigger: trigger, t: trackable): event
+declare function GetTournamentFinishSoonTimeRemaining(): real
+declare function GetTournamentFinishNowRule(): integer
+declare function GetTournamentFinishNowPlayer(): player
+declare function GetTournamentScore(whichPlayer: player): integer
+declare function GetSaveBasicFilename(): string
 
 // trigger player based event
 declare function TriggerRegisterPlayerEvent(
@@ -363,6 +369,10 @@ export class Trigger extends Handle<trigger> {
         return this
     }
 
+
+
+    // Game Events
+
     public registerVariableEvent(varName: string, opcode: limitop, limitval: real): event {
         return TriggerRegisterVariableEvent(this.getHandle, varName, opcode, limitval)
     }
@@ -389,6 +399,13 @@ export class Trigger extends Handle<trigger> {
         return TriggerRegisterDialogButtonEvent(this.getHandle, whichButton.getHandle)
     }
 
+    /** 
+     * EVENT_GAME_STATE_LIMIT
+     */
+    public static getEventGameState(): gamestate {
+        return GetEventGameState()
+    }
+
     public registerGameEvent(whichGameEvent: gameevent): event {
         return TriggerRegisterGameEvent(this.getHandle, whichGameEvent)
     }
@@ -404,6 +421,52 @@ export class Trigger extends Handle<trigger> {
     public registerTrackableHitEvent(t: Trackable): event {
         return TriggerRegisterTrackableHitEvent(this.getHandle, t.getHandle)
     }
+
+    public registerTrackableTrackEvent(t: Trackable): event {
+        return TriggerRegisterTrackableTrackEvent(this.getHandle, t.getHandle)
+    }
+
+    /**
+     * EVENT_GAME_TOURNAMENT_FINISH_SOON
+     * @returns real
+     */
+     public static getTournamentFinishSoonTimeRemaining(): real {
+        return GetTournamentFinishSoonTimeRemaining()
+    }
+
+    public static getTournamentFinishNowRule(): integer {
+        return GetTournamentFinishNowRule()
+    }
+
+    public static getTournamentFinishNowPlayer(): MapPlayer {
+        return MapPlayer.fromHandle(GetTournamentFinishNowPlayer())
+    }
+
+    public static getTournamentScore(whichPlayer: MapPlayer): integer {
+        return GetTournamentScore(whichPlayer.getHandle)
+    }
+
+    /**
+     * EVENT_GAME_SAVE
+     * @returns string
+     */
+    public static getSaveBasicFilename(): string {
+        return GetSaveBasicFilename()
+    }
+
+
+
+    // Player Based Events
+
+    public registerPlayerEvent(whichPlayer: MapPlayer, whichPlayerEvent: playerevent): event {
+        return TriggerRegisterPlayerEvent(this.getHandle, whichPlayer.getHandle, whichPlayerEvent)
+    }
+
+    public registerPlayerUnitEvent(whichPlayer: MapPlayer, whichPlayerUnitEvent: playerunitevent, filterFunc: codeboolexpr): event {
+        return TriggerRegisterPlayerUnitEvent(this.getHandle, whichPlayer.getHandle, whichPlayerUnitEvent, Condition(filterFunc))
+    }
+
+
 
 
 
@@ -422,9 +485,9 @@ export class Trigger extends Handle<trigger> {
     public registerFilterUnitEvent(
         whichUnit: unit,
         whichEvent: unitevent,
-        filter: boolexpr | (() => boolean) | null
+        filterFunc: codeboolexpr
     ) {
-        return TriggerRegisterFilterUnitEvent(this.getHandle, whichUnit, whichEvent, filter)
+        return TriggerRegisterFilterUnitEvent(this.getHandle, whichUnit, whichEvent, Condition(filterFunc))
     }
 
     public registerPlayerAllianceChange(whichPlayer: MapPlayer, whichAlliance: alliancetype) {
@@ -442,10 +505,6 @@ export class Trigger extends Handle<trigger> {
             chatMessageToDetect,
             exactMatchOnly
         )
-    }
-
-    public registerPlayerEvent(whichPlayer: MapPlayer, whichPlayerEvent: playerevent) {
-        return TriggerRegisterPlayerEvent(this.getHandle, whichPlayer.handle, whichPlayerEvent)
     }
 
     public registerPlayerKeyEvent(
@@ -491,22 +550,7 @@ export class Trigger extends Handle<trigger> {
         )
     }
 
-    public registerPlayerUnitEvent(
-        whichPlayer: MapPlayer,
-        whichPlayerUnitEvent: playerunitevent,
-        filter: boolexpr | (() => boolean) | null
-    ) {
-        return TriggerRegisterPlayerUnitEvent(
-            this.getHandle,
-            whichPlayer.handle,
-            whichPlayerUnitEvent,
-            filter
-        )
-    }
 
-    public registerTrackableTrackEvent(whichTrackable: trackable) {
-        return TriggerRegisterTrackableTrackEvent(this.getHandle, whichTrackable)
-    }
 
     public registerUnitEvent(whichUnit: Unit, whichEvent: unitevent) {
         return TriggerRegisterUnitEvent(this.getHandle, whichUnit.handle, whichEvent)
@@ -515,9 +559,9 @@ export class Trigger extends Handle<trigger> {
     public registerUnitInRage(
         whichUnit: unit,
         range: number,
-        filter: boolexpr | (() => boolean) | null
+        filterFunc: codeboolexpr
     ) {
-        return TriggerRegisterUnitInRange(this.getHandle, whichUnit, range, filter)
+        return TriggerRegisterUnitInRange(this.getHandle, whichUnit, range, Condition(filterFunc))
     }
 
     public registerUnitStateEvent(
