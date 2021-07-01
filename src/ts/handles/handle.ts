@@ -15,7 +15,7 @@ export class Handle<T extends handle> {
         map.set(this.getHandle, this)
     }
 
-    public get id(): integer {
+    public getHandleId(): integer {
         return GetHandleId(this.getHandle)
     }
 

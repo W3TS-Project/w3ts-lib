@@ -53,6 +53,8 @@ export type Coords = {
 
 export type Position = Coords | MapLocation | Point
 
+export type Primitive = boolean | integer | real | string
+
 // function forHandle(handle: handle) {
 //     print(handle)
 // }
