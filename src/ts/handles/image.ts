@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, Position, real } from "../utils"
+import { integer, Position, real } from "../Utils"
 import { Handle } from "./handle"
 
 declare function CreateImage(

@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { code, codeboolexpr, integer } from "../utils"
+import { code, codeboolexpr, integer } from "../Utils"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 

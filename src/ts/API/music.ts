@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer } from "../utils"
+import { integer } from "../Utils"
 
 declare function SetMapMusic(musicName: string, random: boolean, index: integer): void
 declare function ClearMapMusic(): void

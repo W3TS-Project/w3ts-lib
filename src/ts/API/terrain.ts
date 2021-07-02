@@ -2,7 +2,7 @@
 //@ts-nocheck
 
 import { Point } from "../handles/point"
-import { formatCC, integer, RawCode, real } from "../utils"
+import { formatCC, integer, RawCode, real } from "../Utils"
 
 declare function GetTerrainCliffLevel(x: real, y: real): integer
 declare function SetWaterBaseColor(

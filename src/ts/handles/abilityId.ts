@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../utils";
+import { integer, real } from "../Utils";
 
 declare function BlzSetAbilityTooltip(abilCode: integer, tooltip: string, level: integer): void
 declare function BlzSetAbilityActivatedTooltip(abilCode: integer, tooltip: string, level: integer): void

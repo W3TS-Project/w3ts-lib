@@ -1,7 +1,7 @@
 // /** @noSelfInFile **/
 // //@ts-nocheck
 
-import { integer, Primitive, real } from "../utils"
+import { integer, Primitive, real } from "../Utils"
 import { Handle } from "./handle"
 
 declare function BlzGetAbilityBooleanField(whichAbility: ability, whichField: abilitybooleanfield): boolean

@@ -4,7 +4,7 @@
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 import { Widget } from "./widget"
-import { formatCC, integer, Position, RawCode, real } from "../utils"
+import { formatCC, integer, Position, RawCode, real } from "../Utils"
 import { MapLocation } from "./location"
 import { Point } from "./point"
 

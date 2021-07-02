@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { integer, real } from "../utils"
+import { integer, real } from "../Utils"
 
 declare function Deg2Rad(degrees: real): real
 declare function Rad2Deg(radians: real): real

@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { real } from "../utils"
+import { real } from "../Utils"
 import { Handle } from "./handle"
 import { MapLocation } from "./location"
 import { Point } from "./point"

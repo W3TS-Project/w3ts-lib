@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../utils"
+import { integer, real } from "../Utils"
 
 declare function I2R(i: integer): real
 declare function R2I(r: real): integer

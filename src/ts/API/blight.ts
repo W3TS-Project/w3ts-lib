@@ -19,61 +19,52 @@ declare function SetBlightPoint(whichPlayer: player, x: real, y: real, addBlight
 declare function CreateBlightedGoldmine(id: player, x: real, y: real, face: real): unit
 declare function IsPointBlighted(x: real, y: real): boolean
 
-export const Blight = {
-    setCoords(whichPlayer: player, x: real, y: real, radius: real, addBlight: boolean) {
-        SetBlight(whichPlayer, x, y, radius, addBlight)
-    },
-
-}
-
 import { MapPlayer } from "../handles/player"
-import { MapLocation, Point } from "../handles/location"
+import { MapLocation } from "../handles/location"
 import { Rectangle } from "../handles/rect"
-import { real } from "../utils"
+import { Position, real } from "../Utils"
 
-export class Blight {
-    private constructor() {}
-
-    public static setArea(
+export abstract class Blight {
+    public static setAreaCoords(
         whichPlayer: MapPlayer,
-        x: number,
-        y: number,
-        radius: number,
+        x: real,
+        y: real,
+        radius: real,
         addBlight: boolean
     ) {
-        SetBlight(whichPlayer.handle, x, y, radius, addBlight)
+        SetBlight(whichPlayer.getHandle, x, y, radius, addBlight)
         return this
     }
 
-    public static setArea(whichPlayer: MapPlayer, p: Point, radius: number, addBlight: boolean) {
-        return this.setArea(whichPlayer, p.x, p.y, radius, addBlight)
+    public static setAreaPos(whichPlayer: MapPlayer, p: Position, radius: real, addBlight: boolean) {
+        return this.setAreaCoords(whichPlayer.getHandle, p.x, p.y, radius, addBlight)
     }
 
     public static setArea(
         whichPlayer: MapPlayer,
         loc: MapLocation,
-        radius: number,
+        radius: real,
         addBlight: boolean
     ) {
-        SetBlightLoc(whichPlayer.handle, loc.handle, radius, addBlight)
+        SetBlightLoc(whichPlayer.getHandle, loc.getHandle, radius, addBlight)
         return this
     }
 
     public static setRect(whichPlayer: MapPlayer, r: Rectangle, addBlight: boolean) {
-        SetBlightRect(whichPlayer.handle, r.handle, addBlight)
+        SetBlightRect(whichPlayer.getHandle, r.getHandle, addBlight)
         return this
     }
 
-    public static setCoords(whichPlayer: MapPlayer, x: number, y: number, addBlight: boolean) {
-        SetBlightPoint(whichPlayer.handle, x, y, addBlight)
+    public static setCoords(whichPlayer: MapPlayer, x: real, y: real, addBlight: boolean) {
+        SetBlightPoint(whichPlayer.getHandle, x, y, addBlight)
         return this
     }
 
-    public static setPoint(whichPlayer: MapPlayer, p: Point, addBlight: boolean) {
-        return this.setCoords(whichPlayer, p.x, p.y, addBlight)
+    public static setPos(whichPlayer: MapPlayer, p: Position, addBlight: boolean) {
+        return this.setCoords(whichPlayer.getHandle, p.x, p.y, addBlight)
     }
 
     public static setLoc(whichPlayer: MapPlayer, loc: MapLocation, addBlight: boolean) {
-        return this.setCoords(whichPlayer, loc.x, loc.y, addBlight)
+        return this.setCoords(whichPlayer.getHandle, loc.x, loc.y, addBlight)
     }
 }

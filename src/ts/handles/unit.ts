@@ -9,7 +9,7 @@ import { MapPlayer } from "./player"
 import { MapLocation } from "./location"
 import { Sound } from "./sound"
 import { Widget } from "./widget"
-import { integer, real } from "../utils"
+import { integer, real } from "../Utils"
 
 declare function CreateUnit(id: player, unitid: number, x: number, y: number, face: number): unit
 declare function CreateUnitByName(

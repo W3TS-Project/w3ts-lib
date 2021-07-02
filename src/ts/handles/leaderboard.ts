@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer } from "../utils"
+import { integer } from "../Utils"
 import { Handle } from "./handle"
 import { MapPlayer } from "./player"
 

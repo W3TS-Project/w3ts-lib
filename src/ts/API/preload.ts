@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { real } from "../utils"
+import { real } from "../Utils"
 
 declare function Preload(filename: string): void
 declare function PreloadEnd(timeout: real): void

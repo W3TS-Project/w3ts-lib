@@ -3,7 +3,7 @@
 
 import { MapPlayer } from "./player"
 import { Widget } from "./widget"
-import { code, codeboolexpr, formatCC, integer, Position, RawCode, real } from "../utils"
+import { code, codeboolexpr, formatCC, integer, Position, RawCode, real } from "../Utils"
 import { Rectangle } from "./rect"
 import { Ability } from "./ability"
 

@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../utils"
+import { integer, real } from "../Utils"
 import { Ability } from "./ability"
 import { Destructable } from "./destructable"
 import { Dialog, DialogButton } from "./dialog"

@@ -1,8 +1,8 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { getHandledCallback } from "../errorHandling"
-import { code, codeboolexpr, integer, real } from "../utils"
+import { getHandledCallback } from "../ErrorHandling"
+import { code, codeboolexpr, integer, real } from "../Utils"
 import { Dialog, DialogButton } from "./dialog"
 import { Frame } from "./frame"
 import { Handle } from "./handle"

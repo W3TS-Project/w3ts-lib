@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { formatCC, integer, RawCode, real } from "../utils"
+import { formatCC, integer, RawCode, real } from "../Utils"
 import { Force } from "./force"
 import { Handle } from "./handle"
 import { Leaderboard } from "./leaderboard"

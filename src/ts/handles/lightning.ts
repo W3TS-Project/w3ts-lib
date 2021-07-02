@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { Position, real } from "../utils"
+import { Position, real } from "../Utils"
 import { Handle } from "./handle"
 
 declare function AddLightning(

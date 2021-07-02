@@ -7,7 +7,7 @@ import { MapLocation } from "./location"
 import { Rectangle } from "./rect"
 import { Unit } from "./unit"
 import { Widget } from "./widget"
-import { code, codeboolexpr, formatOrder, integer, Order, Position, real } from "../utils"
+import { code, codeboolexpr, formatOrder, integer, Order, Position, real } from "../Utils"
 
 declare function CreateGroup(): group
 declare function DestroyGroup(whichGroup: group): void

@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../../utils"
+import { integer, real } from "../../Utils"
 
 declare function ConvertVolumeGroup(i: integer): volumegroup
 declare function VolumeGroupSetVolume(vgroup: volumegroup, scale: real): void

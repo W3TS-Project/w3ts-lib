@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer } from "../utils"
+import { integer } from "../Utils"
 
 const map: WeakMap<handle, any> = new WeakMap<handle, any>()
 

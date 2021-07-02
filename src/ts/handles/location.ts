@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { real } from "../utils"
+import { real } from "../Utils"
 import { Handle } from "./handle"
 
 declare function Location(x: real, y: real): location

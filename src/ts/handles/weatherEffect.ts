@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { formatCC, RawCode } from "../utils"
+import { formatCC, RawCode } from "../Utils"
 import { Handle } from "./handle"
 import { Rectangle } from "./rect"
 

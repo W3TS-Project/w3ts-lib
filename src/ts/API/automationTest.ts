@@ -6,20 +6,24 @@ declare function AutomationTestStart(testName: string): void
 declare function AutomationTestEnd(): void
 declare function AutomationTestingFinished(): void
 
-export const AutomationTest = {
-    setType(testType: string) {
+export abstract class AutomationTest {
+    public static setType(testType: string) {
         AutomationSetTestType(testType)
-    },
+        return this
+    }
 
-    start(testName: string) {
+    public static start(testName: string) {
         AutomationTestStart(testName)
-    },
+        return this
+    }
 
-    end() {
+    public static end() {
         AutomationTestEnd()
-    },
+        return this
+    }
 
-    finish() {
+    public static finish() {
         AutomationTestingFinished()
+        return this
     }
 }

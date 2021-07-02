@@ -1,8 +1,8 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { getHandledCallback } from "../errorHandling"
-import { real } from "../utils"
+import { getHandledCallback } from "../ErrorHandling"
+import { code, real } from "../Utils"
 import { Handle } from "./handle"
 
 declare function CreateTimer(): timer
@@ -71,5 +71,26 @@ export class Timer extends Handle<timer> {
 
     public static fromObject(object: Timer): timer {
         return this.getHandle(object)
+    }
+
+    public setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
+        return this.start(time, false, () => {
+            call()
+            if (isDestroy) {
+                Timer.fromExpired().pause().destroy()
+            }
+        })
+    }
+
+    public static setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
+        return new Timer().setTimeout(time, call, isDestroy)
+    }
+
+    public setInterval(time: real, call: code): Timer {
+        return this.start(time, true, call)
+    }
+
+    public static setInterval(time: real, call: code): Timer {
+        return new Timer().setInterval(time, call)
     }
 }

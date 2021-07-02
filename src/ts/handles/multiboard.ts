@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../utils"
+import { integer, real } from "../Utils"
 import { Handle } from "./handle"
 
 declare function CreateMultiboard(): multiboard
