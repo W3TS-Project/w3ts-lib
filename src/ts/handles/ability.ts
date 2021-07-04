@@ -1,5 +1,5 @@
-// /** @noSelfInFile **/
-// //@ts-nocheck
+/** @noSelfInFile **/
+//@ts-nocheck
 
 import { integer, Primitive, real } from "../Utils"
 import { Handle } from "./handle"
@@ -37,64 +37,7 @@ declare function BlzRemoveAbilityIntegerLevelArrayField(whichAbility: ability, w
 declare function BlzRemoveAbilityRealLevelArrayField(whichAbility: ability, whichField: abilityreallevelarrayfield, level: integer, value: real): boolean
 declare function BlzRemoveAbilityStringLevelArrayField(whichAbility: ability, whichField: abilitystringlevelarrayfield, level: integer, value: string): boolean
 
-export abstract class AbilityField<T extends handle> extends Handle<T> {
-    protected readonly id?: integer
-    protected title?: string
-    protected readonly desc?: string
-
-    protected constructor(field: T, id?: integer, title?: string, desc?: string) {
-        super(field)
-        this.id = id
-        this.title = title
-        this.desc = desc
-    }
-
-    public getId(): integer | undefined {
-        return this.id
-    }
-
-    public getTitle(): string | undefined {
-        return this.title
-    }
-
-    public getDesc(): string | undefined {
-        return this.desc
-    }
-}
-
-export class AbilityBooleanField extends AbilityField<abilitybooleanfield> {
-
-}
-
-export class AbilityIntegerField extends AbilityField<abilityintegerfield> {
-
-}
-
-export class AbilityRealField extends AbilityField<abilityrealfield> {
-
-}
-
-export class AbilityStringField extends AbilityField<abilitystringfield> {
-
-}
-
 export type AbilityFieldType = AbilityBooleanField | AbilityIntegerField | AbilityRealField | AbilityStringField
-
-export class AbilityBooleanLevelField extends AbilityField<abilitybooleanlevelfield> {
-
-}
-
-export class AbilityIntegerLevelField extends AbilityField<abilityintegerlevelfield> {
-
-}
-
-export class AbilityRealLevelField extends AbilityField<abilityreallevelfield> {
-
-}
-
-export class AbilityStringLevelField extends AbilityField<abilitystringlevelfield> {
-
-}
 
 export type AbilityLevelFieldType = AbilityBooleanLevelField | AbilityIntegerLevelField | AbilityRealLevelField | AbilityStringLevelField
 

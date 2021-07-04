@@ -1,4 +1,4 @@
-//@ts-nocheck
+// @ts-nocheck
 
 import { MapLocation } from "./handles/location"
 import { Point } from "./handles/point"

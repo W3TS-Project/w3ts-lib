@@ -1,5 +1,5 @@
-/** @noSelfInFile **/
-//@ts-nocheck
+// /** @noSelfInFile **/
+// //@ts-nocheck
 
 import { integer } from "../Utils"
 
@@ -8,7 +8,7 @@ const map: WeakMap<handle, any> = new WeakMap<handle, any>()
 declare function GetHandleId(h: handle): number
 
 export class Handle<T extends handle> {
-    public readonly handle: T
+    protected readonly handle: T
 
     protected constructor(handle: T) {
         this.handle = handle

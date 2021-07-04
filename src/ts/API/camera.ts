@@ -4,29 +4,30 @@
 import { Handle } from "../handles/handle"
 import { MapLocation, Point } from "../handles/location"
 import { Unit } from "../handles/unit"
+import { Position, real } from "../utils"
 
-declare function SetCameraPosition(x: number, y: number): void
-declare function SetCameraQuickPosition(x: number, y: number): void
+declare function SetCameraPosition(x: real, y: real): void
+declare function SetCameraQuickPosition(x: real, y: real): void
 declare function SetCameraBounds(
-    x1: number,
-    y1: number,
-    x2: number,
-    y2: number,
-    x3: number,
-    y3: number,
-    x4: number,
-    y4: number
+    x1: real,
+    y1: real,
+    x2: real,
+    y2: real,
+    x3: real,
+    y3: real,
+    x4: real,
+    y4: real
 ): void
 declare function StopCamera(): void
-declare function ResetToGameCamera(duration: number): void
-declare function PanCameraTo(x: number, y: number): void
-declare function PanCameraToTimed(x: number, y: number, duration: number): void
-declare function PanCameraToWithZ(x: number, y: number, zOffsetDest: number): void
+declare function ResetToGameCamera(duration: real): void
+declare function PanCameraTo(x: real, y: real): void
+declare function PanCameraToTimed(x: real, y: real, duration: real): void
+declare function PanCameraToWithZ(x: real, y: real, zOffsetDest: real): void
 declare function PanCameraToTimedWithZ(
-    x: number,
-    y: number,
-    zOffsetDest: number,
-    duration: number
+    x: real,
+    y: real,
+    zOffsetDest: real,
+    duration: real
 ): void
 declare function SetCinematicCamera(cameraModelFile: string): void
 declare function SetCameraRotateMode(
@@ -118,65 +119,59 @@ declare function BlzCameraSetupApplyForceDurationSmooth(
     smoothFactor: number
 ): void
 
-export class Camera {
-    private constructor() {}
-
-    static setPos(x: number, y: number): void {
+export abstract class Camera {
+    public static setCoords(x: real, y: real) {
         SetCameraPosition(x, y)
         return this
     }
 
-    static setPos(p: Point): void {
-        return this.setPos(p.x, p.y)
+    public static setPos(p: Position) {
+        return this.setCoords(p.x, p.y)
     }
 
-    static setPos(loc: MapLocation): void {
-        return this.setPos(loc.x, loc.y)
-    }
-
-    static setQuickPos(x: number, y: number): void {
+    public static setQuickCoords(x: real, y: real) {
         SetCameraQuickPosition(x, y)
         return this
     }
 
-    static setQuickPos(p: Point | MapLocation): void {
-        return this.setQuickPos(p.x, p.y)
+    public static setQuickPos(p: Position) {
+        return this.setQuickCoords(p.x, p.y)
     }
 
-    static setBounds(
-        x1: number,
-        y1: number,
-        x2: number,
-        y2: number,
-        x3: number,
-        y3: number,
-        x4: number,
-        y4: number
+    public static setBoundsCoords(
+        x1: real,
+        y1: real,
+        x2: real,
+        y2: real,
+        x3: real,
+        y3: real,
+        x4: real,
+        y4: real
     ) {
         SetCameraBounds(x1, y1, x2, y2, x3, y3, x4, y4)
         return this
     }
 
-    static setBounds(
-        p1: Point | MapLocation,
-        p2: Point | MapLocation,
-        p3: Point | MapLocation,
-        p4: Point | MapLocation
+    public static setBoundsPos(
+        p1: Position,
+        p2: Position,
+        p3: Position,
+        p4: Position
     ) {
-        return this.setBounds(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y)
+        return this.setBoundsCoords(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y)
     }
 
-    static stop() {
+    public static stop() {
         StopCamera()
         return this
     }
 
-    static reset(duration: number) {
+    public static reset(duration: real) {
         ResetToGameCamera(duration)
         return this
     }
 
-    static pan(x: number, y: number, zOffsetDest: number | undefined) {
+    public static panToCoords(x: real, y: real, zOffsetDest: real | undefined) {
         if (!zOffsetDest) {
             PanCameraTo(x, y)
         } else {
@@ -185,11 +180,11 @@ export class Camera {
         return this
     }
 
-    static pan(p: Point | MapLocation) {
-        return this.pan(p.x, p.y, p.z)
+    public static panToPos(p: Position) {
+        return this.panToCoords(p.x, p.y, p.z)
     }
 
-    static panTimed(x: number, y: number, duration: number, zOffsetDest: number | undefined) {
+    public static panToCoordsTimed(x: real, y: real, duration: real, zOffsetDest: real | undefined) {
         if (!zOffsetDest) {
             PanCameraToTimed(x, y, duration)
         } else {
@@ -198,16 +193,16 @@ export class Camera {
         return this
     }
 
-    static panTimed(p: Point | MapLocation, duration: number) {
-        return this.panTimed(p.x, p.y, duration, p.z)
+    public static panToPosTimed(p: Position, duration: real) {
+        return this.panToCoordsTimed(p.x, p.y, duration, p.z)
     }
 
-    static setRotateMode(x: number, y: number, radiansToSweep: number, duration: number) {
+    public static setRotateMode(x: real, y: real, radiansToSweep: real, duration: real) {
         SetCameraRotateMode(x, y, radiansToSweep, duration)
         return this
     }
 
-    static setField(whichField: camerafield, value: number, duration: number) {
+    public static setField(whichField: camerafield, value: number, duration: number) {
         SetCameraField(whichField, value, duration)
         return this
     }
