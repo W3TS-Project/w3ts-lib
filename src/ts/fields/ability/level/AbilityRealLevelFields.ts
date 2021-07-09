@@ -167,254 +167,251 @@ export abstract class AbilityRealLevelFields {
 	public static readonly ACTIVATION_DELAY_MIN1 = new AbilityRealLevelField('Min1', 'Задержка запуска', 'Мина - взрывается (гоблинская мина)')
 	public static readonly INVISIBILITY_TRANSITION_TIME = new AbilityRealLevelField('Min2', 'Время перехода в невидимость', 'Мина - взрывается (гоблинская мина)')
 	public static readonly ACTIVATION_RADIUS = new AbilityRealLevelField('Neu1', 'Радиус запуска', 'Выбрать героя')
+	public static readonly AMOUNT_REGENERATED = new AbilityRealLevelField('Arm1', 'Восстановление', 'Восстановление маны (нейтральный)')
+	public static readonly DAMAGE_PER_SECOND_POI1 = new AbilityRealLevelField('Poi1', 'Урона в секунду', 'Ядовитое жало')
+	public static readonly ATTACK_SPEED_FACTOR_POI2 = new AbilityRealLevelField('Poi2', 'Фактор скорости атаки', 'Ядовитое жало')
+	public static readonly MOVEMENT_SPEED_FACTOR_POI3 = new AbilityRealLevelField('Poi3', 'Фактор скорости перемещения', 'Ядовитое жало')
+	public static readonly EXTRA_DAMAGE_POA1 = new AbilityRealLevelField('Poa1', 'Дополнительный урон', 'Отравленные стрелы')
+	public static readonly DAMAGE_PER_SECOND_POA2 = new AbilityRealLevelField('Poa2', 'Урона в секунду', 'Отравленные стрелы')
+	public static readonly ATTACK_SPEED_FACTOR_POA3 = new AbilityRealLevelField('Poa3', 'Фактор скорости атаки', 'Отравленные стрелы')
+	public static readonly MOVEMENT_SPEED_FACTOR_POA4 = new AbilityRealLevelField('Poa4', 'Фактор скорости перемещения', 'Отравленные стрелы')
+	public static readonly DAMAGE_AMPLIFICATION = new AbilityRealLevelField('Pos2', 'Увеличение урона', 'Одержимость (непрерывное)')
+	public static readonly CHANCE_TO_STOMP_PERCENT = new AbilityRealLevelField('War1', 'Шанс на громовую поступь (%)', 'Сокрушение')
+	public static readonly DAMAGE_DEALT_WAR2 = new AbilityRealLevelField('War2', 'Нанесено урона', 'Сокрушение')
+	public static readonly FULL_DAMAGE_RADIUS_WAR3 = new AbilityRealLevelField('War3', 'Радиус полного урона', 'Сокрушение')
+	public static readonly HALF_DAMAGE_RADIUS_WAR4 = new AbilityRealLevelField('War4', 'Радиус половинного урона', 'Сокрушение')
+	public static readonly SUMMONED_UNIT_DAMAGE_PRG3 = new AbilityRealLevelField('Prg3', 'Урон от вызванной боевой единицы', 'Очищение')
+	public static readonly UNIT_PAUSE_DURATION = new AbilityRealLevelField('Prg4', 'Длительность паузы: воин', 'Очищение')
+	public static readonly HERO_PAUSE_DURATION = new AbilityRealLevelField('Prg5', 'Длительность паузы: герой', 'Очищение')
+	public static readonly HIT_POINTS_GAINED_REJ1 = new AbilityRealLevelField('Rej1', 'Получено здоровья', 'Омоложение')
+	public static readonly MANA_POINTS_GAINED_REJ2 = new AbilityRealLevelField('Rej2', 'Получено маны', 'Омоложение')
+	public static readonly MINIMUM_LIFE_REQUIRED = new AbilityRealLevelField('Rpb3', 'Минимум требуемого здоровья', 'восстановить')
+	public static readonly MINIMUM_MANA_REQUIRED = new AbilityRealLevelField('Rpb4', 'Минимум требуемой маны', 'восстановить')
+	public static readonly REPAIR_COST_RATIO = new AbilityRealLevelField('Rep1', 'Коэффициент стоимости ремонта', 'Ремонтировать')
+	public static readonly REPAIR_TIME_RATIO = new AbilityRealLevelField('Rep2', 'Коэффициент времени ремонта', 'Ремонтировать')
+	public static readonly POWER_BUILD_COST = new AbilityRealLevelField('Rep3', 'Цена ускор. постройки', 'Ремонтировать')
+	public static readonly POWER_BUILD_RATE = new AbilityRealLevelField('Rep4', 'Темп ускор. постройки', 'Ремонтировать')
+	public static readonly NAVAL_RANGE_BONUS = new AbilityRealLevelField('Rep5', 'Дополнительная дальность на море', 'Ремонтировать')
+	public static readonly DAMAGE_INCREASE_PERCENT_ROA1 = new AbilityRealLevelField('Roa1', 'Увеличение урона (%)', 'Рев')
+	public static readonly LIFE_REGENERATION_RATE = new AbilityRealLevelField('Roa3', 'Скорость восстановления здоровья', 'Рев')
+	public static readonly MANA_REGEN = new AbilityRealLevelField('Roa4', 'Восст. маны', 'Рев')
+	public static readonly DAMAGE_INCREASE = new AbilityRealLevelField('Nbr1', 'Увеличение ущерба', 'Рев')
+	public static readonly SALVAGE_COST_RATIO = new AbilityRealLevelField('Sal1', 'Коэффициент стоимости спасения', 'Грабеж')
+	public static readonly IN_FLIGHT_SIGHT_RADIUS = new AbilityRealLevelField('Esn1', 'Радиус обзора в полете', 'Сторожевая сова')
+	public static readonly HOVERING_SIGHT_RADIUS = new AbilityRealLevelField('Esn2', 'Радиус обзора в парении', 'Сторожевая сова')
+	public static readonly HOVERING_HEIGHT = new AbilityRealLevelField('Esn3', 'Высота парения', 'Сторожевая сова')
+	public static readonly DURATION_OF_OWLS = new AbilityRealLevelField('Esn5', 'Время действия сов', 'Сторожевая сова')
+	public static readonly FADE_DURATION = new AbilityRealLevelField('Shm1', 'Длительность затемнения', 'Невидимость по ночам')
+	public static readonly DAY_NIGHT_DURATION = new AbilityRealLevelField('Shm2', 'Длительность дня и ночи', 'Невидимость по ночам')
+	public static readonly ACTION_DURATION = new AbilityRealLevelField('Shm3', 'Длительность действия', 'Невидимость по ночам')
+	public static readonly MOVEMENT_SPEED_FACTOR_SLO1 = new AbilityRealLevelField('Slo1', 'Фактор скорости перемещения', 'Замедление')
+	public static readonly ATTACK_SPEED_FACTOR_SLO2 = new AbilityRealLevelField('Slo2', 'Фактор скорости атаки', 'Замедление')
+	public static readonly DAMAGE_PER_SECOND_SPO1 = new AbilityRealLevelField('Spo1', 'Урона в секунду', 'Яд')
+	public static readonly MOVEMENT_SPEED_FACTOR_SPO2 = new AbilityRealLevelField('Spo2', 'Фактор скорости перемещения', 'Яд')
+	public static readonly ATTACK_SPEED_FACTOR_SPO3 = new AbilityRealLevelField('Spo3', 'Фактор скорости атаки', 'Яд')
+	public static readonly ACTIVATION_DELAY_STA1 = new AbilityRealLevelField('Sta1', 'Задержка запуска', 'Колдовская ловушка')
+	public static readonly DETECTION_RADIUS_STA2 = new AbilityRealLevelField('Sta2', 'Радиус обнаружения', 'Колдовская ловушка')
+	public static readonly DETONATION_RADIUS = new AbilityRealLevelField('Sta3', 'Радиус взрыва', 'Колдовская ловушка')
+	public static readonly STUN_DURATION_STA4 = new AbilityRealLevelField('Sta4', 'Длительность оглушения', 'Колдовская ловушка')
+	public static readonly ATTACK_SPEED_BONUS_PERCENT = new AbilityRealLevelField('Uhf1', 'Дополнительная скорость атаки (%)', 'Ярость Проклятых')
+	public static readonly DAMAGE_PER_SECOND_UHF2 = new AbilityRealLevelField('Uhf2', 'Урона в секунду', 'Ярость Проклятых')
+	public static readonly LUMBER_PER_INTERVAL = new AbilityRealLevelField('Wha1', 'Древесины за интервал времени', 'Добывать ресурсы (светляток в руднике или около дерева)')
+	public static readonly ART_ATTACHMENT_HEIGHT = new AbilityRealLevelField('Wha3', 'Высота графического приложения', 'Добывать ресурсы (светлячок в руднике или около дерева)')
+	public static readonly TELEPORT_AREA_WIDTH = new AbilityRealLevelField('Wrp1', 'Ширина области телепорта', 'Перемещение через портал')
+	public static readonly TELEPORT_AREA_HEIGHT = new AbilityRealLevelField('Wrp2', 'Высота области телепорта', 'Перемещение через портал')
+	public static readonly LIFE_STOLEN_PER_ATTACK = new AbilityRealLevelField('Ivam', 'Жизни украдено за атаку', 'Предмет: вампиризм')
+	public static readonly DAMAGE_BONUS_IDAM = new AbilityRealLevelField('Idam', 'Дополнительный урон', 'Предмет: доп. урон от магии холода')
+	public static readonly CHANCE_TO_HIT_UNITS_PERCENT = new AbilityRealLevelField('Iob2', 'Шанс поразить войска (%)', 'Предмет: Черная стрела')
+	public static readonly CHANCE_TO_HIT_HEROS_PERCENT = new AbilityRealLevelField('Iob3', 'Шанс поразить героев (%)', 'Предмет: Черная стрела')
+	public static readonly CHANCE_TO_HIT_SUMMONS_PERCENT = new AbilityRealLevelField('Iob4', 'Шанс поразить вызванных (%)', 'Предмет: Черная стрела')
+	public static readonly DELAY_FOR_TARGET_EFFECT = new AbilityRealLevelField('Idel', 'Задержка для целевого эффекта', 'Осветительная ракета')
+	public static readonly DAMAGE_DEALT_PERCENT_OF_NORMAL = new AbilityRealLevelField('Iild', 'Нанесено урона (% от нормы)', 'Предмет: иллюзии')
+	public static readonly DAMAGE_RECEIVED_MULTIPLIER = new AbilityRealLevelField('Iilw', 'Увеличение полученного урона', 'Предмет: иллюзии')
+	public static readonly MANA_REGENERATION_BONUS_AS_FRACTION_OF_NORMAL = new AbilityRealLevelField('Imrp', 'Дополнительное восстановление маны (коэффициент от нормы)', 'Предмет: регенерация маны')
+	public static readonly MOVEMENT_SPEED_INCREASE_ISPI = new AbilityRealLevelField('Ispi', 'Увеличение скорости перемещения', 'Предмет: временное повышение скорости')
+	public static readonly DAMAGE_PER_SECOND_IDPS = new AbilityRealLevelField('Idps', 'Урона в секунду', 'Щит молний (предмет)')
+	public static readonly ATTACK_DAMAGE_INCREASE_CAC1 = new AbilityRealLevelField('Cac1', 'Увеличение урона при атаке', 'Боевой дух')
+	public static readonly DAMAGE_PER_SECOND_COR1 = new AbilityRealLevelField('Cor1', 'Урона в секунду', 'Едкое дыхание')
+	public static readonly ATTACK_SPEED_INCREASE_ISX1 = new AbilityRealLevelField('Isx1', 'Увеличение скорости атаки', 'Предмет: увеличение скорости боя (Перчатки Скорости)')
+	public static readonly DAMAGE_WRS1 = new AbilityRealLevelField('Wrs1', 'Урон', 'Громовая поступь')
+	public static readonly TERRAIN_DEFORMATION_AMPLITUDE = new AbilityRealLevelField('Wrs2', 'Амплитуда деформации рельефа', 'Громовая поступь (враг 1)')
+	public static readonly DAMAGE_CTC1 = new AbilityRealLevelField('Ctc1', 'Урон', 'Удар по земле (враг)')
+	public static readonly EXTRA_DAMAGE_TO_TARGET = new AbilityRealLevelField('Ctc2', 'Дополнительный урон цели', 'Удар по земле (враг)')
+	public static readonly MOVEMENT_SPEED_REDUCTION = new AbilityRealLevelField('Ctc3', 'Снижение скорости перемещения', 'Удар по земле (враг)')
+	public static readonly ATTACK_SPEED_REDUCTION = new AbilityRealLevelField('Ctc4', 'Снижение скорости атаки', 'Удар по земле (враг)')
+	public static readonly DAMAGE_CTB1 = new AbilityRealLevelField('Ctb1', 'Урон', 'Бросить камень')
+	public static readonly CASTING_DELAY_SECONDS = new AbilityRealLevelField('Uds2', 'Задержка заклинания (секунды)', 'Зов Тьмы')
+	public static readonly MANA_LOSS_PER_UNIT_DTN1 = new AbilityRealLevelField('Dtn1', 'Потеря маны (на боевую единицу)', 'Самопожертвование')
+	public static readonly DAMAGE_TO_SUMMONED_UNITS_DTN2 = new AbilityRealLevelField('Dtn2', 'Урон вызванным войскам', 'Самопожертвование')
+	public static readonly TRANSITION_TIME_SECONDS = new AbilityRealLevelField('Ivs1', 'Время перемещения (секунды)', 'Невидимость')
+	public static readonly DRAINED_PER_SECOND_NMR1 = new AbilityRealLevelField('Nmr1', 'Украдено маны в секунду', 'Слабоумие')
+	public static readonly CHANCE_TO_REDUCE_DAMAGE_PERCENT = new AbilityRealLevelField('Ssk1', 'Шанс на снижение урона (%)', 'Каменные доспехи')
+	public static readonly MINIMUM_DAMAGE = new AbilityRealLevelField('Ssk2', 'Минимальный урон', 'Каменные доспехи')
+	public static readonly IGNORED_DAMAGE = new AbilityRealLevelField('Ssk3', 'Отклоненный урон', 'Каменные доспехи')
+	public static readonly FULL_DAMAGE_DEALT = new AbilityRealLevelField('Hfs1', 'Нанесено полного урона', 'Огненный столб')
+	public static readonly FULL_DAMAGE_INTERVAL = new AbilityRealLevelField('Hfs2', 'Интервал полного урона', 'Огненный столб')
+	public static readonly HALF_DAMAGE_DEALT = new AbilityRealLevelField('Hfs3', 'Нанесенный половинный урон', 'Огненный столб')
+	public static readonly HALF_DAMAGE_INTERVAL = new AbilityRealLevelField('Hfs4', 'Интервал половинного урона', 'Огненный столб')
+	public static readonly BUILDING_REDUCTION_HFS5 = new AbilityRealLevelField('Hfs5', 'Уменьшение скорости строительства', 'Огненный столб')
+	public static readonly MAXIMUM_DAMAGE_HFS5 = new AbilityRealLevelField('Hfs6', 'Максимальный урон', 'Огненный столб')
+	public static readonly MANA_PER_HIT_POINT = new AbilityRealLevelField('Nms1', 'Маны на единицу здоровья', 'Магический щит')
+	public static readonly DAMAGE_ABSORBED_PERCENT = new AbilityRealLevelField('Nms2', 'Поглощено ущерба (%)', 'Магический щит')
+	public static readonly WAVE_DISTANCE = new AbilityRealLevelField('Uim1', 'Дистанция волны', 'Пронзающая Смерть')
+	public static readonly WAVE_TIME_SECONDS = new AbilityRealLevelField('Uim2', 'Время волны (секунды)', 'Пронзающая Смерть')
+	public static readonly DAMAGE_DEALT_UIM3 = new AbilityRealLevelField('Uim3', 'Нанесено урона', 'Пронзающая Смерть')
+	public static readonly AIR_TIME_SECONDS_UIM4 = new AbilityRealLevelField('Uim4', 'Время в воздухе (секунды)', 'Пронзающая Смерть')
+	public static readonly UNIT_RELEASE_INTERVAL_SECONDS = new AbilityRealLevelField('Uls2', 'Интервал отпускания боевой единицы (секунды)', 'Москиты')
+	public static readonly DAMAGE_RETURN_FACTOR = new AbilityRealLevelField('Uls4', 'Фактор возвращенного урона', 'Москиты')
+	public static readonly DAMAGE_RETURN_THRESHOLD = new AbilityRealLevelField('Uls5', 'Порог возвращенного урона', 'Москиты')
+	public static readonly RETURNED_DAMAGE_FACTOR = new AbilityRealLevelField('Uts1', 'Фактор возвращенного урона', 'Панцирь с шипами')
+	public static readonly RECEIVED_DAMAGE_FACTOR = new AbilityRealLevelField('Uts2', 'Фактор полученного ущерба', 'Панцирь с шипами')
+	public static readonly DEFENSE_BONUS_UTS3 = new AbilityRealLevelField('Uts3', 'Дополнительная защита', 'Панцирь с шипами')
+	public static readonly DAMAGE_BONUS_NBA1 = new AbilityRealLevelField('Nba1', 'Дополнительный урон', 'Черная стрела')
+	public static readonly SUMMONED_UNIT_DURATION_SECONDS_NBA3 = new AbilityRealLevelField('Nba3', 'Длительность вызова боевой единицы (секунды)', 'Черная стрела')
+	public static readonly MANA_PER_SUMMONED_HIT_POINT = new AbilityRealLevelField('Cmg2', 'Маны на единицу здоровья вызванного', 'Захват контроля')
+	public static readonly CHARGE_FOR_CURRENT_LIFE = new AbilityRealLevelField('Cmg3', 'Заряд за текущую жизнь', 'Захват контроля')
+	public static readonly HIT_POINTS_DRAINED = new AbilityRealLevelField('Ndr1', 'Похищено здоровья', 'Похищение жизни')
+	public static readonly MANA_POINTS_DRAINED = new AbilityRealLevelField('Ndr2', 'Похищено маны', 'Похищение жизни')
+	public static readonly DRAIN_INTERVAL_SECONDS = new AbilityRealLevelField('Ndr3', 'Интервал похищения (секунды)', 'Похищение жизни')
+	public static readonly LIFE_TRANSFERED_PER_SECOND = new AbilityRealLevelField('Ndr4', 'Ед. здоровья в секунду', 'Похищение жизни')
+	public static readonly MANA_TRANSFERED_PER_SECOND = new AbilityRealLevelField('Ndr5', 'Ед. маны в секунду', 'Похищение жизни')
+	public static readonly BONUS_LIFE_FACTOR = new AbilityRealLevelField('Ndr6', 'Фактор доп. здоровья', 'Похищение жизни')
+	public static readonly BONUS_LIFE_DECAY = new AbilityRealLevelField('Ndr7', 'Исчезновение доп. здоровья', 'Похищение жизни')
+	public static readonly BONUS_MANA_FACTOR = new AbilityRealLevelField('Ndr8', 'Фактор доп. маны', 'Похищение жизни')
+	public static readonly BONUS_MANA_DECAY = new AbilityRealLevelField('Ndr9', 'Исчезновение доп. маны', 'Похищение жизни')
+	public static readonly CHANCE_TO_MISS_PERCENT = new AbilityRealLevelField('Nsi2', 'Шанс на промах (%)', 'Безмолвие')
+	public static readonly MOVEMENT_SPEED_MODIFIER = new AbilityRealLevelField('Nsi3', 'Модификатор скорости перемещения', 'Безмолвие')
+	public static readonly ATTACK_SPEED_MODIFIER = new AbilityRealLevelField('Nsi4', 'Модификатор скорости боя', 'Безмолвие')
+	public static readonly DAMAGE_PER_SECOND_TDG1 = new AbilityRealLevelField('Tdg1', 'Урона в секунду', 'Аура повреждения зданий (торнадо)')
+	public static readonly MEDIUM_DAMAGE_RADIUS_TDG2 = new AbilityRealLevelField('Tdg2', 'Радиус среднего урона', 'Аура повреждения зданий (торнадо)')
+	public static readonly MEDIUM_DAMAGE_PER_SECOND = new AbilityRealLevelField('Tdg3', 'Среднего урона в секунду', 'Аура повреждения зданий (торнадо)')
+	public static readonly SMALL_DAMAGE_RADIUS_TDG4 = new AbilityRealLevelField('Tdg4', 'Радиус малого урона', 'Аура повреждения зданий (торнадо)')
+	public static readonly SMALL_DAMAGE_PER_SECOND = new AbilityRealLevelField('Tdg5', 'Малого урона в секунду', 'Аура повреждения зданий (торнадо)')
+	public static readonly AIR_TIME_SECONDS_TSP1 = new AbilityRealLevelField('Tsp1', 'Время в воздухе (секунды)', 'Вихрь торнадо (торнадо)')
+	public static readonly MINIMUM_HIT_INTERVAL_SECONDS = new AbilityRealLevelField('Tsp2', 'Минимальный интервал между ударами (секунды)')
+	public static readonly DAMAGE_PER_SECOND_NBF5 = new AbilityRealLevelField('Nbf5', 'Урона в секунду', 'Огненное дыхание')
+	public static readonly MAXIMUM_RANGE = new AbilityRealLevelField('Ebl1', 'Максимальная область', 'Скачок')
+	public static readonly MINIMUM_RANGE = new AbilityRealLevelField('Ebl2', 'Минимальная область', 'Скачок')
+	public static readonly DAMAGE_PER_TARGET_EFK1 = new AbilityRealLevelField('Efk1', 'Урона на цель', 'Веерный бросок')
+	public static readonly MAXIMUM_TOTAL_DAMAGE = new AbilityRealLevelField('Efk2', 'Максимальный суммарный урон', 'Веерный бросок')
+	public static readonly MAXIMUM_SPEED_ADJUSTMENT = new AbilityRealLevelField('Efk4', 'Регулировка максимальной скорости', 'Веерный бросок')
+	public static readonly DECAYING_DAMAGE = new AbilityRealLevelField('Esh1', 'Ущерб от Порчи', 'Отравленный нож')
+	public static readonly MOVEMENT_SPEED_FACTOR_ESH2 = new AbilityRealLevelField('Esh2', 'Фактор скорости перемещения', 'Отравленный нож')
+	public static readonly ATTACK_SPEED_FACTOR = new AbilityRealLevelField('Esh3', 'Фактор скорости атаки', 'Отравленный нож')
+	public static readonly DECAY_POWER = new AbilityRealLevelField('Esh4', 'Сила Порчи', 'Отравленный нож')
+	public static readonly INITIAL_DAMAGE_ESH5 = new AbilityRealLevelField('Esh5', 'Начальный урон', 'Отравленный нож')
+	public static readonly MAXIMUM_LIFE_ABSORBED = new AbilityRealLevelField('abs1', 'Максимум поглощенного здоровья', 'Поглощение маны')
+	public static readonly MAXIMUM_MANA_ABSORBED = new AbilityRealLevelField('abs2', 'Максимум поглощенной маны', 'Поглощение маны')
+	public static readonly MOVEMENT_SPEED_INCREASE_BSK1 = new AbilityRealLevelField('bsk1', 'Увеличение скорости перемещения', 'Безумие')
+	public static readonly ATTACK_SPEED_INCREASE_BSK2 = new AbilityRealLevelField('bsk2', 'Увеличение скорости атаки', 'Безумие')
+	public static readonly DAMAGE_TAKEN_INCREASE = new AbilityRealLevelField('bsk3', 'Увеличение полученного урона', 'Безумие')
+	public static readonly LIFE_PER_UNIT = new AbilityRealLevelField('dvm1', 'Здоровья на боевую единицу', 'Поглощение чар')
+	public static readonly MANA_PER_UNIT = new AbilityRealLevelField('dvm2', 'Маны на боевую единицу', 'Поглощение чар')
+	public static readonly LIFE_PER_BUFF = new AbilityRealLevelField('dvm3', 'Здоровья на заклинание', 'Поглощение чар')
+	public static readonly MANA_PER_BUFF = new AbilityRealLevelField('dvm4', 'Маны на заклинание', 'Поглощение чар')
+	public static readonly SUMMONED_UNIT_DAMAGE_DVM5 = new AbilityRealLevelField('dvm5', 'Урон от вызванной боевой единицы', 'Поглощение чар')
+	public static readonly DAMAGE_BONUS_FAK1 = new AbilityRealLevelField('fak1', 'Дополнительный урон', 'Сфера Небытия')
+	public static readonly MEDIUM_DAMAGE_FACTOR_FAK2 = new AbilityRealLevelField('fak2', 'Фактор среднего урона', 'Сфера Небытия')
+	public static readonly SMALL_DAMAGE_FACTOR_FAK3 = new AbilityRealLevelField('fak3', 'Фактор малого урона', 'Сфера Небытия')
+	public static readonly FULL_DAMAGE_RADIUS_FAK4 = new AbilityRealLevelField('fak4', 'Радиус полного урона', 'Сфера Небытия')
+	public static readonly HALF_DAMAGE_RADIUS_FAK5 = new AbilityRealLevelField('fak5', 'Радиус половинного урона', 'Сфера Небытия')
+	public static readonly EXTRA_DAMAGE_PER_SECOND = new AbilityRealLevelField('liq1', 'Дополнительный урон в секунду', 'Жидкий огонь')
+	public static readonly MOVEMENT_SPEED_REDUCTION_LIQ2 = new AbilityRealLevelField('liq2', 'Снижение скорости перемещения', 'Жидкий огонь')
+	public static readonly ATTACK_SPEED_REDUCTION_LIQ3 = new AbilityRealLevelField('liq3', 'Снижение скорости атаки', 'Жидкий огонь')
+	public static readonly MAGIC_DAMAGE_FACTOR = new AbilityRealLevelField('mim1', 'Фактор магического урона', 'Невосприимчивость к магии')
+	public static readonly UNIT_DAMAGE_PER_MANA_POINT = new AbilityRealLevelField('mfl1', 'Боевая единица: урона на единицу маны', 'Заклинание Крови')
+	public static readonly HERO_DAMAGE_PER_MANA_POINT = new AbilityRealLevelField('mfl2', 'Герой: урона на единицу маны', 'Заклинание Крови')
+	public static readonly UNIT_MAXIMUM_DAMAGE = new AbilityRealLevelField('mfl3', 'Боевая единица: максимальный урон', 'Заклинание Крови')
+	public static readonly HERO_MAXIMUM_DAMAGE = new AbilityRealLevelField('mfl4', 'Герой: максимальный урон', 'Заклинание Крови')
+	public static readonly DAMAGE_COOLDOWN = new AbilityRealLevelField('mfl5', 'Урон при перезарядке', 'Заклинание Крови')
+	public static readonly DISTRIBUTED_DAMAGE_FACTOR_SPL1 = new AbilityRealLevelField('spl1', 'Фактор распределенного урона', 'Эмпатия')
+	public static readonly LIFE_REGENERATED = new AbilityRealLevelField('irl1', 'Восстановлено здоровья', 'Лечебный эликсир')
+	public static readonly MANA_REGENERATED = new AbilityRealLevelField('irl2', 'Восстановлено маны', 'Лечебный эликсир')
+	public static readonly MANA_LOSS_PER_UNIT_IDC1 = new AbilityRealLevelField('idc1', 'Потеря маны на боевую единицу', 'Предмет: волна развеивания чар')
+	public static readonly SUMMONED_UNIT_DAMAGE_IDC2 = new AbilityRealLevelField('idc2', 'Урон от вызванной боевой единицы', 'Предмет: волна развеивания чар')
+	public static readonly ACTIVATION_DELAY_IMO2 = new AbilityRealLevelField('imo2', 'Задержка запуска', 'Приманка')
+	public static readonly LURE_INTERVAL_SECONDS = new AbilityRealLevelField('imo3', 'Интервал подчинения (секунды)', 'Приманка')
+	public static readonly DAMAGE_BONUS_ISR1 = new AbilityRealLevelField('isr1', 'Дополнительный урон', 'Уменьшение урона от магии')
+	public static readonly DAMAGE_REDUCTION_ISR2 = new AbilityRealLevelField('isr2', 'Снижение урона', 'Уменьшение урона от магии')
+	public static readonly DAMAGE_BONUS_IPV1 = new AbilityRealLevelField('ipv1', 'Дополнительный урон', 'Зелье Вампиризма')
+	public static readonly LIFE_STEAL_AMOUNT = new AbilityRealLevelField('ipv2', 'Количество украденного здоровья', 'Зелье Вампиризма')
+	public static readonly LIFE_RESTORED_FACTOR = new AbilityRealLevelField('ast1', 'Фактор восстановленного здоровья', 'Помощь предков')
+	public static readonly MANA_RESTORED_FACTOR = new AbilityRealLevelField('ast2', 'Фактор восстановленной маны', 'Помощь предков')
+	public static readonly ATTACH_DELAY = new AbilityRealLevelField('gra1', 'Задержка атаки', 'Вырвать дерево')
+	public static readonly REMOVE_DELAY = new AbilityRealLevelField('gra2', 'Задержка удаления', 'Вырвать дерево')
+	public static readonly HERO_REGENERATION_DELAY = new AbilityRealLevelField('Nsa2', 'Задержка восстановления героя', 'Посох Спасения')
+	public static readonly UNIT_REGENERATION_DELAY = new AbilityRealLevelField('Nsa3', 'Задержка восстановления боевой единицы', 'Посох Спасения')
+	public static readonly MAGIC_DAMAGE_REDUCTION_NSA4 = new AbilityRealLevelField('Nsa4', 'Снижение магического урона', 'Посох Спасения')
+	public static readonly HIT_POINTS_PER_SECOND_NSA5 = new AbilityRealLevelField('Nsa5', 'Здоровья в секунду', 'Посох Спасения')
+	public static readonly DAMAGE_TO_SUMMONED_UNITS_IXS1 = new AbilityRealLevelField('Ixs1', 'Урон вызванным войскам', 'Предмет: невосприимчивость к магии')
+	public static readonly MAGIC_DAMAGE_REDUCTION_IXS2 = new AbilityRealLevelField('Ixs2', 'Снижение магического урона', 'Предмет: невосприимчивость к магии')
+	public static readonly SUMMONED_UNIT_DURATION = new AbilityRealLevelField('Npa6', 'Время жизни вызванного существа', 'Паразит')
+	public static readonly SHIELD_COOLDOWN_TIME = new AbilityRealLevelField('Nse1', 'Время перезарядки щита', 'Защита (руна)')
+	public static readonly DAMAGE_PER_SECOND_NDO1 = new AbilityRealLevelField('Ndo1', 'Урона в секунду', 'Печать Преисподней')
+	public static readonly SUMMONED_UNIT_DURATION_SECONDS_NDO3 = new AbilityRealLevelField('Ndo3', 'Длительность вызова боевой единицы (секунды)', 'Печать Преисподней')
+	public static readonly MEDIUM_DAMAGE_RADIUS_FLK1 = new AbilityRealLevelField('flk1', 'Радиус среднего урона', 'Разрывные снаряды')
+	public static readonly SMALL_DAMAGE_RADIUS_FLK2 = new AbilityRealLevelField('flk2', 'Радиус малого урона', 'Разрывные снаряды')
+	public static readonly FULL_DAMAGE_AMOUNT_FLK3 = new AbilityRealLevelField('flk3', 'Объем полного урона', 'Разрывные снаряды')
+	public static readonly MEDIUM_DAMAGE_AMOUNT = new AbilityRealLevelField('flk4', 'Объем среднего урона', 'Разрывные снаряды')
+	public static readonly SMALL_DAMAGE_AMOUNT = new AbilityRealLevelField('flk5', 'Объем малого урона', 'Разрывные снаряды')
+	public static readonly MOVEMENT_SPEED_REDUCTION_PERCENT_HBN1 = new AbilityRealLevelField('Hbn1', 'Уменьшение скорости перемещения (%)', 'Изгнание в астрал')
+	public static readonly ATTACK_SPEED_REDUCTION_PERCENT_HBN2 = new AbilityRealLevelField('Hbn2', 'Уменьшение скорости боя (%)', 'Изгнание в астрал')
+	public static readonly MAX_MANA_DRAINED_UNITS = new AbilityRealLevelField('fbk1', 'Макс. украденной маны: войска', 'Сожжение маны (ведьмак)')
+	public static readonly DAMAGE_RATIO_UNITS_PERCENT = new AbilityRealLevelField('fbk2', 'Коэффициент урона: войска (%)', 'Сожжение маны (ведьмак)')
+	public static readonly MAX_MANA_DRAINED_HEROS = new AbilityRealLevelField('fbk3', 'Макс. украденной маны: герои', 'Сожжение маны (ведьмак)')
+	public static readonly DAMAGE_RATIO_HEROS_PERCENT = new AbilityRealLevelField('fbk4', 'Коэффициент урона: герои (%)', 'Сожжение маны (ведьмак)')
+	public static readonly SUMMONED_DAMAGE = new AbilityRealLevelField('fbk5', 'Урон маг. существам', 'Сожжение маны (ведьмак)')
+	public static readonly DISTRIBUTED_DAMAGE_FACTOR_NCA1 = new AbilityRealLevelField('nca1', 'Фактор распределенного урона', 'Демоническая сила')
+	public static readonly INITIAL_DAMAGE_PXF1 = new AbilityRealLevelField('pxf1', 'Начальный урон', 'Пламя феникса')
+	public static readonly DAMAGE_PER_SECOND_PXF2 = new AbilityRealLevelField('pxf2', 'Урона в секунду', 'Пламя феникса')
+	public static readonly DAMAGE_PER_SECOND_MLS1 = new AbilityRealLevelField('mls1', 'Урона в секунду', 'Огненное лассо')
+	public static readonly BEAST_COLLISION_RADIUS = new AbilityRealLevelField('Nst2', 'Радиус столкновения со зверем', 'Стадо ящериц')
+	public static readonly DAMAGE_AMOUNT_NST3 = new AbilityRealLevelField('Nst3', 'Объем урона', 'Стадо ящериц')
+	public static readonly DAMAGE_RADIUS = new AbilityRealLevelField('Nst4', 'Радиус урона', 'Стадо ящериц')
+	public static readonly DAMAGE_DELAY = new AbilityRealLevelField('Nst5', 'Задержка урона', 'Стадо ящериц')
+	public static readonly FOLLOW_THROUGH_TIME = new AbilityRealLevelField('Ncl1', 'Следовать в течение времени', 'Канал')
+	public static readonly ART_DURATION = new AbilityRealLevelField('Ncl4', 'Длительность графики', 'Канал')
+	public static readonly MOVEMENT_SPEED_REDUCTION_PERCENT_NAB1 = new AbilityRealLevelField('Nab1', 'Уменьшение скорости перемещения (%)', 'Кислотная бомба')
+	public static readonly ATTACK_SPEED_REDUCTION_PERCENT_NAB2 = new AbilityRealLevelField('Nab2', 'Уменьшение скорости боя (%)', 'Кислотная бомба')
+	public static readonly PRIMARY_DAMAGE = new AbilityRealLevelField('Nab4', 'Основной урон', 'Кислотная бомба')
+	public static readonly SECONDARY_DAMAGE = new AbilityRealLevelField('Nab5', 'Дополнительный урон', 'Кислотная бомба')
+	public static readonly DAMAGE_INTERVAL_NAB6 = new AbilityRealLevelField('Nab6', 'Интервал урона', 'Кислотная бомба')
+	public static readonly GOLD_COST_FACTOR = new AbilityRealLevelField('Ntm1', 'Требуется золота', 'Трансмутация')
+	public static readonly LUMBER_COST_FACTOR = new AbilityRealLevelField('Ntm2', 'Требуется древесины', 'Трансмутация')
+	public static readonly MOVE_SPEED_BONUS_NEG1 = new AbilityRealLevelField('Neg1', 'Повышение скорости перемещения', 'Техника')
+	public static readonly DAMAGE_BONUS_NEG2 = new AbilityRealLevelField('Neg2', 'Увеличение урона', 'Техника')
+	public static readonly DAMAGE_AMOUNT_NCS1 = new AbilityRealLevelField('Ncs1', 'Урон', 'Ракетный удар')
+	public static readonly DAMAGE_INTERVAL_NCS2 = new AbilityRealLevelField('Ncs2', 'Интервал урона', 'Ракетный удар')
+	public static readonly MAX_DAMAGE_NCS4 = new AbilityRealLevelField('Ncs4', 'Макс. урон', 'Ракетный удар')
+	public static readonly BUILDING_DAMAGE_FACTOR_NCS5 = new AbilityRealLevelField('Ncs5', 'Фактор урона зданиям', 'Ракетный удар')
+	public static readonly EFFECT_DURATION = new AbilityRealLevelField('Ncs6', 'Время действия', 'Ракетный удар')
+	public static readonly SPAWN_INTERVAL_NSY1 = new AbilityRealLevelField('Nsy1', 'Интверал порождения', 'Мини-завод')
+	public static readonly SPAWN_UNIT_DURATION = new AbilityRealLevelField('Nsy3', 'Время жизни порожденного воина', 'Мини-завод')
+	public static readonly SPAWN_UNIT_OFFSET = new AbilityRealLevelField('Nsy4', 'Смещение порожденного воина', 'Мини-завод')
+	public static readonly LEASH_RANGE_NSY5 = new AbilityRealLevelField('Nsy5', 'Радиус подчинения', 'Мини-завод')
+	public static readonly SPAWN_INTERVAL_NFY1 = new AbilityRealLevelField('Nfy1', 'Интервал порождения', 'Завод')
+	public static readonly LEASH_RANGE_NFY2 = new AbilityRealLevelField('Nfy2', 'Радиус подчинения', 'Завод')
+	public static readonly CHANCE_TO_DEMOLISH = new AbilityRealLevelField('Nde1', 'Вероятность уничтожения', 'Разгром')
+	public static readonly DAMAGE_MULTIPLIER_BUILDINGS = new AbilityRealLevelField('Nde2', 'Увеличение урона (здания)', 'Разгром')
+	public static readonly DAMAGE_MULTIPLIER_UNITS = new AbilityRealLevelField('Nde3', 'Увеличение урона (войска)', 'Разгром')
+	public static readonly DAMAGE_MULTIPLIER_HEROES = new AbilityRealLevelField('Nde4', 'Увеличение урона (герои)', 'Разгром')
+	public static readonly BONUS_DAMAGE_MULTIPLIER = new AbilityRealLevelField('Nic1', 'Доп. увеличение урона', 'Оживший огонь')
+	public static readonly DEATH_DAMAGE_FULL_AMOUNT = new AbilityRealLevelField('Nic2', 'Посмертный урон: полный объем', 'Оживший огонь')
+	public static readonly DEATH_DAMAGE_FULL_AREA = new AbilityRealLevelField('Nic3', 'Посмертный урон: полный радиус', 'Оживший огонь')
+	public static readonly DEATH_DAMAGE_HALF_AMOUNT = new AbilityRealLevelField('Nic4', 'Посмертный урон: половинный объем', 'Оживший огонь')
+	public static readonly DEATH_DAMAGE_HALF_AREA = new AbilityRealLevelField('Nic5', 'Посмертный урон: половинный радиус', 'Оживший огонь')
+	public static readonly DEATH_DAMAGE_DELAY = new AbilityRealLevelField('Nic6', 'Посмертный урон: задержка', 'Оживший огонь')
+	public static readonly DAMAGE_AMOUNT_NSO1 = new AbilityRealLevelField('Nso1', 'Урон', 'Пламя Обреченности')
+	public static readonly DAMAGE_PERIOD = new AbilityRealLevelField('Nso2', 'Длительность урона', 'Пламя Обреченности')
+	public static readonly DAMAGE_PENALTY = new AbilityRealLevelField('Nso3', 'Уменьшение урона', 'Пламя Обреченности')
+	public static readonly MOVEMENT_SPEED_REDUCTION_PERCENT_NSO4 = new AbilityRealLevelField('Nso4', 'Уменьшение скорости перемещения (%)', 'Пламя Обреченности')
+	public static readonly ATTACK_SPEED_REDUCTION_PERCENT_NSO5 = new AbilityRealLevelField('Nso5', 'Уменьшение скорости боя (%)', 'Пламя Обреченности')
+	public static readonly SPLIT_DELAY = new AbilityRealLevelField('Nlm2', 'Задержка деления', 'Тварь из Недр')
+	public static readonly MAX_HITPOINT_FACTOR = new AbilityRealLevelField('Nlm4', 'Фактор макс. здоровья', 'Тварь из Недр')
+	public static readonly LIFE_DURATION_SPLIT_BONUS = new AbilityRealLevelField('Nlm5', 'Деление: доп. срок жизни', 'Тварь из Недр')
+	public static readonly WAVE_INTERVAL = new AbilityRealLevelField('Nvc3', 'Интервал между волнами', 'Вулкан')
+	public static readonly BUILDING_DAMAGE_FACTOR_NVC4 = new AbilityRealLevelField('Nvc4', 'Фактор урона зданиям', 'Вулкан')
+	public static readonly FULL_DAMAGE_AMOUNT_NVC5 = new AbilityRealLevelField('Nvc5', 'Полный объем урона', 'Вулкан')
+	public static readonly HALF_DAMAGE_FACTOR = new AbilityRealLevelField('Nvc6', 'Фактор половинного урона', 'Вулкан')
+	public static readonly INTERVAL_BETWEEN_PULSES = new AbilityRealLevelField('Tau5', 'Время между импульсами', 'Оскорбление')
 }
-
-//     ActivationRadius: c("Neu1"),
-//     AmountRegenerated: c("Arm1"),
-//     DamagePerSecond_Poi1: c("Poi1"),
-//     AttackSpeedFactor_Poi2: c("Poi2"),
-//     MovementSpeedFactor_Poi3: c("Poi3"),
-//     ExtraDamage_Poa1: c("Poa1"),
-//     DamagePerSecond_Poa2: c("Poa2"),
-//     AttackSpeedFactor_Poa3: c("Poa3"),
-//     MovementSpeedFactor_Poa4: c("Poa4"),
-//     DamageAmplification: c("Pos2"),
-//     ChanceToStompPercent: c("War1"),
-//     DamageDealt_War2: c("War2"),
-//     FullDamageRadius_War3: c("War3"),
-//     HalfDamageRadius_War4: c("War4"),
-//     SummonedUnitDamage_Prg3: c("Prg3"),
-//     UnitPauseDuration: c("Prg4"),
-//     HeroPauseDuration: c("Prg5"),
-//     HitPointsGained_Rej1: c("Rej1"),
-//     ManaPointsGained_Rej2: c("Rej2"),
-//     MinimumLifeRequired: c("Rpb3"),
-//     MinimumManaRequired: c("Rpb4"),
-//     RepairCostRatio: c("Rep1"),
-//     RepairTimeRatio: c("Rep2"),
-//     PowerbuildConst: c("Rep3"),
-//     PowerbuildRate: c("Rep4"),
-//     NavalRangeBonus: c("Rep5"),
-//     DamageIncreasePercent_Roa1: c("Roa1"),
-//     LifeRegenerationRate: c("Roa3"),
-//     ManaRegen: c("Roa4"),
-//     DamageIncrease: c("Nbr1"),
-//     SalvageCostRatio: c("Sal1"),
-//     InFlightSightRadius: c("Esn1"),
-//     HoveringSightRadius: c("Esn2"),
-//     HoveringHeight: c("Esn3"),
-//     DurationOfOwls: c("Esn5"),
-//     FadeDuration: c("Shm1"),
-//     DayNightDuration: c("Shm2"),
-//     ActionDuration: c("Shm3"),
-//     MovementSpeedFactor_Slo1: c("Slo1"),
-//     AttackSpeedFactor_Slo2: c("Slo2"),
-//     DamagePerSecond_Spo1: c("Spo1"),
-//     MovementSpeedFactor_Spo2: c("Spo2"),
-//     AttackSpeedFactor_Spo3: c("Spo3"),
-//     ActivationDelay_Sta1: c("Sta1"),
-//     DetectionRadius_Sta2: c("Sta2"),
-//     DetonationRadius: c("Sta3"),
-//     StunDuration_Sta4: c("Sta4"),
-//     AttackSpeedBonusPercent: c("Uhf1"),
-//     DamagePerSecond_Uhf2: c("Uhf2"),
-//     LumberPerInterval: c("Wha1"),
-//     ArtAttachmentHeight: c("Wha3"),
-//     TeleportAreaWidth: c("Wrp1"),
-//     TeleportAreaHeight: c("Wrp2"),
-//     LifeStolenPerAttack: c("Ivam"),
-//     DamageBonus_Idam: c("Idam"),
-//     ChanceToHitUnitsPercent: c("Iob2"),
-//     ChanceToHitHerosPercent: c("Iob3"),
-//     ChanceToHitSummonsPercent: c("Iob4"),
-//     DelayForTargetEffect: c("Idel"),
-//     DamageDealtPercentOfNormal: c("Iild"),
-//     DamageReceivedMultiplier: c("Iilw"),
-//     ManaRegenerationBonusAsFractionOfNormal: c("Imrp"),
-//     MovementSpeedIncrease_Ispi: c("Ispi"),
-//     DamagePerSecond_Idps: c("Idps"),
-//     AttackDamageIncrease_Cac1: c("Cac1"),
-//     DamagePerSecond_Cor1: c("Cor1"),
-//     AttackSpeedIncrease_Isx1: c("Isx1"),
-//     Damage_Wrs1: c("Wrs1"),
-//     TerrainDeformationAmplitude: c("Wrs2"),
-//     Damage_Ctc1: c("Ctc1"),
-//     ExtraDamageToTarget: c("Ctc2"),
-//     MovementSpeedReduction: c("Ctc3"),
-//     AttackSpeedReduction: c("Ctc4"),
-//     Damage_Ctb1: c("Ctb1"),
-//     CastingDelaySeconds: c("Uds2"),
-//     ManaLossPerUnit_Dtn1: c("Dtn1"),
-//     DamageToSummonedUnits_Dtn2: c("Dtn2"),
-//     TransitionTimeSeconds: c("Ivs1"),
-//     DrainedPerSecond_Nmr1: c("Nmr1"),
-//     ChanceToReduceDamagePercent: c("Ssk1"),
-//     MinimnumDamage: c("Ssk2"),
-//     IgnoredDamage: c("Ssk3"),
-//     FullDamageDealt: c("Hfs1"),
-//     FullDamageInterval: c("Hfs2"),
-//     HalfDamageDealt: c("Hfs3"),
-//     HalfDamageInterval: c("Hfs4"),
-//     BuildingReduction_Hfs5: c("Hfs5"),
-//     MaximumDamage_Hfs6: c("Hfs6"),
-//     ManaPerHitPoint: c("Nms1"),
-//     DamageAbsorbedPercent: c("Nms2"),
-//     WaveDistance: c("Uim1"),
-//     WaveTimeSeconds: c("Uim2"),
-//     DamageDealt_Uim3: c("Uim3"),
-//     AirTimeSeconds_Uim4: c("Uim4"),
-//     UnitReleaseIntervalSeconds: c("Uls2"),
-//     DamageReturnFactor: c("Uls4"),
-//     DamageReturnThreshold: c("Uls5"),
-//     ReturnedDamageFactor: c("Uts1"),
-//     ReceivedDamageFactor: c("Uts2"),
-//     DefenseBonus_Uts3: c("Uts3"),
-//     DamageBonus_Nba1: c("Nba1"),
-//     SummonedUnitDurationSeconds_Nba3: c("Nba3"),
-//     ManaPerSummonedHitpoint: c("Cmg2"),
-//     ChargeForCurrentLife: c("Cmg3"),
-//     HitPointsDrained: c("Ndr1"),
-//     ManaPointsDrained: c("Ndr2"),
-//     DrainIntervalSeconds: c("Ndr3"),
-//     LifeTransferedPerSecond: c("Ndr4"),
-//     ManaTransferedPerSecond: c("Ndr5"),
-//     BonusLifeFactor: c("Ndr6"),
-//     BonusLifeDecay: c("Ndr7"),
-//     BonusManaFactor: c("Ndr8"),
-//     BonusManaDecay: c("Ndr9"),
-//     ChanceToMissPercent: c("Nsi2"),
-//     MovementSpeedModifier: c("Nsi3"),
-//     AttackSpeedModifier: c("Nsi4"),
-//     DamagePerSecond_Tdg1: c("Tdg1"),
-//     MediumDamageRadius_Tdg2: c("Tdg2"),
-//     MediumDamagePerSecond: c("Tdg3"),
-//     SmallDamageRadius_Tdg4: c("Tdg4"),
-//     SmallDamagePerSecond: c("Tdg5"),
-//     AirTimeSeconds_Tsp1: c("Tsp1"),
-//     MinimumHitIntervalSeconds: c("Tsp2"),
-//     DamagePerSecond_Nbf5: c("Nbf5"),
-//     MaximumRange: c("Ebl1"),
-//     MinimumRange: c("Ebl2"),
-//     DamagePerTarget_Efk1: c("Efk1"),
-//     MaximumTotalDamage: c("Efk2"),
-//     MaximumSpeedAdjustment: c("Efk4"),
-//     DecayingDamage: c("Esh1"),
-//     MovementSpeedFactor_Esh2: c("Esh2"),
-//     AttackSpeedFactor_Esh3: c("Esh3"),
-//     DecayPower: c("Esh4"),
-//     InitialDamage_Esh5: c("Esh5"),
-//     MaximumLifeAbsorbed: c("abs1"),
-//     MaximumManaAbsorbed: c("abs2"),
-//     MovementSpeedIncrease_bsk1: c("bsk1"),
-//     AttackSpeedIncrease_bsk2: c("bsk2"),
-//     DamageTakenIncrease: c("bsk3"),
-//     LifePerUnit: c("dvm1"),
-//     ManaPerUnit: c("dvm2"),
-//     LifePerBuff: c("dvm3"),
-//     ManaPerBuff: c("dvm4"),
-//     SummonedUnitDamage_dvm5: c("dvm5"),
-//     DamageBonus_fak1: c("fak1"),
-//     MediumDamageFactor_fak2: c("fak2"),
-//     SmallDamageFactor_fak3: c("fak3"),
-//     FullDamageRadius_fak4: c("fak4"),
-//     HalfDamageRadius_fak5: c("fak5"),
-//     ExtraDamagePerSecond: c("liq1"),
-//     MovementSpeedReduction_liq2: c("liq2"),
-//     AttackSpeedReduction_liq3: c("liq3"),
-//     MagicDamageFactor: c("mim1"),
-//     UnitDamagePerManaPoint: c("mfl1"),
-//     HeroDamagePerManaPoint: c("mfl2"),
-//     UnitMaximumDamage: c("mfl3"),
-//     HeroMaximumDamage: c("mfl4"),
-//     DamageCooldown: c("mfl5"),
-//     DistributedDamageFactor_spl1: c("spl1"),
-//     LifeRegenerated: c("irl1"),
-//     ManaRegenerated: c("irl2"),
-//     ManaLossPerUnit_idc1: c("idc1"),
-//     SummonedUnitDamage_idc2: c("idc2"),
-//     ActivationDelay_imo2: c("imo2"),
-//     LureIntervalSeconds: c("imo3"),
-//     DamageBonus_isr1: c("isr1"),
-//     DamageReduction_isr2: c("isr2"),
-//     DamageBonus_ipv1: c("ipv1"),
-//     LifeStealAmount: c("ipv2"),
-//     LifeRestoredFactor: c("ast1"),
-//     ManaRestoredFactor: c("ast2"),
-//     AttachDelay: c("gra1"),
-//     RemoveDelay: c("gra2"),
-//     HeroRegenerationDelay: c("Nsa2"),
-//     UnitRegenerationDelay: c("Nsa3"),
-//     MagicDamageReduction_Nsa4: c("Nsa4"),
-//     HitPointsPerSecond_Nsa5: c("Nsa5"),
-//     DamageToSummonedUnits_Ixs1: c("Ixs1"),
-//     MagicDamageReduction_Ixs2: c("Ixs2"),
-//     SummonedUnitDuration: c("Npa6"),
-//     ShieldCooldownTime: c("Nse1"),
-//     DamagePerSecond_Ndo1: c("Ndo1"),
-//     SummonedUnitDurationSeconds_Ndo3: c("Ndo3"),
-//     MediumDamageRadius_flk1: c("flk1"),
-//     SmallDamageRadius_flk2: c("flk2"),
-//     FullDamageAmount_flk3: c("flk3"),
-//     MediumDamageAmount: c("flk4"),
-//     SmallDamageAmount: c("flk5"),
-//     MovementSpeedReductionPercent_Hbn1: c("Hbn1"),
-//     AttackSpeedReductionPercent_Hbn2: c("Hbn2"),
-//     MaxManaDrainedUnits: c("fbk1"),
-//     DamageRatioUnitsPercent: c("fbk2"),
-//     MaxManaDrainedHeros: c("fbk3"),
-//     DamageRatioHerosPercent: c("fbk4"),
-//     SummonedDamage: c("fbk5"),
-//     DistributedDamageFacotr_nca1: c("nca1"),
-//     InitialDamage_pxf1: c("pxf1"),
-//     DamagePerSecond_pxf2: c("pxf2"),
-//     DamagePerSecond_mls1: c("mls1"),
-//     BeastCollisionRadius: c("Nst2"),
-//     DamageAmount_Nst3: c("Nst3"),
-//     DamageRadius: c("Nst4"),
-//     DamageDelay: c("Nst5"),
-//     FollowThroughTime: c("Ncl1"),
-//     ArtDuration: c("Ncl4"),
-//     MovementSpeedReductionPercent_Nab1: c("Nab1"),
-//     AttackSpeedReductionPercent_Nab2: c("Nab2"),
-//     PrimaryDamage: c("Nab4"),
-//     SecondaryDamage: c("Nab5"),
-//     DamageInterval_Nab6: c("Nab6"),
-//     GoldCostFactor: c("Ntm1"),
-//     LumberCostFactor: c("Ntm2"),
-//     MoveSpeedBonus_Neg1: c("Neg1"),
-//     DamageBonus_Neg2: c("Neg2"),
-//     DamageAmount_Ncs1: c("Ncs1"),
-//     DamageInterval_Ncs2: c("Ncs2"),
-//     MaxDamage_Ncs4: c("Ncs4"),
-//     BuildingDamageFactor_Ncs5: c("Ncs5"),
-//     EffectDuration: c("Ncs6"),
-//     SpawnInterval_Nsy1: c("Nsy1"),
-//     SpawnUnitDuration: c("Nsy3"),
-//     SpawnUnitOffset: c("Nsy4"),
-//     LeashRange_Nsy5: c("Nsy5"),
-//     SpawnInterval_Nfy1: c("Nfy1"),
-//     LeashRange_Nfy2: c("Nfy2"),
-//     ChanceToDemolish: c("Nde1"),
-//     DamageMultiplierBuildings: c("Nde2"),
-//     DamageMultiplierUnits: c("Nde3"),
-//     DamageMultiplierHeroes: c("Nde4"),
-//     BonusDamageMultiplier: c("Nic1"),
-//     DeathDamageFullAmount: c("Nic2"),
-//     DeathDamageFullArea: c("Nic3"),
-//     DeathDamageHalfAmount: c("Nic4"),
-//     DeathDamageHalfArea: c("Nic5"),
-//     DeathDamageDelay: c("Nic6"),
-//     DamageAmount_Nso1: c("Nso1"),
-//     DamagePeriod: c("Nso2"),
-//     DamagePenalty: c("Nso3"),
-//     MovementSpeedReductionPercent_Nso4: c("Nso4"),
-//     AttackSpeedReductionPercent_Nso5: c("Nso5"),
-//     SplitDelay: c("Nlm2"),
-//     MaxHitpointFactor: c("Nlm4"),
-//     LifeDurationSplitBonus: c("Nlm5"),
-//     WaveInterval: c("Nvc3"),
-//     BuildingDamageFactor_Nvc4: c("Nvc4"),
-//     FullDamageAmount_Nvc5: c("Nvc5"),
-//     HalfDamageFactor: c("Nvc6"),
-//     IntervalBetweenPulses: c("Tau5")
-// }
