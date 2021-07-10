@@ -34,7 +34,9 @@ export abstract class AbilityStringLevelFields {
   public static readonly PARTNER_UNIT_TYPE = new AbilityStringLevelField('coa1', 'Тип боевой единицы партнера', 'Оседлать гиппогрифа')
   public static readonly PARTNER_UNIT_ONE_TYPE = new AbilityStringLevelField('dcp1', 'Боевая единица партнера, тип первый', 'Расседлать')
   public static readonly PARTNER_UNIT_TWO_TYPE = new AbilityStringLevelField('dcp2', 'Боевая единица партнера, тип второй', 'Расседлать')
+  // не удалось найти в РО
   public static readonly REQUIRED_UNIT_TYPE = new AbilityStringLevelField('tpi1')
+  // не удалось найти в РО
   public static readonly CONVERTED_UNIT_TYPE = new AbilityStringLevelField('tpi2')
   public static readonly SPELL_LIST = new AbilityStringLevelField('spb1', 'Список заклинаний', 'Книга заклинаний')
   public static readonly BASE_ORDER_ID_SPB5 = new AbilityStringLevelField('spb5', 'Базовый ID приказа', 'Книга заклинаний')

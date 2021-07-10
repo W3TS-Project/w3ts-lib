@@ -126,75 +126,75 @@ export class GameSetup {
     }
 }
 
-export class StartLocPrio {
-    public static defineCoords(whichStartLoc: integer, x: real, y: real) {
-        DefineStartLocation(whichStartLoc, x, y)
-        return this
-    }
+// export class StartLocPrio {
+//     public static defineCoords(whichStartLoc: integer, x: real, y: real) {
+//         DefineStartLocation(whichStartLoc, x, y)
+//         return this
+//     }
 
-    public static definePos(whichStartLoc: integer, p: Position) {
-        return this.defineCoords(whichStartLoc, p.x, p.y)
-    }
+//     public static definePos(whichStartLoc: integer, p: Position) {
+//         return this.defineCoords(whichStartLoc, p.x, p.y)
+//     }
 
-    public static defineLoc(whichStartLoc: integer, whichLocation: MapLocation) {
-        DefineStartLocationLoc(whichStartLoc, whichLocation.getHandle)
-        return this
-    }
+//     public static defineLoc(whichStartLoc: integer, whichLocation: MapLocation) {
+//         DefineStartLocationLoc(whichStartLoc, whichLocation.getHandle)
+//         return this
+//     }
 
-    public static setCount(whichStartLoc: integer, prioSlotCount: integer) {
-        SetStartLocPrioCount(whichStartLoc, prioSlotCount)
-        return this
-    }
+//     public static setCount(whichStartLoc: integer, prioSlotCount: integer) {
+//         SetStartLocPrioCount(whichStartLoc, prioSlotCount)
+//         return this
+//     }
 
-    public static set(
-        whichStartLoc: integer,
-        prioSlotIndex: integer,
-        otherStartLocIndex: integer,
-        priority: startlocprio
-    ) {
-        SetStartLocPrio(whichStartLoc, prioSlotIndex, otherStartLocIndex, priority)
-        return this
-    }
+//     public static set(
+//         whichStartLoc: integer,
+//         prioSlotIndex: integer,
+//         otherStartLocIndex: integer,
+//         priority: startlocprio
+//     ) {
+//         SetStartLocPrio(whichStartLoc, prioSlotIndex, otherStartLocIndex, priority)
+//         return this
+//     }
 
-    public static getSlot(whichStartLoc: integer, prioSlotIndex: integer): integer {
-        return GetStartLocPrioSlot(whichStartLoc, prioSlotIndex)
-    }
+//     public static getSlot(whichStartLoc: integer, prioSlotIndex: integer): integer {
+//         return GetStartLocPrioSlot(whichStartLoc, prioSlotIndex)
+//     }
 
-    public static get(whichStartLoc: integer, prioSlotIndex: integer) {
-        return GetStartLocPrio(whichStartLoc, prioSlotIndex)
-    }
+//     public static get(whichStartLoc: integer, prioSlotIndex: integer) {
+//         return GetStartLocPrio(whichStartLoc, prioSlotIndex)
+//     }
 
-    public static getX(whichStartLocation: integer): real {
-        return GetStartLocationX(whichStartLocation)
-    }
+//     public static getX(whichStartLocation: integer): real {
+//         return GetStartLocationX(whichStartLocation)
+//     }
 
-    public static getY(whichStartLocation: integer): real {
-        return GetStartLocationY(whichStartLocation)
-    }
+//     public static getY(whichStartLocation: integer): real {
+//         return GetStartLocationY(whichStartLocation)
+//     }
 
-    static getLoc(whichStartLocation: integer): MapLocation {
-        return MapLocation.fromHandle(GetStartLocationLoc(whichStartLocation))
-    }
-}
+//     static getLoc(whichStartLocation: integer): MapLocation {
+//         return MapLocation.fromHandle(GetStartLocationLoc(whichStartLocation))
+//     }
+// }
 
-export class GameType extends Handle<gametype> {
-    public set supported(value: boolean) {
-        SetGameTypeSupported(this.getHandle, value)
-    }
+// export class GameType extends Handle<gametype> {
+//     public set supported(value: boolean) {
+//         SetGameTypeSupported(this.getHandle, value)
+//     }
 
-    public get supported(): boolean {
-        return IsGameTypeSupported(this.getHandle)
-    }
+//     public get supported(): boolean {
+//         return IsGameTypeSupported(this.getHandle)
+//     }
 
-    public static fromHandle(handle: gametype): GameType {
-        return this.getObject(handle)
-    }
+//     public static fromHandle(handle: gametype): GameType {
+//         return this.getObject(handle)
+//     }
 
-    public static selected() {
-        return this.fromHandle(GetGameTypeSelected())
-    }
+//     public static selected() {
+//         return this.fromHandle(GetGameTypeSelected())
+//     }
 
-    public static fromObject(object: GameType): gametype {
-        return this.getHandle(object)
-    }
-}
+//     public static fromObject(object: GameType): gametype {
+//         return this.getHandle(object)
+//     }
+// }

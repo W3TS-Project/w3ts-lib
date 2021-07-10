@@ -1,5 +1,8 @@
 /** @noSelfInFile **/
 
+declare type integer = number
+declare type real = number
+
 declare function FourCC(str: string): number
 declare function OrderId(orderIdString: string): number
 
