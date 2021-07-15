@@ -1,33 +1,28 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { WeaponType } from "../../API/fields/unit/WeaponType";
 
-declare const ConvertWeaponType = (i: number) => weapontype
-
-const c = ConvertWeaponType
-
-export const WeaponType = {
-    Whoknows: c(0),
-    MetalLightChop: c(1),
-    MetalMediumChop: c(2),
-    MetalHeavyChop: c(3),
-    MetalLightSlice: c(4),
-    MetalMediumSlice: c(5),
-    MetalHeavySlice: c(6),
-    MetalMediumBash: c(7),
-    MetalHeavyBash: c(8),
-    MetalMediumStab: c(9),
-    MetalHeavyStab: c(10),
-    WoodLightSlice: c(11),
-    WoodMediumSlice: c(12),
-    WoodHeavySlice: c(13),
-    WoodLightBash: c(14),
-    WoodMediumBash: c(15),
-    WoodHeavyBash: c(16),
-    WoodLightStab: c(17),
-    WoodMediumStab: c(18),
-    ClawLightSlice: c(19),
-    ClawMediumSlice: c(20),
-    ClawHeavySlice: c(21),
-    AxeMediumChop: c(22),
-    RockHeavyBash: c(23)
+export abstract class WeaponTypes {
+	public static readonly WHOKNOWS = new WeaponType(0)
+	public static readonly METAL_LIGHT_CHOP = new WeaponType(1)
+	public static readonly METAL_MEDIUM_CHOP = new WeaponType(2)
+	public static readonly METAL_HEAVY_CHOP = new WeaponType(3)
+	public static readonly METAL_LIGHT_SLICE = new WeaponType(4)
+	public static readonly METAL_MEDIUM_SLICE = new WeaponType(5)
+	public static readonly METAL_HEAVY_SLICE = new WeaponType(6)
+	public static readonly METAL_MEDIUM_BASH = new WeaponType(7)
+	public static readonly METAL_HEAVY_BASH = new WeaponType(8)
+	public static readonly METAL_MEDIUM_STAB = new WeaponType(9)
+	public static readonly METAL_HEAVY_STAB = new WeaponType(10)
+	public static readonly WOOD_LIGHT_SLICE = new WeaponType(11)
+	public static readonly WOOD_MEDIUM_SLICE = new WeaponType(12)
+	public static readonly WOOD_HEAVY_SLICE = new WeaponType(13)
+	public static readonly WOOD_LIGHT_BASH = new WeaponType(14)
+	public static readonly WOOD_MEDIUM_BASH = new WeaponType(15)
+	public static readonly WOOD_HEAVY_BASH = new WeaponType(16)
+	public static readonly WOOD_LIGHT_STAB = new WeaponType(17)
+	public static readonly WOOD_MEDIUM_STAB = new WeaponType(18)
+	public static readonly CLAW_LIGHT_SLICE = new WeaponType(19)
+	public static readonly CLAW_MEDIUM_SLICE = new WeaponType(20)
+	public static readonly CLAW_HEAVY_SLICE = new WeaponType(21)
+	public static readonly AXE_MEDIUM_CHOP = new WeaponType(22)
+	public static readonly ROCK_HEAVY_BASH = new WeaponType(23)
 }

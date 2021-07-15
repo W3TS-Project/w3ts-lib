@@ -1,17 +1,12 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { MoveType } from "../../API/fields/unit/MoveType";
 
-declare const ConvertMoveType = (i: number) => movetype
-
-const c = ConvertMoveType
-
-export const MoveType = {
-    Unknown: c(0),
-    Foot: c(1),
-    Fly: c(2),
-    Horse: c(4),
-    Hover: c(8),
-    Float: c(16),
-    Amphibious: c(32),
-    Unbuildable: c(64)
+export abstract class MoveTypes {
+	public static readonly UNKNOWN = new MoveType(0)
+	public static readonly FOOT = new MoveType(1)
+	public static readonly FLY = new MoveType(2)
+	public static readonly HORSE = new MoveType(4)
+	public static readonly HOVER = new MoveType(8)
+	public static readonly FLOAT = new MoveType(16)
+	public static readonly AMPHIBIOUS = new MoveType(32)
+	public static readonly UNBUILDABLE = new MoveType(64)
 }

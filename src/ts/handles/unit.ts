@@ -1,4 +1,5 @@
 /** @noSelfInFile **/
+//@ts-nocheck
 
 import { Destructable } from "./destructable"
 import { Force } from "./force"

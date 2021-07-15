@@ -1,14 +1,13 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { integer, RawCode, Utils } from "../../../../utils";
+import { RawCode } from "../../../../RawCode";
 import { AbilityField } from "../AbilityField";
 
 declare function ConvertAbilityBooleanField(i: integer): abilitybooleanfield
 
 export class AbilityBooleanField extends AbilityField<abilitybooleanfield> {
-  public constructor(id: RawCode, title?: string, desc?: string) {
-    id = Utils.formatCC(id)
-    super(ConvertAbilityBooleanField(id), id, title, desc)
+  public constructor(rawCode: RawCode, title?: string, desc?: string) {
+    super(ConvertAbilityBooleanField(rawCode.getId()), rawCode, title, desc)
   }
 }

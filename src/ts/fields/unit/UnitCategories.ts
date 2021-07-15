@@ -1,21 +1,16 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { UnitCategory } from "../../API/fields/unit/UnitCategory";
 
-declare const ConvertUnitCategory = (i: number) => unitcategory
-
-const c = ConvertUnitCategory
-
-export const UnitCategory = {
-    Giant: c(1),
-    Undead: c(2),
-    Summoned: c(4),
-    Mechanical: c(8),
-    Peon: c(16),
-    Sapper: c(32),
-    TownHall: c(64),
-    Ancient: c(128),
-    Neutral: c(256),
-    Ward: c(512),
-    Standon: c(1024),
-    Tauren: c(2048)
+export abstract class UnitCategories {
+  public static readonly GIANT = new UnitCategory(1)
+	public static readonly UNDEAD = new UnitCategory(2)
+	public static readonly SUMMONED = new UnitCategory(4)
+	public static readonly MECHANICAL = new UnitCategory(8)
+	public static readonly PEON = new UnitCategory(16)
+	public static readonly SAPPER = new UnitCategory(32)
+	public static readonly TOWN_HALL = new UnitCategory(64)
+	public static readonly ANCIENT = new UnitCategory(128)
+	public static readonly NEUTRAL = new UnitCategory(256)
+	public static readonly WARD = new UnitCategory(512)
+	public static readonly STANDON = new UnitCategory(1024)
+	public static readonly TAUREN = new UnitCategory(2048)
 }

@@ -1,5 +1,3 @@
-import { code } from "./utils"
-
 export abstract class ErrorHandling {
     public static getHandledCallback(callback: code) {
         return () => {

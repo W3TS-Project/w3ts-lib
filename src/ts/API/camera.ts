@@ -4,7 +4,7 @@
 import { Handle } from "../handles/handle"
 import { MapLocation, Point } from "../handles/location"
 import { Unit } from "../handles/unit"
-import { Position, real } from "../utils"
+import { Position } from "../utils"
 
 declare function SetCameraPosition(x: real, y: real): void
 declare function SetCameraQuickPosition(x: real, y: real): void
@@ -31,17 +31,17 @@ declare function PanCameraToTimedWithZ(
 ): void
 declare function SetCinematicCamera(cameraModelFile: string): void
 declare function SetCameraRotateMode(
-    x: number,
-    y: number,
-    radiansToSweep: number,
-    duration: number
+    x: real,
+    y: real,
+    radiansToSweep: real,
+    duration: real
 ): void
-declare function SetCameraField(whichField: camerafield, value: number, duration: number): void
-declare function AdjustCameraField(whichField: camerafield, offset: number, duration: number): void
+declare function SetCameraField(whichField: camerafield, value: real, duration: real): void
+declare function AdjustCameraField(whichField: camerafield, offset: real, duration: real): void
 declare function SetCameraTargetController(
     whichUnit: unit,
-    xoffset: number,
-    yoffset: number,
+    xoffset: real,
+    yoffset: real,
     inheritOrientation: boolean
 ): void
 declare function SetCameraOrientController(whichUnit: unit, xoffset: number, yoffset: number): void

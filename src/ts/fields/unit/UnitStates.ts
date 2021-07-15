@@ -1,13 +1,8 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { UnitState } from "../../API/fields/unit/UnitState";
 
-declare const ConvertUnitState = (i: number) => unitstate
-
-const c = ConvertUnitState
-
-export const UnitState = {
-    Life: c(0),
-    MaxLife: c(1),
-    Mana: c(2),
-    MaxMana: c(3)
+export abstract class UnitStates {
+	public static readonly LIFE = new UnitState(0)
+	public static readonly MAX_LIFE = new UnitState(1)
+	public static readonly MANA = new UnitState(2)
+	public static readonly MAX_MANA = new UnitState(3)
 }

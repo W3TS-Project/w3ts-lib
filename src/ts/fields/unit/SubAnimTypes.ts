@@ -1,61 +1,56 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { SubAnimType } from "../../API/fields/unit/SubAnimType";
 
-declare const ConvertSubAnimType = (i: number) => subanimtype
-
-const c = ConvertSubAnimType
-
-export const SubAnimType = {
-    Rooted: c(11),
-    AlternateEx: c(12),
-    Looping: c(13),
-    Slam: c(14),
-    Throw: c(15),
-    Spiked: c(16),
-    Fast: c(17),
-    Spin: c(18),
-    Ready: c(19),
-    Channel: c(20),
-    Defend: c(21),
-    Victory: c(22),
-    Turn: c(23),
-    Left: c(24),
-    Right: c(25),
-    Fire: c(26),
-    Flesh: c(27),
-    Hit: c(28),
-    Wounded: c(29),
-    Light: c(30),
-    Moderate: c(31),
-    Severe: c(32),
-    Critical: c(33),
-    Complete: c(34),
-    Gold: c(35),
-    Lumber: c(36),
-    Work: c(37),
-    Talk: c(38),
-    First: c(39),
-    Second: c(40),
-    Third: c(41),
-    Fourth: c(42),
-    Fifth: c(43),
-    One: c(44),
-    Two: c(45),
-    Three: c(46),
-    Four: c(47),
-    Five: c(48),
-    Small: c(49),
-    Medium: c(50),
-    Large: c(51),
-    Upgrade: c(52),
-    Drain: c(53),
-    Fill: c(54),
-    ChainLightning: c(55),
-    EatTree: c(56),
-    Puke: c(57),
-    Flail: c(58),
-    Off: c(59),
-    Swim: c(60),
-    Entangle: c(61),
-    Berserk: c(62)
+export abstract class SubAnimTypes {
+	public static readonly ROOTED = new SubAnimType(11)
+	public static readonly ALTERNATE_EX = new SubAnimType(12)
+	public static readonly LOOPING = new SubAnimType(13)
+	public static readonly SLAM = new SubAnimType(14)
+	public static readonly THROW = new SubAnimType(15)
+	public static readonly SPIKED = new SubAnimType(16)
+	public static readonly FAST = new SubAnimType(17)
+	public static readonly SPIN = new SubAnimType(18)
+	public static readonly READY = new SubAnimType(19)
+	public static readonly CHANNEL = new SubAnimType(20)
+	public static readonly DEFEND = new SubAnimType(21)
+	public static readonly VICTORY = new SubAnimType(22)
+	public static readonly TURN = new SubAnimType(23)
+	public static readonly LEFT = new SubAnimType(24)
+	public static readonly RIGHT = new SubAnimType(25)
+	public static readonly FIRE = new SubAnimType(26)
+	public static readonly FLESH = new SubAnimType(27)
+	public static readonly HIT = new SubAnimType(28)
+	public static readonly WOUNDED = new SubAnimType(29)
+	public static readonly LIGHT = new SubAnimType(30)
+	public static readonly MODERATE = new SubAnimType(31)
+	public static readonly SEVERE = new SubAnimType(32)
+	public static readonly CRITICAL = new SubAnimType(33)
+	public static readonly COMPLETE = new SubAnimType(34)
+	public static readonly GOLD = new SubAnimType(35)
+	public static readonly LUMBER = new SubAnimType(36)
+	public static readonly WORK = new SubAnimType(37)
+	public static readonly TALK = new SubAnimType(38)
+	public static readonly FIRST = new SubAnimType(39)
+	public static readonly SECOND = new SubAnimType(40)
+	public static readonly THIRD = new SubAnimType(41)
+	public static readonly FOURTH = new SubAnimType(42)
+	public static readonly FIFTH = new SubAnimType(43)
+	public static readonly ONE = new SubAnimType(44)
+	public static readonly TWO = new SubAnimType(45)
+	public static readonly THREE = new SubAnimType(46)
+	public static readonly FOUR = new SubAnimType(47)
+	public static readonly FIVE = new SubAnimType(48)
+	public static readonly SMALL = new SubAnimType(49)
+	public static readonly MEDIUM = new SubAnimType(50)
+	public static readonly LARGE = new SubAnimType(51)
+	public static readonly UPGRADE = new SubAnimType(52)
+	public static readonly DRAIN = new SubAnimType(53)
+	public static readonly FILL = new SubAnimType(54)
+	public static readonly CHAIN_LIGHTNING = new SubAnimType(55)
+	public static readonly EAT_TREE = new SubAnimType(56)
+	public static readonly PUKE = new SubAnimType(57)
+	public static readonly FLAIL = new SubAnimType(58)
+	public static readonly OFF = new SubAnimType(59)
+	public static readonly SWIM = new SubAnimType(60)
+	public static readonly ENTANGLE = new SubAnimType(61)
+	public static readonly BERSERK = new SubAnimType(62)
 }

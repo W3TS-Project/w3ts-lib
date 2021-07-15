@@ -1,7 +1,19 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, Primitive, real } from "../Utils"
+import { AbilityBooleanLevelArrayField } from "../API/fields/ability/array/AbilityBooleanLevelArrayField"
+import { AbilityIntegerLevelArrayField } from "../API/fields/ability/array/AbilityIntegerLevelArrayField"
+import { AbilityRealLevelArrayField } from "../API/fields/ability/array/AbilityRealLevelArrayField"
+import { AbilityStringLevelArrayField } from "../API/fields/ability/array/AbilityStringLevelArrayField"
+import { AbilityBooleanField } from "../API/fields/ability/base/AbilityBooleanField"
+import { AbilityIntegerField } from "../API/fields/ability/base/AbilityIntegerField"
+import { AbilityRealField } from "../API/fields/ability/base/AbilityRealField"
+import { AbilityStringField } from "../API/fields/ability/base/AbilityStringField"
+import { AbilityBooleanLevelField } from "../API/fields/ability/level/AbilityBooleanLevelField"
+import { AbilityIntegerLevelField } from "../API/fields/ability/level/AbilityIntegerLevelField"
+import { AbilityRealLevelField } from "../API/fields/ability/level/AbilityRealLevelField"
+import { AbilityStringLevelField } from "../API/fields/ability/level/AbilityStringLevelField"
+import { Primitive } from "../Utils"
 import { Handle } from "./handle"
 
 declare function BlzGetAbilityBooleanField(whichAbility: ability, whichField: abilitybooleanfield): boolean
@@ -40,22 +52,6 @@ declare function BlzRemoveAbilityStringLevelArrayField(whichAbility: ability, wh
 export type AbilityFieldType = AbilityBooleanField | AbilityIntegerField | AbilityRealField | AbilityStringField
 
 export type AbilityLevelFieldType = AbilityBooleanLevelField | AbilityIntegerLevelField | AbilityRealLevelField | AbilityStringLevelField
-
-export class AbilityBooleanLevelArrayField extends AbilityField<abilitybooleanlevelarrayfield> {
-
-}
-
-export class AbilityIntegerLevelArrayField extends AbilityField<abilityintegerlevelarrayfield> {
-
-}
-
-export class AbilityRealLevelArrayField extends AbilityField<abilityreallevelarrayfield> {
-
-}
-
-export class AbilityStringLevelArrayField extends AbilityField<abilitystringlevelarrayfield> {
-
-}
 
 export type AbilityLevelArrayFieldType = AbilityBooleanLevelArrayField | AbilityIntegerLevelArrayField | AbilityRealLevelArrayField | AbilityStringLevelArrayField
 

@@ -1,6 +1,5 @@
 /** @noSelfInFile **/
 
-import { real } from "../Utils"
 import { MapLocation } from "./location"
 
 declare function IsPointBlighted(x: real, y: real): boolean

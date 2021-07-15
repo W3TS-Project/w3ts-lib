@@ -1,14 +1,9 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { RegenType } from "../../API/fields/unit/RegenType";
 
-declare const ConvertRegenType = (i: number) => regentype
-
-const c = ConvertRegenType
-
-export const RegenType = {
-    None: c(0),
-    Always: c(1),
-    Blight: c(2),
-    Day: c(3),
-    Night: c(4)
+export abstract class RegenTypes {
+	public static readonly NONE = new RegenType(0)
+	public static readonly ALWAYS = new RegenType(1)
+	public static readonly BLIGHT = new RegenType(2)
+	public static readonly DAY = new RegenType(3)
+	public static readonly NIGHT = new RegenType(4)
 }

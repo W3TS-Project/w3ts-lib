@@ -1,17 +1,12 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { PathingFlag } from "../../API/fields/unit/PathingFlag";
 
-declare const ConvertPathingFlag = (i: number) => pathingflag
-
-const c = ConvertPathingFlag
-
-export const PathingFlag = {
-    Unwalkable: c(2),
-    Unflyable: c(4),
-    Unbuildable: c(8),
-    Unpeonharvest: c(16),
-    Blighted: c(32),
-    Unfloatable: c(64),
-    Unamphibious: c(128),
-    Unitemplacable: c(256)
+export abstract class PathingFlags {
+	public static readonly UNWALKABLE = new PathingFlag(2)
+	public static readonly UNFLYABLE = new PathingFlag(4)
+	public static readonly UNBUILDABLE = new PathingFlag(8)
+	public static readonly UNPEONHARVEST = new PathingFlag(16)
+	public static readonly BLIGHTED = new PathingFlag(32)
+	public static readonly UNFLOATABLE = new PathingFlag(64)
+	public static readonly UNAMPHIBIOUS = new PathingFlag(128)
+	public static readonly UNITEMPLACABLE = new PathingFlag(256)
 }

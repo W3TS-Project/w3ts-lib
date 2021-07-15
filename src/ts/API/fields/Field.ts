@@ -1,5 +1,4 @@
 import { Handle } from "../../handles/handle";
-import { integer } from "../../utils";
 
 export abstract class Field<T extends handle> extends Handle<T> {
   protected readonly id: integer

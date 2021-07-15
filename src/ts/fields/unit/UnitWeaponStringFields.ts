@@ -1,10 +1,6 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { UnitWeaponStringField } from "../../API/fields/unit/UnitWeaponStringField";
+import { RawCode } from "../../RawCode";
 
-declare const ConvertUnitWeaponStringField = (i: number) => unitweaponstringfield
-
-const c = (s: string): unitweaponstringfield => ConvertUnitWeaponStringField(FourCC(s))
-
-export const UnitWeaponStringField = {
-    AttackProjectileArt: c("ua1m")
+export abstract class UnitWeaponStringFields {
+	public static readonly ATTACK_PROJECTILE_ART = new UnitWeaponStringField(new RawCode('ua1m'), 'Бой - Атака 1 - анимация снаряда')
 }

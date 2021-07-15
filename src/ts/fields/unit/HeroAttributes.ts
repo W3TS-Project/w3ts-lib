@@ -1,12 +1,7 @@
-/** @noSelfInFile **/
-// @ts-nocheck
+import { HeroAttribute } from "../../API/fields/unit/HeroAttribute";
 
-declare const ConvertHeroAttribute = (i: number) => heroattribute
-
-const c = ConvertHeroAttribute
-
-export const HeroAttribute = {
-    Str: c(1),
-    Int: c(2),
-    Agi: c(3)
+export abstract class HeroAttributes {
+  public static readonly STR = new HeroAttribute(1)
+	public static readonly INT = new HeroAttribute(2)
+	public static readonly AGI = new HeroAttribute(3)
 }

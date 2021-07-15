@@ -1,5 +1,5 @@
-// /** @noSelfInFile **/
-// //@ts-nocheck
+/** @noSelfInFile **/
+//@ts-nocheck
 
 import { integer } from "../Utils"
 

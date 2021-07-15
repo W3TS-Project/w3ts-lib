@@ -1,14 +1,13 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { integer, RawCode, Utils } from "../../../../utils";
+import { RawCode } from "../../../../RawCode";
 import { AbilityField } from "../AbilityField";
 
 declare function ConvertAbilityRealField(i: integer): abilityrealfield
 
 export class AbilityRealField extends AbilityField<abilityrealfield> {
-  public constructor(id: RawCode, title?: string, desc?: string) {
-    id = Utils.formatCC(id)
-    super(ConvertAbilityRealField(id), id, title, desc)
+  public constructor(rawCode: RawCode, title?: string, desc?: string) {
+    super(ConvertAbilityRealField(rawCode.getId()), rawCode, title, desc)
   }
 }
