@@ -2,7 +2,7 @@
 //@ts-nocheck
 
 import { real } from "../Utils"
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function Location(x: real, y: real): location
 declare function RemoveLocation(whichLocation: location): void

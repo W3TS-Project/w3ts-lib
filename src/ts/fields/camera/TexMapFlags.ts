@@ -1,4 +1,4 @@
-import { TexMapFlag } from "../../API/fields/camera/TexMapFlag";
+import { TexMapFlag } from "../../API/fields/camera/TexMapFlag"
 
 export abstract class TexMapFlags {
     public static readonly NONE = new TexMapFlag(0)

@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { integer } from "../Utils"
-import { Handle } from "./handle"
-import { MapPlayer } from "./player"
+import { Handle } from "./Handle"
+import { MapPlayer } from "./MapPlayer"
 
 declare function CreateLeaderboard(): leaderboard
 declare function DestroyLeaderboard(lb: leaderboard): void
@@ -69,7 +69,7 @@ declare function LeaderboardSetItemValueColor(
     alpha: integer
 ): void
 
-export class Leaderboard extends Handle<leaderboard> {
+export class LeaderBoard extends Handle<leaderboard> {
     public constructor() {
         super(CreateLeaderboard())
     }

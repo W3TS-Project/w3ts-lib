@@ -1,21 +1,20 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { Rectangle } from "../handles/rect"
+import { Rectangle } from "../handles/Rectangle"
+import { RawCode } from "../RawCode"
 
-declare function SetDoodadAnimation(x: number, y: number, radius: number, doodadID: number, nearestOnly: boolean, animName: string, animRandom: boolean): void
-declare function SetDoodadAnimationRect(r: rect, doodadID: number, animName: string, animRandom: boolean): void
+declare function SetDoodadAnimation(x: real, y: real, radius: real, doodadID: integer, nearestOnly: boolean, animName: string, animRandom: boolean): void
+declare function SetDoodadAnimationRect(r: rect, doodadID: integer, animName: string, animRandom: boolean): void
 
-export class Doodad {
-    private constructor() {}
-
-    static setAnimation(x: number, y: number, radius: number, doodadID: number, nearestOnly: boolean, animName: string, animRandom: boolean) {
-        SetDoodadAnimation(x, y, radius, doodadID, nearestOnly, animName, animRandom)
+export abstract class Doodad {
+    public static setAnimation(x: real, y: real, radius: real, doodadCode: RawCode, nearestOnly: boolean, animName: string, animRandom: boolean) {
+        SetDoodadAnimation(x, y, radius, doodadCode.getId(), nearestOnly, animName, animRandom)
         return this
     }
 
-    static setAnimationRect(r: Rectangle, doodadID: number, animName: string, animRandom: boolean) {
-        SetDoodadAnimationRect(r.handle, doodadID, animName, animRandom)
+    public static setAnimationRect(r: Rectangle, doodadCode: RawCode, animName: string, animRandom: boolean) {
+        SetDoodadAnimationRect(r.getHandle, doodadCode.getId(), animName, animRandom)
         return this
     }
 }

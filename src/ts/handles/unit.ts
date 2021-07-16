@@ -1,15 +1,15 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { Destructable } from "./destructable"
-import { Force } from "./force"
-import { Group } from "./group"
-import { Handle } from "./handle"
-import { Item } from "./item"
-import { MapPlayer } from "./player"
-import { MapLocation } from "./location"
-import { Sound } from "./sound"
-import { Widget } from "./widget"
+import { Destructable } from "./Destructable"
+import { Force } from "./Force"
+import { Group } from "./Group"
+import { Handle } from "./Handle"
+import { Item } from "./Item"
+import { MapPlayer } from "./MapPlayer"
+import { MapLocation } from "./MapLocation"
+import { Sound } from "./Sound"
+import { Widget } from "./Widget"
 import { integer, real } from "../Utils"
 
 declare function CreateUnit(id: player, unitid: number, x: number, y: number, face: number): unit

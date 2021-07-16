@@ -1,4 +1,4 @@
-import { FogState } from "../../API/fields/camera/FogState";
+import { FogState } from "../../API/fields/camera/FogState"
 
 export abstract class FogStates {
     public static readonly MASKED = new FogState(1)

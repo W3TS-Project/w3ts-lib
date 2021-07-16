@@ -1,11 +1,11 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { MapPlayer } from "./player"
-import { Widget } from "./widget"
+import { MapPlayer } from "./MapPlayer"
+import { Widget } from "./Widget"
 import { code, codeboolexpr, formatCC, integer, Position, RawCode, real } from "../Utils"
-import { Rectangle } from "./rect"
-import { Ability } from "./ability"
+import { Rectangle } from "./Rectangle"
+import { Ability } from "./Ability"
 
 declare function BlzCreateItemWithSkin(itemid: integer, x: real, y: real, skinId: integer): item
 declare function CreateItem(itemid: integer, x: real, y: real): item

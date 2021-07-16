@@ -19,10 +19,10 @@ declare function SetBlightPoint(whichPlayer: player, x: real, y: real, addBlight
 declare function CreateBlightedGoldmine(id: player, x: real, y: real, face: real): unit
 declare function IsPointBlighted(x: real, y: real): boolean
 
-import { MapPlayer } from "../handles/player"
-import { MapLocation } from "../handles/location"
-import { Rectangle } from "../handles/rect"
-import { Position, real } from "../Utils"
+import { MapPlayer } from "../handles/MapPlayer"
+import { MapLocation } from "../handles/MapLocation"
+import { Rectangle } from "../handles/Rectangle"
+import { Position } from "../Package"
 
 export abstract class Blight {
     public static setAreaCoords(
@@ -36,7 +36,12 @@ export abstract class Blight {
         return this
     }
 
-    public static setAreaPos(whichPlayer: MapPlayer, p: Position, radius: real, addBlight: boolean) {
+    public static setAreaPos(
+        whichPlayer: MapPlayer,
+        p: Position,
+        radius: real,
+        addBlight: boolean
+    ) {
         return this.setAreaCoords(whichPlayer.getHandle, p.x, p.y, radius, addBlight)
     }
 

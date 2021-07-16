@@ -3,16 +3,16 @@
 
 import { getHandledCallback } from "../ErrorHandling"
 import { code, codeboolexpr, integer, real } from "../Utils"
-import { Dialog, DialogButton } from "./dialog"
-import { Frame } from "./frame"
-import { Handle } from "./handle"
-import { MapPlayer } from "./player"
-import { Region } from "./region"
-import { Sound } from "./sound"
-import { Timer } from "./timer"
-import { Trackable } from "./trackable"
-import { Unit } from "./unit"
-import { Widget } from "./widget"
+import { Dialog, DialogButton } from "./Dialog"
+import { Frame } from "./Frame"
+import { Handle } from "./Handle"
+import { MapPlayer } from "./MapPlayer"
+import { Region } from "./Region"
+import { Sound } from "./Sound"
+import { Timer } from "./Timer"
+import { Trackable } from "./Trackable"
+import { Unit } from "./Unit"
+import { Widget } from "./Widget"
 
 // trigger
 declare function CreateTrigger(): trigger

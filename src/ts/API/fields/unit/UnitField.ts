@@ -1,5 +1,3 @@
-import { ItemField } from "../item/ItemField";
+import { ItemField } from "../item/ItemField"
 
-export abstract class UnitField<T extends handle> extends ItemField<T> {
-  
-}
+export abstract class UnitField<T extends handle> extends ItemField<T> {}

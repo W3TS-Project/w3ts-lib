@@ -1,4 +1,4 @@
-import { BlendMode } from "../../API/fields/camera/BlendMode";
+import { BlendMode } from "../../API/fields/camera/BlendMode"
 
 export abstract class BlendMods {
     public static readonly NONE = new BlendMode(0)

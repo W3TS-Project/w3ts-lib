@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { code, codeboolexpr, integer } from "../Utils"
-import { Handle } from "./handle"
-import { MapPlayer } from "./player"
+import { Handle } from "./Handle"
+import { MapPlayer } from "./MapPlayer"
 
 declare function Condition(func: code): conditionfunc
 declare function DestroyCondition(c: conditionfunc): void

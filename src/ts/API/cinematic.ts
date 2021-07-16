@@ -1,20 +1,34 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-export class Cinematic {
-    private constructor() {}
+import { RawCode } from "../RawCode"
+import { PlayerColor } from "./fields/player/PlayerColor"
 
-    static setScene(
-        portraitUnitId: number,
-        color: playercolor,
+declare function SetCinematicCamera(cameraModelFile: string): void
+declare function SetCinematicScene(
+    portraitUnitId: integer,
+    color: playercolor,
+    speakerTitle: string,
+    text: string,
+    sceneDuration: real,
+    voiceoverDuration: real
+): void
+declare function EndCinematicScene(): void
+declare function ForceCinematicSubtitles(flag: boolean): void
+declare function SetCinematicAudio(cinematicAudio: boolean): void
+
+export abstract class Cinematic {
+    public static setScene(
+        portraitUnitId: RawCode,
+        color: PlayerColor,
         speakerTitle: string,
         text: string,
-        sceneDuration: number,
-        voiceoverDuration: number
+        sceneDuration: real,
+        voiceoverDuration: real
     ) {
         SetCinematicScene(
-            portraitUnitId,
-            color,
+            portraitUnitId.getId(),
+            color.getHandle,
             speakerTitle,
             text,
             sceneDuration,
@@ -23,22 +37,22 @@ export class Cinematic {
         return this
     }
 
-    static endScene() {
+    public static endScene() {
         EndCinematicScene()
         return this
     }
 
-    static forceSubtitles(flag: boolean) {
+    public static forceSubtitles(flag: boolean) {
         ForceCinematicSubtitles(flag)
         return this
     }
 
-    static setCamera(cameraModelFile: string) {
+    public static setCamera(cameraModelFile: string) {
         SetCinematicCamera(cameraModelFile)
         return this
     }
 
-    static setAudio(cinematicAudio: boolean) {
+    public static setAudio(cinematicAudio: boolean) {
         SetCinematicAudio(cinematicAudio)
         return this
     }

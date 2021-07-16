@@ -2,7 +2,7 @@
 //@ts-nocheck
 
 import { integer, real } from "../Utils"
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function CreateMultiboard(): multiboard
 declare function DestroyMultiboard(lb: multiboard): void
@@ -60,7 +60,7 @@ declare function MultiboardSetItemIcon(mbi: multiboarditem, iconFileName: string
 
 declare function MultiboardSuppressDisplay(flag: boolean): void
 
-export class Multiboard extends Handle<multiboard> {
+export class MultiBoard extends Handle<multiboard> {
     public constructor() {
         super(CreateMultiboard())
     }

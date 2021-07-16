@@ -1,6 +1,6 @@
 /** @noSelfInFile **/
 
-import { MapLocation } from "./location"
+import { MapLocation } from "./MapLocation"
 
 declare function IsPointBlighted(x: real, y: real): boolean
 
@@ -20,6 +20,11 @@ export class Point {
         return new Point(loc.x, loc.y, loc.z)
     }
 
+    public static fromHandleLoc(handle: location) {
+        const loc = MapLocation.fromHandle(handle)
+        return new Point(loc.getX(), loc.getY(), loc.getZ())
+    }
+
     public setCoords(x: real, y: real, z: real) {
         this.x = x
         this.y = y
@@ -31,7 +36,7 @@ export class Point {
         return this.setCoords(p.x, p.y, p.z)
     }
 
-    public get isBlighted(): boolean {
+    public isBlighted(): boolean {
         return IsPointBlighted(this.x, this.y)
     }
 }

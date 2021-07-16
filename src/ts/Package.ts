@@ -1,5 +1,5 @@
-import { MapLocation } from "./handles/location";
-import { Point } from "./handles/point";
+import { MapLocation } from "./handles/MapLocation";
+import { Point } from "./handles/Point";
 
 export type Position = MapLocation | Point
 

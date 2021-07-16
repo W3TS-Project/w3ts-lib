@@ -2,9 +2,9 @@
 //@ts-nocheck
 
 import { real } from "../Utils"
-import { Handle } from "./handle"
-import { MapPlayer } from "./player"
-import { Rectangle } from "./rect"
+import { Handle } from "./Handle"
+import { MapPlayer } from "./MapPlayer"
+import { Rectangle } from "./Rectangle"
 
 declare function SetFogStateRect(
     forWhichPlayer: player,

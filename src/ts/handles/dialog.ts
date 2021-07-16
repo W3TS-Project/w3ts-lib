@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { integer } from "../Utils"
-import { Handle } from "./handle"
-import { MapPlayer } from "./player"
+import { Handle } from "./Handle"
+import { MapPlayer } from "./MapPlayer"
 
 declare function DialogCreate(): dialog
 declare function DialogDestroy(whichDialog: dialog): void

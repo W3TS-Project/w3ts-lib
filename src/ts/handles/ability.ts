@@ -13,8 +13,7 @@ import { AbilityBooleanLevelField } from "../API/fields/ability/level/AbilityBoo
 import { AbilityIntegerLevelField } from "../API/fields/ability/level/AbilityIntegerLevelField"
 import { AbilityRealLevelField } from "../API/fields/ability/level/AbilityRealLevelField"
 import { AbilityStringLevelField } from "../API/fields/ability/level/AbilityStringLevelField"
-import { Primitive } from "../Utils"
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function BlzGetAbilityBooleanField(whichAbility: ability, whichField: abilitybooleanfield): boolean
 declare function BlzGetAbilityIntegerField(whichAbility: ability, whichField: abilityintegerfield): integer

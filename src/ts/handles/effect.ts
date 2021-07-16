@@ -1,12 +1,12 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { Handle } from "./handle"
-import { MapPlayer } from "./player"
-import { Widget } from "./widget"
+import { Handle } from "./Handle"
+import { MapPlayer } from "./MapPlayer"
+import { Widget } from "./Widget"
 import { formatCC, integer, Position, RawCode, real } from "../Utils"
-import { MapLocation } from "./location"
-import { Point } from "./point"
+import { MapLocation } from "./MapLocation"
+import { Point } from "./Point"
 
 declare function AddSpecialEffect(modelName: string, x: real, y: real): effect
 declare function AddSpecialEffectLoc(modelName: string, where: location): effect

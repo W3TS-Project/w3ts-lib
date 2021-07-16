@@ -2,11 +2,11 @@
 //@ts-nocheck
 
 import { real } from "../Utils"
-import { Handle } from "./handle"
-import { MapLocation } from "./location"
-import { Point } from "./point"
-import { Rectangle } from "./rect"
-import { Unit } from "./unit"
+import { Handle } from "./Handle"
+import { MapLocation } from "./MapLocation"
+import { Point } from "./Point"
+import { Rectangle } from "./Rectangle"
+import { Unit } from "./Unit"
 
 declare function CreateRegion(): region
 declare function RemoveRegion(whichRegion: region): void

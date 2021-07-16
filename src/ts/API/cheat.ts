@@ -5,6 +5,17 @@ declare function Cheat(cheatStr: string): void
 declare function IsNoVictoryCheat(): boolean
 declare function IsNoDefeatCheat(): boolean
 
-export const cheat = Cheat
-export const isNoVictoryCheat = IsNoVictoryCheat
-export const isNoDefeatCheat = IsNoDefeatCheat
+export abstract class MapCheat {
+    public static cheat(cheatStr: string) {
+        Cheat(cheatStr)
+        return this
+    }
+
+    public static isNoVictoryCheat() {
+        return IsNoVictoryCheat()
+    }
+
+    public static isNoDefeatCheat() {
+        return IsNoDefeatCheat()
+    }
+}

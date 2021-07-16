@@ -1,11 +1,9 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { real } from "../Utils"
-
 declare function Preload(filename: string): void
 declare function PreloadEnd(timeout: real): void
-declare function PrealoadStart(): void
+declare function PreloadStart(): void
 declare function PreloadRefresh(): void
 declare function PreloadEndEx(): void
 
@@ -14,13 +12,49 @@ declare function PreloadGenStart(): void
 declare function PreloadGenEnd(filename: string): void
 declare function Preloader(filename: string): void
 
-export const preload = Preload
-export const preloadEnd = PreloadEnd
-export const preloadStart = PrealoadStart
-export const preloadRefresh = PreloadRefresh
-export const preloadEndEx = PreloadEndEx
+export abstract class MapPreload {
+    public static preload(filename: string) {
+        Preload(filename)
+        return this
+    }
 
-export const preloadGenClear = PreloadGenClear
-export const preloadGenStart = PreloadGenStart
-export const preloadGenEnd = PreloadGenEnd
-export const preloader = Preloader
+    public static end(timeout: real) {
+        PreloadEnd(timeout)
+        return this
+    }
+
+    public static start() {
+        PreloadStart()
+        return this
+    }
+
+    public static refresh() {
+        PreloadRefresh()
+        return this
+    }
+
+    public static endEx() {
+        PreloadEndEx()
+        return this
+    }
+
+    public static genClear() {
+        PreloadGenClear()
+        return this
+    }
+
+    public static genStart() {
+        PreloadGenStart()
+        return this
+    }
+
+    public static genEnd(filename: string) {
+        PreloadGenEnd(filename)
+        return this
+    }
+
+    public static preloader(filename: string) {
+        Preloader(filename)
+        return this
+    }
+}

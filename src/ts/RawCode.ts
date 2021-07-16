@@ -1,5 +1,5 @@
 export class RawCode {
-  protected readonly id: number
+  protected readonly id: integer
   protected readonly chars: string
 
   public constructor(id: rawcode) {
@@ -17,7 +17,7 @@ export class RawCode {
   
   public static toId(id: rawcode): integer {
     if (typeof id === "number") {
-        return id
+        return Math.round(id)
     } else {
         return FourCC(id)
     }
@@ -27,7 +27,7 @@ export class RawCode {
     if (typeof id === 'string') {
       return id
     } else {
-      return string.pack('>I4', id)
+      return string.pack('>I4', Math.round(id))
     }
   }
 }

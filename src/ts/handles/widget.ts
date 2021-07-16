@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function GetWidgetLife(whichWidget: widget): number
 declare function SetWidgetLife(whichWidget: widget, newLife: number): void

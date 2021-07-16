@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { integer, Position, real } from "../Utils"
-import { Handle } from "./handle"
-import { Point } from "./point"
+import { Handle } from "./Handle"
+import { Point } from "./Point"
 
 declare function TerrainDeformCrater(
     x: real,

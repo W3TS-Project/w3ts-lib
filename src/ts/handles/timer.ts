@@ -3,7 +3,7 @@
 
 import { getHandledCallback } from "../ErrorHandling"
 import { code, real } from "../Utils"
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function CreateTimer(): timer
 declare function DestroyTimer(whichTimer: timer): void

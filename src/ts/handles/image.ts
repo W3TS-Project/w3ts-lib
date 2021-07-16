@@ -2,7 +2,7 @@
 //@ts-nocheck
 
 import { integer, Position, real } from "../Utils"
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function CreateImage(
     file: string,

@@ -2,7 +2,7 @@
 //@ts-nocheck
 
 import { Position, real } from "../Utils"
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function AddLightning(
     codeName: string,

@@ -1,12 +1,12 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { Handle } from "./handle"
-import { MapPlayer } from "./player"
-import { MapLocation } from "./location"
-import { Rectangle } from "./rect"
-import { Unit } from "./unit"
-import { Widget } from "./widget"
+import { Handle } from "./Handle"
+import { MapPlayer } from "./MapPlayer"
+import { MapLocation } from "./MapLocation"
+import { Rectangle } from "./Rectangle"
+import { Unit } from "./Unit"
+import { Widget } from "./Widget"
 import { code, codeboolexpr, formatOrder, integer, Order, Position, real } from "../Utils"
 
 declare function CreateGroup(): group

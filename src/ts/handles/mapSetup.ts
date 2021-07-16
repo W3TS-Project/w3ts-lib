@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { integer, Position, real } from "../Utils"
-import { Handle } from "./handle"
-import { MapLocation } from "./location"
+import { Handle } from "./Handle"
+import { MapLocation } from "./MapLocation"
 
 declare function SetMapName(name: string): void
 declare function SetMapDescription(description: string): void
@@ -41,7 +41,7 @@ declare function GetStartLocationX(whichStartLocation: integer): real
 declare function GetStartLocationY(whichStartLocation: integer): real
 declare function GetStartLocationLoc(whichStartLocation: integer): location
 
-export class MapSetup {
+export abstract class MapSetup {
     private constructor() {}
 
     public static setName(name: string) {

@@ -2,9 +2,9 @@
 //@ts-nocheck
 
 import { code, codeboolexpr, real } from "../Utils"
-import { Handle } from "./handle"
-import { MapLocation } from "./location"
-import { Point } from "./point"
+import { Handle } from "./Handle"
+import { MapLocation } from "./MapLocation"
+import { Point } from "./Point"
 
 declare function Rect(minx: real, miny: real, maxx: real, maxy: real): rect
 declare function RectFromLoc(min: location, max: location): rect

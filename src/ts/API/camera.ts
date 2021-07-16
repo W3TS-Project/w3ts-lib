@@ -1,10 +1,11 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { Handle } from "../handles/handle"
-import { MapLocation, Point } from "../handles/location"
-import { Unit } from "../handles/unit"
-import { Position } from "../utils"
+import { Handle } from "../handles/Handle"
+import { MapLocation } from "../handles/MapLocation"
+import { Point } from "../handles/Point"
+import { Unit } from "../handles/Unit"
+import { Position } from "../Package"
 
 declare function SetCameraPosition(x: real, y: real): void
 declare function SetCameraQuickPosition(x: real, y: real): void
@@ -23,19 +24,8 @@ declare function ResetToGameCamera(duration: real): void
 declare function PanCameraTo(x: real, y: real): void
 declare function PanCameraToTimed(x: real, y: real, duration: real): void
 declare function PanCameraToWithZ(x: real, y: real, zOffsetDest: real): void
-declare function PanCameraToTimedWithZ(
-    x: real,
-    y: real,
-    zOffsetDest: real,
-    duration: real
-): void
-declare function SetCinematicCamera(cameraModelFile: string): void
-declare function SetCameraRotateMode(
-    x: real,
-    y: real,
-    radiansToSweep: real,
-    duration: real
-): void
+declare function PanCameraToTimedWithZ(x: real, y: real, zOffsetDest: real, duration: real): void
+declare function SetCameraRotateMode(x: real, y: real, radiansToSweep: real, duration: real): void
 declare function SetCameraField(whichField: camerafield, value: real, duration: real): void
 declare function AdjustCameraField(whichField: camerafield, offset: real, duration: real): void
 declare function SetCameraTargetController(
@@ -44,80 +34,28 @@ declare function SetCameraTargetController(
     yoffset: real,
     inheritOrientation: boolean
 ): void
-declare function SetCameraOrientController(whichUnit: unit, xoffset: number, yoffset: number): void
-declare function CreateCameraSetup(): camerasetup
-declare function CameraSetupSetField(
-    whichSetup: camerasetup,
-    whichField: camerafield,
-    value: number,
-    duration: number
-): void
-declare function CameraSetupGetField(whichSetup: camerasetup, whichField: camerafield): number
-declare function CameraSetupSetDestPosition(
-    whichSetup: camerasetup,
-    x: number,
-    y: number,
-    duration: number
-): void
-declare function CameraSetupGetDestPositionLoc(whichSetup: camerasetup): location
-declare function CameraSetupGetDestPositionX(whichSetup: camerasetup): number
-declare function CameraSetupGetDestPositionY(whichSetup: camerasetup): number
-declare function CameraSetupApply(whichSetup: camerasetup, doPan: boolean, panTimed: boolean): void
-declare function CameraSetupApplyWithZ(whichSetup: camerasetup, zDestOffset: number): void
-declare function CameraSetupApplyForceDuration(
-    whichSetup: camerasetup,
-    doPan: boolean,
-    forceDuration: number
-): void
-declare function CameraSetupApplyForceDurationWithZ(
-    whichSetup: camerasetup,
-    zDestOffset: number,
-    forceDuration: number
-): void
-declare function BlzCameraSetupSetLabel(whichSetup: camerasetup, label: string): void
-declare function BlzCameraSetupGetLabel(whichSetup: camerasetup): string
-// declare function CameraSetTargetNoise(mag: number, velocity: number): void
-// declare function CameraSetSourceNoise(mag: number, velocity: number): void
-declare function CameraSetTargetNoiseEx(mag: number, velocity: number, vertOnly: boolean): void
-declare function CameraSetSourceNoiseEx(mag: number, velocity: number, vertOnly: boolean): void
-declare function CameraSetSmoothingFactor(factor: number): void
-declare function CameraSetFocalDistance(distance: number): void
-declare function CameraSetDepthOfFieldScale(scale: number): void
-declare function DisplayCineFilter(flag: boolean): void
-declare function IsCineFilterDisplayed(): boolean
-declare function SetCinematicScene(
-    portraitUnitId: number,
-    color: playercolor,
-    speakerTitle: string,
-    text: string,
-    sceneDuration: number,
-    voiceoverDuration: number
-): void
-declare function EndCinematicScene(): void
-declare function ForceCinematicSubtitles(flag: boolean): void
-declare function SetCinematicAudio(cinematicAudio: boolean): void
-declare function GetCameraMargin(whichMargin: number): number
-declare function GetCameraBoundMinX(): number
-declare function GetCameraBoundMinY(): number
-declare function GetCameraBoundMaxX(): number
-declare function GetCameraBoundMaxY(): number
-declare function GetCameraField(whichField: camerafield): number
-declare function GetCameraTargetPositionX(): number
-declare function GetCameraTargetPositionY(): number
-declare function GetCameraTargetPositionZ(): number
+declare function SetCameraOrientController(whichUnit: unit, xoffset: real, yoffset: real): void
+declare function CameraSetTargetNoise(mag: real, velocity: real): void
+declare function CameraSetSourceNoise(mag: real, velocity: real): void
+declare function CameraSetTargetNoiseEx(mag: real, velocity: real, vertOnly: boolean): void
+declare function CameraSetSourceNoiseEx(mag: real, velocity: real, vertOnly: boolean): void
+declare function CameraSetSmoothingFactor(factor: real): void
+declare function CameraSetFocalDistance(distance: real): void
+declare function CameraSetDepthOfFieldScale(scale: real): void
+declare function GetCameraMargin(whichMargin: integer): real
+declare function GetCameraBoundMinX(): real
+declare function GetCameraBoundMinY(): real
+declare function GetCameraBoundMaxX(): real
+declare function GetCameraBoundMaxY(): real
+declare function GetCameraField(whichField: camerafield): real
+declare function GetCameraTargetPositionX(): real
+declare function GetCameraTargetPositionY(): real
+declare function GetCameraTargetPositionZ(): real
 declare function GetCameraTargetPositionLoc(): location
-declare function GetCameraEyePositionX(): number
-declare function GetCameraEyePositionY(): number
-declare function GetCameraEyePositionZ(): number
+declare function GetCameraEyePositionX(): real
+declare function GetCameraEyePositionY(): real
+declare function GetCameraEyePositionZ(): real
 declare function GetCameraEyePositionLoc(): location
-declare function BlzCameraSetupApplyForceDurationSmooth(
-    whichSetup: camerasetup,
-    doPan: boolean,
-    forcedDuration: number,
-    easeInDuration: number,
-    easeOutDuration: number,
-    smoothFactor: number
-): void
 
 export abstract class Camera {
     public static setCoords(x: real, y: real) {
@@ -152,12 +90,7 @@ export abstract class Camera {
         return this
     }
 
-    public static setBoundsPos(
-        p1: Position,
-        p2: Position,
-        p3: Position,
-        p4: Position
-    ) {
+    public static setBoundsPos(p1: Position, p2: Position, p3: Position, p4: Position) {
         return this.setBoundsCoords(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y)
     }
 
@@ -184,7 +117,12 @@ export abstract class Camera {
         return this.panToCoords(p.x, p.y, p.z)
     }
 
-    public static panToCoordsTimed(x: real, y: real, duration: real, zOffsetDest: real | undefined) {
+    public static panToCoordsTimed(
+        x: real,
+        y: real,
+        duration: real,
+        zOffsetDest: real | undefined
+    ) {
         if (!zOffsetDest) {
             PanCameraToTimed(x, y, duration)
         } else {
@@ -202,219 +140,142 @@ export abstract class Camera {
         return this
     }
 
-    public static setField(whichField: camerafield, value: number, duration: number) {
+    public static setField(whichField: camerafield, value: real, duration: real) {
         SetCameraField(whichField, value, duration)
         return this
     }
 
-    static adjustField(whichField: camerafield, offset: number, duration: number) {
+    public static adjustField(whichField: camerafield, offset: real, duration: real) {
         AdjustCameraField(whichField, offset, duration)
         return this
     }
 
-    static setTargetController(
+    public static setTargetControllerCoords(
         whichUnit: Unit,
-        xOffset: number,
-        yOffset: number,
+        xOffset: real,
+        yOffset: real,
         inheritOrientation: boolean
     ) {
         SetCameraTargetController(whichUnit.handle, xOffset, yOffset, inheritOrientation)
         return this
     }
 
-    static setTargetController(whichUnit: Unit, p: Point, inheritOrientation: boolean) {
-        return this.setTargetController(whichUnit, p.x, p.y, inheritOrientation)
+    public static setTargetControllerPos(
+        whichUnit: Unit,
+        p: Position,
+        inheritOrientation: boolean
+    ) {
+        return this.setTargetControllerCoords(whichUnit, p.x, p.y, inheritOrientation)
     }
 
-    static setOrientController(whichUnit: Unit, xOffset: number, yOffset: number) {
+    public static setOrientControllerCoords(whichUnit: Unit, xOffset: real, yOffset: real) {
         SetCameraOrientController(whichUnit.handle, xOffset, yOffset)
         return this
     }
 
-    static setOrientController(whichUnit: Unit, p: Point | MapLocation) {
-        return this.setOrientController(whichUnit, p.x, p.y)
+    public static setOrientControllerPos(whichUnit: Unit, p: Position) {
+        return this.setOrientControllerCoords(whichUnit, p.x, p.y)
     }
 
-    static setTargetNoise(mag: number, velocity: number, vertOnly = false) {
+    public static setTargetNoise(mag: real, velocity: real, vertOnly = false) {
         CameraSetTargetNoiseEx(mag, velocity, vertOnly)
     }
 
-    static setSourceNoise(mag: number, velocity: number, vertOnly = false) {
+    public static setSourceNoise(mag: real, velocity: real, vertOnly = false) {
         CameraSetSourceNoiseEx(mag, velocity, vertOnly)
     }
 
-    static setSmoothingFactor(factor: number) {
+    public static setSmoothingFactor(factor: real) {
         CameraSetSmoothingFactor(factor)
     }
 
-    static getMargin(whichMargin: number): number {
-        return GetCameraMargin(whichMargin)
+    public static getMargin(whichMargin: integer): real {
+        return GetCameraMargin(Math.round(whichMargin))
     }
 
-    static get boundMinX(): number {
+    public static getBoundMinX(): real {
         return GetCameraBoundMinX()
     }
 
-    static get boundMinY(): number {
+    public static getBoundMinY(): real {
         return GetCameraBoundMinY()
     }
 
-    static get boundMinPoint(): Point {
-        return new Point(this.boundMinX, this.boundMinY)
+    public static getBoundMinPoint(): Point {
+        return new Point(this.getBoundMinX(), this.getBoundMinY())
     }
 
-    static get boundMinLoc(): MapLocation {
-        return new MapLocation(this.boundMinX, this.boundMinY)
+    public static getBoundMinLoc(): MapLocation {
+        return new MapLocation(this.getBoundMinX(), this.getBoundMinY())
     }
 
-    static get boundMaxX(): number {
+    public static getBoundMaxX(): real {
         return GetCameraBoundMaxX()
     }
 
-    static get boundMaxY(): number {
+    public static getBoundMaxY(): real {
         return GetCameraBoundMaxY()
     }
 
-    static get boundMaxPoint(): Point {
-        return new Point(this.boundMaxX, this.boundMaxY)
+    public static getBoundMaxPoint(): Point {
+        return new Point(this.getBoundMaxX(), this.getBoundMaxY())
     }
 
-    static get boundMaxLoc(): MapLocation {
-        return new MapLocation(this.boundMaxX, this.boundMaxY)
+    public static getBoundMaxLoc(): MapLocation {
+        return new MapLocation(this.getBoundMaxX(), this.getBoundMaxY())
     }
 
-    static getField(whichField: camerafield): number {
+    public static getField(whichField: camerafield): real {
         return GetCameraField(whichField)
     }
 
-    static get targetX(): number {
+    public static getTargetX(): real {
         return GetCameraTargetPositionX()
     }
 
-    static get targetY(): number {
+    public static getTargetY(): real {
         return GetCameraTargetPositionY()
     }
 
-    static get targetZ(): number {
+    public static getTargetZ(): real {
         return GetCameraTargetPositionZ()
     }
 
-    static get targetPoint(): Point {
-        return new Point(this.targetX, this.targetY, this.targetZ)
+    public static getTargetPoint(): Point {
+        return new Point(this.getTargetX(), this.getTargetY(), this.getTargetZ())
     }
 
-    static get targetLoc() {
-        return Point.fromHandle(GetCameraTargetPositionLoc())
+    public static getTargetLoc() {
+        return MapLocation.fromHandle(GetCameraTargetPositionLoc())
     }
 
-    static get eyeX(): number {
+    public static getEyeX(): real {
         return GetCameraEyePositionX()
     }
 
-    static get eyeY(): number {
+    public static getEyeY(): real {
         return GetCameraEyePositionY()
     }
 
-    static get eyeZ(): number {
+    public static getEyeZ(): real {
         return GetCameraEyePositionZ()
     }
 
-    static get eyeLoc(): MapLocation {
+    public static getEyeLoc(): MapLocation {
         return MapLocation.fromHandle(GetCameraEyePositionLoc())
     }
 
-    static get eyePoint(): Point {
-        return new Point(this.eyeX, this.eyeY, this.eyeZ)
+    public static getEyePoint(): Point {
+        return new Point(this.getEyeX(), this.getEyeY(), this.getEyeZ())
     }
 
-    static setDepthOfFieldScale(scale: number) {
+    public static setDepthOfFieldScale(scale: real) {
         CameraSetDepthOfFieldScale(scale)
+        return this
     }
 
-    static setFocalDistance(distance: number) {
+    public static setFocalDistance(distance: real) {
         CameraSetFocalDistance(distance)
-    }
-}
-
-export class CameraSetup extends Handle<camerasetup> {
-    constructor() {
-        super(Handle.initFromHandle() ? undefined : CreateCameraSetup())
-    }
-
-    public get destPoint() {
-        return CameraSetupGetDestPositionLoc(this.handle)
-    }
-
-    public get destX() {
-        return CameraSetupGetDestPositionX(this.handle)
-    }
-
-    public set destX(x: number) {
-        CameraSetupSetDestPosition(this.handle, x, this.destY, 0)
-    }
-
-    public get destY() {
-        return CameraSetupGetDestPositionY(this.handle)
-    }
-
-    public set destY(y: number) {
-        CameraSetupSetDestPosition(this.handle, this.destX, y, 0)
-    }
-
-    public set label(label: string) {
-        BlzCameraSetupSetLabel(this.handle, label)
-    }
-
-    public get label() {
-        return BlzCameraSetupGetLabel(this.handle)
-    }
-
-    public apply(doPan: boolean, panTimed: boolean) {
-        CameraSetupApply(this.handle, doPan, panTimed)
-    }
-
-    public applyForceDuration(doPan: boolean, forceDuration: number) {
-        CameraSetupApplyForceDuration(this.handle, doPan, forceDuration)
-    }
-
-    public applyForceDurationSmooth(
-        doPan: boolean,
-        forcedDuration: number,
-        easeInDuration: number,
-        easeOutDuration: number,
-        smoothFactor: number
-    ) {
-        BlzCameraSetupApplyForceDurationSmooth(
-            this.handle,
-            doPan,
-            forcedDuration,
-            easeInDuration,
-            easeOutDuration,
-            smoothFactor
-        )
-    }
-
-    public applyForceDurationZ(zDestOffset: number, forceDuration: number) {
-        CameraSetupApplyForceDurationWithZ(this.handle, zDestOffset, forceDuration)
-    }
-
-    public applyZ(zDestOffset: number) {
-        CameraSetupApplyWithZ(this.handle, zDestOffset)
-    }
-
-    public getField(whichField: camerafield) {
-        return CameraSetupGetField(this.handle, whichField)
-    }
-
-    public setDestPos(x: number, y: number, duration: number) {
-        CameraSetupSetDestPosition(this.handle, x, y, duration)
-    }
-
-    public setField(whichField: camerafield, value: number, duration: number) {
-        CameraSetupSetField(this.handle, whichField, value, duration)
-    }
-
-    public static fromHandle(handle: camerasetup): camerasetup {
-        return this.getObject(handle)
+        return this
     }
 }

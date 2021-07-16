@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { integer, real } from "../Utils"
-import { Handle } from "./handle"
-import { Unit } from "./unit"
+import { Handle } from "./Handle"
+import { Unit } from "./Unit"
 
 declare function CreateTextTag(): texttag
 declare function DestroyTextTag(t: texttag): void

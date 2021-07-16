@@ -2,34 +2,34 @@
 //@ts-nocheck
 
 import { integer, real } from "../Utils"
-import { Ability } from "./ability"
-import { Destructable } from "./destructable"
-import { Dialog, DialogButton } from "./dialog"
-import { Effect } from "./effect"
-import { FogModifier } from "./fogmodifier"
-import { Force } from "./force"
-import { Frame } from "./frame"
-import { Group } from "./group"
-import { Handle } from "./handle"
-import { Image } from "./image"
-import { Item } from "./item"
-import { Leaderboard } from "./leaderboard"
-import { Lightning } from "./lightning"
-import { MapLocation } from "./location"
-import { Multiboard, MultiboardItem } from "./multiboard"
-import { MapPlayer } from "./player"
-import { Quest, QuestItem } from "./quest"
-import { Rectangle } from "./rect"
-import { Region } from "./region"
-import { Sound } from "./sound"
-import { TextTag } from "./textTag"
-import { Timer } from "./timer"
-import { TimerDialog } from "./timerDialog"
-import { Trackable } from "./trackable"
-import { Trigger } from "./trigger"
-import { Ubersplat } from "./ubersplat"
-import { Unit } from "./unit"
-import { Widget } from "./widget"
+import { Ability } from "./Ability"
+import { Destructable } from "./Destructable"
+import { Dialog, DialogButton } from "./Dialog"
+import { Effect } from "./Effect"
+import { FogModifier } from "./FogModifier"
+import { Force } from "./Force"
+import { Frame } from "./Frame"
+import { Group } from "./Group"
+import { Handle } from "./Handle"
+import { Image } from "./Image"
+import { Item } from "./Item"
+import { Leaderboard } from "./LeaderBoard"
+import { Lightning } from "./Lightning"
+import { MapLocation } from "./MapLocation"
+import { Multiboard, MultiboardItem } from "./MultiBoard"
+import { MapPlayer } from "./MapPlayer"
+import { Quest, QuestItem } from "./Quest"
+import { Rectangle } from "./Rectangle"
+import { Region } from "./Region"
+import { Sound } from "./Sound"
+import { TextTag } from "./TextTag"
+import { Timer } from "./Timer"
+import { TimerDialog } from "./TimerDialog"
+import { Trackable } from "./Trackable"
+import { Trigger } from "./Trigger"
+import { Ubersplat } from "./Ubersplat"
+import { Unit } from "./Unit"
+import { Widget } from "./Widget"
 
 declare function InitHashtable(): hashtable
 
@@ -441,7 +441,7 @@ declare function RemoveSavedHandle(table: hashtable, parentKey: integer, childKe
 declare function FlushParentHashtable(table: hashtable): void
 declare function FlushChildHashtable(table: hashtable, parentKey: integer): void
 
-export class Hashtable extends Handle<hashtable> {
+export class HashTable extends Handle<hashtable> {
     public constructor() {
         super(InitHashtable())
     }

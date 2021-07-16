@@ -1,8 +1,6 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer } from "../Utils"
-
 declare function SetMapMusic(musicName: string, random: boolean, index: integer): void
 declare function ClearMapMusic(): void
 declare function PlayMusic(musicName: string): void
@@ -16,11 +14,9 @@ declare function SetMusicVolume(volume: integer): void
 declare function SetMusicPlayPosition(millisecs: integer): void
 declare function SetThematicMusicPlayPosition(millisecs: integer): void
 
-export class Music {
-    private constructor() {}
-
+export abstract class Music {
     public static setMap(musicName: string, random: boolean, index: integer) {
-        SetMapMusic(musicName, random, index)
+        SetMapMusic(musicName, random, Math.round(index))
         return this
     }
 
@@ -35,7 +31,7 @@ export class Music {
     }
 
     public static playEx(musicName: string, frommsecs: integer, fadeinmsecs: integer) {
-        PlayMusicEx(musicName, frommsecs, fadeinmsecs)
+        PlayMusicEx(musicName, Math.round(frommsecs), Math.round(fadeinmsecs))
         return this
     }
 
@@ -55,7 +51,7 @@ export class Music {
     }
 
     public static playThematicEx(musicFileName: string, frommsecs: integer) {
-        PlayThematicMusicEx(musicFileName, frommsecs)
+        PlayThematicMusicEx(musicFileName, Math.round(frommsecs))
         return this
     }
 
@@ -65,17 +61,17 @@ export class Music {
     }
 
     public static setVolume(volume: integer) {
-        SetMusicVolume(volume)
+        SetMusicVolume(Math.round(volume))
         return this
     }
 
     public static setPlayPosition(millisecs: integer) {
-        SetMusicPlayPosition(millisecs)
+        SetMusicPlayPosition(Math.round(millisecs))
         return this
     }
 
     public static setThematicPlayPosition(millisecs: integer) {
-        SetThematicMusicPlayPosition(millisecs)
+        SetThematicMusicPlayPosition(Math.round(millisecs))
         return this
     }
 }

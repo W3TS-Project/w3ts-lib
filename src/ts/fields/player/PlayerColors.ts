@@ -1,4 +1,4 @@
-import { PlayerColor } from "../../API/fields/player/PlayerColor";
+import { PlayerColor } from "../../API/fields/player/PlayerColor"
 
 export abstract class PlayerColors {
     public static readonly RED = new PlayerColor(0)

@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { formatCC, RawCode } from "../Utils"
-import { Handle } from "./handle"
-import { Rectangle } from "./rect"
+import { Handle } from "./Handle"
+import { Rectangle } from "./Rectangle"
 
 declare function AddWeatherEffect(where: rect, effectID: number): weathereffect
 declare function RemoveWeatherEffect(whichEffect: weathereffect): void

@@ -1,4 +1,4 @@
-import { AttackType } from "../../API/fields/unit/AttackType";
+import { AttackType } from "../../API/fields/unit/AttackType"
 
 export abstract class AttackTypes {
     public static readonly NORMAL = new AttackType(0)

@@ -1,67 +1,73 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
+import { GameDifficulty } from "./fields/game/GameDifficulty"
+
 declare function SetTutorialCleared(cleared: boolean): void
 declare function SetMissionAvailable(
-    campaignNumber: number,
-    missionNumber: number,
+    campaignNumber: integer,
+    missionNumber: integer,
     available: boolean
 ): void
-declare function SetCampaignAvailable(campaignNumber: number, available: boolean): void
-declare function SetOpCinematicAvailable(campaignNumber: number, available: boolean): void
-declare function SetEdCinematicAvailable(campaignNumber: number, available: boolean): void
+declare function SetCampaignAvailable(campaignNumber: integer, available: boolean): void
+declare function SetOpCinematicAvailable(campaignNumber: integer, available: boolean): void
+declare function SetEdCinematicAvailable(campaignNumber: integer, available: boolean): void
 declare function GetDefaultDifficulty(): gamedifficulty
 declare function SetDefaultDifficulty(g: gamedifficulty): void
-declare function SetCustomCampaignButtonVisible(whichButton: number, visible: boolean): void
-declare function GetCustomCampaignButtonVisible(whichButton: number): boolean
+declare function SetCustomCampaignButtonVisible(whichButton: integer, visible: boolean): void
+declare function GetCustomCampaignButtonVisible(whichButton: integer): boolean
 declare function DoNotSaveReplay(): void
-B
-export class Campaign {
-    private constructor() {}
 
-    static set tutorialCleared(cleared: boolean) {
+export abstract class Campaign {
+    public static setTutorialCleared(cleared: boolean) {
         SetTutorialCleared(cleared)
-    }
-
-    static setMissionAvailable(campaignNumber: number, missionNumber: number, available: boolean) {
-        this.setMissionAvailable(campaignNumber, missionNumber, available)
         return this
     }
 
-    static setAvailable(campaignNumber: number, available: boolean) {
-        SetCampaignAvailable(campaignNumber, available)
+    public static setMissionAvailable(
+        campaignNumber: integer,
+        missionNumber: integer,
+        available: boolean
+    ) {
+        SetMissionAvailable(Math.round(campaignNumber), Math.round(missionNumber), available)
         return this
     }
 
-    static setOpCinematicAvailable(campaignNumber: number, available: boolean) {
-        SetOpCinematicAvailable(campaignNumber, available)
+    public static setAvailable(campaignNumber: integer, available: boolean) {
+        SetCampaignAvailable(Math.round(campaignNumber), available)
         return this
     }
 
-    static setEdCinematicAvailable(campaignNumber: number, available: boolean) {
-        SetEdCinematicAvailable(campaignNumber, available)
+    public static setOpCinematicAvailable(campaignNumber: integer, available: boolean) {
+        SetOpCinematicAvailable(Math.round(campaignNumber), available)
         return this
     }
 
-    static get defaultDifficulty(): gamedifficulty {
-        return GetDefaultDifficulty()
-    }
-
-    static set defaultDifficulty(g: gamedifficulty) {
-        SetDefaultDifficulty(g)
+    public static setEdCinematicAvailable(campaignNumber: integer, available: boolean) {
+        SetEdCinematicAvailable(Math.round(campaignNumber), available)
         return this
     }
 
-    static setCustomButtonVisible(whichButton: number, visible: boolean) {
-        SetCustomCampaignButtonVisible(whichButton, visible)
+    public static getDefaultDifficulty(): GameDifficulty {
+        return GameDifficulty.fromHandle(GetDefaultDifficulty())
+    }
+
+    public static setDefaultDifficulty(g: GameDifficulty) {
+        SetDefaultDifficulty(g.getHandle)
         return this
     }
 
-    static getCustomButtonVisible(whichButton: number): boolean {
-        return GetCustomCampaignButtonVisible(whichButton)
+    public static setCustomButtonVisible(whichButton: integer, visible: boolean) {
+        SetCustomCampaignButtonVisible(Math.round(whichButton), visible)
+        return this
     }
 
-    static doNotSaveReplay() {
+    public static getCustomButtonVisible(whichButton: integer): boolean {
+        return GetCustomCampaignButtonVisible(Math.round(whichButton))
+    }
+
+    public static doNotSaveReplay() {
         DoNotSaveReplay()
+        return this
     }
 }

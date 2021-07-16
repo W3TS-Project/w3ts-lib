@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { MapPlayer } from "../handles/player"
+import { MapPlayer } from "../handles/MapPlayer"
 
 declare function Player(number: number): player
 

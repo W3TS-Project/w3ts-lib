@@ -2,11 +2,11 @@
 //@ts-nocheck
 
 import { formatCC, integer, RawCode, real } from "../Utils"
-import { Force } from "./force"
-import { Handle } from "./handle"
-import { Leaderboard } from "./leaderboard"
-import { MapLocation } from "./location"
-import { Point } from "./point"
+import { Force } from "./Force"
+import { Handle } from "./Handle"
+import { Leaderboard } from "./LeaderBoard"
+import { MapLocation } from "./MapLocation"
+import { Point } from "./Point"
 
 declare function Player(number: integer): player
 declare function GetLocalPlayer(): player

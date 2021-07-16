@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function CreateQuest(): quest
 declare function DestroyQuest(whichQuest: quest): void

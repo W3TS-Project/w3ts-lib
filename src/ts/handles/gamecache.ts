@@ -2,9 +2,9 @@
 //@ts-nocheck
 
 import { integer, real } from "../Utils"
-import { Handle } from "./handle"
-import { MapPlayer } from "./player"
-import { Unit } from "./unit"
+import { Handle } from "./Handle"
+import { MapPlayer } from "./MapPlayer"
+import { Unit } from "./Unit"
 
 declare function ReloadGameCachesFromDisk(): boolean
 declare function InitGameCache(campaignFile: string): gamecache

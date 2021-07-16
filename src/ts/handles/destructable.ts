@@ -1,8 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { formatCC, integer, Position, RawCode, real } from "../Utils"
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function CreateDestructable(
     objectid: integer,

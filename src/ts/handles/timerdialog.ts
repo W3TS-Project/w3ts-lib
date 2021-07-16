@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { integer, real } from "../Utils"
-import { Handle } from "./handle"
-import { Timer } from "./timer"
+import { Handle } from "./Handle"
+import { Timer } from "./Timer"
 
 declare function CreateTimerDialog(t: timer): timerdialog
 declare function DestroyTimerDialog(whichDialog: timerdialog): void

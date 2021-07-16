@@ -2,7 +2,7 @@
 //@ts-nocheck
 
 import { real } from "../Utils"
-import { Handle } from "./handle"
+import { Handle } from "./Handle"
 
 declare function CreateTrackable(
     trackableModelPath: string,
