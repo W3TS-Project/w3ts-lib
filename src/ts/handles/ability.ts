@@ -35,7 +35,7 @@ declare function BlzSetAbilityBooleanLevelField(whichAbility: ability, whichFiel
 declare function BlzSetAbilityIntegerLevelField(whichAbility: ability, whichField: abilityintegerlevelfield, level: integer, value: integer): boolean
 declare function BlzSetAbilityRealLevelField(whichAbility: ability, whichField: abilityreallevelfield, level: integer, value: real): boolean
 declare function BlzSetAbilityStringLevelField(whichAbility: ability, whichField: abilitystringlevelfield, level: integer, value: string): boolean
-declare function BlzSetAbilityBooleanLevelArrayField(whichAbility: ability, whichField: abilitybooleanlevelarrayfield, level: integer, index: integer, value: integer): boolean
+declare function BlzSetAbilityBooleanLevelArrayField(whichAbility: ability, whichField: abilitybooleanlevelarrayfield, level: integer, index: integer, value: boolean): boolean
 declare function BlzSetAbilityIntegerLevelArrayField(whichAbility: ability, whichField: abilityintegerlevelarrayfield, level: integer, index: integer, value: integer): boolean
 declare function BlzSetAbilityRealLevelArrayField(whichAbility: ability, whichField: abilityreallevelarrayfield, level: integer, index: integer, value: real): boolean
 declare function BlzSetAbilityStringLevelArrayField(whichAbility: ability, whichField: abilitystringlevelarrayfield, level: integer, index: integer, value: string): boolean
@@ -55,7 +55,6 @@ export type AbilityLevelFieldType = AbilityBooleanLevelField | AbilityIntegerLev
 export type AbilityLevelArrayFieldType = AbilityBooleanLevelArrayField | AbilityIntegerLevelArrayField | AbilityRealLevelArrayField | AbilityStringLevelArrayField
 
 export class Ability extends Handle<ability> {
-
     public getBooleanField(whichField: AbilityBooleanField) {
         return BlzGetAbilityBooleanField(this.getHandle, whichField.getHandle)
     }
@@ -87,19 +86,19 @@ export class Ability extends Handle<ability> {
     }
 
     public getBooleanLevelField(whichField: AbilityBooleanLevelField, level: integer) {
-        return BlzGetAbilityBooleanLevelField(this.getHandle, whichField.getHandle, level)
+        return BlzGetAbilityBooleanLevelField(this.getHandle, whichField.getHandle, Math.round(level))
     }
 
     public getIntegerLevelField(whichField: AbilityIntegerLevelField, level: integer): integer {
-        return BlzGetAbilityIntegerLevelField(this.getHandle, whichField.getHandle, level)
+        return BlzGetAbilityIntegerLevelField(this.getHandle, whichField.getHandle, Math.round(level))
     }
 
     public getRealLevelField(whichField: AbilityRealLevelField, level: integer): real {
-        return BlzGetAbilityRealLevelField(this.getHandle, whichField.getHandle, level)
+        return BlzGetAbilityRealLevelField(this.getHandle, whichField.getHandle, Math.round(level))
     }
 
     public getStringLevelField(whichField: AbilityStringLevelField, level: integer) {
-        return BlzGetAbilityStringLevelField(this.getHandle, whichField.getHandle, level)
+        return BlzGetAbilityStringLevelField(this.getHandle, whichField.getHandle, Math.round(level))
     }
 
     public getLevelField(whichField: AbilityLevelFieldType, level: integer): Primitive | undefined {
@@ -117,19 +116,19 @@ export class Ability extends Handle<ability> {
     }
 
     public getBooleanLevelArrayField(whichField: AbilityBooleanLevelArrayField, level: integer, index: integer) {
-        return BlzGetAbilityBooleanLevelArrayField(this.getHandle, whichField.getHandle, level, index)
+        return BlzGetAbilityBooleanLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(index))
     }
 
     public getIntegerLevelArrayField(whichField: AbilityIntegerLevelArrayField, level: integer, index: integer): integer {
-        return BlzGetAbilityIntegerLevelArrayField(this.getHandle, whichField.getHandle, level, index)
+        return BlzGetAbilityIntegerLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(index))
     }
 
     public getRealLevelArrayField(whichField: AbilityRealLevelArrayField, level: integer, index: integer): real {
-        return BlzGetAbilityRealLevelArrayField(this.getHandle, whichField.getHandle, level, index)
+        return BlzGetAbilityRealLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(index))
     }
 
     public getStringLevelArrayField(whichField: AbilityStringLevelArrayField, level: integer, index: integer) {
-        return BlzGetAbilityStringLevelArrayField(this.getHandle, whichField.getHandle, level, index)
+        return BlzGetAbilityStringLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(index))
     }
 
     public getLevelArrayField(whichField: AbilityLevelArrayFieldType, level: integer, index: integer): Primitive | undefined {
@@ -151,7 +150,7 @@ export class Ability extends Handle<ability> {
     }
 
     public setIntegerField(whichField: AbilityIntegerField, value: integer) {
-        return BlzSetAbilityIntegerField(this.getHandle, whichField.getHandle, value)
+        return BlzSetAbilityIntegerField(this.getHandle, whichField.getHandle, Math.round(value))
     }
 
     public setRealField(whichField: AbilityRealField, value: real) {
@@ -177,19 +176,19 @@ export class Ability extends Handle<ability> {
     }
 
     public setBooleanLevelField(whichField: AbilityBooleanLevelField, level: integer, value: boolean) {
-        return BlzSetAbilityBooleanLevelField(this.getHandle, whichField.getHandle, level, value)
+        return BlzSetAbilityBooleanLevelField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public setIntegerLevelField(whichField: AbilityIntegerLevelField, level: integer, value: integer) {
-        return BlzSetAbilityIntegerLevelField(this.getHandle, whichField.getHandle, level, value)
+        return BlzSetAbilityIntegerLevelField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(value))
     }
 
     public setRealLevelField(whichField: AbilityRealLevelField, level: integer, value: real) {
-        return BlzSetAbilityRealLevelField(this.getHandle, whichField.getHandle, level, value)
+        return BlzSetAbilityRealLevelField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public setStringLevelField(whichField: AbilityStringLevelField, level: integer, value: string) {
-        return BlzSetAbilityStringLevelField(this.getHandle, whichField.getHandle, level, value)
+        return BlzSetAbilityStringLevelField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public setLevelField(whichField: AbilityLevelFieldType, level: integer, value: Primitive) {
@@ -206,23 +205,23 @@ export class Ability extends Handle<ability> {
         }
     }
 
-    public setBooleanLevelArrayField(whichField: AbilityBooleanLevelArrayField, level: integer, index: integer, value: integer) {
-        return BlzSetAbilityBooleanLevelArrayField(this.getHandle, whichField.getHandle, level, index, value)
+    public setBooleanLevelArrayField(whichField: AbilityBooleanLevelArrayField, level: integer, index: integer, value: boolean) {
+        return BlzSetAbilityBooleanLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(index), value)
     }
 
     public setIntegerLevelArrayField(whichField: AbilityIntegerLevelArrayField, level: integer, index: integer, value: integer) {
-        return BlzSetAbilityIntegerLevelArrayField(this.getHandle, whichField.getHandle, level, index, value)
+        return BlzSetAbilityIntegerLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(index), Math.round(value))
     }
 
     public setRealLevelArrayField(whichField: AbilityRealLevelArrayField, level: integer, index: integer, value: real) {
-        return BlzSetAbilityRealLevelArrayField(this.getHandle, whichField.getHandle, level, index, value)
+        return BlzSetAbilityRealLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(index), value)
     }
 
     public setStringLevelArrayField(whichField: AbilityStringLevelArrayField, level: integer, index: integer, value: string) {
-        return BlzSetAbilityStringLevelArrayField(this.getHandle, whichField.getHandle, level, index, value)
+        return BlzSetAbilityStringLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(index), value)
     }
 
-    public setLevelArrayField(whichField: AbilityLevelArrayFieldType, level: integer, index: integer, value: string) {
+    public setLevelArrayField(whichField: AbilityLevelArrayFieldType, level: integer, index: integer, value: Primitive) {
         if (whichField instanceof AbilityBooleanLevelArrayField && typeof value === 'boolean') {
             this.setBooleanLevelArrayField(whichField, level, index, value)
         } else if (whichField instanceof AbilityIntegerLevelArrayField && typeof value === 'number') {
@@ -237,19 +236,19 @@ export class Ability extends Handle<ability> {
     }
 
     public addBooleanLevelArrayField(whichField: AbilityBooleanLevelArrayField, level: integer, value: boolean) {
-        return BlzAddAbilityBooleanLevelArrayField(this.getHandle, whichField.getHandle, level, value)
+        return BlzAddAbilityBooleanLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public addIntegerLevelArrayField(whichField: AbilityIntegerLevelArrayField, level: integer, value: integer) {
-        return BlzAddAbilityIntegerLevelArrayField(this.getHandle, whichField.getHandle, level, value)
+        return BlzAddAbilityIntegerLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(value))
     }
 
     public addRealLevelArrayField(whichField: AbilityRealLevelArrayField, level: integer, value: real) {
-        return BlzAddAbilityRealLevelArrayField(this.getHandle, whichField.getHandle, level, value)
+        return BlzAddAbilityRealLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public addStringLevelArrayField(whichField: AbilityStringLevelArrayField, level: integer, value: string) {
-        return BlzAddAbilityStringLevelArrayField(this.getHandle, whichField.getHandle, level, value)
+        return BlzAddAbilityStringLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public addLevelArrayField(whichField: AbilityLevelArrayFieldType, level: integer, value: Primitive) {
@@ -267,19 +266,19 @@ export class Ability extends Handle<ability> {
     }
 
     public removeBooleanLevelArrayField(whichField: AbilityBooleanLevelArrayField, level: integer, value: boolean) {
-        return BlzRemoveAbilityBooleanLevelArrayField(this.getHandle, whichField.getHandle, level, value)
+        return BlzRemoveAbilityBooleanLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public removeIntegerLevelArrayField(whichField: AbilityIntegerLevelArrayField, level: integer, value: integer) {
-        return BlzRemoveAbilityIntegerLevelArrayField(this.getHandle, whichField.getHandle, level, value)
+        return BlzRemoveAbilityIntegerLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), Math.round(value))
     }
 
     public removeRealLevelArrayField(whichField: AbilityRealLevelArrayField, level: integer, value: real) {
-        return BlzRemoveAbilityRealLevelArrayField(this.getHandle, whichField.getHandle, level, value)
+        return BlzRemoveAbilityRealLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public removeStringLevelArrayField(whichField: AbilityStringLevelArrayField, level: integer, value: string) {
-        return BlzRemoveAbilityStringLevelArrayField(this.getHandle, whichField.getHandle, level, value)
+        return BlzRemoveAbilityStringLevelArrayField(this.getHandle, whichField.getHandle, Math.round(level), value)
     }
 
     public removeLevelArrayField(whichField: AbilityLevelArrayFieldType, level: integer, value: Primitive) {

@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer } from "../Utils"
+import { DialogButton } from "./DialogButton"
 import { Handle } from "./Handle"
 import { MapPlayer } from "./MapPlayer"
 
@@ -9,57 +9,20 @@ declare function DialogCreate(): dialog
 declare function DialogDestroy(whichDialog: dialog): void
 declare function DialogClear(whichDialog: dialog): void
 declare function DialogSetMessage(whichDialog: dialog, messageText: string): void
-declare function DialogAddButton(whichDialog: dialog, buttonText: string, hotkey: integer): button
-declare function DialogAddQuitButton(
-    whichDialog: dialog,
-    doScoreScreen: boolean,
-    buttonText: string,
-    hotkey: integer
-): button
 declare function DialogDisplay(whichPlayer: player, whichDialog: dialog, flag: boolean): void
-declare function GetClickedButtion(): button
 declare function GetClickedDialog(): dialog
-
-export class DialogButton extends Handle<button> {
-    public constructor(
-        whichDialog: Dialog,
-        text: string,
-        hotkey: integer = 0,
-        quit: boolean = false,
-        score: boolean = false
-    ) {
-        if (!quit) {
-            super(DialogAddButton(whichDialog.getHandle, text, hotkey))
-        } else {
-            super(DialogAddQuitButton(whichDialog.getHandle, score, text, hotkey))
-        }
-    }
-
-    public static fromHandle(handle: button): DialogButton {
-        return this.getObject(handle)
-    }
-
-    public static getClicked() {
-        return this.fromHandle(GetClickedButtion())
-    }
-
-    public static fromObject(handleObject: DialogButton): button {
-        return this.getHandle(handleObject)
-    }
-}
 
 export class Dialog extends Handle<dialog> {
     public constructor() {
         super(DialogCreate())
     }
 
-    public addButton(
-        text: string,
-        hotkey: integer = 0,
-        quit: boolean = false,
-        score: boolean = false
-    ) {
-        return new DialogButton(this, text, hotkey, quit, score)
+    public addButton(buttonText: string, hotkey: integer = 0) {
+        return DialogButton.add(this, buttonText, hotkey)
+    }
+
+    public addButtonQuit(doScoreScreen: boolean, buttonText: string, hotkey: integer = 0) {
+        return DialogButton.addQuit(this, doScoreScreen, buttonText, hotkey)
     }
 
     public clear() {
@@ -69,6 +32,7 @@ export class Dialog extends Handle<dialog> {
 
     public destroy() {
         DialogDestroy(this.getHandle)
+        return this
     }
 
     public display(whichPlayer: MapPlayer, flag: boolean) {

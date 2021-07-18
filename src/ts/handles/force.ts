@@ -1,7 +1,6 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { code, codeboolexpr, integer } from "../Utils"
 import { Handle } from "./Handle"
 import { MapPlayer } from "./MapPlayer"
 
@@ -39,14 +38,17 @@ export class Force extends Handle<force> {
 
     public addPlayer(whichPlayer: MapPlayer) {
         ForceAddPlayer(this.getHandle, whichPlayer.getHandle)
+        return this
     }
 
     public clear() {
         ForceClear(this.getHandle)
+        return this
     }
 
     public destroy() {
         DestroyForce(this.getHandle)
+        return this
     }
 
     public enumAllies(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
@@ -72,13 +74,14 @@ export class Force extends Handle<force> {
 
     public enumPlayersCounted(countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        ForceEnumPlayersCounted(this.getHandle, filter, countLimit)
+        ForceEnumPlayersCounted(this.getHandle, filter, Math.round(countLimit))
         DestroyCondition(filter)
         return this
     }
 
     public forEach(callback: code) {
         ForForce(this.getHandle, callback)
+        return this
     }
 
     public hasPlayer(whichPlayer: MapPlayer) {

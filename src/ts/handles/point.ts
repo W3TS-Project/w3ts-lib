@@ -5,15 +5,39 @@ import { MapLocation } from "./MapLocation"
 declare function IsPointBlighted(x: real, y: real): boolean
 
 export class Point {
-    public x: real
-    public y: real
-    public z: real
+    protected x: real
+    protected y: real
+    protected z: real
 
     public constructor(x: real, y: real, z?: real) {
         this.x = x
         this.y = y
         this.z = z || 0
         return this
+    }
+
+    public getX(): real {
+        return this.x
+    }
+
+    public getY(): real {
+        return this.y
+    }
+
+    public getZ(): real {
+        return this.z
+    }
+
+    public setX(x: real) {
+        this.x = x
+    }
+
+    public setY(y: real) {
+        this.y = y
+    }
+
+    public setZ(z: real) {
+        this.z = z
     }
 
     public static fromLoc(loc: MapLocation) {

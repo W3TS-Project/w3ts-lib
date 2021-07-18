@@ -1,8 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { getHandledCallback } from "../ErrorHandling"
-import { code, real } from "../Utils"
+import { ErrorHandling } from "../ErrorHandling"
 import { Handle } from "./Handle"
 
 declare function CreateTimer(): timer
@@ -19,10 +18,6 @@ declare function TimerGetTimeout(whichTimer: timer): real
 declare function PauseTimer(whichTimer: timer): void
 declare function ResumeTimer(whichTimer: timer): void
 declare function GetExpiredTimer(): timer
-
-const realTimerStart = TimerStart
-TimerStart = (whichTimer: timer, timeout: real, periodic: boolean, handlerFunc: () => void) =>
-    realTimerStart(whichTimer, timeout, periodic, getHandledCallback(handlerFunc))
 
 export class Timer extends Handle<timer> {
     public constructor() {
@@ -56,7 +51,7 @@ export class Timer extends Handle<timer> {
         return this
     }
 
-    public start(timeout: real, periodic: boolean, handlerFunc: () => void) {
+    public start(timeout: real, periodic: boolean, handlerFunc: code) {
         TimerStart(this.getHandle, timeout, periodic, handlerFunc)
         return this
     }
@@ -74,12 +69,18 @@ export class Timer extends Handle<timer> {
     }
 
     public setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
-        return this.start(time, false, () => {
-            call()
-            if (isDestroy) {
-                Timer.fromExpired().pause().destroy()
-            }
-        })
+        return this.start(
+            time,
+            false,
+            ErrorHandling.getHandledCallback(() => {
+                call()
+                if (isDestroy) {
+                    Timer.fromExpired()
+                        .pause()
+                        .destroy()
+                }
+            })
+        )
     }
 
     public static setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
@@ -87,7 +88,7 @@ export class Timer extends Handle<timer> {
     }
 
     public setInterval(time: real, call: code): Timer {
-        return this.start(time, true, call)
+        return this.start(time, true, ErrorHandling.getHandledCallback(call))
     }
 
     public static setInterval(time: real, call: code): Timer {

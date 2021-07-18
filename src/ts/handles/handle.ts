@@ -1,8 +1,6 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer } from "../Utils"
-
 const map: WeakMap<handle, any> = new WeakMap<handle, any>()
 
 declare function GetHandleId(h: handle): number

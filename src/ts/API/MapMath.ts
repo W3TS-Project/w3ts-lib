@@ -27,10 +27,6 @@ declare function BlzBitOr(x: integer, y: integer): integer
 declare function BlzBitAnd(x: integer, y: integer): integer
 declare function BlzBitXor(x: integer, y: integer): integer
 
-declare function GetRandomInt(lowBound: integer, highBound: integer): integer
-declare function GetRandomReal(lowBound: real, highBound: real): real
-declare function SetRandomSeed(seed: integer): void
-
 export abstract class MapMath {
     public static deg2Rad(degrees: real): real {
         return Deg2Rad(degrees)
@@ -86,18 +82,5 @@ export abstract class MapMath {
 
     public static bitXor(x: integer, y: integer): integer {
         return BlzBitXor(Math.round(x), Math.round(y))
-    }
-
-    public static getRandomInt(lowBound: integer, highBound: integer): integer {
-        return GetRandomInt(Math.round(lowBound), Math.round(highBound))
-    }
-
-    public static getRandomReal(lowBound: real, highBound: real): real {
-        return GetRandomReal(lowBound, highBound)
-    }
-
-    public static setRandomSeed(seed: integer) {
-        SetRandomSeed(Math.round(seed))
-        return this
     }
 }

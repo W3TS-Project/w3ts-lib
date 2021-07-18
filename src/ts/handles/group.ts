@@ -7,7 +7,8 @@ import { MapLocation } from "./MapLocation"
 import { Rectangle } from "./Rectangle"
 import { Unit } from "./Unit"
 import { Widget } from "./Widget"
-import { code, codeboolexpr, formatOrder, integer, Order, Position, real } from "../Utils"
+import { Position } from "../Package"
+import { Order } from "../Order"
 
 declare function CreateGroup(): group
 declare function DestroyGroup(whichGroup: group): void
@@ -107,6 +108,7 @@ export class Group extends Handle<group> {
 
     public destroy() {
         DestroyGroup(this.getHandle)
+        return this
     }
 
     public addUnit(whichUnit: Unit): boolean {
@@ -130,12 +132,12 @@ export class Group extends Handle<group> {
         return this
     }
 
-    public get size(): integer {
+    public getSize(): integer {
         return BlzGroupGetSize(this.getHandle)
     }
 
     public getUnitAt(index: integer): Unit {
-        return Unit.fromHandle(BlzGroupUnitAt(this.getHandle, index))
+        return Unit.fromHandle(BlzGroupUnitAt(this.getHandle, Math.round(index)))
     }
 
     public enumOfType(unitname: string, filterFunc: codeboolexpr) {
@@ -154,7 +156,7 @@ export class Group extends Handle<group> {
 
     public enumCountedOfType(unitname: string, countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsOfTypeCounted(this.getHandle, unitname, filter, countLimit)
+        GroupEnumUnitsOfTypeCounted(this.getHandle, unitname, filter, Math.round(countLimit))
         DestroyCondition(filter)
         return this
     }
@@ -168,7 +170,7 @@ export class Group extends Handle<group> {
 
     public enumCountedInRect(r: Rectangle, countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRectCounted(this.getHandle, r.getHandle, filter, countLimit)
+        GroupEnumUnitsInRectCounted(this.getHandle, r.getHandle, filter, Math.round(countLimit))
         DestroyCondition(filter)
         return this
     }
@@ -181,7 +183,7 @@ export class Group extends Handle<group> {
     }
 
     public enumPosInRange(p: Position, radius: real, filterFunc: codeboolexpr) {
-        return this.enumCoordsInRange(p.x, p.y, radius, filterFunc)
+        return this.enumCoordsInRange(p.getX(), p.getY(), radius, filterFunc)
     }
 
     public enumLocInRange(whichLocation: MapLocation, radius: real, filterFunc: codeboolexpr) {
@@ -199,7 +201,7 @@ export class Group extends Handle<group> {
         filterFunc: codeboolexpr
     ) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRangeCounted(this.getHandle, x, y, radius, filter, countLimit)
+        GroupEnumUnitsInRangeCounted(this.getHandle, x, y, radius, filter, Math.round(countLimit))
         DestroyCondition(filter)
         return this
     }
@@ -210,7 +212,13 @@ export class Group extends Handle<group> {
         countLimit: integer,
         filterFunc: codeboolexpr
     ) {
-        return this.enumCoordsCountedInRange(p.x, p.y, radius, countLimit, filterFunc)
+        return this.enumCoordsCountedInRange(
+            p.getX(),
+            p.getY(),
+            radius,
+            Math.round(countLimit),
+            filterFunc
+        )
     }
 
     public enumLocCountedInRange(
@@ -225,7 +233,7 @@ export class Group extends Handle<group> {
             whichLocation.getHandle,
             radius,
             filter,
-            countLimit
+            Math.round(countLimit)
         )
         DestroyCondition(filter)
         return this
@@ -239,51 +247,51 @@ export class Group extends Handle<group> {
     }
 
     public immediateOrder(order: Order): boolean {
-        order = formatOrder(order)
-        if (typeof order === "string") {
-            return GroupImmediateOrder(this.getHandle, order)
-        } else {
-            return GroupImmediateOrderById(this.getHandle, order)
-        }
+        return GroupImmediateOrder(this.getHandle, order.getStr())
+    }
+
+    public immediateOrderById(order: Order): boolean {
+        return GroupImmediateOrderById(this.getHandle, order.getId())
     }
 
     public coordsOrder(order: Order, x: real, y: real): boolean {
-        order = formatOrder(order)
-        if (typeof order === "string") {
-            return GroupPointOrder(this.getHandle, order, x, y)
-        } else {
-            return GroupPointOrderById(this.getHandle, order, x, y)
-        }
+        return GroupPointOrder(this.getHandle, order.getStr(), x, y)
+    }
+
+    public coordsOrderById(order: Order, x: real, y: real): boolean {
+        return GroupPointOrderById(this.getHandle, order.getId(), x, y)
     }
 
     public posOrder(order: Order, pos: Position): boolean {
-        return this.coordsOrder(order, pos.x, pos.y)
+        return this.coordsOrder(order, pos.getX(), pos.getY())
+    }
+
+    public posOrderById(order: Order, pos: Position): boolean {
+        return this.coordsOrderById(order, pos.getX(), pos.getY())
     }
 
     public locOrder(order: Order, whichLocation: MapLocation): boolean {
-        order = formatOrder(order)
-        if (typeof order === "string") {
-            return GroupPointOrderLoc(this.getHandle, order, whichLocation.getHandle)
-        } else {
-            return GroupPointOrderByIdLoc(this.getHandle, order, whichLocation.getHandle)
-        }
+        return GroupPointOrderLoc(this.getHandle, order.getStr(), whichLocation.getHandle)
+    }
+
+    public locOrderById(order: Order, whichLocation: MapLocation): boolean {
+        return GroupPointOrderByIdLoc(this.getHandle, order.getId(), whichLocation.getHandle)
     }
 
     public targetOrder(order: Order, targetWidget: Widget): boolean {
-        order = formatOrder(order)
-        if (typeof order === "string") {
-            return GroupTargetOrder(this.getHandle, order, targetWidget.getHandle)
-        } else {
-            return GroupTargetOrderById(this.getHandle, order, targetWidget.getHandle)
-        }
+        return GroupTargetOrder(this.getHandle, order.getStr(), targetWidget.getHandle)
     }
 
-    public for(callback: code) {
+    public targetOrderById(order: Order, targetWidget: Widget): boolean {
+        return GroupTargetOrderById(this.getHandle, order.getId(), targetWidget.getHandle)
+    }
+
+    public forEach(callback: code) {
         ForGroup(this.getHandle, callback)
         return this
     }
 
-    public get first() {
+    public first() {
         return Unit.fromHandle(FirstOfGroup(this.getHandle))
     }
 

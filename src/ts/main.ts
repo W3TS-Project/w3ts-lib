@@ -4,5 +4,6 @@
 /// <reference types="lua-types/5.3"/>
 /// <reference types="ceres-decl/ceres"/>
 
-import { Package } from "./Package";
-Package.config()
+import { Timer } from "./handles/Timer"
+import { Package } from "./Package"
+Timer.setTimeout(0, () => Package.config(), true)

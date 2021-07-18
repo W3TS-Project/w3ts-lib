@@ -1,6 +1,8 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { Position } from "../Package"
+import { RawCode } from "../RawCode"
 import { Handle } from "./Handle"
 
 declare function CreateDestructable(
@@ -52,7 +54,7 @@ declare function GetDestructableY(d: destructable): real
 declare function SetDestructableLife(d: destructable, life: real): void
 declare function GetDestructableLife(d: destructable): real
 declare function SetDestructableMaxLife(d: destructable, max: real): void
-declare function GetDestructableMaxLife(d: destructable): number
+declare function GetDestructableMaxLife(d: destructable): real
 declare function DestructableRestoreLife(d: destructable, life: real, birth: boolean): void
 declare function QueueDestructableAnimation(d: destructable, whichAnimation: string): void
 declare function SetDestructableAnimation(d: destructable, whichAnimation: string): void
@@ -67,51 +69,20 @@ declare function GetEnumDestructable(): destructable
 
 export class Destructable extends Handle<destructable> {
     public static createCoords(
-        objectid: RawCode,
+        rawCode: RawCode,
         x: real,
         y: real,
         face: real,
         scale: real,
         variation: integer
     ) {
-        return new this(CreateDestructable(formatCC(objectid), x, y, face, scale, variation))
+        return new this(
+            CreateDestructable(rawCode.getId(), x, y, face, scale, Math.round(variation))
+        )
     }
 
     public static createZCoords(
-        objectid: RawCode,
-        x: real,
-        y: real,
-        z: real,
-        face: real,
-        scale: real,
-        variation: integer
-    ) {
-        return new this(CreateDestructableZ(formatCC(objectid), x, y, z, face, scale, variation))
-    }
-
-    public static createPos(
-        objectid: RawCode,
-        p: Position,
-        face: real,
-        scale: real,
-        variation: integer
-    ) {
-        return this.createZCoords(objectid, p.x, p.y, p.z, face, scale, variation)
-    }
-
-    public static createDeadCoords(
-        objectid: RawCode,
-        x: real,
-        y: real,
-        face: real,
-        scale: real,
-        variation: integer
-    ) {
-        return new this(CreateDeadDestructable(formatCC(objectid), x, y, face, scale, variation))
-    }
-
-    public static createDeadZCoords(
-        objectid: RawCode,
+        rawCode: RawCode,
         x: real,
         y: real,
         z: real,
@@ -120,94 +91,146 @@ export class Destructable extends Handle<destructable> {
         variation: integer
     ) {
         return new this(
-            CreateDeadDestructableZ(formatCC(objectid), x, y, z, face, scale, variation)
+            CreateDestructableZ(rawCode.getId(), x, y, z, face, scale, Math.round(variation))
         )
     }
 
-    public static createDeadPos(
-        objectid: RawCode,
+    public static createPos(
+        rawCode: RawCode,
         p: Position,
         face: real,
         scale: real,
         variation: integer
     ) {
-        return this.createDeadZCoords(objectid, p.x, p.y, p.z, face, scale, variation)
+        return this.createZCoords(rawCode, p.x, p.y, p.z, face, scale, variation)
     }
 
-    public set invulnerable(flag: boolean) {
+    public static createDeadCoords(
+        rawCode: RawCode,
+        x: real,
+        y: real,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
+        return new this(
+            CreateDeadDestructable(rawCode.getId(), x, y, face, scale, Math.round(variation))
+        )
+    }
+
+    public static createDeadZCoords(
+        rawCode: RawCode,
+        x: real,
+        y: real,
+        z: real,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
+        return new this(
+            CreateDeadDestructableZ(rawCode.getId(), x, y, z, face, scale, Math.round(variation))
+        )
+    }
+
+    public static createDeadPos(
+        rawCode: RawCode,
+        p: Position,
+        face: real,
+        scale: real,
+        variation: integer
+    ) {
+        return this.createDeadZCoords(rawCode, p.x, p.y, p.z, face, scale, variation)
+    }
+
+    public setInvulnerable(flag: boolean) {
         SetDestructableInvulnerable(this.getHandle, flag)
+        return this
     }
 
-    public get invulnerable() {
+    public getInvulnerable() {
         return IsDestructableInvulnerable(this.getHandle)
     }
 
-    public get life() {
+    public getLife(): real {
         return GetDestructableLife(this.getHandle)
     }
 
-    public set life(value: real) {
+    public setLife(value: real) {
         SetDestructableLife(this.getHandle, value)
+        return this
     }
 
-    public get maxLife() {
+    public getMaxLife(): real {
         return GetDestructableMaxLife(this.getHandle)
     }
 
-    public set maxLife(value: real) {
+    public setMaxLife(value: real) {
         SetDestructableMaxLife(this.getHandle, value)
+        return this
     }
 
-    public get name() {
+    public getName() {
         return GetDestructableName(this.getHandle)
     }
 
-    public get occluderHeight() {
+    public getOccluderHeight(): real {
         return GetDestructableOccluderHeight(this.getHandle)
     }
 
-    public set occluderHeight(value: real) {
+    public setOccluderHeight(value: real) {
         SetDestructableOccluderHeight(this.getHandle, value)
+        return this
     }
 
-    public get typeId() {
+    public getTypeId(): integer {
         return GetDestructableTypeId(this.getHandle)
     }
 
-    public get x() {
+    public getRawCode() {
+        return new RawCode(this.getTypeId())
+    }
+
+    public getX(): real {
         return GetDestructableX(this.getHandle)
     }
 
-    public get y() {
+    public getY(): real {
         return GetDestructableY(this.getHandle)
     }
 
-    public destroy() {
+    public remove() {
         RemoveDestructable(this.getHandle)
+        return this
     }
 
-    public heal(life: number, birth: boolean) {
+    public restoreLife(life: real, birth: boolean) {
         DestructableRestoreLife(this.getHandle, life, birth)
+        return this
     }
 
     public kill() {
         KillDestructable(this.getHandle)
+        return this
     }
 
-    public queueAnim(whichAnimation: string) {
+    public queueAnimation(whichAnimation: string) {
         QueueDestructableAnimation(this.getHandle, whichAnimation)
+        return this
     }
 
-    public setAnim(whichAnimation: string) {
+    public setAnimation(whichAnimation: string) {
         SetDestructableAnimation(this.getHandle, whichAnimation)
+        return this
     }
 
-    public setAnimSpeed(speedFactor: real) {
+    public setAnimationSpeed(speedFactor: real) {
         SetDestructableAnimationSpeed(this.getHandle, speedFactor)
+        return this
     }
 
     public show(flag: boolean) {
         ShowDestructable(this.getHandle, flag)
+        return this
     }
 
     public static fromHandle(handle: destructable): Destructable {

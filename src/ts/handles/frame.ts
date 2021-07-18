@@ -1,7 +1,10 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../Utils"
+import { FrameOriginType } from "../API/fields/frame/FrameOriginType"
+import { FramePointType } from "../API/fields/frame/FramePointType"
+import { TextAlignType } from "../API/fields/frame/TextAlignType"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 
 declare function BlzCreateFrame(
@@ -93,7 +96,6 @@ declare function BlzFrameSetTextAlignment(
     horz: textaligntype
 ): void
 declare function BlzGetTriggerFrame(): framehandle
-declare function BlzGetTriggerFrameEvent(): frameeventtype
 declare function BlzGetTriggerFrameValue(): real
 declare function BlzGetTriggerFrameText(): string
 declare function BlzEnableUIAutoPosition(enable: boolean): void
@@ -103,25 +105,25 @@ declare function BlzLoadTOCFile(TOCFile: string): boolean
 
 export class Frame extends Handle<framehandle> {
     public static create(name: string, owner: Frame, priority: integer, createContext: integer) {
-        return new this(BlzCreateFrame(name, owner.getHandle, priority, createContext))
+        return new this(BlzCreateFrame(name, owner.getHandle, Math.round(priority), Math.round(createContext)))
     }
 
-    public static simpleCreate(name: string, owner: Frame, createContext: integer) {
-        return new this(BlzCreateSimpleFrame(name, owner.getHandle, createContext))
+    public static createSimple(name: string, owner: Frame, createContext: integer) {
+        return new this(BlzCreateSimpleFrame(name, owner.getHandle, Math.round(createContext)))
     }
 
-    public static byTypeCreate(
+    public static createByType(
         typeName: string,
         name: string,
         owner: Frame,
         inherits: string,
         createContext: integer
     ) {
-        return new this(BlzCreateFrameByType(typeName, name, owner.getHandle, inherits, createContext))
+        return new this(BlzCreateFrameByType(typeName, name, owner.getHandle, inherits, Math.round(createContext)))
     }
 
-    public static fromOrigin(frameType: originframetype, index: integer) {
-        return this.fromHandle(BlzGetOriginFrame(frameType, index))
+    public static fromOrigin(frameType: FrameOriginType, index: integer) {
+        return this.fromHandle(BlzGetOriginFrame(frameType.getHandle, Math.round(index)))
     }
 
     public static autoPosition(enable: boolean) {
@@ -136,22 +138,31 @@ export class Frame extends Handle<framehandle> {
 
     public destroy() {
         BlzDestroyFrame(this.getHandle)
+        return this
     }
 
-    public setPoint(
-        point: framepointtype,
+    public setPointCoords(
+        point: FramePointType,
         relative: Frame,
-        relativePoint: framepointtype,
+        relativePoint: FramePointType,
         x: real,
         y: real
     ) {
-        BlzFrameSetPoint(this.getHandle, point, relative.getHandle, relativePoint, x, y)
+        BlzFrameSetPoint(this.getHandle, point.getHandle, relative.getHandle, relativePoint.getHandle, x, y)
         return this
     }
 
-    public setAbsPoint(point: framepointtype, x: real, y: real) {
-        BlzFrameSetAbsPoint(this.getHandle, point, x, y)
+    public setPointPos(point: FramePointType, relative: Frame, relativePoint: FramePointType, p: Position) {
+        return this.setPointCoords(point, relative, relativePoint, p.getX(), p.getY())
+    }
+
+    public setAbsPointCoords(point: FramePointType, x: real, y: real) {
+        BlzFrameSetAbsPoint(this.getHandle, point.getHandle, x, y)
         return this
+    }
+
+    public setAbsPointPos(point: FramePointType, p: Position) {
+        return this.setAbsPointCoords(point, p.getX(), p.getY())
     }
 
     public clearPoints() {
@@ -164,24 +175,20 @@ export class Frame extends Handle<framehandle> {
         return this
     }
 
-    public set visible(flag: boolean) {
-        BlzFrameSetVisible(this.getHandle, flag)
-    }
-
     public setVisible(flag: boolean) {
         BlzFrameSetVisible(this.getHandle, flag)
         return this
     }
 
-    public get visible(): boolean {
+    public isVisible(): boolean {
         return BlzFrameIsVisible(this.getHandle)
     }
 
     public static fromName(name: string, createContext: integer) {
-        return this.fromHandle(BlzGetFrameByName(name, createContext))
+        return this.fromHandle(BlzGetFrameByName(name, Math.round(createContext)))
     }
 
-    public get name(): string {
+    public getName(): string {
         return BlzFrameGetName(this.getHandle)
     }
 
@@ -190,11 +197,12 @@ export class Frame extends Handle<framehandle> {
         return this
     }
 
-    public set text(text: string) {
+    public setText(text: string) {
         BlzFrameSetText(this.getHandle, text)
+        return this
     }
 
-    public get text(): string {
+    public getText(): string {
         return BlzFrameGetText(this.getHandle)
     }
 
@@ -203,16 +211,17 @@ export class Frame extends Handle<framehandle> {
         return this
     }
 
-    public set sizeLimitText(size: integer) {
-        BlzFrameSetTextSizeLimit(this.getHandle, size)
+    public setSizeLimitText(size: integer) {
+        BlzFrameSetTextSizeLimit(this.getHandle, Math.round(size))
+        return this
     }
 
-    public get sizeLimitText(): integer {
+    public getSizeLimitText(): integer {
         return BlzFrameGetTextSizeLimit(this.getHandle)
     }
 
     public setTextColor(color: integer) {
-        BlzFrameSetTextColor(this.getHandle, color)
+        BlzFrameSetTextColor(this.getHandle, Math.round(color))
         return this
     }
 
@@ -222,43 +231,34 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setModel(modelFile: string, cameraIndex: integer) {
-        BlzFrameSetModel(this.getHandle, modelFile, cameraIndex)
+        BlzFrameSetModel(this.getHandle, modelFile, Math.round(cameraIndex))
         return this
     }
 
-    public set enabled(flag: boolean) {
-        BlzFrameSetEnable(this.getHandle, flag)
-    }
-
-    public setEnabled(flag: boolean) {
+    public setEnable(flag: boolean) {
         BlzFrameSetEnable(this.getHandle, flag)
         return this
     }
 
-    public get enabled(): boolean {
+    public getEnable(): boolean {
         return BlzFrameGetEnable(this.getHandle)
     }
 
-    public set alpha(alpha: integer) {
-        BlzFrameSetAlpha(this.getHandle, alpha)
-    }
-
     public setAlpha(alpha: integer) {
-        BlzFrameSetAlpha(this.getHandle, alpha)
-        return this
+        BlzFrameSetAlpha(this.getHandle, Math.round(alpha))
     }
 
-    public get alpha(): integer {
+    public getAlpha(): integer {
         return BlzFrameGetAlpha(this.getHandle)
     }
 
     public setSpriteAnimate(primaryProp: integer, flags: integer) {
-        BlzFrameSetSpriteAnimate(this.getHandle, primaryProp, flags)
+        BlzFrameSetSpriteAnimate(this.getHandle, Math.round(primaryProp), Math.round(flags))
         return this
     }
 
     public setTexture(texFile: string, flag: integer, blend: boolean) {
-        BlzFrameSetTexture(this.getHandle, texFile, flag, blend)
+        BlzFrameSetTexture(this.getHandle, texFile, Math.round(flag), blend)
         return this
     }
 
@@ -277,16 +277,12 @@ export class Frame extends Handle<framehandle> {
         return this
     }
 
-    public set value(value: real) {
-        BlzFrameSetValue(this.getHandle, value)
-    }
-
     public setValue(value: real) {
         BlzFrameSetValue(this.getHandle, value)
         return this
     }
 
-    public get value(): real {
+    public getValue(): real {
         return BlzFrameGetValue(this.getHandle)
     }
 
@@ -306,57 +302,13 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setVertexColor(color: integer) {
-        BlzFrameSetVertexColor(this.getHandle, color)
+        BlzFrameSetVertexColor(this.getHandle, Math.round(color))
         return this
     }
 
     public setLevel(level: integer) {
-        BlzFrameSetLevel(this.getHandle, level)
+        BlzFrameSetLevel(this.getHandle, Math.round(level))
         return this
-    }
-
-    public set parent(parent: Frame) {
-        BlzFrameSetParent(this.getHandle, parent.getHandle)
-    }
-
-    public get parent() {
-        return Frame.fromHandle(BlzFrameGetParent(this.getHandle))
-    }
-
-    public set width(width: real) {
-        BlzFrameSetSize(this.getHandle, width, this.height)
-    }
-
-    public setWidth(width: real) {
-        BlzFrameSetSize(this.getHandle, width, this.height)
-        return this
-    }
-
-    public get width(): real {
-        return BlzFrameGetWidth(this.getHandle)
-    }
-
-    public setFont(filename: string, height: real, flags: integer) {
-        BlzFrameSetFont(this.getHandle, filename, height, flags)
-        return this
-    }
-
-    public setTextAlignment(vert: textaligntype, horz: textaligntype) {
-        BlzFrameSetTextAlignment(this.getHandle, vert, horz)
-        return this
-    }
-
-    public set height(height: real) {
-        BlzFrameSetSize(this.getHandle, this.width, height)
-    }
-
-    public setHeight(height: number) {
-        BlzFrameSetSize(this.getHandle, this.width, height)
-        return this
-    }
-
-    public get height(): real {
-        return BlzFrameGetHeight(this.getHandle)
     }
 
     public setParent(parent: Frame) {
@@ -364,13 +316,40 @@ export class Frame extends Handle<framehandle> {
         return this
     }
 
-    public setText(text: string) {
-        BlzFrameSetText(this.getHandle, text)
+    public getParent() {
+        return Frame.fromHandle(BlzFrameGetParent(this.getHandle))
+    }
+
+    public setWidth(width: real) {
+        BlzFrameSetSize(this.getHandle, width, this.getHeight())
         return this
     }
 
-    public setTextSizeLimit(size: number) {
-        BlzFrameSetTextSizeLimit(this.getHandle, size)
+    public getWidth(): real {
+        return BlzFrameGetWidth(this.getHandle)
+    }
+
+    public setFont(filename: string, height: real, flags: integer) {
+        BlzFrameSetFont(this.getHandle, filename, height, Math.round(flags))
+        return this
+    }
+
+    public setTextAlignment(vert: TextAlignType, horz: TextAlignType) {
+        BlzFrameSetTextAlignment(this.getHandle, vert.getHandle, horz.getHandle)
+        return this
+    }
+
+    public setHeight(height: real) {
+        BlzFrameSetSize(this.getHandle, this.getWidth(), height)
+        return this
+    }
+
+    public getHeight(): real {
+        return BlzFrameGetHeight(this.getHandle)
+    }
+
+    public setTextSizeLimit(size: integer) {
+        BlzFrameSetTextSizeLimit(this.getHandle, Math.round(size))
         return this
     }
 
@@ -384,10 +363,6 @@ export class Frame extends Handle<framehandle> {
 
     public static fromObject(handleObject: Frame): framehandle {
         return this.getHandle(handleObject)
-    }
-
-    public static getEventType(): frameeventtype {
-        return BlzGetTriggerFrameEvent()
     }
 
     public static getEventText(): string {
