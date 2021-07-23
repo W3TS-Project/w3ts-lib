@@ -41,7 +41,7 @@ export class Point {
     }
 
     public static fromLoc(loc: MapLocation) {
-        return new Point(loc.x, loc.y, loc.z)
+        return new Point(loc.getX(), loc.getY(), loc.getZ())
     }
 
     public static fromHandleLoc(handle: location) {

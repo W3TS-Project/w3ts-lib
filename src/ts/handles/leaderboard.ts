@@ -1,7 +1,6 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer } from "../Utils"
 import { Handle } from "./Handle"
 import { MapPlayer } from "./MapPlayer"
 
@@ -76,6 +75,7 @@ export class LeaderBoard extends Handle<leaderboard> {
 
     public destroy() {
         DestroyLeaderboard(this.getHandle)
+        return this
     }
 
     public display(flag: boolean = true) {
@@ -83,25 +83,26 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public get displayed(): boolean {
+    public isDisplayed(): boolean {
         return IsLeaderboardDisplayed(this.getHandle)
     }
 
-    public get itemCount(): integer {
+    public getItemCount(): integer {
         return LeaderboardGetItemCount(this.getHandle)
     }
 
-    public set itemCount(count: integer) {
-        LeaderboardSetSizeByItemCount(this.getHandle, count)
+    public setItemCount(count: integer) {
+        LeaderboardSetSizeByItemCount(this.getHandle, Math.round(count))
+        return this
     }
 
     public addItem(label: string, value: integer, p: MapPlayer) {
-        LeaderboardAddItem(this.getHandle, label, value, p.getHandle)
+        LeaderboardAddItem(this.getHandle, label, Math.round(value), p.getHandle)
         return this
     }
 
     public removeItem(index: integer) {
-        LeaderboardRemoveItem(this.getHandle, index)
+        LeaderboardRemoveItem(this.getHandle, Math.round(index))
         return this
     }
 
@@ -115,18 +116,18 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public sortByValue(asc: boolean = true) {
-        LeaderboardSortItemsByValue(this.getHandle, asc)
+    public sortByValue(ascending: boolean = true) {
+        LeaderboardSortItemsByValue(this.getHandle, ascending)
         return this
     }
 
-    public sortByPlayer(asc: boolean = true) {
-        LeaderboardSortItemsByPlayer(this.getHandle, asc)
+    public sortByPlayer(ascending: boolean = true) {
+        LeaderboardSortItemsByPlayer(this.getHandle, ascending)
         return this
     }
 
-    public sortByLabel(asc: boolean = true) {
-        LeaderboardSortItemsByLabel(this.getHandle, asc)
+    public sortByLabel(ascending: boolean = true) {
+        LeaderboardSortItemsByLabel(this.getHandle, ascending)
         return this
     }
 
@@ -138,21 +139,34 @@ export class LeaderBoard extends Handle<leaderboard> {
         return LeaderboardGetPlayerIndex(this.getHandle, p.getHandle)
     }
 
-    public set label(value: string) {
+    public setLabel(value: string) {
         LeaderboardSetLabel(this.getHandle, value)
+        return this
     }
 
-    public get label(): string {
+    public getLabelText(): string {
         return LeaderboardGetLabelText(this.getHandle)
     }
 
     public setLabelColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        LeaderboardSetLabelColor(this.getHandle, red, green, blue, alpha)
+        LeaderboardSetLabelColor(
+            this.getHandle,
+            Math.round(red),
+            Math.round(green),
+            Math.round(blue),
+            Math.round(alpha)
+        )
         return this
     }
 
     public setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        LeaderboardSetValueColor(this.getHandle, red, green, blue, alpha)
+        LeaderboardSetValueColor(
+            this.getHandle,
+            Math.round(red),
+            Math.round(green),
+            Math.round(blue),
+            Math.round(alpha)
+        )
         return this
     }
 
@@ -167,12 +181,12 @@ export class LeaderBoard extends Handle<leaderboard> {
     }
 
     public setItemValue(item: integer, value: integer) {
-        LeaderboardSetItemValue(this.getHandle, item, value)
+        LeaderboardSetItemValue(this.getHandle, Math.round(item), Math.round(value))
         return this
     }
 
     public setItemLabel(item: integer, label: string) {
-        LeaderboardSetItemLabel(this.getHandle, item, label)
+        LeaderboardSetItemLabel(this.getHandle, Math.round(item), label)
         return this
     }
 
@@ -182,7 +196,7 @@ export class LeaderBoard extends Handle<leaderboard> {
         showValues: boolean = true,
         showIcons: boolean = true
     ) {
-        LeaderboardSetItemStyle(this.getHandle, item, showLabel, showValues, showIcons)
+        LeaderboardSetItemStyle(this.getHandle, Math.round(item), showLabel, showValues, showIcons)
         return this
     }
 
@@ -193,7 +207,14 @@ export class LeaderBoard extends Handle<leaderboard> {
         blue: integer,
         alpha: integer
     ) {
-        LeaderboardSetItemLabelColor(this.getHandle, item, red, green, blue, alpha)
+        LeaderboardSetItemLabelColor(
+            this.getHandle,
+            Math.round(item),
+            Math.round(red),
+            Math.round(green),
+            Math.round(blue),
+            Math.round(alpha)
+        )
         return this
     }
 
@@ -204,15 +225,22 @@ export class LeaderBoard extends Handle<leaderboard> {
         blue: integer,
         alpha: integer
     ) {
-        LeaderboardSetItemValueColor(this.getHandle, item, red, green, blue, alpha)
+        LeaderboardSetItemValueColor(
+            this.getHandle,
+            Math.round(item),
+            Math.round(red),
+            Math.round(green),
+            Math.round(blue),
+            Math.round(alpha)
+        )
         return this
     }
 
-    public static fromHandle(handle: leaderboard): Leaderboard {
+    public static fromHandle(handle: leaderboard): LeaderBoard {
         return this.getObject(handle)
     }
 
-    public static fromObject(object: Leaderboard): leaderboard {
+    public static fromObject(object: LeaderBoard): leaderboard {
         return this.getHandle(object)
     }
 }

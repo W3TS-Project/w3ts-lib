@@ -163,13 +163,13 @@ export class Ability extends Handle<ability> {
 
     public setField(whichField: AbilityFieldType, value: Primitive) {
         if (whichField instanceof AbilityBooleanField && typeof value === 'boolean') {
-            this.setBooleanField(whichField, value)
+            return this.setBooleanField(whichField, value)
         } else if (whichField instanceof AbilityIntegerField && typeof value === 'number') {
-            this.setIntegerField(whichField, value)
+            return this.setIntegerField(whichField, value)
         } else if (whichField instanceof AbilityRealField && typeof value === 'number') {
-            this.setRealField(whichField, value)
+            return this.setRealField(whichField, value)
         } else if (whichField instanceof AbilityStringField && typeof value === 'string') {
-            this.setStringField(whichField, value)
+            return this.setStringField(whichField, value)
         } else {
             error('Неверные аргументы вызова метода setField объекта класса Ability', 2)
         }

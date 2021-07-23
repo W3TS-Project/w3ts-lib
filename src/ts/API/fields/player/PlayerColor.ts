@@ -10,4 +10,12 @@ export class PlayerColor extends Field<playercolor> {
         id = Math.round(id)
         super(ConvertPlayerColor(id), id)
     }
+
+    public static fromHandle(handle: playercolor): PlayerColor {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: PlayerColor): playercolor {
+        return this.getHandle(object)
+    }
 }

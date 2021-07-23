@@ -3,9 +3,15 @@
 
 import { MapPlayer } from "./MapPlayer"
 import { Widget } from "./Widget"
-import { code, codeboolexpr, formatCC, integer, Position, RawCode, real } from "../Utils"
 import { Rectangle } from "./Rectangle"
 import { Ability } from "./Ability"
+import { RawCode } from "../RawCode"
+import { Position } from "../Package"
+import { ItemType } from "../API/fields/item/ItemType"
+import { ItemBooleanField } from "../API/fields/item/ItemBooleanField"
+import { ItemIntegerField } from "../API/fields/item/ItemIntegerField"
+import { ItemRealField } from "../API/fields/item/ItemRealField"
+import { ItemStringField } from "../API/fields/item/ItemStringField"
 
 declare function BlzCreateItemWithSkin(itemid: integer, x: real, y: real, skinId: integer): item
 declare function CreateItem(itemid: integer, x: real, y: real): item
@@ -27,9 +33,6 @@ declare function IsItemOwned(whichItem: item): boolean
 declare function IsItemPowerup(whichItem: item): boolean
 declare function IsItemSellable(whichItem: item): boolean
 declare function IsItemPawnable(whichItem: item): boolean
-declare function IsItemIdPowerup(itemId: integer): boolean
-declare function IsItemIdSellable(itemId: integer): boolean
-declare function IsItemIdPawnable(itemId: integer): boolean
 declare function EnumItemsInRect(r: rect, filter: boolexpr | null, actionFunc: code | null): void
 declare function GetItemLevel(whichItem: item): integer
 declare function GetItemType(whichItem: item): itemtype
@@ -73,14 +76,14 @@ declare function BlzItemRemoveAbility(whichItem: item, abilCode: integer): boole
 declare function GetFilterItem(): item
 declare function GetEnumItem(): item
 
-export class Item extends Widget {
-    public readonly handle!: item
+export type ItemFieldType = ItemBooleanField | ItemIntegerField | ItemRealField | ItemStringField
 
-    public constructor(itemId: integer, x: real, y: real, skinId?: integer) {
+export class Item extends Widget {
+    public constructor(itemId: RawCode, x: real, y: real, skinId?: RawCode) {
         if (skinId) {
-            super(BlzCreateItemWithSkin(itemId, x, y, skinId))
+            super(BlzCreateItemWithSkin(itemId.getId(), x, y, skinId.getId()))
         } else {
-            super(CreateItem(itemId, x, y))
+            super(CreateItem(itemId.getId(), x, y))
         }
     }
 
@@ -93,15 +96,19 @@ export class Item extends Widget {
         return MapPlayer.fromHandle(GetItemPlayer(this.getHandle))
     }
 
-    public get typeId(): integer {
+    public getTypeId(): integer {
         return GetItemTypeId(this.getHandle)
     }
 
-    public get x(): real {
+    public getRawCode(): RawCode {
+        return new RawCode(this.getTypeId())
+    }
+
+    public getX(): real {
         return GetItemX(this.getHandle)
     }
 
-    public get y(): real {
+    public getY(): real {
         return GetItemY(this.getHandle)
     }
 
@@ -110,16 +117,16 @@ export class Item extends Widget {
         return this
     }
 
-    public set x(x: real) {
+    public setX(x: real) {
         this.setCoords(x, this.y)
     }
 
-    public set y(y: real) {
+    public setY(y: real) {
         this.setCoords(this.x, y)
     }
 
     public setPos(pos: Position) {
-        return this.setCoords(pos.x, pos.y)
+        return this.setCoords(pos.getX(), pos.getY())
     }
 
     public setDropOnDeath(flag: boolean) {
@@ -127,17 +134,9 @@ export class Item extends Widget {
         return this
     }
 
-    public set dropOnDeath(flag: boolean) {
-        this.setDropOnDeath(flag)
-    }
-
     public setDroppable(flag: boolean) {
         SetItemDroppable(this.getHandle, flag)
         return this
-    }
-
-    public set droppable(flag: boolean) {
-        this.setDroppable(flag)
     }
 
     public setPawnable(flag: boolean) {
@@ -145,28 +144,26 @@ export class Item extends Widget {
         return this
     }
 
-    public set pawnable(flag: boolean) {
-        this.setPawnable(flag)
-    }
-
     public setPlayer(whichPlayer: MapPlayer, changeColor: boolean) {
         SetItemPlayer(this.getHandle, whichPlayer.getHandle, changeColor)
         return this
     }
 
-    public set invulnerable(flag: boolean) {
+    public setInvulnerable(flag: boolean) {
         SetItemInvulnerable(this.getHandle, flag)
+        return this
     }
 
-    public get invulnerable(): boolean {
+    public isInvulnerable(): boolean {
         return IsItemInvulnerable(this.getHandle)
     }
 
-    public set visible(show: boolean) {
+    public setVisible(show: boolean) {
         SetItemVisible(this.getHandle, show)
+        return this
     }
 
-    public get visible(): boolean {
+    public isVisible(): boolean {
         return IsItemVisible(this.getHandle)
     }
 
@@ -186,18 +183,6 @@ export class Item extends Widget {
         return IsItemPawnable(this.getHandle)
     }
 
-    public static isPowerup(itemId: RawCode): boolean {
-        return IsItemIdPowerup(formatCC(itemId))
-    }
-
-    public static isSellable(itemId: RawCode): boolean {
-        return IsItemIdSellable(formatCC(itemId))
-    }
-
-    public static isPawnable(itemId: RawCode): boolean {
-        return IsItemIdPawnable(formatCC(itemId))
-    }
-
     public static enumInRect(r: Rectangle, filterFunc: codeboolexpr, actionFunc: code) {
         const filter = Condition(filterFunc)
         EnumItemsInRect(r.getHandle, filter, actionFunc)
@@ -209,103 +194,130 @@ export class Item extends Widget {
         return GetItemLevel(this.getHandle)
     }
 
-    public get type(): itemtype {
-        return GetItemType(this.getHandle)
+    public getType(): ItemType {
+        return ItemType.fromHandle(GetItemType(this.getHandle))
     }
 
-    public set dropID(unitId: RawCode) {
-        SetItemDropID(this.getHandle, formatCC(unitId))
-    }
-
-    public setDropID(unitId: number) {
-        SetItemDropID(this.getHandle, unitId)
+    public setDropID(unitId: rawcode) {
+        SetItemDropID(this.getHandle, RawCode.toId(unitId))
         return this
     }
 
-    public set name(value: string) {
-        BlzSetItemName(this.getHandle, value)
+    public setDropCode(unitCode: RawCode) {
+        SetItemDropID(this.getHandle, unitCode.getId())
+        return this
     }
 
-    public get name(): string {
+    public setName(value: string) {
+        BlzSetItemName(this.getHandle, value)
+        return this
+    }
+
+    public getName(): string {
         return GetItemName(this.getHandle)
     }
 
-    public get charges(): integer {
+    public getCharges(): integer {
         return GetItemCharges(this.getHandle)
     }
 
-    public set charges(value: integer) {
-        SetItemCharges(this.getHandle, value)
+    public setCharges(value: integer) {
+        SetItemCharges(this.getHandle, Math.round(value))
+        return this
     }
 
-    public get userData(): integer {
+    public getUserData(): integer {
         return GetItemUserData(this.getHandle)
     }
 
-    public set userData(data: integer) {
-        SetItemUserData(this.getHandle, data)
+    public setUserData(data: integer) {
+        SetItemUserData(this.getHandle, Math.round(data))
+        return this
     }
 
-    public getByIndexAbility(index: integer) {
-        return Ability.fromHandle(BlzGetItemAbilityByIndex(this.getHandle, index))
+    public getAbilityByIndex(index: integer) {
+        return Ability.fromHandle(BlzGetItemAbilityByIndex(this.getHandle, Math.round(index)))
     }
 
-    public getAbility(abilCode: RawCode) {
-        return Ability.fromHandle(BlzGetItemAbility(this.getHandle, formatCC(abilCode)))
+    public getAbilityByCode(abilCode: RawCode) {
+        return Ability.fromHandle(BlzGetItemAbility(this.getHandle, abilCode.getId()))
     }
 
     public addAbility(abilCode: RawCode): boolean {
-        return BlzItemAddAbility(this.getHandle, formatCC(abilCode))
+        return BlzItemAddAbility(this.getHandle, abilCode.getId())
     }
 
-    public get skin(): integer {
-        return BlzGetItemSkin(this.getHandle)
+    public getSkin(): RawCode {
+        return new RawCode(BlzGetItemSkin(this.getHandle))
     }
 
-    public set skin(skinId: integer) {
-        BlzSetItemSkin(this.getHandle, skinId)
+    public setSkin(skinCode: RawCode) {
+        BlzSetItemSkin(this.getHandle, skinCode.getId())
+        return this
     }
 
-    public getField(
-        field: itembooleanfield | itemintegerfield | itemrealfield | itemstringfield
-    ): boolean | integer | real | string {
-        const fieldType = field.toString().substr(0, field.toString().indexOf(":"))
+    public getBooleanField(field: ItemBooleanField) {
+        return BlzGetItemBooleanField(this.getHandle, field.getHandle)
+    }
 
-        switch (fieldType) {
-            case "unitbooleanfield":
-                return BlzGetItemBooleanField(this.getHandle, field as itembooleanfield)
-            case "unitintegerfield":
-                return BlzGetItemIntegerField(this.getHandle, field as itemintegerfield)
-            case "unitrealfield":
-                return BlzGetItemRealField(this.getHandle, field as itemrealfield)
-            case "unitstringfield":
-                return BlzGetItemStringField(this.getHandle, field as itemstringfield)
-            default:
-                return 0
+    public getIntegerField(field: ItemIntegerField) {
+        return BlzGetItemIntegerField(this.getHandle, field.getHandle)
+    }
+
+    public getRealField(field: ItemRealField) {
+        return BlzGetItemRealField(this.getHandle, field.getHandle)
+    }
+
+    public getStringField(field: ItemStringField) {
+        return BlzGetItemStringField(this.getHandle, field.getHandle)
+    }
+
+    public getField(field: ItemFieldType): Primitive | undefined {
+        let fieldValue: Primitive | undefined
+        if (field instanceof ItemBooleanField) {
+            fieldValue = this.getBooleanField(field)
+        } else if (field instanceof ItemIntegerField) {
+            fieldValue = this.getIntegerField(field)
+        } else if (field instanceof ItemRealField) {
+            fieldValue = this.getRealField(field)
+        } else if (field instanceof ItemStringField) {
+            fieldValue = this.getStringField(field)
         }
+        return fieldValue
     }
 
-    public setField(
-        field: itembooleanfield | itemintegerfield | itemrealfield | itemstringfield,
-        value: boolean | number | string
-    ) {
-        const fieldType = field.toString().substr(0, field.toString().indexOf(":"))
+    public setBooleanField(field: ItemBooleanField, value: boolean) {
+        return BlzSetItemBooleanField(this.getHandle, field.getHandle, value)
+    }
 
-        if (fieldType === "unitbooleanfield" && typeof value === "boolean") {
-            return BlzSetItemBooleanField(this.getHandle, field as itembooleanfield, value)
-        } else if (fieldType === "unitintegerfield" && typeof value === "number") {
-            return BlzSetItemIntegerField(this.getHandle, field as itemintegerfield, value)
-        } else if (fieldType === "unitrealfield" && typeof value === "number") {
-            return BlzSetItemRealField(this.getHandle, field as itemrealfield, value)
-        } else if (fieldType === "unitstringfield" && typeof value === "string") {
-            return BlzSetItemStringField(this.getHandle, field as itemstringfield, value)
+    public setIntegerField(field: ItemIntegerField, value: integer) {
+        return BlzSetItemIntegerField(this.getHandle, field.getHandle, Math.round(value))
+    }
+
+    public setRealField(field: ItemRealField, value: real) {
+        return BlzSetItemRealField(this.getHandle, field.getHandle, value)
+    }
+
+    public setStringField(field: ItemStringField, value: string) {
+        return BlzSetItemStringField(this.getHandle, field.getHandle, value)
+    }
+
+    public setField(field: ItemFieldType, value: Primitive) {
+        if (field instanceof ItemBooleanField && typeof value === "boolean") {
+            this.setBooleanField(field, value)
+        } else if (field instanceof ItemIntegerField && typeof value === "number") {
+            this.setIntegerField(field, value)
+        } else if (field instanceof ItemRealField && typeof value === "number") {
+            this.setRealField(field, value)
+        } else if (field instanceof ItemStringField && typeof value === "string") {
+            this.setStringField(field, value)
+        } else {
+            error("Неверные аргументы вызова метода setField объекта класса Item", 2)
         }
-
-        return false
     }
 
     public removeAbility(abilCode: RawCode): boolean {
-        return BlzItemRemoveAbility(this.getHandle, formatCC(abilCode))
+        return BlzItemRemoveAbility(this.getHandle, abilCode.getId())
     }
 
     public static fromHandle(handle: item): Item {

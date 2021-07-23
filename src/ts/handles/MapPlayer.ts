@@ -1,10 +1,14 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { formatCC, integer, RawCode, real } from "../Utils"
+import { MapControl } from "../API/fields/mapSetup/MapControl"
+import { Race } from "../API/fields/other/Race"
+import { PlayerColor } from "../API/fields/player/PlayerColor"
+import { PlayerSlotState } from "../API/fields/player/PlayerSlotState"
+import { RawCode } from "../RawCode"
 import { Force } from "./Force"
 import { Handle } from "./Handle"
-import { Leaderboard } from "./LeaderBoard"
+import { LeaderBoard } from "./LeaderBoard"
 import { MapLocation } from "./MapLocation"
 import { Point } from "./Point"
 
@@ -138,74 +142,79 @@ declare function GetEnumPlayer(): player
 
 export class MapPlayer extends Handle<player> {
     private constructor(index: integer) {
-        super(Player(index))
+        super(Player(Math.round(index)))
     }
 
-    public set color(color: playercolor) {
-        SetPlayerColor(this.getHandle, color)
+    public setColor(color: PlayerColor) {
+        SetPlayerColor(this.getHandle, color.getHandle)
     }
 
-    public get color(): playercolor {
-        return GetPlayerColor(this.getHandle)
+    public getColor(): PlayerColor {
+        return PlayerColor.fromHandle(GetPlayerColor(this.getHandle))
     }
 
-    public get controller(): mapcontrol {
-        return GetPlayerController(this.getHandle)
+    public getController(): MapControl {
+        return MapControl.fromHandle(GetPlayerController(this.getHandle))
     }
 
-    public get handicap(): real {
+    public getHandicap(): real {
         return GetPlayerHandicap(this.getHandle)
     }
 
-    public set handicap(handicap: number) {
+    public setHandicap(handicap: real) {
         SetPlayerHandicap(this.getHandle, handicap)
+        return this
     }
 
-    public get handicapReviveTime(): real {
+    public getHandicapReviveTime(): real {
         return GetPlayerHandicapReviveTime(this.getHandle)
     }
 
-    public set handicapReviveTime(handicap: real) {
+    public setHandicapReviveTime(handicap: real) {
         SetPlayerHandicapReviveTime(this.getHandle, handicap)
+        return this
     }
 
-    public get handicapXp(): real {
+    public getHandicapXp(): real {
         return GetPlayerHandicapXP(this.getHandle)
     }
 
-    public set handicapXp(handicap: number) {
+    public setHandicapXp(handicap: real) {
         SetPlayerHandicapXP(this.getHandle, handicap)
+        return this
     }
 
-    public get handicapDamage(): real {
+    public getHandicapDamage(): real {
         return GetPlayerHandicapDamage(this.getHandle)
     }
 
-    public set handicapDamage(handicap: real) {
+    public setHandicapDamage(handicap: real) {
         SetPlayerHandicapDamage(this.getHandle, handicap)
+        return this
     }
 
-    public get id(): integer {
+    public getId(): integer {
         return GetPlayerId(this.getHandle)
     }
 
-    public get name(): string {
+    public getName(): string {
         return GetPlayerName(this.getHandle)
     }
 
-    public set name(value: string) {
+    public setName(value: string) {
         SetPlayerName(this.getHandle, value)
+        return this
     }
 
-    public get race(): race {
-        return GetPlayerRace(this.getHandle)
+    public getRace(): Race {
+        return Race.fromHandle(GetPlayerRace(this.getHandle))
     }
 
-    public get slotState(): playerslotstate {
-        return GetPlayerSlotState(this.getHandle)
+    public getSlotState(): PlayerSlotState {
+        return PlayerSlotState.fromHandle(GetPlayerSlotState(this.getHandle))
     }
 
-    public get startLocation(): integer {
+    public getStartLocation(): integer {
         return GetPlayerStartLocation(this.getHandle)
     }
 
@@ -233,13 +242,13 @@ export class MapPlayer extends Handle<player> {
         return BlzGetPlayerTownHallCount(this.getHandle)
     }
 
-    public addTechResearched(techId: RawCode, levels: integer) {
-        AddPlayerTechResearched(this.getHandle, formatCC(techId), levels)
+    public addTechResearched(techCode: RawCode, levels: integer) {
+        AddPlayerTechResearched(this.getHandle, techCode.getId(), levels)
         return this
     }
 
-    public decTechResearched(techId: RawCode, levels: integer) {
-        BlzDecPlayerTechResearched(this.getHandle, formatCC(techId), levels)
+    public decTechResearched(techCode: RawCode, levels: integer) {
+        BlzDecPlayerTechResearched(this.getHandle, techCode.getId(), levels)
         return this
     }
 
@@ -423,12 +432,12 @@ export class MapPlayer extends Handle<player> {
         return this
     }
 
-    setLeaderboard(lb: Leaderboard) {
+    setLeaderboard(lb: LeaderBoard) {
         PlayerSetLeaderboard(this.getHandle, lb.getHandle)
         return this
     }
 
-    getleaderboard(toPlayer: MapPlayer): Leaderboard {
+    getleaderboard(toPlayer: MapPlayer): LeaderBoard {
         return Leaderboard.fromHandle(PlayerGetLeaderboard(toPlayer.getHandle))
     }
 

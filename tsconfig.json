@@ -16,7 +16,7 @@
             "./src/ts/decl",
             "./src/war3map"
         ],
-        // "noImplicitAny": true,
+        // "noImplicitAny": true
         "noImplicitThis": true,
         "noImplicitReturns": true,
         "alwaysStrict": true,

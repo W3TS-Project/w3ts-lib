@@ -1,7 +1,6 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { real } from "../Utils"
 import { Handle } from "./Handle"
 
 declare function Location(x: real, y: real): location
@@ -11,9 +10,8 @@ declare function GetLocationX(whichLocation: location): real
 declare function GetLocationY(whichLocation: location): real
 declare function GetLocationZ(whichLocation: location): real
 
-
 export class MapLocation extends Handle<location> {
-    public constructor(x: number, y: number, z?: number) {
+    public constructor(x: real, y: real, z?: real) {
         super(Location(x, y))
     }
 
@@ -27,50 +25,30 @@ export class MapLocation extends Handle<location> {
         return this
     }
 
-    public set x(value: real) {
-        this.move(value, this.y)
-    }
-
     public setX(newX: real) {
-        this.x = newX
+        this.move(newX, this.getY())
         return this
-    }
-
-    public get x(): real {
-        return GetLocationX(this.getHandle)
     }
 
     public getX(): real {
-        return this.x
-    }
-
-    public set y(value: real) {
-        this.move(this.x, value)
+        return GetLocationX(this.getHandle)
     }
 
     public setY(newY: real) {
-        this.y = newY
+        this.move(this.getX(), newY)
         return this
     }
 
-    public get y(): real {
-        return GetLocationY(this.getHandle)
-    }
-
     public getY(): real {
-        return this.y
+        return GetLocationY(this.getHandle)
     }
 
     /**
      * This function is asynchronous. The values it returns are not guaranteed synchronous between each player.
      * If you attempt to use it in a synchronous manner, it may cause a desync.
      */
-    public get z(): real {
-        return GetLocationZ(this.getHandle)
-    }
-
     public getZ(): real {
-        return this.z
+        return GetLocationZ(this.getHandle)
     }
 
     public static fromHandle(handle: location): MapLocation {

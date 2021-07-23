@@ -10,4 +10,12 @@ export class StartLocPrio extends Field<startlocprio> {
         id = Math.round(id)
         super(ConvertStartLocPrio(id), id)
     }
+
+    public static fromHandle(handle: startlocprio): StartLocPrio {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: StartLocPrio): startlocprio {
+        return this.getHandle(object)
+    }
 }

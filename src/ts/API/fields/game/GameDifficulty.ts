@@ -14,4 +14,8 @@ export class GameDifficulty extends Field<gamedifficulty> {
     public static fromHandle(handle: gamedifficulty): GameDifficulty {
         return this.getObject(handle)
     }
+
+    public static fromObject(object: GameDifficulty): gamedifficulty {
+        return this.getHandle(object)
+    }
 }

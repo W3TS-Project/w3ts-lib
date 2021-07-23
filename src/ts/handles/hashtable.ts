@@ -1,5 +1,5 @@
-// /** @noSelfInFile **/
-// //@ts-nocheck
+/** @noSelfInFile **/
+//@ts-nocheck
 
 import { FogState } from "../API/fields/camera/FogState"
 import { DialogEvent } from "../API/fields/events/DialogEvent"
@@ -10,6 +10,8 @@ import { PlayerEvent } from "../API/fields/events/PlayerEvent"
 import { PlayerUnitEvent } from "../API/fields/events/PlayerUnitEvent"
 import { UnitEvent } from "../API/fields/events/UnitEvent"
 import { WidgetEvent } from "../API/fields/events/WidgetEvent"
+import { Events } from "../fields/events/Events"
+import { ObjectOptions } from "../ObjectOptions"
 import { Ability } from "./Ability"
 import { Destructable } from "./Destructable"
 import { Dialog } from "./Dialog"
@@ -942,8 +944,20 @@ export class HashTable extends Handle<hashtable> {
         return LoadTriggerActionHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
     }
 
-    public loadTriggerEvent(parentKey: integer, childKey: integer): event {
-        return LoadTriggerEventHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+    public loadTriggerEvent(parentKey: integer, childKey: integer): EventType | undefined {
+        const handle = LoadTriggerEventHandle(
+            this.getHandle,
+            Math.round(parentKey),
+            Math.round(childKey)
+        )
+        for (const events of ObjectOptions.values(Events)) {
+            for (const event of ObjectOptions.values(events)) {
+                if (event instanceof Event && Event.getHandle(event) === handle) {
+                    return event
+                }
+            }
+        }
+        error("Не удалось найти подходящий объект Event", 2)
     }
 
     public loadForce(parentKey: integer, childKey: integer): Force {

@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { Position, real } from "../Utils"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 
 declare function AddLightning(
@@ -79,7 +79,16 @@ export class Lightning extends Handle<lightning> {
     }
 
     public static addPos(codeName: string, checkVisibility: boolean, p1: Position, p2: Position) {
-        return this.addExCoords(codeName, checkVisibility, p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
+        return this.addExCoords(
+            codeName,
+            checkVisibility,
+            p1.getX(),
+            p1.getY(),
+            p1.getZ(),
+            p2.getX(),
+            p2.getY(),
+            p2.getZ()
+        )
     }
 
     public destroy(): boolean {
@@ -103,22 +112,22 @@ export class Lightning extends Handle<lightning> {
     }
 
     public movePos(checkVisibility: boolean, p1: Position, p2: Position): boolean {
-        return this.moveExCoords(checkVisibility, p1.x, p1.y, p1.z, p2.x, p2.y, p2.z)
+        return this.moveExCoords(checkVisibility, p1.getX(), p1.getY(), p1.getZ(), p2.getX(), p2.getY(), p2.getZ())
     }
 
-    public get colorAlpha(): real {
+    public getColorAlpha(): real {
         return GetLightningColorA(this.getHandle)
     }
 
-    public get colorRed(): real {
+    public getColorRed(): real {
         return GetLightningColorR(this.getHandle)
     }
 
-    public get colorGreen(): real {
+    public getColorGreen(): real {
         return GetLightningColorG(this.getHandle)
     }
 
-    public get colorBlue(): real {
+    public getColorBlue(): real {
         return GetLightningColorB(this.getHandle)
     }
 

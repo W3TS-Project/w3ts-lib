@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, Position, real } from "../Utils"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 
 declare function CreateImage(
@@ -108,21 +108,22 @@ export class Image extends Handle<image> {
     ) {
         return this.coordsCreate(
             file,
-            size.x,
-            size.y,
-            size.z,
-            pos.x,
-            pos.y,
-            pos.z,
-            originPos.x,
-            originPos.y,
-            originPos.z,
+            size.getX(),
+            size.getY(),
+            size.getZ(),
+            pos.getX(),
+            pos.getY(),
+            pos.getZ(),
+            originPos.getX(),
+            originPos.getY(),
+            originPos.getZ(),
             imageType
         )
     }
 
     public destroy() {
         DestroyImage(this.getHandle)
+        return this
     }
 
     public show(flag: boolean) {
@@ -141,15 +142,20 @@ export class Image extends Handle<image> {
     }
 
     public setPos(pos: Position) {
-        return this.setCoords(pos.x, pos.y, pos.z)
+        return this.setCoords(pos.getX(), pos.getY(), pos.getZ())
     }
 
     public setColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        SetImageColor(this.getHandle, red, green, blue, alpha)
+        SetImageColor(this.getHandle, Math.round(red), Math.round(green), Math.round(blue), Math.round(alpha))
         return this
     }
 
     public setRender(flag: boolean) {
+        SetImageRender(this.getHandle, flag)
+        return this
+    }
+
+    public setRenderAlways(flag: boolean) {
         SetImageRenderAlways(this.getHandle, flag)
         return this
     }

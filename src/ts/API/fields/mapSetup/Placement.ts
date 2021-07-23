@@ -10,4 +10,12 @@ export class Placement extends Field<placement> {
         id = Math.round(id)
         super(ConvertPlacement(id), id)
     }
+
+    public static fromHandle(handle: placement): Placement {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: Placement): placement {
+        return this.getHandle(object)
+    }
 }

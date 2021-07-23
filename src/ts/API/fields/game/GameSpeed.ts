@@ -10,4 +10,12 @@ export class GameSpeed extends Field<gamespeed> {
         id = Math.round(id)
         super(ConvertGameSpeed(id), id)
     }
+
+    public static fromHandle(handle: gamespeed): GameSpeed {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: GameSpeed): gamespeed {
+        return this.getHandle(object)
+    }
 }

@@ -10,4 +10,12 @@ export class MapControl extends Field<mapcontrol> {
         id = Math.round(id)
         super(ConvertMapControl(id), id)
     }
+
+    public static fromHandle(handle: mapcontrol): MapControl {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: MapControl): mapcontrol {
+        return this.getHandle(object)
+    }
 }

@@ -10,4 +10,12 @@ export class PlayerSlotState extends Field<playerslotstate> {
         id = Math.round(id)
         super(ConvertPlayerSlotState(id), id)
     }
+
+    public static fromHandle(handle: playerslotstate): PlayerSlotState {
+        return this.getObject(handle)
+    }
+
+    public static fromObject(object: PlayerSlotState): playerslotstate {
+        return this.getHandle(object)
+    }
 }
