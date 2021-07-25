@@ -1,7 +1,6 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../Utils"
 import { Handle } from "./Handle"
 
 declare function CreateMultiboard(): multiboard
@@ -57,7 +56,6 @@ declare function MultiboardSetItemValueColor(
 ): void
 declare function MultiboardSetItemWidth(mbi: multiboarditem, width: real): void
 declare function MultiboardSetItemIcon(mbi: multiboarditem, iconFileName: string): void
-
 declare function MultiboardSuppressDisplay(flag: boolean): void
 
 export class MultiBoard extends Handle<multiboard> {
@@ -67,18 +65,21 @@ export class MultiBoard extends Handle<multiboard> {
 
     public destroy() {
         DestroyMultiboard(this.getHandle)
+        return this
     }
 
-    public set display(show: boolean) {
+    public display(show: boolean) {
         MultiboardDisplay(this.getHandle, show)
+        return this
     }
 
     public isDisplayed(): boolean {
         return IsMultiboardDisplayed(this.getHandle)
     }
 
-    public set minimize(minimize: boolean) {
+    public minimize(minimize: boolean) {
         MultiboardMinimize(this.getHandle, minimize)
+        return this
     }
 
     public isMinimized(): boolean {
@@ -90,33 +91,36 @@ export class MultiBoard extends Handle<multiboard> {
         return this
     }
 
-    public set titleText(label: string) {
+    public setTitleText(label: string) {
         MultiboardSetTitleText(this.getHandle, label)
+        return this
     }
 
-    public get titleText(): string {
+    public getTitleText(): string {
         return MultiboardGetTitleText(this.getHandle)
     }
 
     public setTitleTextColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        MultiboardSetTitleTextColor(this.getHandle, red, green, blue, alpha)
+        MultiboardSetTitleTextColor(this.getHandle, Math.floor(red), Math.floor(green), Math.floor(blue), Math.floor(alpha))
         return this
     }
 
-    public get rowCount(): integer {
+    public getRowCount(): integer {
         return MultiboardGetRowCount(this.getHandle)
     }
 
-    public get columnCount(): integer {
+    public getColumnCount(): integer {
         return MultiboardGetColumnCount(this.getHandle)
     }
 
-    public set rowCount(count: integer) {
+    public setRowCount(count: integer) {
         MultiboardSetRowCount(this.getHandle, count)
+        return this
     }
 
-    public set columnCount(count: integer) {
+    public setColumnCount(count: integer) {
         MultiboardSetColumnCount(this.getHandle, count)
+        return this
     }
 
     public setItemsStyle(showValues: boolean, showIcons: boolean) {
@@ -124,32 +128,35 @@ export class MultiBoard extends Handle<multiboard> {
         return this
     }
 
-    public set itemsValue(value: string) {
+    public setItemsValue(value: string) {
         MultiboardSetItemsValue(this.getHandle, value)
-    }
-
-    public setItemsValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        MultiboardSetItemsValueColor(this.getHandle, red, green, blue, alpha)
         return this
     }
 
-    public set itemsWidth(width: real) {
-        MultiboardSetItemsWidth(this.getHandle, width)
+    public setItemsValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
+        MultiboardSetItemsValueColor(this.getHandle, Math.floor(red), Math.floor(green), Math.floor(blue), Math.floor(alpha))
+        return this
     }
 
-    public set itemsIcon(iconPath: string) {
+    public setItemsWidth(width: real) {
+        MultiboardSetItemsWidth(this.getHandle, width)
+        return this
+    }
+
+    public setItemsIcon(iconPath: string) {
         MultiboardSetItemsIcon(this.getHandle, iconPath)
+        return this
     }
 
     public getItem(row: integer, column: integer): MultiboardItem {
-        return new MultiboardItem(MultiboardGetItem(this.getHandle, row, column))
+        return new MultiboardItem(MultiboardGetItem(this.getHandle, Math.floor(row), Math.floor(column)))
     }
 
-    public static fromHandle(handle: multiboard): Multiboard {
+    public static fromHandle(handle: multiboard): MultiBoard {
         return this.getObject(handle)
     }
 
-    public static fromObject(object: Multiboard): multiboard {
+    public static fromObject(object: MultiBoard): multiboard {
         return this.getHandle(object)
     }
 }
@@ -165,21 +172,24 @@ export class MultiboardItem extends Handle<multiboarditem> {
         return this
     }
 
-    public set value(val: string) {
+    public setValue(val: string) {
         MultiboardSetItemValue(this.getHandle, val)
-    }
-
-    public setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        MultiboardSetItemValueColor(this.getHandle, red, green, blue, alpha)
         return this
     }
 
-    public set width(width: real) {
-        MultiboardSetItemWidth(this.getHandle, width)
+    public setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
+        MultiboardSetItemValueColor(this.getHandle, Math.floor(red), Math.floor(green), Math.floor(blue), Math.floor(alpha))
+        return this
     }
 
-    public set icon(iconFileName: string) {
+    public setWidth(width: real) {
+        MultiboardSetItemWidth(this.getHandle, width)
+        return this
+    }
+
+    public setIcon(iconFileName: string) {
         MultiboardSetItemIcon(this.getHandle, iconFileName)
+        return this
     }
 
     public static fromhandle(handle: multiboarditem): MultiboardItem {

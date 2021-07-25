@@ -190,7 +190,7 @@ export abstract class Camera {
     }
 
     public static getMargin(whichMargin: integer): real {
-        return GetCameraMargin(Math.round(whichMargin))
+        return GetCameraMargin(Math.floor(whichMargin))
     }
 
     public static getBoundMinX(): real {

@@ -10,7 +10,7 @@ declare function GetGameTypeSelected(): gametype
 
 export class GameType extends Field<gametype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertGameType(id), id)
     }
 

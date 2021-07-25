@@ -2,15 +2,22 @@
 //@ts-nocheck
 
 import { MapControl } from "../API/fields/mapSetup/MapControl"
+import { RacePref } from "../API/fields/mapSetup/RacePref"
 import { Race } from "../API/fields/other/Race"
+import { AllianceType } from "../API/fields/player/AllianceType"
 import { PlayerColor } from "../API/fields/player/PlayerColor"
+import { PlayerGameResult } from "../API/fields/player/PlayerGameResult"
+import { PlayerScore } from "../API/fields/player/PlayerScore"
 import { PlayerSlotState } from "../API/fields/player/PlayerSlotState"
-import { RawCode } from "../RawCode"
+import { PlayerState } from "../API/fields/player/PlayerState"
+import { StartLocation } from "../API/StartLocation"
+import { Position } from "../Package"
+import { AbilityRawCode } from "./rawCode/AbilityRawCode"
 import { Force } from "./Force"
 import { Handle } from "./Handle"
 import { LeaderBoard } from "./LeaderBoard"
 import { MapLocation } from "./MapLocation"
-import { Point } from "./Point"
+import { TechRawCode } from "./rawCode/TechRawCode"
 
 declare function Player(number: integer): player
 declare function GetLocalPlayer(): player
@@ -123,9 +130,6 @@ declare function GetPlayerTaxRate(
 ): real
 declare function IsPlayerRacePrefSet(whichPlayer: player, pref: racepreference): boolean
 declare function GetPlayerName(whichPlayer: player): string
-declare function GetStartLocationX(whichStartLocation: integer): real
-declare function GetStartLocationY(whichStartLocation: integer): real
-declare function GetStartLocationLoc(whichStartLocation: integer): location
 declare function BlzGetPlayerTownHallCount(whichPlayer: player): integer
 declare function BlzDecPlayerTechResearched(
     whichPlayer: player,
@@ -142,7 +146,7 @@ declare function GetEnumPlayer(): player
 
 export class MapPlayer extends Handle<player> {
     private constructor(index: integer) {
-        super(Player(Math.round(index)))
+        super(Player(Math.floor(index)))
     }
 
     public setColor(color: PlayerColor) {
@@ -214,88 +218,79 @@ export class MapPlayer extends Handle<player> {
         return PlayerSlotState.fromHandle(GetPlayerSlotState(this.getHandle))
     }
 
-    public getStartLocation(): integer {
-        return GetPlayerStartLocation(this.getHandle)
+    public getStartLocation(): StartLocation {
+        return StartLocation.arr[GetPlayerStartLocation(this.getHandle)]
     }
 
-    public get startLocationX(): real {
-        return GetStartLocationX(this.startLocation)
-    }
-
-    public get startLocationY(): real {
-        return GetStartLocationY(this.startLocation)
-    }
-
-    public get startLocationLoc(): MapLocation {
-        return MapLocation.fromHandle(GetStartLocationLoc(this.startLocation))
-    }
-
-    public get startLocationPoint(): Point {
-        return new Point(this.startLocationX, this.startLocationY)
-    }
-
-    public get team(): integer {
+    public getTeam(): integer {
         return GetPlayerTeam(this.getHandle)
     }
 
-    public get townHallCount(): integer {
+    public getTownHallCount(): integer {
         return BlzGetPlayerTownHallCount(this.getHandle)
     }
 
-    public addTechResearched(techCode: RawCode, levels: integer) {
-        AddPlayerTechResearched(this.getHandle, techCode.getId(), levels)
+    public addTechResearched(techCode: TechRawCode, levels: integer) {
+        AddPlayerTechResearched(this.getHandle, techCode.getId(), Math.floor(levels))
         return this
     }
 
-    public decTechResearched(techCode: RawCode, levels: integer) {
-        BlzDecPlayerTechResearched(this.getHandle, techCode.getId(), levels)
+    public decTechResearched(techCode: TechRawCode, levels: integer) {
+        BlzDecPlayerTechResearched(this.getHandle, techCode.getId(), Math.floor(levels))
         return this
     }
 
-    // Used to store hero level data for the scorescreen
-    // before units are moved to neutral passive in melee games
+    /**
+     * Used to store hero level data for the scorescreen
+     * before units are moved to neutral passive in melee games
+     * @returns this
+     */
     public cacheHeroData() {
         CachePlayerHeroData(this.getHandle)
         return this
     }
 
-    public compareAlliance(otherPlayer: MapPlayer, whichAllianceSetting: alliancetype): boolean {
-        return GetPlayerAlliance(this.getHandle, otherPlayer.getHandle, whichAllianceSetting)
+    public isAlliance(otherPlayer: MapPlayer, whichAllianceSetting: AllianceType): boolean {
+        return GetPlayerAlliance(
+            this.getHandle,
+            otherPlayer.getHandle,
+            whichAllianceSetting.getHandle
+        )
     }
 
-    public coordsFogged(x: real, y: real): boolean {
+    public isFoggedCoords(x: real, y: real): boolean {
         return IsFoggedToPlayer(x, y, this.getHandle)
     }
 
-    public pointFogged(p: Point): boolean {
-        return this.coordsFogged(p.x, p.y)
+    public isFoggedPos(p: Position): boolean {
+        return this.isFoggedCoords(p.getX(), p.getY())
     }
 
-    public locFogged(loc: MapLocation): boolean {
+    public isFoggedLoc(loc: MapLocation): boolean {
         return IsLocationFoggedToPlayer(loc.getHandle, this.getHandle)
     }
 
-    public coordsMasked(x: real, y: real): boolean {
+    public isMaskedCoords(x: real, y: real): boolean {
         return IsMaskedToPlayer(x, y, this.getHandle)
     }
 
-    public pointMasked(p: Point): boolean {
-        return this.coordsMasked(p.x, p.y)
+    public isMaskedPos(p: Position): boolean {
+        return this.isMaskedCoords(p.getX(), p.getY())
     }
 
-    public locMasked(loc: MapLocation): boolean {
+    public isMaskedLoc(loc: MapLocation): boolean {
         return IsLocationMaskedToPlayer(loc.getHandle, this.getHandle)
     }
 
-    public coordsVisible(x: real, y: real): boolean {
+    public isVisibleCoords(x: real, y: real): boolean {
         return IsVisibleToPlayer(x, y, this.getHandle)
     }
 
-    public pointVisible(p: Point): boolean {
-        return this.coordsVisible(p.x, p.y)
+    public isVisiblePos(p: Position): boolean {
+        return this.isVisibleCoords(p.getX(), p.getY())
     }
 
-    public locVisible(loc: MapLocation): boolean {
+    public isVisibleLoc(loc: MapLocation): boolean {
         return IsLocationVisibleToPlayer(loc.getHandle, this.getHandle)
     }
 
@@ -304,39 +299,39 @@ export class MapPlayer extends Handle<player> {
         return this
     }
 
-    public getScore(whichPlayerScore: playerscore): integer {
-        return GetPlayerScore(this.getHandle, whichPlayerScore)
+    public getScore(whichPlayerScore: PlayerScore): integer {
+        return GetPlayerScore(this.getHandle, whichPlayerScore.getHandle)
     }
 
-    public getState(whichPlayerState: playerstate): integer {
-        return GetPlayerState(this.getHandle, whichPlayerState)
+    public getState(whichPlayerState: PlayerState): integer {
+        return GetPlayerState(this.getHandle, whichPlayerState.getHandle)
     }
 
     public getStructureCount(includeIncomplete: boolean): integer {
         return GetPlayerStructureCount(this.getHandle, includeIncomplete)
     }
 
-    public getTaxRate(otherPlayer: player, whichResource: playerstate): real {
-        return GetPlayerTaxRate(this.getHandle, otherPlayer, whichResource)
+    public getTaxRate(otherPlayer: MapPlayer, whichResource: PlayerState): real {
+        return GetPlayerTaxRate(this.getHandle, otherPlayer.getHandle, whichResource.getHandle)
     }
 
-    public getTechCount(techId: integer, specificonly: boolean): integer {
-        return GetPlayerTechCount(this.getHandle, techId, specificonly)
+    public getTechCount(techCode: TechRawCode, specificonly: boolean): integer {
+        return GetPlayerTechCount(this.getHandle, techCode.getId(), specificonly)
     }
 
-    public getTechMaxAllowed(techId: RawCode): integer {
-        return GetPlayerTechMaxAllowed(this.getHandle, formatCC(techId))
+    public getTechMaxAllowed(techCode: TechRawCode): integer {
+        return GetPlayerTechMaxAllowed(this.getHandle, techCode.getId())
     }
 
-    public getTechResearched(techId: RawCode, specificonly: boolean): boolean {
-        return GetPlayerTechResearched(this.getHandle, formatCC(techId), specificonly)
+    public getTechResearched(techCode: TechRawCode, specificonly: boolean): boolean {
+        return GetPlayerTechResearched(this.getHandle, techCode.getId(), specificonly)
     }
 
     public getUnitCount(includeIncomplete: boolean): integer {
         return GetPlayerUnitCount(this.getHandle, includeIncomplete)
     }
 
-    public getUnitCountByType(
+    public getTypedUnitCount(
         unitName: string,
         includeIncomplete: boolean,
         includeUpgrades: boolean
@@ -352,24 +347,25 @@ export class MapPlayer extends Handle<player> {
         return IsPlayerObserver(this.getHandle)
     }
 
-    public isPlayerAlly(otherPlayer: MapPlayer): boolean {
+    public isAlly(otherPlayer: MapPlayer): boolean {
         return IsPlayerAlly(this.getHandle, otherPlayer.getHandle)
     }
 
-    public isPlayerEnemy(otherPlayer: MapPlayer): boolean {
+    public isEnemy(otherPlayer: MapPlayer): boolean {
         return IsPlayerEnemy(this.getHandle, otherPlayer.getHandle)
     }
 
-    public isRacePrefSet(pref: racepreference): boolean {
-        return IsPlayerRacePrefSet(this.getHandle, pref)
+    public isRacePrefSet(pref: RacePref): boolean {
+        return IsPlayerRacePrefSet(this.getHandle, pref.getHandle)
     }
 
     public isSelectable(): boolean {
         return GetPlayerSelectable(this.getHandle)
     }
 
-    public remove(gameResult: playergameresult) {
-        RemovePlayer(this.getHandle, gameResult)
+    public remove(gameResult: PlayerGameResult) {
+        RemovePlayer(this.getHandle, gameResult.getHandle)
+        return this
     }
 
     public removeAllGuardPositions() {
@@ -377,13 +373,18 @@ export class MapPlayer extends Handle<player> {
         return this
     }
 
-    public setAbilityAvailable(abilId: RawCode, avail: boolean) {
-        SetPlayerAbilityAvailable(this.getHandle, formatCC(abilId), avail)
+    public setAbilityAvailable(abilCode: AbilityRawCode, avail: boolean) {
+        SetPlayerAbilityAvailable(this.getHandle, abilCode.getId(), avail)
         return this
     }
 
-    public setAlliance(otherPlayer: MapPlayer, whichAllianceSetting: alliancetype, value: boolean) {
-        SetPlayerAlliance(this.getHandle, otherPlayer.getHandle, whichAllianceSetting, value)
+    public setAlliance(otherPlayer: MapPlayer, whichAllianceSetting: AllianceType, value: boolean) {
+        SetPlayerAlliance(
+            this.getHandle,
+            otherPlayer.getHandle,
+            whichAllianceSetting.getHandle,
+            value
+        )
         return this
     }
 
@@ -392,18 +393,18 @@ export class MapPlayer extends Handle<player> {
         return this
     }
 
-    public setState(whichPlayerState: playerstate, value: integer) {
-        SetPlayerState(this.getHandle, whichPlayerState, value)
+    public setState(whichPlayerState: PlayerState, value: integer) {
+        SetPlayerState(this.getHandle, whichPlayerState.getHandle, Math.floor(value))
         return this
     }
 
-    public setTaxRate(otherPlayer: MapPlayer, whichResource: playerstate, rate: real) {
-        SetPlayerTaxRate(this.getHandle, otherPlayer.getHandle, whichResource, rate)
+    public setTaxRate(otherPlayer: MapPlayer, whichResource: PlayerState, rate: real) {
+        SetPlayerTaxRate(this.getHandle, otherPlayer.getHandle, whichResource.getHandle, rate)
         return this
     }
 
-    public setRacePreference(whichRacePreference: racepreference) {
-        SetPlayerRacePreference(this.getHandle, whichRacePreference)
+    public setRacePreference(whichRacePreference: RacePref) {
+        SetPlayerRacePreference(this.getHandle, whichRacePreference.getHandle)
         return this
     }
 
@@ -412,33 +413,33 @@ export class MapPlayer extends Handle<player> {
         return this
     }
 
-    public setController(controlType: mapcontrol) {
-        SetPlayerController(this.getHandle, controlType)
+    public setController(controlType: MapControl) {
+        SetPlayerController(this.getHandle, controlType.getHandle)
         return this
     }
 
-    public setTechMaxAllowed(techId: RawCode, maximum: integer) {
-        SetPlayerTechMaxAllowed(this.getHandle, formatCC(techId), maximum)
+    public setTechMaxAllowed(techCode: TechRawCode, maximum: integer) {
+        SetPlayerTechMaxAllowed(this.getHandle, techCode.getId(), Math.floor(maximum))
         return this
     }
 
-    public setTechResearched(techId: RawCode, setToLevel: integer) {
-        SetPlayerTechResearched(this.getHandle, formatCC(techId), setToLevel)
+    public setTechResearched(techCode: TechRawCode, setToLevel: integer) {
+        SetPlayerTechResearched(this.getHandle, techCode.getId(), Math.floor(setToLevel))
         return this
     }
 
     public setUnitsOwner(newOwner: integer) {
-        SetPlayerUnitsOwner(this.getHandle, newOwner)
+        SetPlayerUnitsOwner(this.getHandle, Math.floor(newOwner))
         return this
     }
 
-    setLeaderboard(lb: LeaderBoard) {
+    public setLeaderboard(lb: LeaderBoard) {
         PlayerSetLeaderboard(this.getHandle, lb.getHandle)
         return this
     }
 
-    getleaderboard(toPlayer: MapPlayer): LeaderBoard {
-        return Leaderboard.fromHandle(PlayerGetLeaderboard(toPlayer.getHandle))
+    public getleaderboard(toPlayer: MapPlayer): LeaderBoard {
+        return LeaderBoard.fromHandle(PlayerGetLeaderboard(toPlayer.getHandle))
     }
 
     public static fromHandle(handle: player): MapPlayer {
@@ -463,7 +464,7 @@ export class MapPlayer extends Handle<player> {
     }
 
     public static fromIndex(index: integer): MapPlayer {
-        return this.fromHandle(Player(index))
+        return this.fromHandle(Player(Math.floor(index)))
     }
 
     public static fromLocal(): MapPlayer {

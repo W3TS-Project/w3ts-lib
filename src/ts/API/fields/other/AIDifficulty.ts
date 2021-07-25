@@ -7,7 +7,7 @@ declare function ConvertAIDifficulty(i: integer): aidifficulty
 
 export class AIDifficulty extends Field<aidifficulty> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertAIDifficulty(id), id)
     }
 

@@ -8,7 +8,7 @@ declare function SetMapFlag(whichMapFlag: mapflag, value: boolean): void
 
 export class MapFlag extends Field<mapflag> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertMapFlag(id), id)
     }
 

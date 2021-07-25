@@ -13,7 +13,7 @@ declare function SetRandomSeed(seed: integer): void
 
 export abstract class MapRandom {
     public static getInt(lowBound: integer, highBound: integer): integer {
-        return GetRandomInt(Math.round(lowBound), Math.round(highBound))
+        return GetRandomInt(Math.floor(lowBound), Math.floor(highBound))
     }
 
     public static getReal(lowBound: real, highBound: real): real {
@@ -26,7 +26,7 @@ export abstract class MapRandom {
      * @returns integer
      */
     public static chooseCreep(level: integer): integer {
-        return ChooseRandomCreep(Math.round(level))
+        return ChooseRandomCreep(Math.floor(level))
     }
 
     public static chooseNPBuilding(): integer {
@@ -34,15 +34,15 @@ export abstract class MapRandom {
     }
 
     public static chooseItem(level: integer): integer {
-        return ChooseRandomItem(Math.round(level))
+        return ChooseRandomItem(Math.floor(level))
     }
 
     public static chooseItemEx(whichType: ItemType, level: integer): integer {
-        return ChooseRandomItemEx(whichType.getHandle, Math.round(level))
+        return ChooseRandomItemEx(whichType.getHandle, Math.floor(level))
     }
 
     public static setSeed(seed: integer) {
-        SetRandomSeed(Math.round(seed))
+        SetRandomSeed(Math.floor(seed))
         return this
     }
 }

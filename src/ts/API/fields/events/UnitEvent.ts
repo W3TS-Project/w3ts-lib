@@ -7,7 +7,7 @@ declare function ConvertUnitEvent(i: integer): unitevent
 
 export class UnitEvent extends Event<unitevent> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertUnitEvent(id), id)
     }
 

@@ -7,7 +7,7 @@ declare function ConvertItemType(i: integer): itemtype
 
 export class ItemType extends Field<itemtype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertItemType(id), id)
     }
 

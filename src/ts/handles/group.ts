@@ -137,7 +137,7 @@ export class Group extends Handle<group> {
     }
 
     public getUnitAt(index: integer): Unit {
-        return Unit.fromHandle(BlzGroupUnitAt(this.getHandle, Math.round(index)))
+        return Unit.fromHandle(BlzGroupUnitAt(this.getHandle, Math.floor(index)))
     }
 
     public enumOfType(unitname: string, filterFunc: codeboolexpr) {
@@ -156,7 +156,7 @@ export class Group extends Handle<group> {
 
     public enumCountedOfType(unitname: string, countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsOfTypeCounted(this.getHandle, unitname, filter, Math.round(countLimit))
+        GroupEnumUnitsOfTypeCounted(this.getHandle, unitname, filter, Math.floor(countLimit))
         DestroyCondition(filter)
         return this
     }
@@ -170,7 +170,7 @@ export class Group extends Handle<group> {
 
     public enumCountedInRect(r: Rectangle, countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRectCounted(this.getHandle, r.getHandle, filter, Math.round(countLimit))
+        GroupEnumUnitsInRectCounted(this.getHandle, r.getHandle, filter, Math.floor(countLimit))
         DestroyCondition(filter)
         return this
     }
@@ -201,7 +201,7 @@ export class Group extends Handle<group> {
         filterFunc: codeboolexpr
     ) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRangeCounted(this.getHandle, x, y, radius, filter, Math.round(countLimit))
+        GroupEnumUnitsInRangeCounted(this.getHandle, x, y, radius, filter, Math.floor(countLimit))
         DestroyCondition(filter)
         return this
     }
@@ -216,7 +216,7 @@ export class Group extends Handle<group> {
             p.getX(),
             p.getY(),
             radius,
-            Math.round(countLimit),
+            Math.floor(countLimit),
             filterFunc
         )
     }
@@ -233,7 +233,7 @@ export class Group extends Handle<group> {
             whichLocation.getHandle,
             radius,
             filter,
-            Math.round(countLimit)
+            Math.floor(countLimit)
         )
         DestroyCondition(filter)
         return this

@@ -77,7 +77,7 @@ export class Destructable extends Handle<destructable> {
         variation: integer
     ) {
         return new this(
-            CreateDestructable(rawCode.getId(), x, y, face, scale, Math.round(variation))
+            CreateDestructable(rawCode.getId(), x, y, face, scale, Math.floor(variation))
         )
     }
 
@@ -91,7 +91,7 @@ export class Destructable extends Handle<destructable> {
         variation: integer
     ) {
         return new this(
-            CreateDestructableZ(rawCode.getId(), x, y, z, face, scale, Math.round(variation))
+            CreateDestructableZ(rawCode.getId(), x, y, z, face, scale, Math.floor(variation))
         )
     }
 
@@ -114,7 +114,7 @@ export class Destructable extends Handle<destructable> {
         variation: integer
     ) {
         return new this(
-            CreateDeadDestructable(rawCode.getId(), x, y, face, scale, Math.round(variation))
+            CreateDeadDestructable(rawCode.getId(), x, y, face, scale, Math.floor(variation))
         )
     }
 
@@ -128,7 +128,7 @@ export class Destructable extends Handle<destructable> {
         variation: integer
     ) {
         return new this(
-            CreateDeadDestructableZ(rawCode.getId(), x, y, z, face, scale, Math.round(variation))
+            CreateDeadDestructableZ(rawCode.getId(), x, y, z, face, scale, Math.floor(variation))
         )
     }
 

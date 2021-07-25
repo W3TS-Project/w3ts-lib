@@ -7,7 +7,7 @@ declare function ConvertPathingType(i: integer): pathingtype
 
 export class PathingType extends Field<pathingtype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertPathingType(id), id)
     }
 }

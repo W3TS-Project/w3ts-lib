@@ -74,7 +74,7 @@ export class Force extends Handle<force> {
 
     public enumPlayersCounted(countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        ForceEnumPlayersCounted(this.getHandle, filter, Math.round(countLimit))
+        ForceEnumPlayersCounted(this.getHandle, filter, Math.floor(countLimit))
         DestroyCondition(filter)
         return this
     }

@@ -1,7 +1,6 @@
 import { BlendMode } from "../../API/fields/camera/BlendMode"
-import { IterableClass } from "../../IterableClass"
 
-export abstract class BlendMods extends IterableClass {
+export abstract class BlendMods {
     public static readonly NONE = new BlendMode(0)
     public static readonly DONT_CARE = new BlendMode(0)
     public static readonly KEY_ALPHA = new BlendMode(1)

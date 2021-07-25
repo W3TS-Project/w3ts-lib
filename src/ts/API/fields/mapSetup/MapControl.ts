@@ -7,7 +7,7 @@ declare function ConvertMapControl(i: integer): mapcontrol
 
 export class MapControl extends Field<mapcontrol> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertMapControl(id), id)
     }
 

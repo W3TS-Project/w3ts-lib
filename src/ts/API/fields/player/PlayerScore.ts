@@ -7,7 +7,7 @@ declare function ConvertPlayerScore(i: integer): playerscore
 
 export class PlayerScore extends Field<playerscore> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertPlayerScore(id), id)
     }
 }

@@ -7,7 +7,7 @@ declare function ConvertWidgetEvent(i: integer): widgetevent
 
 export class WidgetEvent extends Event<widgetevent> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertWidgetEvent(id), id)
     }
 

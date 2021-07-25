@@ -7,7 +7,7 @@ declare function ConvertMouseButtonType(i: integer): mousebuttontype
 
 export class MouseButtonType extends Field<mousebuttontype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertMouseButtonType(id), id)
     }
 }

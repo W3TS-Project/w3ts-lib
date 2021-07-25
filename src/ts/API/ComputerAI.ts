@@ -26,7 +26,7 @@ export abstract class ComputerAI {
     }
 
     public static command(num: MapPlayer, command: integer, data: integer) {
-        CommandAI(num.getHandle, Math.round(command), Math.round(data))
+        CommandAI(num.getHandle, Math.floor(command), Math.floor(data))
         return this
     }
 

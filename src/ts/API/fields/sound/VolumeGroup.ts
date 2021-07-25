@@ -9,7 +9,7 @@ declare function VolumeGroupReset(): void
 
 export class VolumeGroup extends Field<volumegroup> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertVolumeGroup(id), id)
     }
 

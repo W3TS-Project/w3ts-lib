@@ -7,7 +7,7 @@ declare function ConvertPlayerUnitEvent(i: integer): playerunitevent
 
 export class PlayerUnitEvent extends Event<playerunitevent> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertPlayerUnitEvent(id), id)
     }
 

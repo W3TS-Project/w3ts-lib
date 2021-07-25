@@ -36,7 +36,7 @@ export abstract class Terrain {
     }
 
     public static setWaterBaseColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        SetWaterBaseColor(Math.round(red), Math.round(green), Math.round(blue), Math.round(alpha))
+        SetWaterBaseColor(Math.floor(red), Math.floor(green), Math.floor(blue), Math.floor(alpha))
         return this
     }
 
@@ -73,9 +73,9 @@ export abstract class Terrain {
             x,
             y,
             terrainType.getId(),
-            Math.round(variation),
-            Math.round(area),
-            Math.round(shape)
+            Math.floor(variation),
+            Math.floor(area),
+            Math.floor(shape)
         )
         return this
     }
@@ -91,9 +91,9 @@ export abstract class Terrain {
             p.x,
             p.y,
             terrainType,
-            Math.round(variation),
-            Math.round(area),
-            Math.round(shape)
+            Math.floor(variation),
+            Math.floor(area),
+            Math.floor(shape)
         )
     }
 

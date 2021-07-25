@@ -7,7 +7,7 @@ declare function ConvertGameSpeed(i: integer): gamespeed
 
 export class GameSpeed extends Field<gamespeed> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertGameSpeed(id), id)
     }
 

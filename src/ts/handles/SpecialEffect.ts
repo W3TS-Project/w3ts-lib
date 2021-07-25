@@ -5,7 +5,6 @@ import { Handle } from "./Handle"
 import { MapPlayer } from "./MapPlayer"
 import { Widget } from "./Widget"
 import { MapLocation } from "./MapLocation"
-import { Point } from "./Point"
 import { Position } from "../Package"
 import { SubAnimType } from "../API/fields/unit/SubAnimType"
 import { AnimType } from "../API/fields/unit/AnimType"
@@ -164,7 +163,7 @@ export class SpecialEffect extends Handle<effect> {
     }
 
     public setAlpha(alpha: integer) {
-        BlzSetSpecialEffectAlpha(this.getHandle, Math.round(alpha))
+        BlzSetSpecialEffectAlpha(this.getHandle, Math.floor(alpha))
         return this
     }
 

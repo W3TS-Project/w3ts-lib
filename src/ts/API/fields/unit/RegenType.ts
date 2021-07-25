@@ -7,7 +7,7 @@ declare function ConvertRegenType(i: integer): regentype
 
 export class RegenType extends Field<regentype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertRegenType(id), id)
     }
 }

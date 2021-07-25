@@ -7,7 +7,7 @@ declare function ConvertUnitCategory(i: integer): unitcategory
 
 export class UnitCategory extends Field<unitcategory> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertUnitCategory(id), id)
     }
 }

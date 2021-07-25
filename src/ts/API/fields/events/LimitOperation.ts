@@ -7,7 +7,7 @@ declare function ConvertLimitOp(i: integer): limitop
 
 export class LimitOperation extends Event<limitop> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertLimitOp(id), id)
     }
 

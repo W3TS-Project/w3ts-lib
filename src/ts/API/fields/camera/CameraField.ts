@@ -7,7 +7,7 @@ declare function ConvertCameraField(i: integer): camerafield
 
 export class CameraField extends Field<camerafield> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertCameraField(id), id)
     }
 }

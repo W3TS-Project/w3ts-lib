@@ -1,7 +1,6 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../Utils"
 import { Handle } from "./Handle"
 import { Timer } from "./Timer"
 
@@ -37,6 +36,7 @@ export class TimerDialog extends Handle<timerdialog> {
 
     public destroy() {
         DestroyTimerDialog(this.getHandle)
+        return this
     }
 
     public setTitle(title: string) {
@@ -45,21 +45,34 @@ export class TimerDialog extends Handle<timerdialog> {
     }
 
     public setTitleColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        TimerDialogSetTitleColor(this.getHandle, red, green, blue, alpha)
+        TimerDialogSetTitleColor(
+            this.getHandle,
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
+        )
         return this
     }
 
     public setTimeColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        TimerDialogSetTimeColor(this.getHandle, red, green, blue, alpha)
+        TimerDialogSetTimeColor(
+            this.getHandle,
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
+        )
         return this
     }
 
-    public get display() {
+    public isDisplayed(): boolean {
         return IsTimerDialogDisplayed(this.getHandle)
     }
 
-    public set display(display: boolean) {
+    public display(display: boolean) {
         TimerDialogDisplay(this.getHandle, display)
+        return this
     }
 
     public setSpeed(speedMultFactor: real) {

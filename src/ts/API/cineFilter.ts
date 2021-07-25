@@ -57,20 +57,20 @@ export abstract class CineFilter {
 
     public static setStartColor(red: integer, green: integer, blue: integer, alpha: integer) {
         SetCineFilterStartColor(
-            Math.round(red),
-            Math.round(green),
-            Math.round(blue),
-            Math.round(alpha)
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
         )
         return this
     }
 
     public static setEndColor(red: integer, green: integer, blue: integer, alpha: integer) {
         SetCineFilterEndColor(
-            Math.round(red),
-            Math.round(green),
-            Math.round(blue),
-            Math.round(alpha)
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
         )
         return this
     }

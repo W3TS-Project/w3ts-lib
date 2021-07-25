@@ -5,7 +5,7 @@ export abstract class Field<T extends handle> extends Handle<T> {
 
     protected constructor(field: T, id: integer) {
         super(field)
-        this.id = Math.round(id)
+        this.id = Math.floor(id)
     }
 
     public getId(): integer {

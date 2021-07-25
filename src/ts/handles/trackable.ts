@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { real } from "../Utils"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 
 declare function CreateTrackable(
@@ -13,8 +13,12 @@ declare function CreateTrackable(
 declare function GetTriggeringTrackable(): trackable
 
 export class Trackable extends Handle<trackable> {
-    public constructor(trackableModelPath: string, x: real, y: real, facing: real) {
-        super(CreateTrackable(trackableModelPath, x, y, facing))
+    public static createCoords(trackableModelPath: string, x: real, y: real, facing: real) {
+        return new this(CreateTrackable(trackableModelPath, x, y, facing))
+    }
+
+    public static createPos(trackableModelPath: string, p: Position, facing: real) {
+        return this.createCoords(trackableModelPath, p.getX(), p.getY(), facing)
     }
 
     public static fromHandle(handle: trackable): Trackable {

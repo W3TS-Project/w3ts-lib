@@ -146,7 +146,7 @@ export class Image extends Handle<image> {
     }
 
     public setColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        SetImageColor(this.getHandle, Math.round(red), Math.round(green), Math.round(blue), Math.round(alpha))
+        SetImageColor(this.getHandle, Math.floor(red), Math.floor(green), Math.floor(blue), Math.floor(alpha))
         return this
     }
 

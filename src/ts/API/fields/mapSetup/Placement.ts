@@ -7,7 +7,7 @@ declare function ConvertPlacement(i: integer): placement
 
 export class Placement extends Field<placement> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertPlacement(id), id)
     }
 

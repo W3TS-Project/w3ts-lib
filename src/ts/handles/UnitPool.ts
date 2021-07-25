@@ -5,7 +5,7 @@ import { Position } from "../Package";
 import { Handle } from "./Handle";
 import { MapPlayer } from "./MapPlayer";
 import { Unit } from "./Unit";
-import { UnitRawCode } from "./UnitRawCode";
+import { UnitRawCode } from "./rawCode/UnitRawCode";
 
 declare function CreateUnitPool(): unitpool
 declare function DestroyUnitPool(whichPool: unitpool): void

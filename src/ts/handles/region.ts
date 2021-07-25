@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { real } from "../Utils"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { MapLocation } from "./MapLocation"
 import { Point } from "./Point"
@@ -26,13 +26,13 @@ export class Region extends Handle<region> {
         super(CreateRegion())
     }
 
-    public addCell(x: real, y: real) {
+    public addCellCoords(x: real, y: real) {
         RegionAddCell(this.getHandle, x, y)
         return this
     }
 
-    public addCellPoint(whichPoint: Point) {
-        return this.addCell(whichPoint.x, whichPoint.y)
+    public addCellPos(p: Position) {
+        return this.addCellCoords(p.getX(), p.getY())
     }
 
     public addCellLoc(whichLoc: MapLocation) {
@@ -45,13 +45,13 @@ export class Region extends Handle<region> {
         return this
     }
 
-    public clearCell(x: real, y: real) {
+    public clearCellCoords(x: real, y: real) {
         RegionClearCell(this.getHandle, x, y)
         return this
     }
 
-    public clearCellPoint(whichPoint: Point) {
-        return this.clearCell(whichPoint.x, whichPoint.y)
+    public clearCellPos(p: Position) {
+        return this.clearCellCoords(p.getX(), p.getY())
     }
 
     public clearCellLoc(whichLoc: MapLocation) {
@@ -68,8 +68,8 @@ export class Region extends Handle<region> {
         return IsPointInRegion(this.getHandle, x, y)
     }
 
-    public containsPoint(whichPoint: Point): boolean {
-        return this.containsCoords(whichPoint.x, whichPoint.y)
+    public containsPos(p: Position) {
+        return this.containsCoords(p.getX(), p.getY())
     }
 
     public containsLoc(whichLoc: MapLocation): boolean {
@@ -82,6 +82,7 @@ export class Region extends Handle<region> {
 
     public destroy() {
         RemoveRegion(this.getHandle)
+        return this
     }
 
     public static fromHandle(handle: region): Region {

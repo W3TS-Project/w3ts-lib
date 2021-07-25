@@ -7,7 +7,7 @@ declare function ConvertArmorType(i: integer): armortype
 
 export class ArmorType extends Field<armortype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertArmorType(id), id)
     }
 }

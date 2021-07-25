@@ -7,7 +7,7 @@ declare function ConvertSoundType(i: integer): soundtype
 
 export class SoundType extends Field<soundtype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertSoundType(id), id)
     }
 }

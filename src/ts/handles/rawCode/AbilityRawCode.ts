@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { RawCode } from "../RawCode"
+import { RawCode } from "../../RawCode"
 
 declare function BlzSetAbilityTooltip(abilCode: integer, tooltip: string, level: integer): void
 declare function BlzSetAbilityActivatedTooltip(
@@ -52,57 +52,57 @@ declare function BlzGetAbilityCooldown(abilId: integer, level: integer): real
 
 export class AbilityRawCode extends RawCode {
     public setTooltip(tooltip: string, level: integer) {
-        BlzSetAbilityTooltip(this.id, tooltip, Math.round(level))
+        BlzSetAbilityTooltip(this.id, tooltip, Math.floor(level))
         return this
     }
 
     public setActivatedTooltip(tooltip: string, level: integer) {
-        BlzSetAbilityActivatedTooltip(this.id, tooltip, Math.round(level))
+        BlzSetAbilityActivatedTooltip(this.id, tooltip, Math.floor(level))
         return this
     }
 
     public setExtendedTooltip(extendedTooltip: string, level: integer) {
-        BlzSetAbilityExtendedTooltip(this.id, extendedTooltip, Math.round(level))
+        BlzSetAbilityExtendedTooltip(this.id, extendedTooltip, Math.floor(level))
         return this
     }
 
     public setActivatedExtendedTooltip(extendedTooltip: string, level: integer) {
-        BlzSetAbilityActivatedExtendedTooltip(this.id, extendedTooltip, Math.round(level))
+        BlzSetAbilityActivatedExtendedTooltip(this.id, extendedTooltip, Math.floor(level))
         return this
     }
 
     public setResearchTooltip(researchTooltip: string, level: integer) {
-        BlzSetAbilityResearchTooltip(this.id, researchTooltip, Math.round(level))
+        BlzSetAbilityResearchTooltip(this.id, researchTooltip, Math.floor(level))
         return this
     }
 
     public setResearchExtendedTooltip(researchExtendedTooltip: string, level: integer) {
-        BlzSetAbilityResearchExtendedTooltip(this.id, researchExtendedTooltip, Math.round(level))
+        BlzSetAbilityResearchExtendedTooltip(this.id, researchExtendedTooltip, Math.floor(level))
         return this
     }
 
     public getTooltip(level: integer): string {
-        return BlzGetAbilityTooltip(this.id, Math.round(level))
+        return BlzGetAbilityTooltip(this.id, Math.floor(level))
     }
 
     public getActivatedTooltip(level: integer): string {
-        return BlzGetAbilityActivatedTooltip(this.id, Math.round(level))
+        return BlzGetAbilityActivatedTooltip(this.id, Math.floor(level))
     }
 
     public getExtendedTooltip(level: integer): string {
-        return BlzGetAbilityExtendedTooltip(this.id, Math.round(level))
+        return BlzGetAbilityExtendedTooltip(this.id, Math.floor(level))
     }
 
     public getActivatedExtendedTooltip(level: integer): string {
-        return BlzGetAbilityActivatedExtendedTooltip(this.id, Math.round(level))
+        return BlzGetAbilityActivatedExtendedTooltip(this.id, Math.floor(level))
     }
 
     public getResearchTooltip(level: integer): string {
-        return BlzGetAbilityResearchTooltip(this.id, Math.round(level))
+        return BlzGetAbilityResearchTooltip(this.id, Math.floor(level))
     }
 
     public getResearchExtendedTooltip(level: integer): string {
-        return BlzGetAbilityResearchExtendedTooltip(this.id, Math.round(level))
+        return BlzGetAbilityResearchExtendedTooltip(this.id, Math.floor(level))
     }
 
     public setIcon(iconPath: string) {
@@ -132,12 +132,12 @@ export class AbilityRawCode extends RawCode {
     }
 
     public setPosX(x: integer) {
-        BlzSetAbilityPosX(this.id, Math.round(x))
+        BlzSetAbilityPosX(this.id, Math.floor(x))
         return this
     }
 
     public setPosY(y: integer) {
-        BlzSetAbilityPosY(this.id, Math.round(y))
+        BlzSetAbilityPosY(this.id, Math.floor(y))
         return this
     }
 
@@ -150,20 +150,20 @@ export class AbilityRawCode extends RawCode {
     }
 
     public setActivatedPosX(x: integer) {
-        BlzSetAbilityActivatedPosX(this.id, Math.round(x))
+        BlzSetAbilityActivatedPosX(this.id, Math.floor(x))
         return this
     }
 
     public setActivatedPosY(y: integer) {
-        BlzSetAbilityActivatedPosY(this.id, Math.round(y))
+        BlzSetAbilityActivatedPosY(this.id, Math.floor(y))
         return this
     }
 
     public getManaCost(level: integer): integer {
-        return BlzGetAbilityManaCost(this.id, Math.round(level))
+        return BlzGetAbilityManaCost(this.id, Math.floor(level))
     }
 
     public getCooldown(level: integer): real {
-        return BlzGetAbilityCooldown(this.id, Math.round(level))
+        return BlzGetAbilityCooldown(this.id, Math.floor(level))
     }
 }

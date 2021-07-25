@@ -1,51 +1,16 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { getHandledCallback } from "../ErrorHandling"
-import { code, codeboolexpr, integer, real } from "../Utils"
-import { Dialog, DialogButton } from "./Dialog"
+import { Dialog } from "./Dialog"
+import { DialogButton } from "./DialogButton"
 import { Frame } from "./Frame"
 import { Handle } from "./Handle"
 import { MapPlayer } from "./MapPlayer"
 import { Region } from "./Region"
-import { Sound } from "./Sound"
 import { Timer } from "./Timer"
 import { Trackable } from "./Trackable"
 import { Unit } from "./Unit"
 import { Widget } from "./Widget"
-
-// trigger
-declare function CreateTrigger(): trigger
-declare function DestroyTrigger(whichTrigger: trigger): void
-declare function ResetTrigger(whichTrigger: trigger): void
-declare function EnableTrigger(whichTrigger: trigger): void
-declare function DisableTrigger(whichTrigger: trigger): void
-declare function IsTriggerEnabled(whichTrigger: trigger): boolean
-declare function TriggerWaitOnSleeps(whichTrigger: trigger, flag: boolean): void
-declare function IsTriggerWaitOnSleeps(whichTrigger: trigger): boolean
-declare function GetTriggeringTrigger(): trigger
-declare function GetTriggerEventId(): eventid
-declare function GetTriggerEvalCount(whichTrigger: trigger): integer
-declare function GetTriggerExecCount(whichTrigger: trigger): integer
-declare function TriggerAddCondition(
-    whichTrigger: trigger,
-    condition: boolexpr | null
-): triggercondition
-declare function TriggerRemoveCondition(
-    whichTrigger: trigger,
-    whichCondition: triggercondition
-): void
-declare function TriggerClearConditions(whichTrigger: trigger): void
-declare let TriggerAddAction: (whichTrigger: trigger, actionFunc: () => void) => triggeraction
-declare function TriggerRemoveAction(whichTrigger: trigger, whichAction: triggeraction): void
-declare function TriggerClearActions(whichTrigger: trigger): void
-declare function TriggerSleepAction(timeout: real): void
-declare function TriggerWaitForSound(s: sound, offset: real): void
-declare function TriggerEvaluate(whichTrigger: trigger): boolean
-declare function TriggerExecute(whichTrigger: trigger): void
-declare function TriggerExecuteWait(whichTrigger: trigger): void
-declare function TriggerSyncStart(): void
-declare function TriggerSyncReady(): void
 
 // trigger game event
 declare function TriggerRegisterVariableEvent(
@@ -253,124 +218,7 @@ declare function BlzTriggerRegisterFrameEvent(
     eventId: frameeventtype
 ): event
 
-const realTriggerAddACtion = TriggerAddAction
-TriggerAddAction = (whichTrigger: trigger, actionFunc: () => void) =>
-    realTriggerAddACtion(whichTrigger, getHandledCallback(actionFunc))
-
 export class Trigger extends Handle<trigger> {
-    public constructor() {
-        super(CreateTrigger())
-    }
-
-    public destroy() {
-        DestroyTrigger(this.getHandle)
-        return this
-    }
-
-    public reset() {
-        ResetTrigger(this.getHandle)
-        return this
-    }
-
-    public enable() {
-        EnableTrigger(this.getHandle)
-        return this
-    }
-
-    public disable() {
-        DisableTrigger(this.getHandle)
-        return this
-    }
-
-    public isEnabled(): boolean {
-        return IsTriggerEnabled(this.getHandle)
-    }
-
-    public waitOnSleeps(flag: boolean) {
-        TriggerWaitOnSleeps(this.getHandle, flag)
-        return this
-    }
-
-    public isWaitOnSleeps(): boolean {
-        return IsTriggerWaitOnSleeps(this.getHandle)
-    }
-
-    public static getEventId(): eventid {
-        return GetTriggerEventId()
-    }
-
-    public getEvalCount(): integer {
-        return GetTriggerEvalCount(this.getHandle)
-    }
-
-    public getExecCount(): integer {
-        return GetTriggerExecCount(this.getHandle)
-    }
-
-    public addCondition(filterFunc: codeboolexpr): triggercondition {
-        return TriggerAddCondition(this.getHandle, Condition(filterFunc))
-    }
-
-    public removeCondition(whichCondition: triggercondition) {
-        TriggerRemoveCondition(this.getHandle, whichCondition)
-        return this
-    }
-
-    public clearConditions() {
-        TriggerClearConditions(this.getHandle)
-        return this
-    }
-
-    public addAction(actionFunc: code) {
-        return TriggerAddAction(this.getHandle, actionFunc)
-    }
-
-    public removeAction(whichAction: triggeraction) {
-        TriggerRemoveAction(this.getHandle, whichAction)
-        return this
-    }
-
-    public clearActions() {
-        TriggerClearActions(this.getHandle)
-        return this
-    }
-
-    public static sleepAction(timeout: real) {
-        TriggerSleepAction(timeout)
-        return this
-    }
-
-    public static waitForSound(s: Sound, offset: real) {
-        TriggerWaitForSound(s.getHandle, offset)
-        return this
-    }
-
-    public evaluate(): boolean {
-        return TriggerEvaluate(this.getHandle)
-    }
-
-    public execute() {
-        TriggerExecute(this.getHandle)
-        return this
-    }
-
-    public executeWait() {
-        TriggerExecuteWait(this.getHandle)
-        return this
-    }
-
-    public static syncStart() {
-        TriggerSyncStart()
-        return this
-    }
-
-    public static syncReady() {
-        TriggerSyncReady()
-        return this
-    }
-
-
-
     // Game Events
 
     public registerVariableEvent(varName: string, opcode: limitop, limitval: real): event {
@@ -399,7 +247,7 @@ export class Trigger extends Handle<trigger> {
         return TriggerRegisterDialogButtonEvent(this.getHandle, whichButton.getHandle)
     }
 
-    /** 
+    /**
      * EVENT_GAME_STATE_LIMIT
      */
     public static getEventGameState(): gamestate {
@@ -411,11 +259,19 @@ export class Trigger extends Handle<trigger> {
     }
 
     public registerEnterRegion(whichRegion: Region, filterFunc: codeboolexpr): event {
-        return TriggerRegisterEnterRegion(this.getHandle, whichRegion.getHandle, Condition(filterFunc))
+        return TriggerRegisterEnterRegion(
+            this.getHandle,
+            whichRegion.getHandle,
+            Condition(filterFunc)
+        )
     }
 
     public registerLeaveRegion(whichRegion: Region, filterFunc: codeboolexpr): event {
-        return TriggerRegisterLeaveRegion(this.getHandle, whichRegion.getHandle, Condition(filterFunc))
+        return TriggerRegisterLeaveRegion(
+            this.getHandle,
+            whichRegion.getHandle,
+            Condition(filterFunc)
+        )
     }
 
     public registerTrackableHitEvent(t: Trackable): event {
@@ -430,7 +286,7 @@ export class Trigger extends Handle<trigger> {
      * EVENT_GAME_TOURNAMENT_FINISH_SOON
      * @returns real
      */
-     public static getTournamentFinishSoonTimeRemaining(): real {
+    public static getTournamentFinishSoonTimeRemaining(): real {
         return GetTournamentFinishSoonTimeRemaining()
     }
 
@@ -454,21 +310,24 @@ export class Trigger extends Handle<trigger> {
         return GetSaveBasicFilename()
     }
 
-
-
     // Player Based Events
 
     public registerPlayerEvent(whichPlayer: MapPlayer, whichPlayerEvent: playerevent): event {
         return TriggerRegisterPlayerEvent(this.getHandle, whichPlayer.getHandle, whichPlayerEvent)
     }
 
-    public registerPlayerUnitEvent(whichPlayer: MapPlayer, whichPlayerUnitEvent: playerunitevent, filterFunc: codeboolexpr): event {
-        return TriggerRegisterPlayerUnitEvent(this.getHandle, whichPlayer.getHandle, whichPlayerUnitEvent, Condition(filterFunc))
+    public registerPlayerUnitEvent(
+        whichPlayer: MapPlayer,
+        whichPlayerUnitEvent: playerunitevent,
+        filterFunc: codeboolexpr
+    ): event {
+        return TriggerRegisterPlayerUnitEvent(
+            this.getHandle,
+            whichPlayer.getHandle,
+            whichPlayerUnitEvent,
+            Condition(filterFunc)
+        )
     }
-
-
-
-
 
     public registerAnyUnitEvent(whichPlayerUnitEvent: playerunitevent) {
         return TriggerRegisterAnyUnitEventBJ(this.getHandle, whichPlayerUnitEvent)
@@ -479,7 +338,7 @@ export class Trigger extends Handle<trigger> {
     }
 
     public registerDeathEvent(whichWidget: Widget) {
-        return TriggerRegisterDeathEvent(this.getHandle, whichWidget.handle)
+        return TriggerRegisterDeathEvent(this.getHandle, whichWidget.getHandle)
     }
 
     public registerFilterUnitEvent(
@@ -487,11 +346,20 @@ export class Trigger extends Handle<trigger> {
         whichEvent: unitevent,
         filterFunc: codeboolexpr
     ) {
-        return TriggerRegisterFilterUnitEvent(this.getHandle, whichUnit, whichEvent, Condition(filterFunc))
+        return TriggerRegisterFilterUnitEvent(
+            this.getHandle,
+            whichUnit,
+            whichEvent,
+            Condition(filterFunc)
+        )
     }
 
     public registerPlayerAllianceChange(whichPlayer: MapPlayer, whichAlliance: alliancetype) {
-        return TriggerRegisterPlayerAllianceChange(this.getHandle, whichPlayer.handle, whichAlliance)
+        return TriggerRegisterPlayerAllianceChange(
+            this.getHandle,
+            whichPlayer.getHandle,
+            whichAlliance
+        )
     }
 
     public registerPlayerChatEvent(
@@ -501,7 +369,7 @@ export class Trigger extends Handle<trigger> {
     ) {
         return TriggerRegisterPlayerChatEvent(
             this.getHandle,
-            whichPlayer.handle,
+            whichPlayer.getHandle,
             chatMessageToDetect,
             exactMatchOnly
         )
@@ -515,7 +383,7 @@ export class Trigger extends Handle<trigger> {
     ) {
         return BlzTriggerRegisterPlayerKeyEvent(
             this.getHandle,
-            whichPlayer.handle,
+            whichPlayer.getHandle,
             whichKey,
             metaKey,
             fireOnKeyDown
@@ -523,7 +391,11 @@ export class Trigger extends Handle<trigger> {
     }
 
     public registerPlayerMouseEvent(whichPlayer: MapPlayer, whichMouseEvent: number) {
-        return TriggerRegisterPlayerMouseEventBJ(this.getHandle, whichPlayer.handle, whichMouseEvent)
+        return TriggerRegisterPlayerMouseEventBJ(
+            this.getHandle,
+            whichPlayer.getHandle,
+            whichMouseEvent
+        )
     }
 
     public registerPlayerStateEvent(
@@ -534,7 +406,7 @@ export class Trigger extends Handle<trigger> {
     ) {
         return TriggerRegisterPlayerStateEvent(
             this.getHandle,
-            whichPlayer.handle,
+            whichPlayer.getHandle,
             whichState,
             opcode,
             limitval
@@ -544,23 +416,17 @@ export class Trigger extends Handle<trigger> {
     public registerPlayerSyncEvent(whichPlayer: MapPlayer, prefix: string, fromServer: boolean) {
         return BlzTriggerRegisterPlayerSyncEvent(
             this.getHandle,
-            whichPlayer.handle,
+            whichPlayer.getHandle,
             prefix,
             fromServer
         )
     }
 
-
-
     public registerUnitEvent(whichUnit: Unit, whichEvent: unitevent) {
         return TriggerRegisterUnitEvent(this.getHandle, whichUnit.handle, whichEvent)
     }
 
-    public registerUnitInRage(
-        whichUnit: unit,
-        range: number,
-        filterFunc: codeboolexpr
-    ) {
+    public registerUnitInRage(whichUnit: unit, range: number, filterFunc: codeboolexpr) {
         return TriggerRegisterUnitInRange(this.getHandle, whichUnit, range, Condition(filterFunc))
     }
 
@@ -583,27 +449,7 @@ export class Trigger extends Handle<trigger> {
         return TriggerRegisterUpgradeCommandEvent(this.getHandle, whichUpgrade)
     }
 
-    public removeActions() {
-        return TriggerClearActions(this.getHandle)
-    }
-
-    public removeConditions() {
-        return TriggerClearConditions(this.getHandle)
-    }
-
     public triggerRegisterFrameEvent(frame: Frame, eventId: frameeventtype) {
-        return BlzTriggerRegisterFrameEvent(this.getHandle, frame.handle, eventId)
-    }
-
-    public static fromHandle(handle: trigger): Trigger {
-        return this.getObject(handle)
-    }
-
-    public static fromEvent() {
-        return this.fromHandle(GetTriggeringTrigger())
-    }
-
-    public static fromObject(object: Trigger): trigger {
-        return this.getHandle(object)
+        return BlzTriggerRegisterFrameEvent(this.getHandle, frame.getHandle, eventId)
     }
 }

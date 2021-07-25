@@ -7,7 +7,7 @@ declare function ConvertDialogEvent(i: integer): dialogevent
 
 export class DialogEvent extends Event<dialogevent> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertDialogEvent(id), id)
     }
 

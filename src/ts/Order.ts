@@ -17,7 +17,7 @@ export class Order {
 
     public static toId(id: order) {
         if (typeof id === "number") {
-            return Math.round(id)
+            return Math.floor(id)
         } else {
             return OrderId(id)
         }
@@ -27,7 +27,7 @@ export class Order {
         if (typeof id === "string") {
             return id
         } else {
-            return OrderId2String(Math.round(id))
+            return OrderId2String(Math.floor(id))
         }
     }
 }

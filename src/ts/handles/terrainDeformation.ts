@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, Position, real } from "../Utils"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { Point } from "./Point"
 
@@ -58,7 +58,7 @@ export class TerrainDeformation extends Handle<terraindeformation> {
         duration: integer,
         permanent: boolean
     ) {
-        return new this(TerrainDeformCrater(x, y, radius, depth, duration, permanent))
+        return new this(TerrainDeformCrater(x, y, radius, depth, Math.floor(duration), permanent))
     }
 
     public static createCraterPos(
@@ -68,8 +68,7 @@ export class TerrainDeformation extends Handle<terraindeformation> {
         duration: integer,
         permanent: boolean
     ) {
-        p = <Point>p
-        return this.createCraterCoords(p.x, p.y, radius, depth, duration, permanent)
+        return this.createCraterCoords(p.getX(), p.getY(), radius, depth, duration, permanent)
     }
 
     public static createRippleCoords(
@@ -90,8 +89,8 @@ export class TerrainDeformation extends Handle<terraindeformation> {
                 y,
                 radius,
                 depth,
-                duration,
-                count,
+                Math.floor(duration),
+                Math.floor(count),
                 spaceWaves,
                 timeWaves,
                 radiusStartPct,
@@ -111,10 +110,9 @@ export class TerrainDeformation extends Handle<terraindeformation> {
         radiusStartPct: real,
         limitNeg: boolean
     ) {
-        p = <Point>p
         return this.createRippleCoords(
-            p.x,
-            p.y,
+            p.getX(),
+            p.getY(),
             radius,
             depth,
             duration,
@@ -139,7 +137,18 @@ export class TerrainDeformation extends Handle<terraindeformation> {
         count: integer
     ) {
         return new this(
-            TerrainDeformWave(x, y, dirX, dirY, distance, speed, radius, depth, trailTime, count)
+            TerrainDeformWave(
+                x,
+                y,
+                dirX,
+                dirY,
+                distance,
+                speed,
+                radius,
+                depth,
+                Math.floor(trailTime),
+                Math.floor(count)
+            )
         )
     }
 
@@ -153,13 +162,11 @@ export class TerrainDeformation extends Handle<terraindeformation> {
         trailTime: integer,
         count: integer
     ) {
-        p = <Point>p
-        dirPos = <Point>dirPos
         return this.createWaveCoords(
-            p.x,
-            p.y,
-            dirPos.x,
-            dirPos.y,
+            p.getX(),
+            p.getY(),
+            dirPos.getX(),
+            dirPos.getY(),
             distance,
             speed,
             radius,
@@ -179,7 +186,15 @@ export class TerrainDeformation extends Handle<terraindeformation> {
         updateInterval: integer
     ) {
         return new this(
-            TerrainDeformRandom(x, y, radius, minDelta, maxDelta, duration, updateInterval)
+            TerrainDeformRandom(
+                x,
+                y,
+                radius,
+                minDelta,
+                maxDelta,
+                Math.floor(duration),
+                Math.floor(updateInterval)
+            )
         )
     }
 
@@ -191,10 +206,9 @@ export class TerrainDeformation extends Handle<terraindeformation> {
         duration: integer,
         updateInterval: integer
     ) {
-        p = <Point>p
         return this.createRandomCoords(
-            p.x,
-            p.y,
+            p.getX(),
+            p.getY(),
             radius,
             minDelta,
             maxDelta,
@@ -204,7 +218,7 @@ export class TerrainDeformation extends Handle<terraindeformation> {
     }
 
     public stop(duration: integer) {
-        TerrainDeformStop(this.getHandle, duration)
+        TerrainDeformStop(this.getHandle, Math.floor(duration))
         return this
     }
 

@@ -7,7 +7,7 @@ declare function ConvertMoveType(i: integer): movetype
 
 export class MoveType extends Field<movetype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertMoveType(id), id)
     }
 }

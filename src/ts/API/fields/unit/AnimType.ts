@@ -7,7 +7,7 @@ declare function ConvertAnimType(i: integer): animtype
 
 export class AnimType extends Field<animtype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertAnimType(id), id)
     }
 }

@@ -1,10 +1,9 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { code, codeboolexpr, real } from "../Utils"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { MapLocation } from "./MapLocation"
-import { Point } from "./Point"
 
 declare function Rect(minx: real, miny: real, maxx: real, maxy: real): rect
 declare function RectFromLoc(min: location, max: location): rect
@@ -19,12 +18,8 @@ declare function GetRectMinX(whichRect: rect): real
 declare function GetRectMinY(whichRect: rect): real
 declare function GetRectMaxX(whichRect: rect): real
 declare function GetRectMaxY(whichRect: rect): real
-declare function EnumDestructablesInRect(
-    r: rect,
-    filter: boolexpr | null,
-    actionFunc: () => void
-): void
-declare function EnumItemsInRect(r: rect, filter: boolexpr | null, actionFunc: () => void): void
+declare function EnumDestructablesInRect(r: rect, filter: boolexpr | null, actionFunc: code): void
+declare function EnumItemsInRect(r: rect, filter: boolexpr | null, actionFunc: code): void
 declare function GetWorldBounds(): rect
 
 export class Rectangle extends Handle<rect> {
@@ -32,32 +27,33 @@ export class Rectangle extends Handle<rect> {
         super(Rect(minX, minY, maxX, maxY))
     }
 
-    public get centerX() {
+    public getCenterX(): real {
         return GetRectCenterX(this.getHandle)
     }
 
-    public get centerY() {
+    public getCenterY(): real {
         return GetRectCenterY(this.getHandle)
     }
 
-    public get maxX() {
+    public getMaxX(): real {
         return GetRectMaxX(this.getHandle)
     }
 
-    public get maxY() {
+    public getMaxY(): real {
         return GetRectMaxY(this.getHandle)
     }
 
-    public get minX() {
+    public getMinX(): real {
         return GetRectMinX(this.getHandle)
     }
 
-    public get minY() {
+    public getMinY(): real {
         return GetRectMinY(this.getHandle)
     }
 
     public destroy() {
         RemoveRect(this.getHandle)
+        return this
     }
 
     public enumDestructables(filterFunc: codeboolexpr, actionFunc: code) {
@@ -74,9 +70,13 @@ export class Rectangle extends Handle<rect> {
         return this
     }
 
-    public move(newCenterX: real, newCenterY: real) {
+    public moveCoords(newCenterX: real, newCenterY: real) {
         MoveRectTo(this.getHandle, newCenterX, newCenterY)
         return this
+    }
+
+    public movePos(newPos: Position) {
+        return this.moveCoords(newPos.getX(), newPos.getY())
     }
 
     public moveLoc(newCenterPoint: MapLocation) {
@@ -84,13 +84,17 @@ export class Rectangle extends Handle<rect> {
         return this
     }
 
-    public setRect(minX: real, minY: real, maxX: real, maxY: real) {
+    public setCoords(minX: real, minY: real, maxX: real, maxY: real) {
         SetRect(this.handle, minX, minY, maxX, maxY)
         return this
     }
 
-    public setRectFromLoc(min: MapLocation, max: MapLocation) {
-        SetRectFromLoc(this.getHandle, min.getHandle, max.getHandle)
+    public setPos(minPos: Position, maxPos: Position) {
+        return this.setCoords(minPos.getX(), minPos.getY(), maxPos.getX(), maxPos.getY())
+    }
+
+    public setLoc(minLoc: MapLocation, maxLoc: MapLocation) {
+        SetRectFromLoc(this.getHandle, minLoc.getHandle, maxLoc.getHandle)
         return this
     }
 
@@ -98,12 +102,16 @@ export class Rectangle extends Handle<rect> {
         return this.getObject(handle)
     }
 
-    public static fromLoc(min: MapLocation, max: MapLocation) {
-        return this.fromHandle(RectFromLoc(min.getHandle, max.getHandle))
+    public static fromCoords(minX: real, minY: real, maxX: real, maxY: real) {
+        return this.fromHandle(Rect(minX, minY, maxX, maxY))
     }
 
-    public static fromPoint(min: Point, max: Point) {
-        return this.fromHandle(Rect(min.x, min.y, max.x, max.y))
+    public static fromPos(minPos: Position, maxPos: Position) {
+        return this.fromCoords(minPos.getX(), minPos.getY(), maxPos.getX(), maxPos.getY())
+    }
+
+    public static fromLoc(min: MapLocation, max: MapLocation) {
+        return this.fromHandle(RectFromLoc(min.getHandle, max.getHandle))
     }
 
     // Returns full map bounds, including unplayable borders, in world coordinates
@@ -114,5 +122,4 @@ export class Rectangle extends Handle<rect> {
     public static fromObject(object: Rectangle): rect {
         return this.getHandle(object)
     }
-    
 }

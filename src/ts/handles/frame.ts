@@ -105,11 +105,11 @@ declare function BlzLoadTOCFile(TOCFile: string): boolean
 
 export class Frame extends Handle<framehandle> {
     public static create(name: string, owner: Frame, priority: integer, createContext: integer) {
-        return new this(BlzCreateFrame(name, owner.getHandle, Math.round(priority), Math.round(createContext)))
+        return new this(BlzCreateFrame(name, owner.getHandle, Math.floor(priority), Math.floor(createContext)))
     }
 
     public static createSimple(name: string, owner: Frame, createContext: integer) {
-        return new this(BlzCreateSimpleFrame(name, owner.getHandle, Math.round(createContext)))
+        return new this(BlzCreateSimpleFrame(name, owner.getHandle, Math.floor(createContext)))
     }
 
     public static createByType(
@@ -119,11 +119,11 @@ export class Frame extends Handle<framehandle> {
         inherits: string,
         createContext: integer
     ) {
-        return new this(BlzCreateFrameByType(typeName, name, owner.getHandle, inherits, Math.round(createContext)))
+        return new this(BlzCreateFrameByType(typeName, name, owner.getHandle, inherits, Math.floor(createContext)))
     }
 
     public static fromOrigin(frameType: FrameOriginType, index: integer) {
-        return this.fromHandle(BlzGetOriginFrame(frameType.getHandle, Math.round(index)))
+        return this.fromHandle(BlzGetOriginFrame(frameType.getHandle, Math.floor(index)))
     }
 
     public static autoPosition(enable: boolean) {
@@ -185,7 +185,7 @@ export class Frame extends Handle<framehandle> {
     }
 
     public static fromName(name: string, createContext: integer) {
-        return this.fromHandle(BlzGetFrameByName(name, Math.round(createContext)))
+        return this.fromHandle(BlzGetFrameByName(name, Math.floor(createContext)))
     }
 
     public getName(): string {
@@ -212,7 +212,7 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setSizeLimitText(size: integer) {
-        BlzFrameSetTextSizeLimit(this.getHandle, Math.round(size))
+        BlzFrameSetTextSizeLimit(this.getHandle, Math.floor(size))
         return this
     }
 
@@ -221,7 +221,7 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setTextColor(color: integer) {
-        BlzFrameSetTextColor(this.getHandle, Math.round(color))
+        BlzFrameSetTextColor(this.getHandle, Math.floor(color))
         return this
     }
 
@@ -231,7 +231,7 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setModel(modelFile: string, cameraIndex: integer) {
-        BlzFrameSetModel(this.getHandle, modelFile, Math.round(cameraIndex))
+        BlzFrameSetModel(this.getHandle, modelFile, Math.floor(cameraIndex))
         return this
     }
 
@@ -245,7 +245,7 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setAlpha(alpha: integer) {
-        BlzFrameSetAlpha(this.getHandle, Math.round(alpha))
+        BlzFrameSetAlpha(this.getHandle, Math.floor(alpha))
     }
 
     public getAlpha(): integer {
@@ -253,12 +253,12 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setSpriteAnimate(primaryProp: integer, flags: integer) {
-        BlzFrameSetSpriteAnimate(this.getHandle, Math.round(primaryProp), Math.round(flags))
+        BlzFrameSetSpriteAnimate(this.getHandle, Math.floor(primaryProp), Math.floor(flags))
         return this
     }
 
     public setTexture(texFile: string, flag: integer, blend: boolean) {
-        BlzFrameSetTexture(this.getHandle, texFile, Math.round(flag), blend)
+        BlzFrameSetTexture(this.getHandle, texFile, Math.floor(flag), blend)
         return this
     }
 
@@ -302,12 +302,12 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setVertexColor(color: integer) {
-        BlzFrameSetVertexColor(this.getHandle, Math.round(color))
+        BlzFrameSetVertexColor(this.getHandle, Math.floor(color))
         return this
     }
 
     public setLevel(level: integer) {
-        BlzFrameSetLevel(this.getHandle, Math.round(level))
+        BlzFrameSetLevel(this.getHandle, Math.floor(level))
         return this
     }
 
@@ -330,7 +330,7 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setFont(filename: string, height: real, flags: integer) {
-        BlzFrameSetFont(this.getHandle, filename, height, Math.round(flags))
+        BlzFrameSetFont(this.getHandle, filename, height, Math.floor(flags))
         return this
     }
 
@@ -349,7 +349,7 @@ export class Frame extends Handle<framehandle> {
     }
 
     public setTextSizeLimit(size: integer) {
-        BlzFrameSetTextSizeLimit(this.getHandle, Math.round(size))
+        BlzFrameSetTextSizeLimit(this.getHandle, Math.floor(size))
         return this
     }
 

@@ -7,7 +7,7 @@ declare function ConvertOriginFrameType(i: integer): originframetype
 
 export class FrameOriginType extends Field<originframetype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertOriginFrameType(id), id)
     }
 }

@@ -7,7 +7,7 @@ declare function ConvertRacePref(i: integer): racepreference
 
 export class RacePref extends Field<racepreference> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertRacePref(id), id)
     }
 }

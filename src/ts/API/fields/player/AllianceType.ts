@@ -7,7 +7,7 @@ declare function ConvertAliianceType(i: integer): alliancetype
 
 export class AllianceType extends Field<alliancetype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertAliianceType(id), id)
     }
 }

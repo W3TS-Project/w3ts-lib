@@ -7,7 +7,7 @@ declare function ConvertStartLocPrio(i: integer): startlocprio
 
 export class StartLocPrio extends Field<startlocprio> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertStartLocPrio(id), id)
     }
 

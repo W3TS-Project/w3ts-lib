@@ -2,6 +2,7 @@
 //@ts-nocheck
 
 import { Handle } from "./Handle"
+import { QuestItem } from "./QuestItem"
 
 declare function CreateQuest(): quest
 declare function DestroyQuest(whichQuest: quest): void
@@ -18,75 +19,57 @@ declare function IsQuestCompleted(whichQuest: quest): boolean
 declare function IsQuestDiscovered(whichQuest: quest): boolean
 declare function IsQuestFailed(whichQuest: quest): boolean
 declare function IsQuestEnabled(whichQuest: quest): boolean
-declare function QuestCreateItem(whichQuest: quest): questitem
-declare function QuestItemSetDescription(whichQuestItem: questitem, description: string): void
-declare function QuestItemSetCompleted(whichQuestItem: questitem, completed: boolean): void
-declare function IsQuestItemCompleted(whichQuestItem: questitem): boolean
 declare function FlashQuestDialogButton(): void
 declare function ForceQuestDialogUpdate(): void
-
-export class QuestItem extends Handle<questitem> {
-    constructor(whichQuest: Quest) {
-        super(QuestCreateItem(whichQuest.getHandle))
-    }
-
-    public setDescription(description: string) {
-        QuestItemSetDescription(this.getHandle, description)
-        return this
-    }
-
-    public get completed(): boolean {
-        return IsQuestItemCompleted(this.getHandle)
-    }
-
-    public set completed(completed: boolean) {
-        QuestItemSetCompleted(this.getHandle, completed)
-    }
-}
 
 export class Quest extends Handle<quest> {
     constructor() {
         super(CreateQuest())
     }
 
-    public get completed(): boolean {
+    public isCompleted(): boolean {
         return IsQuestCompleted(this.getHandle)
     }
 
-    public set completed(completed: boolean) {
+    public setCompleted(completed: boolean) {
         QuestSetCompleted(this.getHandle, completed)
+        return this
     }
 
-    public get discovered(): boolean {
+    public isDiscovered(): boolean {
         return IsQuestDiscovered(this.getHandle)
     }
 
-    public set discovered(discovered: boolean) {
+    public setDiscovered(discovered: boolean) {
         QuestSetDiscovered(this.getHandle, discovered)
+        return this
     }
 
-    public get enabled(): boolean {
+    public isEnabled(): boolean {
         return IsQuestEnabled(this.getHandle)
     }
 
-    public set enabled(enabled: boolean) {
+    public setEnabled(enabled: boolean) {
         QuestSetEnabled(this.getHandle, enabled)
+        return this
     }
 
-    public get failed(): boolean {
+    public isFailed(): boolean {
         return IsQuestFailed(this.getHandle)
     }
 
-    public set failed(failed: boolean) {
+    public setFailed(failed: boolean) {
         QuestSetFailed(this.getHandle, failed)
+        return this
     }
 
-    public get required(): boolean {
+    public isRequired(): boolean {
         return IsQuestRequired(this.getHandle)
     }
 
-    public set required(required: boolean) {
+    public setRequired(required: boolean) {
         QuestSetRequired(this.getHandle, required)
+        return this
     }
 
     public addItem(description: string) {
@@ -99,6 +82,7 @@ export class Quest extends Handle<quest> {
 
     public destroy() {
         DestroyQuest(this.getHandle)
+        return this
     }
 
     public setDescription(description: string) {
@@ -106,7 +90,7 @@ export class Quest extends Handle<quest> {
         return this
     }
 
-    public setIcon(iconPath: string) {
+    public setIconPath(iconPath: string) {
         QuestSetIconPath(this.getHandle, iconPath)
         return this
     }

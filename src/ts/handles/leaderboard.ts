@@ -92,17 +92,17 @@ export class LeaderBoard extends Handle<leaderboard> {
     }
 
     public setItemCount(count: integer) {
-        LeaderboardSetSizeByItemCount(this.getHandle, Math.round(count))
+        LeaderboardSetSizeByItemCount(this.getHandle, Math.floor(count))
         return this
     }
 
     public addItem(label: string, value: integer, p: MapPlayer) {
-        LeaderboardAddItem(this.getHandle, label, Math.round(value), p.getHandle)
+        LeaderboardAddItem(this.getHandle, label, Math.floor(value), p.getHandle)
         return this
     }
 
     public removeItem(index: integer) {
-        LeaderboardRemoveItem(this.getHandle, Math.round(index))
+        LeaderboardRemoveItem(this.getHandle, Math.floor(index))
         return this
     }
 
@@ -151,10 +151,10 @@ export class LeaderBoard extends Handle<leaderboard> {
     public setLabelColor(red: integer, green: integer, blue: integer, alpha: integer) {
         LeaderboardSetLabelColor(
             this.getHandle,
-            Math.round(red),
-            Math.round(green),
-            Math.round(blue),
-            Math.round(alpha)
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
         )
         return this
     }
@@ -162,10 +162,10 @@ export class LeaderBoard extends Handle<leaderboard> {
     public setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
         LeaderboardSetValueColor(
             this.getHandle,
-            Math.round(red),
-            Math.round(green),
-            Math.round(blue),
-            Math.round(alpha)
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
         )
         return this
     }
@@ -181,12 +181,12 @@ export class LeaderBoard extends Handle<leaderboard> {
     }
 
     public setItemValue(item: integer, value: integer) {
-        LeaderboardSetItemValue(this.getHandle, Math.round(item), Math.round(value))
+        LeaderboardSetItemValue(this.getHandle, Math.floor(item), Math.floor(value))
         return this
     }
 
     public setItemLabel(item: integer, label: string) {
-        LeaderboardSetItemLabel(this.getHandle, Math.round(item), label)
+        LeaderboardSetItemLabel(this.getHandle, Math.floor(item), label)
         return this
     }
 
@@ -196,7 +196,7 @@ export class LeaderBoard extends Handle<leaderboard> {
         showValues: boolean = true,
         showIcons: boolean = true
     ) {
-        LeaderboardSetItemStyle(this.getHandle, Math.round(item), showLabel, showValues, showIcons)
+        LeaderboardSetItemStyle(this.getHandle, Math.floor(item), showLabel, showValues, showIcons)
         return this
     }
 
@@ -209,11 +209,11 @@ export class LeaderBoard extends Handle<leaderboard> {
     ) {
         LeaderboardSetItemLabelColor(
             this.getHandle,
-            Math.round(item),
-            Math.round(red),
-            Math.round(green),
-            Math.round(blue),
-            Math.round(alpha)
+            Math.floor(item),
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
         )
         return this
     }
@@ -227,11 +227,11 @@ export class LeaderBoard extends Handle<leaderboard> {
     ) {
         LeaderboardSetItemValueColor(
             this.getHandle,
-            Math.round(item),
-            Math.round(red),
-            Math.round(green),
-            Math.round(blue),
-            Math.round(alpha)
+            Math.floor(item),
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
         )
         return this
     }

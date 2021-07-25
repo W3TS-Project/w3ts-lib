@@ -18,7 +18,7 @@ export class DialogButton extends Handle<button> {
         quit: boolean = false,
         doScoreScreen: boolean = false
     ) {
-        hotkey = Math.round(hotkey)
+        hotkey = Math.floor(hotkey)
         const handle = whichDialog.getHandle
         if (!quit) {
             super(DialogAddButton(handle, buttonText, hotkey))

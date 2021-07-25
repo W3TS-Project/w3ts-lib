@@ -7,7 +7,7 @@ declare function ConvertRarityControl(i: integer): raritycontrol
 
 export class RarityControl extends Field<raritycontrol> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertRarityControl(id), id)
     }
 }

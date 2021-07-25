@@ -34,7 +34,7 @@ export abstract class MapString {
     }
 
     public static realToStringW(r: real, width: integer, precision: integer): string {
-        return R2SW(r, Math.round(width), Math.round(precision))
+        return R2SW(r, Math.floor(width), Math.floor(precision))
     }
 
     public static stringToInteger(s: string): integer {
@@ -46,7 +46,7 @@ export abstract class MapString {
     }
 
     public static subString(source: string, start: integer, ending: integer): string {
-        return SubString(source, Math.round(start), Math.round(ending))
+        return SubString(source, Math.floor(start), Math.floor(ending))
     }
 
     public static stringLength(s: string): integer {

@@ -7,7 +7,7 @@ declare function ConvertGameDifficulty(i: integer): gamedifficulty
 
 export class GameDifficulty extends Field<gamedifficulty> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertGameDifficulty(id), id)
     }
 

@@ -7,7 +7,7 @@ declare function ConvertOsKeyType(i: integer): oskeytype
 
 export class OsKeyType extends Field<oskeytype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertOsKeyType(id), id)
     }
 }

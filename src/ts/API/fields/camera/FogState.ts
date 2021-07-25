@@ -7,7 +7,7 @@ declare function ConvertFogState(i: integer): fogstate
 
 export class FogState extends Field<fogstate> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertFogState(id), id)
     }
 

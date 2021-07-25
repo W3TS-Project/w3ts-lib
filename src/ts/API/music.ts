@@ -16,7 +16,7 @@ declare function SetThematicMusicPlayPosition(millisecs: integer): void
 
 export abstract class Music {
     public static setMap(musicName: string, random: boolean, index: integer) {
-        SetMapMusic(musicName, random, Math.round(index))
+        SetMapMusic(musicName, random, Math.floor(index))
         return this
     }
 
@@ -31,7 +31,7 @@ export abstract class Music {
     }
 
     public static playEx(musicName: string, frommsecs: integer, fadeinmsecs: integer) {
-        PlayMusicEx(musicName, Math.round(frommsecs), Math.round(fadeinmsecs))
+        PlayMusicEx(musicName, Math.floor(frommsecs), Math.floor(fadeinmsecs))
         return this
     }
 
@@ -51,7 +51,7 @@ export abstract class Music {
     }
 
     public static playThematicEx(musicFileName: string, frommsecs: integer) {
-        PlayThematicMusicEx(musicFileName, Math.round(frommsecs))
+        PlayThematicMusicEx(musicFileName, Math.floor(frommsecs))
         return this
     }
 
@@ -61,17 +61,17 @@ export abstract class Music {
     }
 
     public static setVolume(volume: integer) {
-        SetMusicVolume(Math.round(volume))
+        SetMusicVolume(Math.floor(volume))
         return this
     }
 
     public static setPlayPosition(millisecs: integer) {
-        SetMusicPlayPosition(Math.round(millisecs))
+        SetMusicPlayPosition(Math.floor(millisecs))
         return this
     }
 
     public static setThematicPlayPosition(millisecs: integer) {
-        SetThematicMusicPlayPosition(Math.round(millisecs))
+        SetThematicMusicPlayPosition(Math.floor(millisecs))
         return this
     }
 }

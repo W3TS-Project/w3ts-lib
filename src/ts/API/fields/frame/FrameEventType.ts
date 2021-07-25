@@ -8,7 +8,7 @@ declare function BlzGetTriggerFrameEvent(): frameeventtype
 
 export class FrameEventType extends Field<frameeventtype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertFrameEventType(id), id)
     }
 

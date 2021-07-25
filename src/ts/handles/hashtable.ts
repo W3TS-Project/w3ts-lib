@@ -470,29 +470,29 @@ export class HashTable extends Handle<hashtable> {
     }
 
     public saveInt(parentKey: integer, childKey: integer, value: integer) {
-        SaveInteger(this.getHandle, Math.round(parentKey), Math.round(childKey), Math.round(value))
+        SaveInteger(this.getHandle, Math.floor(parentKey), Math.floor(childKey), Math.floor(value))
         return this
     }
 
     public saveReal(parentKey: integer, childKey: integer, value: real) {
-        SaveReal(this.getHandle, Math.round(parentKey), Math.round(childKey), value)
+        SaveReal(this.getHandle, Math.floor(parentKey), Math.floor(childKey), value)
         return this
     }
 
     public saveBool(parentKey: integer, childKey: integer, value: boolean) {
-        SaveBoolean(this.getHandle, Math.round(parentKey), Math.round(childKey), value)
+        SaveBoolean(this.getHandle, Math.floor(parentKey), Math.floor(childKey), value)
         return this
     }
 
     public saveStr(parentKey: integer, childKey: integer, value: string) {
-        return SaveStr(this.getHandle, Math.round(parentKey), Math.round(childKey), value)
+        return SaveStr(this.getHandle, Math.floor(parentKey), Math.floor(childKey), value)
     }
 
     public savePlayer(parentKey: integer, childKey: integer, whichPlayer: MapPlayer) {
         return SavePlayerHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichPlayer.getHandle
         )
     }
@@ -500,8 +500,8 @@ export class HashTable extends Handle<hashtable> {
     public saveWidget(parentKey: integer, childKey: integer, whichWidget: Widget) {
         return SaveWidgetHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichWidget.getHandle
         )
     }
@@ -513,8 +513,8 @@ export class HashTable extends Handle<hashtable> {
     ) {
         return SaveDestructableHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichDestructable.getHandle
         )
     }
@@ -522,8 +522,8 @@ export class HashTable extends Handle<hashtable> {
     public saveItem(parentKey: integer, childKey: integer, whichItem: Item) {
         return SaveItemHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichItem.getHandle
         )
     }
@@ -531,8 +531,8 @@ export class HashTable extends Handle<hashtable> {
     public saveUnit(parentKey: integer, childKey: integer, whichUnit: Unit) {
         return SaveUnitHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichUnit.getHandle
         )
     }
@@ -540,8 +540,8 @@ export class HashTable extends Handle<hashtable> {
     public saveAbility(parentKey: integer, childKey: integer, whichAbility: Ability) {
         return SaveAbilityHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichAbility.getHandle
         )
     }
@@ -549,8 +549,8 @@ export class HashTable extends Handle<hashtable> {
     public saveTimer(parentKey: integer, childKey: integer, whichTimer: Timer) {
         return SaveTimerHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichTimer.getHandle
         )
     }
@@ -558,8 +558,8 @@ export class HashTable extends Handle<hashtable> {
     public saveTrigger(parentKey: integer, childKey: integer, whichTrigger: Trigger) {
         return SaveTriggerHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichTrigger.getHandle
         )
     }
@@ -571,8 +571,8 @@ export class HashTable extends Handle<hashtable> {
     ) {
         return SaveTriggerConditionHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichTriggercondition
         )
     }
@@ -584,8 +584,8 @@ export class HashTable extends Handle<hashtable> {
     ) {
         return SaveTriggerActionHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichTriggeraction
         )
     }
@@ -593,8 +593,8 @@ export class HashTable extends Handle<hashtable> {
     public saveTriggerEvent(parentKey: integer, childKey: integer, whichEvent: EventType) {
         return SaveTriggerEventHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichEvent.getHandle
         )
     }
@@ -602,8 +602,8 @@ export class HashTable extends Handle<hashtable> {
     public saveForce(parentKey: integer, childKey: integer, whichForce: Force) {
         return SaveForceHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichForce.getHandle
         )
     }
@@ -611,8 +611,8 @@ export class HashTable extends Handle<hashtable> {
     public saveGroup(parentKey: integer, childKey: integer, whichGroup: Group) {
         return SaveGroupHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichGroup.getHandle
         )
     }
@@ -620,8 +620,8 @@ export class HashTable extends Handle<hashtable> {
     public saveLocation(parentKey: integer, childKey: integer, whichLocation: MapLocation) {
         return SaveLocationHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichLocation.getHandle
         )
     }
@@ -629,8 +629,8 @@ export class HashTable extends Handle<hashtable> {
     public saveRect(parentKey: integer, childKey: integer, whichRect: Rectangle) {
         return SaveRectHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichRect.getHandle
         )
     }
@@ -638,8 +638,8 @@ export class HashTable extends Handle<hashtable> {
     public saveBooleanExpr(parentKey: integer, childKey: integer, whichBoolexpr: boolexpr) {
         return SaveBooleanExprHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichBoolexpr
         )
     }
@@ -647,8 +647,8 @@ export class HashTable extends Handle<hashtable> {
     public saveSound(parentKey: integer, childKey: integer, whichSound: Sound) {
         return SaveSoundHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichSound.getHandle
         )
     }
@@ -656,8 +656,8 @@ export class HashTable extends Handle<hashtable> {
     public saveEffect(parentKey: integer, childKey: integer, whichEffect: SpecialEffect) {
         return SaveEffectHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichEffect.getHandle
         )
     }
@@ -665,8 +665,8 @@ export class HashTable extends Handle<hashtable> {
     public saveUnitPool(parentKey: integer, childKey: integer, whichUnitpool: unitpool) {
         return SaveUnitPoolHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichUnitpool
         )
     }
@@ -674,8 +674,8 @@ export class HashTable extends Handle<hashtable> {
     public saveItemPool(parentKey: integer, childKey: integer, whichItempool: itempool) {
         return SaveItemPoolHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichItempool
         )
     }
@@ -683,8 +683,8 @@ export class HashTable extends Handle<hashtable> {
     public saveQuest(parentKey: integer, childKey: integer, whichQuest: Quest) {
         return SaveQuestHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichQuest.getHandle
         )
     }
@@ -692,8 +692,8 @@ export class HashTable extends Handle<hashtable> {
     public saveQuestItem(parentKey: integer, childKey: integer, whichQuestitem: QuestItem) {
         return SaveQuestItemHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichQuestitem.getHandle
         )
     }
@@ -705,8 +705,8 @@ export class HashTable extends Handle<hashtable> {
     ) {
         return SaveDefeatConditionHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichDefeatcondition
         )
     }
@@ -714,8 +714,8 @@ export class HashTable extends Handle<hashtable> {
     public saveTimerDialog(parentKey: integer, childKey: integer, whichTimerdialog: TimerDialog) {
         return SaveTimerDialogHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichTimerdialog.getHandle
         )
     }
@@ -723,8 +723,8 @@ export class HashTable extends Handle<hashtable> {
     public saveLeaderboard(parentKey: integer, childKey: integer, whichLeaderboard: LeaderBoard) {
         return SaveLeaderboardHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichLeaderboard.getHandle
         )
     }
@@ -732,8 +732,8 @@ export class HashTable extends Handle<hashtable> {
     public saveMultiboard(parentKey: integer, childKey: integer, whichMultiboard: MultiBoard) {
         return SaveMultiboardHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichMultiboard.getHandle
         )
     }
@@ -745,8 +745,8 @@ export class HashTable extends Handle<hashtable> {
     ) {
         return SaveMultiboardItemHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichMultiboardItem.getHandle
         )
     }
@@ -754,8 +754,8 @@ export class HashTable extends Handle<hashtable> {
     public saveTrackable(parentKey: integer, childKey: integer, whichTrackable: Trackable) {
         return SaveTrackableHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichTrackable.getHandle
         )
     }
@@ -763,8 +763,8 @@ export class HashTable extends Handle<hashtable> {
     public saveDialog(parentKey: integer, childKey: integer, whichDialog: Dialog) {
         return SaveDialogHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichDialog.getHandle
         )
     }
@@ -772,8 +772,8 @@ export class HashTable extends Handle<hashtable> {
     public saveButton(parentKey: integer, childKey: integer, whichButton: DialogButton) {
         return SaveButtonHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichButton.getHandle
         )
     }
@@ -781,8 +781,8 @@ export class HashTable extends Handle<hashtable> {
     public saveTextTag(parentKey: integer, childKey: integer, whichTexttag: TextTag) {
         return SaveTextTagHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichTexttag.getHandle
         )
     }
@@ -790,8 +790,8 @@ export class HashTable extends Handle<hashtable> {
     public saveLightning(parentKey: integer, childKey: integer, whichLightning: Lightning) {
         return SaveLightningHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichLightning.getHandle
         )
     }
@@ -799,8 +799,8 @@ export class HashTable extends Handle<hashtable> {
     public saveImage(parentKey: integer, childKey: integer, whichImage: Image) {
         return SaveImageHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichImage.getHandle
         )
     }
@@ -808,8 +808,8 @@ export class HashTable extends Handle<hashtable> {
     public saveUbersplat(parentKey: integer, childKey: integer, whichUbersplat: Ubersplat) {
         return SaveUbersplatHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichUbersplat.getHandle
         )
     }
@@ -817,8 +817,8 @@ export class HashTable extends Handle<hashtable> {
     public saveRegion(parentKey: integer, childKey: integer, whichRegion: Region) {
         return SaveRegionHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichRegion.getHandle
         )
     }
@@ -826,8 +826,8 @@ export class HashTable extends Handle<hashtable> {
     public saveFogState(parentKey: integer, childKey: integer, whichFogState: FogState) {
         return SaveFogStateHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichFogState.getHandle
         )
     }
@@ -835,8 +835,8 @@ export class HashTable extends Handle<hashtable> {
     public saveFogModifier(parentKey: integer, childKey: integer, whichFogModifier: FogModifier) {
         return SaveFogModifierHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichFogModifier.getHandle
         )
     }
@@ -844,8 +844,8 @@ export class HashTable extends Handle<hashtable> {
     public saveAgent(parentKey: integer, childKey: integer, whichAgent: agent) {
         return SaveAgentHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichAgent
         )
     }
@@ -853,8 +853,8 @@ export class HashTable extends Handle<hashtable> {
     public saveHashtable(parentKey: integer, childKey: integer, whichHashtable: HashTable) {
         return SaveHashtableHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichHashtable.getHandle
         )
     }
@@ -862,93 +862,93 @@ export class HashTable extends Handle<hashtable> {
     public saveFrame(parentKey: integer, childKey: integer, whichFrameHandle: Frame) {
         return SaveFrameHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey),
+            Math.floor(parentKey),
+            Math.floor(childKey),
             whichFrameHandle.getHandle
         )
     }
 
     public loadInt(parentKey: integer, childKey: integer): integer {
-        return LoadInteger(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return LoadInteger(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public loadReal(parentKey: integer, childKey: integer): real {
-        return LoadReal(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return LoadReal(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public loadBool(parentKey: integer, childKey: integer): boolean {
-        return LoadBoolean(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return LoadBoolean(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public loadStr(parentKey: integer, childKey: integer): string {
-        return LoadStr(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return LoadStr(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public loadPlayer(parentKey: integer, childKey: integer): MapPlayer {
         return MapPlayer.fromHandle(
-            LoadPlayerHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadPlayerHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadWidget(parentKey: integer, childKey: integer): Widget {
         return Widget.fromHandle(
-            LoadWidgetHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadWidgetHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadDestructable(parentKey: integer, childKey: integer): Destructable {
         return Destructable.fromHandle(
-            LoadDestructableHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadDestructableHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadItem(parentKey: integer, childKey: integer): Item {
         return Item.fromHandle(
-            LoadItemHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadItemHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadUnit(parentKey: integer, childKey: integer): Unit {
         return Unit.fromHandle(
-            LoadUnitHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadUnitHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadAbility(parentKey: integer, childKey: integer): Ability {
         return Ability.fromHandle(
-            LoadAbilityHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadAbilityHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadTimer(parentKey: integer, childKey: integer): Timer {
         return Timer.fromHandle(
-            LoadTimerHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadTimerHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadTrigger(parentKey: integer, childKey: integer): Trigger {
         return Trigger.fromHandle(
-            LoadTriggerHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadTriggerHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadTriggerCondition(parentKey: integer, childKey: integer): triggercondition {
         return LoadTriggerConditionHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey)
+            Math.floor(parentKey),
+            Math.floor(childKey)
         )
     }
 
     public loadTriggerAction(parentKey: integer, childKey: integer): triggeraction {
-        return LoadTriggerActionHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return LoadTriggerActionHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public loadTriggerEvent(parentKey: integer, childKey: integer): EventType | undefined {
         const handle = LoadTriggerEventHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey)
+            Math.floor(parentKey),
+            Math.floor(childKey)
         )
         for (const events of ObjectOptions.values(Events)) {
             for (const event of ObjectOptions.values(events)) {
@@ -962,59 +962,59 @@ export class HashTable extends Handle<hashtable> {
 
     public loadForce(parentKey: integer, childKey: integer): Force {
         return Force.fromHandle(
-            LoadForceHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadForceHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadGroup(parentKey: integer, childKey: integer): Group {
         return Group.fromHandle(
-            LoadGroupHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadGroupHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadLocation(parentKey: integer, childKey: integer): MapLocation {
         return MapLocation.fromHandle(
-            LoadLocationHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadLocationHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadRect(parentKey: integer, childKey: integer): Rectangle {
         return Rectangle.fromHandle(
-            LoadRectHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadRectHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadBoolExpr(parentKey: integer, childKey: integer): boolexpr {
-        return LoadBooleanExprHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return LoadBooleanExprHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public loadSound(parentKey: integer, childKey: integer): Sound {
         return Sound.fromHandle(
-            LoadSoundHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadSoundHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadSpecialEffect(parentKey: integer, childKey: integer): SpecialEffect {
         return SpecialEffect.fromHandle(
-            LoadEffectHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadEffectHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadSpellEffect(parentKey: integer, childKey: integer): SpellEffect {
         return SpellEffect.fromHandle(
-            LoadEffectHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadEffectHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadUnitPool(parentKey: integer, childKey: integer): UnitPool {
         return UnitPool.fromHandle(
-            LoadUnitPoolHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadUnitPoolHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadItemPool(parentKey: integer, childKey: integer): ItemPool {
         return ItemPool.fromHandle(
-            LoadItemPoolHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadItemPoolHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
@@ -1025,149 +1025,149 @@ export class HashTable extends Handle<hashtable> {
     public loadDefeatCondition(parentKey: integer, childKey: integer): defeatcondition {
         return LoadDefeatConditionHandle(
             this.getHandle,
-            Math.round(parentKey),
-            Math.round(childKey)
+            Math.floor(parentKey),
+            Math.floor(childKey)
         )
     }
 
     public loadTimerDialog(parentKey: integer, childKey: integer): TimerDialog {
         return TimerDialog.fromHandle(
-            LoadTimerDialogHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadTimerDialogHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadLeaderboard(parentKey: integer, childKey: integer): LeaderBoard {
         return LeaderBoard.fromHandle(
-            LoadLeaderboardHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadLeaderboardHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadMultiboard(parentKey: integer, childKey: integer): MultiBoard {
         return MultiBoard.fromHandle(
-            LoadMultiboardHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadMultiboardHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadMultiboardItem(parentKey: integer, childKey: integer): MultiboardItem {
         return MultiboardItem.getObject(
-            LoadMultiboardItemHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadMultiboardItemHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadTrackable(parentKey: integer, childKey: integer): Trackable {
         return Trackable.getObject(
-            LoadTrackableHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadTrackableHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadDialog(parentKey: integer, childKey: integer): Dialog {
         return Dialog.fromHandle(
-            LoadDialogHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadDialogHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadButton(parentKey: integer, childKey: integer): DialogButton {
         return DialogButton.fromHandle(
-            LoadButtonHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadButtonHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadTextTag(parentKey: integer, childKey: integer): TextTag {
         return TextTag.getObject(
-            LoadTextTagHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadTextTagHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadLightning(parentKey: integer, childKey: integer): Lightning {
         return Lightning.getObject(
-            LoadLightningHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadLightningHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadImage(parentKey: integer, childKey: integer): Image {
         return Image.fromHandle(
-            LoadImageHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadImageHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadUbersplat(parentKey: integer, childKey: integer): Ubersplat {
         return Ubersplat.fromHandle(
-            LoadUbersplatHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadUbersplatHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadRegion(parentKey: integer, childKey: integer): Region {
         return Region.fromHandle(
-            LoadRegionHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadRegionHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadFogState(parentKey: integer, childKey: integer): FogState {
         return FogState.fromHandle(
-            LoadFogStateHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadFogStateHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadFogModifier(parentKey: integer, childKey: integer): FogModifier {
         return FogModifier.fromHandle(
-            LoadFogModifierHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadFogModifierHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadHashtable(parentKey: integer, childKey: integer): HashTable {
         return HashTable.getObject(
-            LoadHashtableHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadHashtableHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public loadFrameHandle(parentKey: integer, childKey: integer): Frame {
         return Frame.fromHandle(
-            LoadFrameHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+            LoadFrameHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         )
     }
 
     public haveInt(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedInteger(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return HaveSavedInteger(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public haveReal(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedReal(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return HaveSavedReal(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public haveBool(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedBoolean(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return HaveSavedBoolean(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public haveStr(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedString(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return HaveSavedString(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public haveHandle(parentKey: integer, childKey: integer): boolean {
-        return HaveSavedHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        return HaveSavedHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
     }
 
     public removeInt(parentKey: integer, childKey: integer) {
-        RemoveSavedInteger(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        RemoveSavedInteger(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         return this
     }
 
     public removeReal(parentKey: integer, childKey: integer) {
-        RemoveSavedReal(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        RemoveSavedReal(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         return this
     }
 
     public removeBool(parentKey: integer, childKey: integer) {
-        RemoveSavedBoolean(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        RemoveSavedBoolean(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         return this
     }
 
     public removeStr(parentKey: integer, childKey: integer) {
-        RemoveSavedString(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        RemoveSavedString(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         return this
     }
 
     public removeHandle(parentKey: integer, childKey: integer) {
-        RemoveSavedHandle(this.getHandle, Math.round(parentKey), Math.round(childKey))
+        RemoveSavedHandle(this.getHandle, Math.floor(parentKey), Math.floor(childKey))
         return this
     }
 
@@ -1177,7 +1177,7 @@ export class HashTable extends Handle<hashtable> {
     }
 
     public flushChild(parentKey: integer) {
-        FlushChildHashtable(this.getHandle, Math.round(parentKey))
+        FlushChildHashtable(this.getHandle, Math.floor(parentKey))
         return this
     }
 

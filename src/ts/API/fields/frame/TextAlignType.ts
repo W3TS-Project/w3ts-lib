@@ -7,7 +7,7 @@ declare function ConvertTextAlignType(i: integer): textaligntype
 
 export class TextAlignType extends Field<textaligntype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertTextAlignType(id), id)
     }
 }

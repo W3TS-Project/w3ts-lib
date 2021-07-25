@@ -7,7 +7,7 @@ declare function ConvertUnitState(i: integer): unitstate
 
 export class UnitState extends Field<unitstate> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertUnitState(id), id)
     }
 }

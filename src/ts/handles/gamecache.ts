@@ -100,7 +100,7 @@ export class GameCache extends Handle<gamecache> {
     }
 
     public storeInteger(missionKey: string, key: string, value: integer) {
-        StoreInteger(this.getHandle, missionKey, key, Math.round(value))
+        StoreInteger(this.getHandle, missionKey, key, Math.floor(value))
         return this
     }
 

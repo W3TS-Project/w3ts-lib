@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { integer, real } from "../Utils"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { Unit } from "./Unit"
 
@@ -100,8 +100,8 @@ export class Sound extends Handle<sound> {
                 looping,
                 is3D,
                 stopWhenOutOfRange,
-                fadeInRate,
-                fadeOutRate,
+                Math.floor(fadeInRate),
+                Math.floor(fadeOutRate),
                 eaxSetting
             )
         )
@@ -122,8 +122,8 @@ export class Sound extends Handle<sound> {
                 looping,
                 is3D,
                 stopWhenOutOfRange,
-                fadeInRate,
-                fadeOutRate,
+                Math.floor(fadeInRate),
+                Math.floor(fadeOutRate),
                 SLKEntryName
             )
         )
@@ -143,14 +143,16 @@ export class Sound extends Handle<sound> {
                 looping,
                 is3D,
                 stopWhenOutOfRange,
-                fadeInRate,
-                fadeOutRate
+                Math.floor(fadeInRate),
+                Math.floor(fadeOutRate)
             )
         )
     }
 
     public static createMIDI(soundLabel: string, fadeInRate: integer, fadeOutRate: integer) {
-        return new this(CreateMIDISound(soundLabel, fadeInRate, fadeOutRate))
+        return new this(
+            CreateMIDISound(soundLabel, Math.floor(fadeInRate), Math.floor(fadeOutRate))
+        )
     }
 
     public setParamsFromLabel(soundLabel: string) {
@@ -164,12 +166,12 @@ export class Sound extends Handle<sound> {
     }
 
     public setChannel(channel: integer) {
-        SetSoundChannel(this.getHandle, channel)
+        SetSoundChannel(this.getHandle, Math.floor(channel))
         return this
     }
 
     public setVolume(volume: integer) {
-        SetSoundVolume(this.getHandle, volume)
+        SetSoundVolume(this.getHandle, Math.floor(volume))
         return this
     }
 
@@ -183,7 +185,7 @@ export class Sound extends Handle<sound> {
      * @param millisecs
      */
     public setPlayPosition(millisecs: integer) {
-        SetSoundPlayPosition(this.getHandle, millisecs)
+        SetSoundPlayPosition(this.getHandle, Math.floor(millisecs))
         return this
     }
 
@@ -193,23 +195,35 @@ export class Sound extends Handle<sound> {
     }
 
     public setConeAngles(inside: real, outside: real, outsideVolume: integer) {
-        SetSoundConeAngles(this.getHandle, inside, outside, outsideVolume)
+        SetSoundConeAngles(this.getHandle, inside, outside, Math.floor(outsideVolume))
         return this
     }
 
-    public setConeOrientation(x: real, y: real, z: real) {
+    public setConeOrientationCoords(x: real, y: real, z: real) {
         SetSoundConeOrientation(this.getHandle, x, y, z)
         return this
     }
 
-    public setPosition(x: real, y: real, z: real) {
+    public setConeOrientationPos(p: Position) {
+        return this.setConeOrientationCoords(p.getX(), p.getY(), p.getZ())
+    }
+
+    public setPositionCoords(x: real, y: real, z: real) {
         SetSoundPosition(this.getHandle, x, y, z)
         return this
     }
 
-    public setVelocity(x: real, y: real, z: real) {
+    public setPositionPos(p: Position) {
+        return this.setPositionCoords(p.getX(), p.getY(), p.getZ())
+    }
+
+    public setVelocityCoords(x: real, y: real, z: real) {
         SetSoundVelocity(this.getHandle, x, y, z)
         return this
+    }
+
+    public setVelocityPos(p: Position) {
+        return this.setVelocityCoords(p.getX(), p.getY(), p.getZ())
     }
 
     public attachToUnit(whichUnit: Unit) {
@@ -229,25 +243,27 @@ export class Sound extends Handle<sound> {
 
     public killWhenDone() {
         KillSoundWhenDone(this.getHandle)
+        return this
     }
 
-    public get duration(): integer {
+    public getDuration(): integer {
         return GetSoundDuration(this.getHandle)
     }
 
-    public set duration(duration: integer) {
-        SetSoundDuration(this.getHandle, duration)
+    public setDuration(duration: integer) {
+        SetSoundDuration(this.getHandle, Math.floor(duration))
+        return this
     }
 
     public static getFileDuration(fileName: string): integer {
         return GetSoundFileDuration(fileName)
     }
 
-    public get playing(): boolean {
+    public isPlaying(): boolean {
         return GetSoundIsPlaying(this.getHandle)
     }
 
-    public get loading(): boolean {
+    public isLoading(): boolean {
         return GetSoundIsLoading(this.getHandle)
     }
 
@@ -261,20 +277,22 @@ export class Sound extends Handle<sound> {
         return this
     }
 
-    public get dialogueSpeakerNameKey(): string {
+    public getDialogueSpeakerNameKey(): string {
         return GetDialogueSpeakerNameKey(this.getHandle)
     }
 
-    public set dialogueSpeakerNameKey(speakerName: string) {
+    public setDialogueSpeakerNameKey(speakerName: string) {
         SetDialogueSpeakerNameKey(this.getHandle, speakerName)
+        return this
     }
 
-    public get dialogueTextKey(): string {
+    public getDalogueTextKey(): string {
         return GetDialogueTextKey(this.getHandle)
     }
 
-    public set dialogueTextKey(dialogueText: string) {
+    public setDialogueTextKey(dialogueText: string) {
         SetDialogueTextKey(this.getHandle, dialogueText)
+        return this
     }
 
     public setFacialAnimationFilepath(animationSetFilepath: string) {

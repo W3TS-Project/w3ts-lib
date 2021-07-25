@@ -7,7 +7,7 @@ declare function ConvertFGameState(i: integer): fgamestate
 
 export class GameFloatState extends Field<fgamestate> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertFGameState(id), id)
     }
 }

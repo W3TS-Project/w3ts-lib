@@ -7,7 +7,7 @@ declare function ConvertBlendMode(i: integer): blendmode
 
 export class BlendMode extends Field<blendmode> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertBlendMode(id), id)
     }
 }

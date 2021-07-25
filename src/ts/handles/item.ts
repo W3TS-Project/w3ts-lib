@@ -75,6 +75,14 @@ declare function BlzSetItemStringField(
 declare function BlzItemRemoveAbility(whichItem: item, abilCode: integer): boolean
 declare function GetFilterItem(): item
 declare function GetEnumItem(): item
+declare function BlzSetItemDescription(whichItem: item, description: string): void
+declare function BlzGetItemDescription(whichItem: item): string
+declare function BlzSetItemTooltip(whichItem: item, tooltip: string): void
+declare function BlzGetItemTooltip(whichItem: item): string
+declare function BlzSetItemExtendedTooltip(whichItem: item, extendedTooltip: string): void
+declare function BlzGetItemExtendedTooltip(whichItem: item): string
+declare function BlzSetItemIconPath(whichItem: item, iconPath: string): void
+declare function BlzGetItemIconPath(whichItem: item): string
 
 export type ItemFieldType = ItemBooleanField | ItemIntegerField | ItemRealField | ItemStringField
 
@@ -222,7 +230,7 @@ export class Item extends Widget {
     }
 
     public setCharges(value: integer) {
-        SetItemCharges(this.getHandle, Math.round(value))
+        SetItemCharges(this.getHandle, Math.floor(value))
         return this
     }
 
@@ -231,12 +239,12 @@ export class Item extends Widget {
     }
 
     public setUserData(data: integer) {
-        SetItemUserData(this.getHandle, Math.round(data))
+        SetItemUserData(this.getHandle, Math.floor(data))
         return this
     }
 
     public getAbilityByIndex(index: integer) {
-        return Ability.fromHandle(BlzGetItemAbilityByIndex(this.getHandle, Math.round(index)))
+        return Ability.fromHandle(BlzGetItemAbilityByIndex(this.getHandle, Math.floor(index)))
     }
 
     public getAbilityByCode(abilCode: RawCode) {
@@ -291,7 +299,7 @@ export class Item extends Widget {
     }
 
     public setIntegerField(field: ItemIntegerField, value: integer) {
-        return BlzSetItemIntegerField(this.getHandle, field.getHandle, Math.round(value))
+        return BlzSetItemIntegerField(this.getHandle, field.getHandle, Math.floor(value))
     }
 
     public setRealField(field: ItemRealField, value: real) {
@@ -318,6 +326,42 @@ export class Item extends Widget {
 
     public removeAbility(abilCode: RawCode): boolean {
         return BlzItemRemoveAbility(this.getHandle, abilCode.getId())
+    }
+
+    public setDescription(description: string) {
+        BlzSetItemDescription(this.getHandle, description)
+        return this
+    }
+
+    public getDescription() {
+        return BlzGetItemDescription(this.getHandle)
+    }
+
+    public setTooltip(tooltip: string) {
+        BlzSetItemTooltip(this.getHandle, tooltip)
+        return this
+    }
+
+    public getTooltip() {
+        return BlzGetItemTooltip(this.getHandle)
+    }
+
+    public setExtendedTooltip(extendedTooltip: string) {
+        BlzSetItemExtendedTooltip(this.getHandle, extendedTooltip)
+        return this
+    }
+
+    public getExtendedTooltip() {
+        return BlzGetItemExtendedTooltip(this.getHandle)
+    }
+
+    public setIconPath(iconPath: string) {
+        BlzSetItemIconPath(this.getHandle, iconPath)
+        return this
+    }
+
+    public getIconPath() {
+        return BlzGetItemIconPath(this.getHandle)
     }
 
     public static fromHandle(handle: item): Item {

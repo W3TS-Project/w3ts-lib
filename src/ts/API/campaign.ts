@@ -29,22 +29,22 @@ export abstract class Campaign {
         missionNumber: integer,
         available: boolean
     ) {
-        SetMissionAvailable(Math.round(campaignNumber), Math.round(missionNumber), available)
+        SetMissionAvailable(Math.floor(campaignNumber), Math.floor(missionNumber), available)
         return this
     }
 
     public static setAvailable(campaignNumber: integer, available: boolean) {
-        SetCampaignAvailable(Math.round(campaignNumber), available)
+        SetCampaignAvailable(Math.floor(campaignNumber), available)
         return this
     }
 
     public static setOpCinematicAvailable(campaignNumber: integer, available: boolean) {
-        SetOpCinematicAvailable(Math.round(campaignNumber), available)
+        SetOpCinematicAvailable(Math.floor(campaignNumber), available)
         return this
     }
 
     public static setEdCinematicAvailable(campaignNumber: integer, available: boolean) {
-        SetEdCinematicAvailable(Math.round(campaignNumber), available)
+        SetEdCinematicAvailable(Math.floor(campaignNumber), available)
         return this
     }
 
@@ -58,12 +58,12 @@ export abstract class Campaign {
     }
 
     public static setCustomButtonVisible(whichButton: integer, visible: boolean) {
-        SetCustomCampaignButtonVisible(Math.round(whichButton), visible)
+        SetCustomCampaignButtonVisible(Math.floor(whichButton), visible)
         return this
     }
 
     public static getCustomButtonVisible(whichButton: integer): boolean {
-        return GetCustomCampaignButtonVisible(Math.round(whichButton))
+        return GetCustomCampaignButtonVisible(Math.floor(whichButton))
     }
 
     public static doNotSaveReplay() {

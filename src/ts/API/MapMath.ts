@@ -73,14 +73,14 @@ export abstract class MapMath {
     }
 
     public static bitOr(x: integer, y: integer): integer {
-        return BlzBitOr(Math.round(x), Math.round(y))
+        return BlzBitOr(Math.floor(x), Math.floor(y))
     }
 
     public static bitAnd(x: integer, y: integer): integer {
-        return BlzBitAnd(Math.round(x), Math.round(y))
+        return BlzBitAnd(Math.floor(x), Math.floor(y))
     }
 
     public static bitXor(x: integer, y: integer): integer {
-        return BlzBitXor(Math.round(x), Math.round(y))
+        return BlzBitXor(Math.floor(x), Math.floor(y))
     }
 }

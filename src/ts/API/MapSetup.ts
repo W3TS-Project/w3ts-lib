@@ -29,12 +29,12 @@ export abstract class MapSetup {
     }
 
     public static setTeams(teamcount: integer) {
-        SetTeams(Math.round(teamcount))
+        SetTeams(Math.floor(teamcount))
         return this
     }
 
     public static setPlayers(playercount: integer) {
-        SetPlayers(Math.round(playercount))
+        SetPlayers(Math.floor(playercount))
         return this
     }
 

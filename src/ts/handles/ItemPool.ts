@@ -4,7 +4,7 @@
 import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { Item } from "./Item"
-import { ItemRawCode } from "./ItemRawCode"
+import { ItemRawCode } from "./rawCode/ItemRawCode"
 
 declare function CreateItemPool(): itempool
 declare function DestroyItemPool(whichItemPool: itempool): void

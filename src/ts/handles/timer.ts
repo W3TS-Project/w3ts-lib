@@ -10,7 +10,7 @@ declare let TimerStart: (
     whichTimer: timer,
     timeout: real,
     periodic: boolean,
-    handlerFunc: () => void
+    handlerFunc: code
 ) => void
 declare function TimerGetElapsed(whichTimer: timer): real
 declare function TimerGetRemaining(whichTimer: timer): real
@@ -24,15 +24,15 @@ export class Timer extends Handle<timer> {
         super(CreateTimer())
     }
 
-    public get elapsed(): real {
+    public getElapsed(): real {
         return TimerGetElapsed(this.getHandle)
     }
 
-    public get remaining(): real {
+    public getRemaining(): real {
         return TimerGetRemaining(this.getHandle)
     }
 
-    public get timeout(): real {
+    public getTimeout(): real {
         return TimerGetTimeout(this.getHandle)
     }
 
@@ -52,7 +52,7 @@ export class Timer extends Handle<timer> {
     }
 
     public start(timeout: real, periodic: boolean, handlerFunc: code) {
-        TimerStart(this.getHandle, timeout, periodic, handlerFunc)
+        TimerStart(this.getHandle, timeout, periodic, ErrorHandling.getHandledCallback(handlerFunc))
         return this
     }
 
@@ -69,18 +69,14 @@ export class Timer extends Handle<timer> {
     }
 
     public setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
-        return this.start(
-            time,
-            false,
-            ErrorHandling.getHandledCallback(() => {
-                call()
-                if (isDestroy) {
-                    Timer.fromExpired()
-                        .pause()
-                        .destroy()
-                }
-            })
-        )
+        return this.start(time, false, () => {
+            call()
+            if (isDestroy) {
+                Timer.fromExpired()
+                    .pause()
+                    .destroy()
+            }
+        })
     }
 
     public static setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {

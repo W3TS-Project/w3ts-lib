@@ -17,7 +17,7 @@ export class RawCode {
 
     public static toId(id: rawcode): integer {
         if (typeof id === "number") {
-            return Math.round(id)
+            return Math.floor(id)
         } else {
             return FourCC(id)
         }
@@ -27,7 +27,7 @@ export class RawCode {
         if (typeof id === "string") {
             return id
         } else {
-            return string.pack(">I4", Math.round(id))
+            return string.pack(">I4", Math.floor(id))
         }
     }
 }

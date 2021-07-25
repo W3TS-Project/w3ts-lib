@@ -7,7 +7,7 @@ declare function ConvertPlayerSlotState(i: integer): playerslotstate
 
 export class PlayerSlotState extends Field<playerslotstate> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertPlayerSlotState(id), id)
     }
 

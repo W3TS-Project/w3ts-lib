@@ -7,7 +7,7 @@ declare function ConvertVersion(i: integer): version
 
 export class Version extends Field<version> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertVersion(id), id)
     }
 }

@@ -209,7 +209,7 @@ export class SpellEffect extends Handle<effect> {
     }
 
     public setAlpha(alpha: integer) {
-        BlzSetSpecialEffectAlpha(this.getHandle, Math.round(alpha))
+        BlzSetSpecialEffectAlpha(this.getHandle, Math.floor(alpha))
         return this
     }
 

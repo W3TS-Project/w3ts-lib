@@ -9,7 +9,7 @@ declare function GetCreatureDensity(): mapdensity
 
 export class MapDensity extends Field<mapdensity> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertMapDensity(id), id)
     }
 

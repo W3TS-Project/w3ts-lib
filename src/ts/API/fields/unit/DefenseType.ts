@@ -7,7 +7,7 @@ declare function ConvertDefenseType(i: integer): defensetype
 
 export class DefenseType extends Field<defensetype> {
     public constructor(id: integer) {
-        id = Math.round(id)
+        id = Math.floor(id)
         super(ConvertDefenseType(id), id)
     }
 }
