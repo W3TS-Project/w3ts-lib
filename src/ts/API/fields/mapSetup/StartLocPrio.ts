@@ -11,11 +11,7 @@ export class StartLocPrio extends Field<startlocprio> {
         super(ConvertStartLocPrio(id), id)
     }
 
-    public static fromHandle(handle: startlocprio): StartLocPrio {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: StartLocPrio): startlocprio {
-        return this.getHandle(object)
+    public static fromHandle(handle: startlocprio) {
+        return this.getObject(handle) as StartLocPrio
     }
 }

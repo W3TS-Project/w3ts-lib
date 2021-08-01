@@ -1,11 +1,8 @@
-// /** @noSelfInFile **/
-// //@ts-nocheck
+/** @noSelfInFile **/
+//@ts-nocheck
 
-import { GameDifficulty } from "./fields/game/GameDifficulty"
-import { GameSpeed } from "./fields/game/GameSpeed"
 import { MapDensity } from "./fields/mapSetup/MapDensity"
 import { MapFlag } from "./fields/mapSetup/MapFlag"
-import { Placement } from "./fields/mapSetup/Placement"
 
 declare function SetMapName(name: string): void
 declare function SetMapDescription(description: string): void
@@ -47,16 +44,16 @@ export abstract class MapSetup {
     }
 
     public static isFlagSet(whichMapFlag: MapFlag): boolean {
-        return IsMapFlagSet(whichMapFlag.getHandle)
+        return IsMapFlagSet(whichMapFlag.getHandle() as mapflag)
     }
 
     public static setResourceDensity(whichDensity: MapDensity) {
-        SetResourceDensity(whichDensity.getHandle)
+        SetResourceDensity(whichDensity.getHandle() as mapdensity)
         return this
     }
 
     public static setCreatureDensity(whichDensity: MapDensity) {
-        SetCreatureDensity(whichDensity.getHandle)
+        SetCreatureDensity(whichDensity.getHandle() as mapdensity)
         return this
     }
 }

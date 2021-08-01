@@ -1,5 +1,5 @@
-// /** @noSelfInFile **/
-// // @ts-nocheck
+/** @noSelfInFile **/
+// @ts-nocheck
 
 import { MapLocation } from "../handles/MapLocation"
 import { Point } from "../handles/Point"
@@ -46,7 +46,7 @@ export class StartLocation {
 
     public static defineLoc(whichStartLoc: integer, whichLocation: MapLocation) {
         whichStartLoc = Math.floor(whichStartLoc)
-        DefineStartLocationLoc(whichStartLoc, whichLocation.getHandle)
+        DefineStartLocationLoc(whichStartLoc, whichLocation.getHandle() as location)
         return new this(whichStartLoc)
     }
 
@@ -60,7 +60,7 @@ export class StartLocation {
             this.num,
             Math.floor(prioSlotIndex),
             Math.floor(otherStartLocIndex),
-            priority.getHandle
+            priority.getHandle() as startlocprio
         )
         return this
     }

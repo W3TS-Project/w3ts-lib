@@ -14,7 +14,7 @@ export abstract class Doodad {
     }
 
     public static setAnimationRect(r: Rectangle, doodadCode: RawCode, animName: string, animRandom: boolean) {
-        SetDoodadAnimationRect(r.getHandle, doodadCode.getId(), animName, animRandom)
+        SetDoodadAnimationRect(r.getHandle() as rect, doodadCode.getId(), animName, animRandom)
         return this
     }
 }

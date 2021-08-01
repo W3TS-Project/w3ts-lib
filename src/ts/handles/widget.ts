@@ -18,25 +18,25 @@ declare function AddIndicator(
 
 export class Widget extends Handle<widget> {
     public getLife() {
-        return GetWidgetLife(this.getHandle)
+        return GetWidgetLife(this.getHandle() as widget)
     }
 
     public setLife(value: real) {
-        SetWidgetLife(this.getHandle, value)
+        SetWidgetLife(this.getHandle() as widget, value)
         return this
     }
 
     public getX(): real {
-        return GetWidgetX(this.getHandle)
+        return GetWidgetX(this.getHandle() as widget)
     }
 
     public getY(): real {
-        return GetWidgetY(this.getHandle)
+        return GetWidgetY(this.getHandle() as widget)
     }
 
     public addIndicator(red: integer, green: integer, blue: integer, alpha: integer) {
         AddIndicator(
-            this.getHandle,
+            this.getHandle() as widget,
             Math.floor(red),
             Math.floor(green),
             Math.floor(blue),
@@ -45,15 +45,11 @@ export class Widget extends Handle<widget> {
         return this
     }
 
-    public static fromHandle(handle: widget): Widget {
-        return this.getObject(handle)
+    public static fromHandle(handle: widget) {
+        return this.getObject(handle) as Widget
     }
 
     public static fromEvent() {
         return this.fromHandle(GetTriggerWidget())
-    }
-
-    public static fromObject(handleObject: Widget): widget {
-        return this.getHandle(handleObject)
     }
 }

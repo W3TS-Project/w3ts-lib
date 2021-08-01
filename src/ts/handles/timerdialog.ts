@@ -31,22 +31,22 @@ declare function TimerDialogSetRealTimeRemaining(
 
 export class TimerDialog extends Handle<timerdialog> {
     public constructor(t: Timer) {
-        super(CreateTimerDialog(t.getHandle))
+        super(CreateTimerDialog(t.getHandle() as timer))
     }
 
     public destroy() {
-        DestroyTimerDialog(this.getHandle)
+        DestroyTimerDialog(this.getHandle() as timerdialog)
         return this
     }
 
     public setTitle(title: string) {
-        TimerDialogSetTitle(this.getHandle, title)
+        TimerDialogSetTitle(this.getHandle() as timerdialog, title)
         return this
     }
 
     public setTitleColor(red: integer, green: integer, blue: integer, alpha: integer) {
         TimerDialogSetTitleColor(
-            this.getHandle,
+            this.getHandle() as timerdialog,
             Math.floor(red),
             Math.floor(green),
             Math.floor(blue),
@@ -57,7 +57,7 @@ export class TimerDialog extends Handle<timerdialog> {
 
     public setTimeColor(red: integer, green: integer, blue: integer, alpha: integer) {
         TimerDialogSetTimeColor(
-            this.getHandle,
+            this.getHandle() as timerdialog,
             Math.floor(red),
             Math.floor(green),
             Math.floor(blue),
@@ -67,29 +67,25 @@ export class TimerDialog extends Handle<timerdialog> {
     }
 
     public isDisplayed(): boolean {
-        return IsTimerDialogDisplayed(this.getHandle)
+        return IsTimerDialogDisplayed(this.getHandle() as timerdialog)
     }
 
     public display(display: boolean) {
-        TimerDialogDisplay(this.getHandle, display)
+        TimerDialogDisplay(this.getHandle() as timerdialog, display)
         return this
     }
 
     public setSpeed(speedMultFactor: real) {
-        TimerDialogSetSpeed(this.getHandle, speedMultFactor)
+        TimerDialogSetSpeed(this.getHandle() as timerdialog, speedMultFactor)
         return this
     }
 
     public setTimeRemaining(value: real) {
-        TimerDialogSetRealTimeRemaining(this.getHandle, value)
+        TimerDialogSetRealTimeRemaining(this.getHandle() as timerdialog, value)
         return this
     }
 
-    public static fromHandle(handle: timerdialog): TimerDialog {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: TimerDialog): timerdialog {
-        return this.getHandle(object)
+    public static fromHandle(handle: timerdialog) {
+        return this.getObject(handle) as TimerDialog
     }
 }

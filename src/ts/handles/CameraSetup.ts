@@ -51,43 +51,45 @@ export class CameraSetup extends Handle<camerasetup> {
     }
 
     public getDestLoc() {
-        return MapLocation.fromHandle(CameraSetupGetDestPositionLoc(this.getHandle))
+        return MapLocation.fromHandle(
+            CameraSetupGetDestPositionLoc(this.getHandle() as camerasetup)
+        )
     }
 
     public getDestX(): real {
-        return CameraSetupGetDestPositionX(this.getHandle)
+        return CameraSetupGetDestPositionX(this.getHandle() as camerasetup)
     }
 
     public setDestX(x: real) {
-        CameraSetupSetDestPosition(this.getHandle, x, this.getDestY(), 0)
+        CameraSetupSetDestPosition(this.getHandle() as camerasetup, x, this.getDestY(), 0)
         return this
     }
 
     public getDestY() {
-        return CameraSetupGetDestPositionY(this.getHandle)
+        return CameraSetupGetDestPositionY(this.getHandle() as camerasetup)
     }
 
     public setDestY(y: real) {
-        CameraSetupSetDestPosition(this.getHandle, this.getDestX(), y, 0)
+        CameraSetupSetDestPosition(this.getHandle() as camerasetup, this.getDestX(), y, 0)
         return this
     }
 
     public setLabel(label: string) {
-        BlzCameraSetupSetLabel(this.getHandle, label)
+        BlzCameraSetupSetLabel(this.getHandle() as camerasetup, label)
         return this
     }
 
     public getLabel() {
-        return BlzCameraSetupGetLabel(this.getHandle)
+        return BlzCameraSetupGetLabel(this.getHandle() as camerasetup)
     }
 
     public apply(doPan: boolean, panTimed: boolean) {
-        CameraSetupApply(this.getHandle, doPan, panTimed)
+        CameraSetupApply(this.getHandle() as camerasetup, doPan, panTimed)
         return this
     }
 
     public applyForceDuration(doPan: boolean, forceDuration: real) {
-        CameraSetupApplyForceDuration(this.getHandle, doPan, forceDuration)
+        CameraSetupApplyForceDuration(this.getHandle() as camerasetup, doPan, forceDuration)
         return this
     }
 
@@ -99,7 +101,7 @@ export class CameraSetup extends Handle<camerasetup> {
         smoothFactor: real
     ) {
         BlzCameraSetupApplyForceDurationSmooth(
-            this.getHandle,
+            this.getHandle() as camerasetup,
             doPan,
             forcedDuration,
             easeInDuration,
@@ -110,34 +112,42 @@ export class CameraSetup extends Handle<camerasetup> {
     }
 
     public applyForceDurationZ(zDestOffset: real, forceDuration: real) {
-        CameraSetupApplyForceDurationWithZ(this.getHandle, zDestOffset, forceDuration)
+        CameraSetupApplyForceDurationWithZ(
+            this.getHandle() as camerasetup,
+            zDestOffset,
+            forceDuration
+        )
         return this
     }
 
     public applyZ(zDestOffset: real) {
-        CameraSetupApplyWithZ(this.getHandle, zDestOffset)
+        CameraSetupApplyWithZ(this.getHandle() as camerasetup, zDestOffset)
         return this
     }
 
     public getField(whichField: CameraField): real {
-        return CameraSetupGetField(this.getHandle, whichField.getHandle)
+        return CameraSetupGetField(
+            this.getHandle() as camerasetup,
+            whichField.getHandle() as camerafield
+        )
     }
 
     public setDestCoords(x: real, y: real, duration: real) {
-        CameraSetupSetDestPosition(this.getHandle, x, y, duration)
+        CameraSetupSetDestPosition(this.getHandle() as camerasetup, x, y, duration)
         return this
     }
 
     public setField(whichField: CameraField, value: real, duration: real) {
-        CameraSetupSetField(this.getHandle, whichField.getHandle, value, duration)
+        CameraSetupSetField(
+            this.getHandle() as camerasetup,
+            whichField.getHandle() as camerafield,
+            value,
+            duration
+        )
         return this
     }
 
-    public static fromHandle(handle: camerasetup): CameraSetup {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: CameraSetup): camerasetup {
-        return this.getHandle(object)
+    public static fromHandle(handle: camerasetup) {
+        return this.getObject(handle) as CameraSetup
     }
 }

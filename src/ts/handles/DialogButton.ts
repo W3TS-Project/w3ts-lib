@@ -1,3 +1,6 @@
+/** @noSelfInFile **/
+//@ts-nocheck
+
 import { Dialog } from "./Dialog"
 import { Handle } from "./Handle"
 
@@ -19,7 +22,7 @@ export class DialogButton extends Handle<button> {
         doScoreScreen: boolean = false
     ) {
         hotkey = Math.floor(hotkey)
-        const handle = whichDialog.getHandle
+        const handle = whichDialog.getHandle() as dialog
         if (!quit) {
             super(DialogAddButton(handle, buttonText, hotkey))
         } else {
@@ -40,15 +43,11 @@ export class DialogButton extends Handle<button> {
         return new this(whichDialog, buttonText, hotkey, true, doScoreScreen)
     }
 
-    public static fromHandle(handle: button): DialogButton {
-        return this.getObject(handle)
+    public static fromHandle(handle: button) {
+        return this.getObject(handle) as DialogButton
     }
 
     public static getClicked() {
         return this.fromHandle(GetClickedButton())
-    }
-
-    public static fromObject(handleObject: DialogButton): button {
-        return this.getHandle(handleObject)
     }
 }

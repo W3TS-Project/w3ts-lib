@@ -37,42 +37,101 @@ declare function FogModifierStart(whichFogModifier: fogmodifier): void
 declare function FogModifierStop(whichFogModifier: fogmodifier): void
 
 export class FogModifier extends Handle<fogmodifier> {
-    public static createAtRect(forWhichPlayer: MapPlayer, whichState: FogState, where: Rectangle, useSharedVision: boolean, afterUnits: boolean) {
-        return new this(CreateFogModifierRect(forWhichPlayer.getHandle, whichState.getHandle, where.getHandle, useSharedVision, afterUnits))
+    public static createAtRect(
+        forWhichPlayer: MapPlayer,
+        whichState: FogState,
+        where: Rectangle,
+        useSharedVision: boolean,
+        afterUnits: boolean
+    ) {
+        return new this(
+            CreateFogModifierRect(
+                forWhichPlayer.getHandle() as player,
+                whichState.getHandle() as fogstate,
+                where.getHandle() as rect,
+                useSharedVision,
+                afterUnits
+            )
+        )
     }
 
-    public static createRadiusCoords(forWhichPlayer: MapPlayer, whichState: FogState, centerX: real, centerY: real, radius: real, useSharedVision: boolean, afterUnits: boolean) {
-        return new this(CreateFogModifierRadius(forWhichPlayer.getHandle, whichState.getHandle, centerX, centerY, radius, useSharedVision, afterUnits))
+    public static createRadiusCoords(
+        forWhichPlayer: MapPlayer,
+        whichState: FogState,
+        centerX: real,
+        centerY: real,
+        radius: real,
+        useSharedVision: boolean,
+        afterUnits: boolean
+    ) {
+        return new this(
+            CreateFogModifierRadius(
+                forWhichPlayer.getHandle() as player,
+                whichState.getHandle() as fogstate,
+                centerX,
+                centerY,
+                radius,
+                useSharedVision,
+                afterUnits
+            )
+        )
     }
 
-    public static createRadiusPos(forWhichPlayer: MapPlayer, whichState: FogState, center: Position, radius: real, useSharedVision: boolean, afterUnits: boolean) {
-        return this.createRadiusCoords(forWhichPlayer, whichState, center.getX(), center.getY(), radius, useSharedVision, afterUnits)
+    public static createRadiusPos(
+        forWhichPlayer: MapPlayer,
+        whichState: FogState,
+        center: Position,
+        radius: real,
+        useSharedVision: boolean,
+        afterUnits: boolean
+    ) {
+        return this.createRadiusCoords(
+            forWhichPlayer,
+            whichState,
+            center.getX(),
+            center.getY(),
+            radius,
+            useSharedVision,
+            afterUnits
+        )
     }
 
-    public static createRadiusLoc(forWhichPlayer: MapPlayer, whichState: FogState, center: MapLocation, radius: real, useSharedVision: boolean, afterUnits: boolean) {
-        return new this(CreateFogModifierRadiusLoc(forWhichPlayer.getHandle, whichState.getHandle, center.getHandle, radius, useSharedVision, afterUnits))
+    public static createRadiusLoc(
+        forWhichPlayer: MapPlayer,
+        whichState: FogState,
+        center: MapLocation,
+        radius: real,
+        useSharedVision: boolean,
+        afterUnits: boolean
+    ) {
+        return new this(
+            CreateFogModifierRadiusLoc(
+                forWhichPlayer.getHandle() as player,
+                whichState.getHandle() as fogstate,
+                center.getHandle() as location,
+                radius,
+                useSharedVision,
+                afterUnits
+            )
+        )
     }
-    
+
     public destroy() {
-        DestroyFogModifier(this.getHandle)
+        DestroyFogModifier(this.getHandle() as fogmodifier)
         return this
     }
 
     public start() {
-        FogModifierStart(this.getHandle)
+        FogModifierStart(this.getHandle() as fogmodifier)
         return this
     }
 
     public stop() {
-        FogModifierStop(this.getHandle)
+        FogModifierStop(this.getHandle() as fogmodifier)
         return this
     }
 
-    public static fromHandle(handle: fogmodifier): FogModifier {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(handleObject: FogModifier): fogmodifier {
-        return this.getHandle(handleObject)
+    public static fromHandle(handle: fogmodifier) {
+        return this.getObject(handle) as FogModifier
     }
 }

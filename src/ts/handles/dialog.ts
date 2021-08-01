@@ -1,5 +1,5 @@
-/** @noSelfInFile **/
-//@ts-nocheck
+// /** @noSelfInFile **/
+// //@ts-nocheck
 
 import { DialogButton } from "./DialogButton"
 import { Handle } from "./Handle"
@@ -26,34 +26,30 @@ export class Dialog extends Handle<dialog> {
     }
 
     public clear() {
-        DialogClear(this.getHandle)
+        DialogClear(this.getHandle() as dialog)
         return this
     }
 
     public destroy() {
-        DialogDestroy(this.getHandle)
+        DialogDestroy(this.getHandle() as dialog)
         return this
     }
 
     public display(whichPlayer: MapPlayer, flag: boolean) {
-        DialogDisplay(whichPlayer.getHandle, this.getHandle, flag)
+        DialogDisplay(whichPlayer.getHandle() as player, this.getHandle() as dialog, flag)
         return this
     }
 
     public setMessage(whichMessage: string) {
-        DialogSetMessage(this.getHandle, whichMessage)
+        DialogSetMessage(this.getHandle() as dialog, whichMessage)
         return this
     }
 
-    public static fromHandle(handle: dialog): Dialog {
-        return this.getObject(handle)
+    public static fromHandle(handle: dialog) {
+        return this.getObject(handle) as Dialog
     }
 
     public static getClicked() {
         return this.fromHandle(GetClickedDialog())
-    }
-
-    public static fromObject(handleObject: Dialog): dialog {
-        return this.getHandle(handleObject)
     }
 }

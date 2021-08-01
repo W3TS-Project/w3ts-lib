@@ -11,11 +11,7 @@ export class MapControl extends Field<mapcontrol> {
         super(ConvertMapControl(id), id)
     }
 
-    public static fromHandle(handle: mapcontrol): MapControl {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: MapControl): mapcontrol {
-        return this.getHandle(object)
+    public static fromHandle(handle: mapcontrol) {
+        return this.getObject(handle) as MapControl
     }
 }

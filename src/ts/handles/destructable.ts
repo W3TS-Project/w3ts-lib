@@ -102,7 +102,7 @@ export class Destructable extends Handle<destructable> {
         scale: real,
         variation: integer
     ) {
-        return this.createZCoords(rawCode, p.x, p.y, p.z, face, scale, variation)
+        return this.createZCoords(rawCode, p.getX(), p.getY(), p.getZ(), face, scale, variation)
     }
 
     public static createDeadCoords(
@@ -139,51 +139,51 @@ export class Destructable extends Handle<destructable> {
         scale: real,
         variation: integer
     ) {
-        return this.createDeadZCoords(rawCode, p.x, p.y, p.z, face, scale, variation)
+        return this.createDeadZCoords(rawCode, p.getX(), p.getY(), p.getZ(), face, scale, variation)
     }
 
     public setInvulnerable(flag: boolean) {
-        SetDestructableInvulnerable(this.getHandle, flag)
+        SetDestructableInvulnerable(this.getHandle() as destructable, flag)
         return this
     }
 
     public getInvulnerable() {
-        return IsDestructableInvulnerable(this.getHandle)
+        return IsDestructableInvulnerable(this.getHandle() as destructable)
     }
 
     public getLife(): real {
-        return GetDestructableLife(this.getHandle)
+        return GetDestructableLife(this.getHandle() as destructable)
     }
 
     public setLife(value: real) {
-        SetDestructableLife(this.getHandle, value)
+        SetDestructableLife(this.getHandle() as destructable, value)
         return this
     }
 
     public getMaxLife(): real {
-        return GetDestructableMaxLife(this.getHandle)
+        return GetDestructableMaxLife(this.getHandle() as destructable)
     }
 
     public setMaxLife(value: real) {
-        SetDestructableMaxLife(this.getHandle, value)
+        SetDestructableMaxLife(this.getHandle() as destructable, value)
         return this
     }
 
     public getName() {
-        return GetDestructableName(this.getHandle)
+        return GetDestructableName(this.getHandle() as destructable)
     }
 
     public getOccluderHeight(): real {
-        return GetDestructableOccluderHeight(this.getHandle)
+        return GetDestructableOccluderHeight(this.getHandle() as destructable)
     }
 
     public setOccluderHeight(value: real) {
-        SetDestructableOccluderHeight(this.getHandle, value)
+        SetDestructableOccluderHeight(this.getHandle() as destructable, value)
         return this
     }
 
     public getTypeId(): integer {
-        return GetDestructableTypeId(this.getHandle)
+        return GetDestructableTypeId(this.getHandle() as destructable)
     }
 
     public getRawCode() {
@@ -191,50 +191,50 @@ export class Destructable extends Handle<destructable> {
     }
 
     public getX(): real {
-        return GetDestructableX(this.getHandle)
+        return GetDestructableX(this.getHandle() as destructable)
     }
 
     public getY(): real {
-        return GetDestructableY(this.getHandle)
+        return GetDestructableY(this.getHandle() as destructable)
     }
 
     public remove() {
-        RemoveDestructable(this.getHandle)
+        RemoveDestructable(this.getHandle() as destructable)
         return this
     }
 
     public restoreLife(life: real, birth: boolean) {
-        DestructableRestoreLife(this.getHandle, life, birth)
+        DestructableRestoreLife(this.getHandle() as destructable, life, birth)
         return this
     }
 
     public kill() {
-        KillDestructable(this.getHandle)
+        KillDestructable(this.getHandle() as destructable)
         return this
     }
 
     public queueAnimation(whichAnimation: string) {
-        QueueDestructableAnimation(this.getHandle, whichAnimation)
+        QueueDestructableAnimation(this.getHandle() as destructable, whichAnimation)
         return this
     }
 
     public setAnimation(whichAnimation: string) {
-        SetDestructableAnimation(this.getHandle, whichAnimation)
+        SetDestructableAnimation(this.getHandle() as destructable, whichAnimation)
         return this
     }
 
     public setAnimationSpeed(speedFactor: real) {
-        SetDestructableAnimationSpeed(this.getHandle, speedFactor)
+        SetDestructableAnimationSpeed(this.getHandle() as destructable, speedFactor)
         return this
     }
 
     public show(flag: boolean) {
-        ShowDestructable(this.getHandle, flag)
+        ShowDestructable(this.getHandle() as destructable, flag)
         return this
     }
 
-    public static fromHandle(handle: destructable): Destructable {
-        return this.getObject(handle)
+    public static fromHandle(handle: destructable) {
+        return this.getObject(handle) as Destructable
     }
 
     public static fromEvent() {
@@ -247,9 +247,5 @@ export class Destructable extends Handle<destructable> {
 
     public static fromEnum() {
         return this.fromHandle(GetEnumDestructable())
-    }
-
-    public static fromObject(handleObject: Destructable): destructable {
-        return this.getHandle(handleObject)
     }
 }

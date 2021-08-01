@@ -1,4 +1,5 @@
 /** @noSelfInFile **/
+//@ts-nocheck
 
 import { MapLocation } from "./MapLocation"
 

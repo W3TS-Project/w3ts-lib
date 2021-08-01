@@ -16,12 +16,12 @@ export class MapLocation extends Handle<location> {
     }
 
     public destroy() {
-        RemoveLocation(this.getHandle)
+        RemoveLocation(this.getHandle() as location)
         return this
     }
 
     public move(x: real, y: real) {
-        MoveLocation(this.getHandle, x, y)
+        MoveLocation(this.getHandle() as location, x, y)
         return this
     }
 
@@ -31,7 +31,7 @@ export class MapLocation extends Handle<location> {
     }
 
     public getX(): real {
-        return GetLocationX(this.getHandle)
+        return GetLocationX(this.getHandle() as location)
     }
 
     public setY(newY: real) {
@@ -40,7 +40,7 @@ export class MapLocation extends Handle<location> {
     }
 
     public getY(): real {
-        return GetLocationY(this.getHandle)
+        return GetLocationY(this.getHandle() as location)
     }
 
     /**
@@ -48,14 +48,10 @@ export class MapLocation extends Handle<location> {
      * If you attempt to use it in a synchronous manner, it may cause a desync.
      */
     public getZ(): real {
-        return GetLocationZ(this.getHandle)
+        return GetLocationZ(this.getHandle() as location)
     }
 
-    public static fromHandle(handle: location): MapLocation {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: MapLocation): location {
-        return this.getHandle(object)
+    public static fromHandle(handle: location) {
+        return this.getObject(handle) as MapLocation
     }
 }

@@ -28,47 +28,47 @@ export class Quest extends Handle<quest> {
     }
 
     public isCompleted(): boolean {
-        return IsQuestCompleted(this.getHandle)
+        return IsQuestCompleted(this.getHandle() as quest)
     }
 
     public setCompleted(completed: boolean) {
-        QuestSetCompleted(this.getHandle, completed)
+        QuestSetCompleted(this.getHandle() as quest, completed)
         return this
     }
 
     public isDiscovered(): boolean {
-        return IsQuestDiscovered(this.getHandle)
+        return IsQuestDiscovered(this.getHandle() as quest)
     }
 
     public setDiscovered(discovered: boolean) {
-        QuestSetDiscovered(this.getHandle, discovered)
+        QuestSetDiscovered(this.getHandle() as quest, discovered)
         return this
     }
 
     public isEnabled(): boolean {
-        return IsQuestEnabled(this.getHandle)
+        return IsQuestEnabled(this.getHandle() as quest)
     }
 
     public setEnabled(enabled: boolean) {
-        QuestSetEnabled(this.getHandle, enabled)
+        QuestSetEnabled(this.getHandle() as quest, enabled)
         return this
     }
 
     public isFailed(): boolean {
-        return IsQuestFailed(this.getHandle)
+        return IsQuestFailed(this.getHandle() as quest)
     }
 
     public setFailed(failed: boolean) {
-        QuestSetFailed(this.getHandle, failed)
+        QuestSetFailed(this.getHandle() as quest, failed)
         return this
     }
 
     public isRequired(): boolean {
-        return IsQuestRequired(this.getHandle)
+        return IsQuestRequired(this.getHandle() as quest)
     }
 
     public setRequired(required: boolean) {
-        QuestSetRequired(this.getHandle, required)
+        QuestSetRequired(this.getHandle() as quest, required)
         return this
     }
 
@@ -81,22 +81,22 @@ export class Quest extends Handle<quest> {
     }
 
     public destroy() {
-        DestroyQuest(this.getHandle)
+        DestroyQuest(this.getHandle() as quest)
         return this
     }
 
     public setDescription(description: string) {
-        QuestSetDescription(this.getHandle, description)
+        QuestSetDescription(this.getHandle() as quest, description)
         return this
     }
 
     public setIconPath(iconPath: string) {
-        QuestSetIconPath(this.getHandle, iconPath)
+        QuestSetIconPath(this.getHandle() as quest, iconPath)
         return this
     }
 
     public setTitle(title: string) {
-        QuestSetTitle(this.getHandle, title)
+        QuestSetTitle(this.getHandle() as quest, title)
         return this
     }
 
@@ -110,11 +110,7 @@ export class Quest extends Handle<quest> {
         return this
     }
 
-    public static fromHandle(handle: quest): Quest {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: Quest): quest {
-        return this.getHandle(object)
+    public static fromHandle(handle: quest) {
+        return this.getObject(handle) as Quest
     }
 }

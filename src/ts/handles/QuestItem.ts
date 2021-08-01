@@ -11,20 +11,24 @@ declare function IsQuestItemCompleted(whichQuestItem: questitem): boolean
 
 export class QuestItem extends Handle<questitem> {
     constructor(whichQuest: Quest) {
-        super(QuestCreateItem(whichQuest.getHandle))
+        super(QuestCreateItem(whichQuest.getHandle() as quest))
     }
 
     public setDescription(description: string) {
-        QuestItemSetDescription(this.getHandle, description)
+        QuestItemSetDescription(this.getHandle() as questitem, description)
         return this
     }
 
     public isCompleted(): boolean {
-        return IsQuestItemCompleted(this.getHandle)
+        return IsQuestItemCompleted(this.getHandle() as questitem)
     }
 
     public setCompleted(completed: boolean) {
-        QuestItemSetCompleted(this.getHandle, completed)
+        QuestItemSetCompleted(this.getHandle() as questitem, completed)
         return this
+    }
+
+    public static fromHandle(handle: questitem) {
+        return this.getObject(handle) as QuestItem
     }
 }

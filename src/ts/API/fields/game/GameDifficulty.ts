@@ -11,11 +11,7 @@ export class GameDifficulty extends Field<gamedifficulty> {
         super(ConvertGameDifficulty(id), id)
     }
 
-    public static fromHandle(handle: gamedifficulty): GameDifficulty {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: GameDifficulty): gamedifficulty {
-        return this.getHandle(object)
+    public static fromHandle(handle: gamedifficulty) {
+        return this.getObject(handle) as GameDifficulty
     }
 }

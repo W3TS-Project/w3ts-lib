@@ -150,93 +150,93 @@ export class MapPlayer extends Handle<player> {
     }
 
     public setColor(color: PlayerColor) {
-        SetPlayerColor(this.getHandle, color.getHandle)
+        SetPlayerColor(this.getHandle() as player, color.getHandle() as playercolor)
     }
 
     public getColor(): PlayerColor {
-        return PlayerColor.fromHandle(GetPlayerColor(this.getHandle))
+        return PlayerColor.fromHandle(GetPlayerColor(this.getHandle() as player))
     }
 
     public getController(): MapControl {
-        return MapControl.fromHandle(GetPlayerController(this.getHandle))
+        return MapControl.fromHandle(GetPlayerController(this.getHandle() as player))
     }
 
     public getHandicap(): real {
-        return GetPlayerHandicap(this.getHandle)
+        return GetPlayerHandicap(this.getHandle() as player)
     }
 
     public setHandicap(handicap: real) {
-        SetPlayerHandicap(this.getHandle, handicap)
+        SetPlayerHandicap(this.getHandle() as player, handicap)
         return this
     }
 
     public getHandicapReviveTime(): real {
-        return GetPlayerHandicapReviveTime(this.getHandle)
+        return GetPlayerHandicapReviveTime(this.getHandle() as player)
     }
 
     public setHandicapReviveTime(handicap: real) {
-        SetPlayerHandicapReviveTime(this.getHandle, handicap)
+        SetPlayerHandicapReviveTime(this.getHandle() as player, handicap)
         return this
     }
 
     public getHandicapXp(): real {
-        return GetPlayerHandicapXP(this.getHandle)
+        return GetPlayerHandicapXP(this.getHandle() as player)
     }
 
     public setHandicapXp(handicap: real) {
-        SetPlayerHandicapXP(this.getHandle, handicap)
+        SetPlayerHandicapXP(this.getHandle() as player, handicap)
         return this
     }
 
     public getHandicapDamage(): real {
-        return GetPlayerHandicapDamage(this.getHandle)
+        return GetPlayerHandicapDamage(this.getHandle() as player)
     }
 
     public setHandicapDamage(handicap: real) {
-        SetPlayerHandicapDamage(this.getHandle, handicap)
+        SetPlayerHandicapDamage(this.getHandle() as player, handicap)
         return this
     }
 
     public getId(): integer {
-        return GetPlayerId(this.getHandle)
+        return GetPlayerId(this.getHandle() as player)
     }
 
     public getName(): string {
-        return GetPlayerName(this.getHandle)
+        return GetPlayerName(this.getHandle() as player)
     }
 
     public setName(value: string) {
-        SetPlayerName(this.getHandle, value)
+        SetPlayerName(this.getHandle() as player, value)
         return this
     }
 
     public getRace(): Race {
-        return Race.fromHandle(GetPlayerRace(this.getHandle))
+        return Race.fromHandle(GetPlayerRace(this.getHandle() as player))
     }
 
     public getSlotState(): PlayerSlotState {
-        return PlayerSlotState.fromHandle(GetPlayerSlotState(this.getHandle))
+        return PlayerSlotState.fromHandle(GetPlayerSlotState(this.getHandle() as player))
     }
 
     public getStartLocation(): StartLocation {
-        return StartLocation.arr[GetPlayerStartLocation(this.getHandle)]
+        return StartLocation.arr[GetPlayerStartLocation(this.getHandle() as player)]
     }
 
     public getTeam(): integer {
-        return GetPlayerTeam(this.getHandle)
+        return GetPlayerTeam(this.getHandle() as player)
     }
 
     public getTownHallCount(): integer {
-        return BlzGetPlayerTownHallCount(this.getHandle)
+        return BlzGetPlayerTownHallCount(this.getHandle() as player)
     }
 
     public addTechResearched(techCode: TechRawCode, levels: integer) {
-        AddPlayerTechResearched(this.getHandle, techCode.getId(), Math.floor(levels))
+        AddPlayerTechResearched(this.getHandle() as player, techCode.getId(), Math.floor(levels))
         return this
     }
 
     public decTechResearched(techCode: TechRawCode, levels: integer) {
-        BlzDecPlayerTechResearched(this.getHandle, techCode.getId(), Math.floor(levels))
+        BlzDecPlayerTechResearched(this.getHandle() as player, techCode.getId(), Math.floor(levels))
         return this
     }
 
@@ -246,20 +246,20 @@ export class MapPlayer extends Handle<player> {
      * @returns this
      */
     public cacheHeroData() {
-        CachePlayerHeroData(this.getHandle)
+        CachePlayerHeroData(this.getHandle() as player)
         return this
     }
 
     public isAlliance(otherPlayer: MapPlayer, whichAllianceSetting: AllianceType): boolean {
         return GetPlayerAlliance(
-            this.getHandle,
-            otherPlayer.getHandle,
-            whichAllianceSetting.getHandle
+            this.getHandle() as player,
+            otherPlayer.getHandle() as player,
+            whichAllianceSetting.getHandle() as alliancetype
         )
     }
 
     public isFoggedCoords(x: real, y: real): boolean {
-        return IsFoggedToPlayer(x, y, this.getHandle)
+        return IsFoggedToPlayer(x, y, this.getHandle() as player)
     }
 
     public isFoggedPos(p: Position): boolean {
@@ -267,11 +267,11 @@ export class MapPlayer extends Handle<player> {
     }
 
     public isFoggedLoc(loc: MapLocation): boolean {
-        return IsLocationFoggedToPlayer(loc.getHandle, this.getHandle)
+        return IsLocationFoggedToPlayer(loc.getHandle() as location, this.getHandle() as player)
     }
 
     public isMaskedCoords(x: real, y: real): boolean {
-        return IsMaskedToPlayer(x, y, this.getHandle)
+        return IsMaskedToPlayer(x, y, this.getHandle() as player)
     }
 
     public isMaskedPos(p: Position): boolean {
@@ -279,11 +279,11 @@ export class MapPlayer extends Handle<player> {
     }
 
     public isMaskedLoc(loc: MapLocation): boolean {
-        return IsLocationMaskedToPlayer(loc.getHandle, this.getHandle)
+        return IsLocationMaskedToPlayer(loc.getHandle() as location, this.getHandle() as player)
     }
 
     public isVisibleCoords(x: real, y: real): boolean {
-        return IsVisibleToPlayer(x, y, this.getHandle)
+        return IsVisibleToPlayer(x, y, this.getHandle() as player)
     }
 
     public isVisiblePos(p: Position): boolean {
@@ -291,44 +291,54 @@ export class MapPlayer extends Handle<player> {
     }
 
     public isVisibleLoc(loc: MapLocation): boolean {
-        return IsLocationVisibleToPlayer(loc.getHandle, this.getHandle)
+        return IsLocationVisibleToPlayer(loc.getHandle() as location, this.getHandle() as player)
     }
 
     public cripple(toWhichPlayers: Force, flag: boolean) {
-        CripplePlayer(this.getHandle, toWhichPlayers.getHandle, flag)
+        CripplePlayer(this.getHandle() as player, toWhichPlayers.getHandle() as force, flag)
         return this
     }
 
     public getScore(whichPlayerScore: PlayerScore): integer {
-        return GetPlayerScore(this.getHandle, whichPlayerScore.getHandle)
+        return GetPlayerScore(
+            this.getHandle() as player,
+            whichPlayerScore.getHandle() as playerscore
+        )
     }
 
     public getState(whichPlayerState: PlayerState): integer {
-        return GetPlayerState(this.getHandle, whichPlayerState.getHandle)
+        return GetPlayerState(
+            this.getHandle() as player,
+            whichPlayerState.getHandle() as playerstate
+        )
     }
 
     public getStructureCount(includeIncomplete: boolean): integer {
-        return GetPlayerStructureCount(this.getHandle, includeIncomplete)
+        return GetPlayerStructureCount(this.getHandle() as player, includeIncomplete)
     }
 
     public getTaxRate(otherPlayer: MapPlayer, whichResource: PlayerState): real {
-        return GetPlayerTaxRate(this.getHandle, otherPlayer.getHandle, whichResource.getHandle)
+        return GetPlayerTaxRate(
+            this.getHandle() as player,
+            otherPlayer.getHandle() as player,
+            whichResource.getHandle() as playerstate
+        )
     }
 
     public getTechCount(techCode: TechRawCode, specificonly: boolean): integer {
-        return GetPlayerTechCount(this.getHandle, techCode.getId(), specificonly)
+        return GetPlayerTechCount(this.getHandle() as player, techCode.getId(), specificonly)
     }
 
     public getTechMaxAllowed(techCode: TechRawCode): integer {
-        return GetPlayerTechMaxAllowed(this.getHandle, techCode.getId())
+        return GetPlayerTechMaxAllowed(this.getHandle() as player, techCode.getId())
     }
 
     public getTechResearched(techCode: TechRawCode, specificonly: boolean): boolean {
-        return GetPlayerTechResearched(this.getHandle, techCode.getId(), specificonly)
+        return GetPlayerTechResearched(this.getHandle() as player, techCode.getId(), specificonly)
     }
 
     public getUnitCount(includeIncomplete: boolean): integer {
-        return GetPlayerUnitCount(this.getHandle, includeIncomplete)
+        return GetPlayerUnitCount(this.getHandle() as player, includeIncomplete)
     }
 
     public getTypedUnitCount(
@@ -336,114 +346,135 @@ export class MapPlayer extends Handle<player> {
         includeIncomplete: boolean,
         includeUpgrades: boolean
     ): integer {
-        return GetPlayerTypedUnitCount(this.getHandle, unitName, includeIncomplete, includeUpgrades)
+        return GetPlayerTypedUnitCount(
+            this.getHandle() as player,
+            unitName,
+            includeIncomplete,
+            includeUpgrades
+        )
     }
 
     public inForce(whichForce: Force): boolean {
-        return IsPlayerInForce(this.getHandle, whichForce.getHandle)
+        return IsPlayerInForce(this.getHandle() as player, whichForce.getHandle() as force)
     }
 
     public isObserver(): boolean {
-        return IsPlayerObserver(this.getHandle)
+        return IsPlayerObserver(this.getHandle() as player)
     }
 
     public isAlly(otherPlayer: MapPlayer): boolean {
-        return IsPlayerAlly(this.getHandle, otherPlayer.getHandle)
+        return IsPlayerAlly(this.getHandle() as player, otherPlayer.getHandle() as player)
     }
 
     public isEnemy(otherPlayer: MapPlayer): boolean {
-        return IsPlayerEnemy(this.getHandle, otherPlayer.getHandle)
+        return IsPlayerEnemy(this.getHandle() as player, otherPlayer.getHandle() as player)
     }
 
     public isRacePrefSet(pref: RacePref): boolean {
-        return IsPlayerRacePrefSet(this.getHandle, pref.getHandle)
+        return IsPlayerRacePrefSet(this.getHandle() as player, pref.getHandle() as racepreference)
     }
 
     public isSelectable(): boolean {
-        return GetPlayerSelectable(this.getHandle)
+        return GetPlayerSelectable(this.getHandle() as player)
     }
 
     public remove(gameResult: PlayerGameResult) {
-        RemovePlayer(this.getHandle, gameResult.getHandle)
+        RemovePlayer(this.getHandle() as player, gameResult.getHandle() as playergameresult)
         return this
     }
 
     public removeAllGuardPositions() {
-        RemoveAllGuardPositions(this.getHandle)
+        RemoveAllGuardPositions(this.getHandle() as player)
         return this
     }
 
     public setAbilityAvailable(abilCode: AbilityRawCode, avail: boolean) {
-        SetPlayerAbilityAvailable(this.getHandle, abilCode.getId(), avail)
+        SetPlayerAbilityAvailable(this.getHandle() as player, abilCode.getId(), avail)
         return this
     }
 
     public setAlliance(otherPlayer: MapPlayer, whichAllianceSetting: AllianceType, value: boolean) {
         SetPlayerAlliance(
-            this.getHandle,
-            otherPlayer.getHandle,
-            whichAllianceSetting.getHandle,
+            this.getHandle() as player,
+            otherPlayer.getHandle() as player,
+            whichAllianceSetting.getHandle() as alliancetype,
             value
         )
         return this
     }
 
     public setOnScoreScreen(flag: boolean) {
-        SetPlayerOnScoreScreen(this.getHandle, flag)
+        SetPlayerOnScoreScreen(this.getHandle() as player, flag)
         return this
     }
 
     public setState(whichPlayerState: PlayerState, value: integer) {
-        SetPlayerState(this.getHandle, whichPlayerState.getHandle, Math.floor(value))
+        SetPlayerState(
+            this.getHandle() as player,
+            whichPlayerState.getHandle() as playerstate,
+            Math.floor(value)
+        )
         return this
     }
 
     public setTaxRate(otherPlayer: MapPlayer, whichResource: PlayerState, rate: real) {
-        SetPlayerTaxRate(this.getHandle, otherPlayer.getHandle, whichResource.getHandle, rate)
+        SetPlayerTaxRate(
+            this.getHandle() as player,
+            otherPlayer.getHandle() as player,
+            whichResource.getHandle() as playerstate,
+            rate
+        )
         return this
     }
 
     public setRacePreference(whichRacePreference: RacePref) {
-        SetPlayerRacePreference(this.getHandle, whichRacePreference.getHandle)
+        SetPlayerRacePreference(
+            this.getHandle() as player,
+            whichRacePreference.getHandle() as racepreference
+        )
         return this
     }
 
     public setRaceSelectable(value: boolean) {
-        SetPlayerRaceSelectable(this.getHandle, value)
+        SetPlayerRaceSelectable(this.getHandle() as player, value)
         return this
     }
 
     public setController(controlType: MapControl) {
-        SetPlayerController(this.getHandle, controlType.getHandle)
+        SetPlayerController(this.getHandle() as player, controlType.getHandle() as mapcontrol)
         return this
     }
 
     public setTechMaxAllowed(techCode: TechRawCode, maximum: integer) {
-        SetPlayerTechMaxAllowed(this.getHandle, techCode.getId(), Math.floor(maximum))
+        SetPlayerTechMaxAllowed(this.getHandle() as player, techCode.getId(), Math.floor(maximum))
         return this
     }
 
     public setTechResearched(techCode: TechRawCode, setToLevel: integer) {
-        SetPlayerTechResearched(this.getHandle, techCode.getId(), Math.floor(setToLevel))
+        SetPlayerTechResearched(
+            this.getHandle() as player,
+            techCode.getId(),
+            Math.floor(setToLevel)
+        )
         return this
     }
 
     public setUnitsOwner(newOwner: integer) {
-        SetPlayerUnitsOwner(this.getHandle, Math.floor(newOwner))
+        SetPlayerUnitsOwner(this.getHandle() as player, Math.floor(newOwner))
         return this
     }
 
     public setLeaderboard(lb: LeaderBoard) {
-        PlayerSetLeaderboard(this.getHandle, lb.getHandle)
+        PlayerSetLeaderboard(this.getHandle() as player, lb.getHandle() as leaderboard)
         return this
     }
 
     public getleaderboard(toPlayer: MapPlayer): LeaderBoard {
-        return LeaderBoard.fromHandle(PlayerGetLeaderboard(toPlayer.getHandle))
+        return LeaderBoard.fromHandle(PlayerGetLeaderboard(toPlayer.getHandle() as player))
     }
 
-    public static fromHandle(handle: player): MapPlayer {
-        return this.getObject(handle)
+    public static fromHandle(handle: player) {
+        return this.getObject(handle) as MapPlayer
     }
 
     public static fromEnum(): MapPlayer {
@@ -473,9 +504,5 @@ export class MapPlayer extends Handle<player> {
 
     public static fromWinning(): MapPlayer {
         return this.fromHandle(GetWinningPlayer())
-    }
-
-    public static fromObject(object: MapPlayer): player {
-        return this.getHandle(object)
     }
 }

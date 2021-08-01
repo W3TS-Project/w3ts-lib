@@ -21,15 +21,11 @@ export class Trackable extends Handle<trackable> {
         return this.createCoords(trackableModelPath, p.getX(), p.getY(), facing)
     }
 
-    public static fromHandle(handle: trackable): Trackable {
-        return this.getObject(handle)
+    public static fromHandle(handle: trackable) {
+        return this.getObject(handle) as Trackable
     }
 
     public static fromEvent() {
         return this.fromHandle(GetTriggeringTrackable())
-    }
-
-    public static fromObject(object: Trackable): trackable {
-        return this.getHandle(object)
     }
 }

@@ -53,7 +53,7 @@ export abstract class Campaign {
     }
 
     public static setDefaultDifficulty(g: GameDifficulty) {
-        SetDefaultDifficulty(g.getHandle)
+        SetDefaultDifficulty(g.getHandle() as gamedifficulty)
         return this
     }
 

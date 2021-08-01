@@ -11,11 +11,7 @@ export class Race extends Field<race> {
         super(ConvertRace(id), id)
     }
 
-    public static fromHandle(handle: race): Race {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: Race): race {
-        return this.getHandle(object)
+    public static fromHandle(handle: race) {
+        return this.getObject(handle) as Race
     }
 }

@@ -11,11 +11,7 @@ export class GameEvent extends Event<gameevent> {
         super(ConvertGameEvent(id), id)
     }
 
-    public static fromHandle(handle: gameevent): GameEvent {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: GameEvent): gameevent {
-        return this.getHandle(object)
+    public static fromHandle(handle: gameevent) {
+        return this.getObject(handle) as GameEvent
     }
 }

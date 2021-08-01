@@ -32,7 +32,7 @@ export abstract class Terrain {
     }
 
     public static getCliffLevelFromPos(p: Position): integer {
-        return this.getCliffLevelFromCoords(p.x, p.y)
+        return this.getCliffLevelFromCoords(p.getX(), p.getY())
     }
 
     public static setWaterBaseColor(red: integer, green: integer, blue: integer, alpha: integer) {
@@ -50,7 +50,7 @@ export abstract class Terrain {
     }
 
     public static getTypeFromPos(p: Position): integer {
-        return this.getTypeFromCoords(p.x, p.y)
+        return this.getTypeFromCoords(p.getX(), p.getY())
     }
 
     public static getVarianceFromCoords(x: real, y: real): integer {
@@ -58,7 +58,7 @@ export abstract class Terrain {
     }
 
     public static getVarianceFromPos(p: Position): integer {
-        return this.getVarianceFromCoords(p.x, p.y)
+        return this.getVarianceFromCoords(p.getX(), p.getY())
     }
 
     public static setTypeWithCoords(
@@ -88,8 +88,8 @@ export abstract class Terrain {
         shape: integer
     ) {
         return this.setTypeWithCoords(
-            p.x,
-            p.y,
+            p.getX(),
+            p.getY(),
             terrainType,
             Math.floor(variation),
             Math.floor(area),
@@ -98,19 +98,19 @@ export abstract class Terrain {
     }
 
     public static isPathableWithCoords(x: real, y: real, t: PathingType): boolean {
-        return IsTerrainPathable(x, y, t.getHandle)
+        return IsTerrainPathable(x, y, t.getHandle() as pathingtype)
     }
 
     public static isPathableWithPos(p: Position, t: PathingType): boolean {
-        return this.isPathableWithCoords(p.x, p.y, t)
+        return this.isPathableWithCoords(p.getX(), p.getY(), t)
     }
 
     public static setPathableWithCoords(x: real, y: real, t: PathingType, flag: boolean) {
-        SetTerrainPathable(x, y, t.getHandle, flag)
+        SetTerrainPathable(x, y, t.getHandle() as pathingtype, flag)
         return this
     }
 
     public static setPathableWithPos(p: Position, t: PathingType, flag: boolean) {
-        return this.setPathableWithCoords(p.x, p.y, t, flag)
+        return this.setPathableWithCoords(p.getX(), p.getY(), t, flag)
     }
 }

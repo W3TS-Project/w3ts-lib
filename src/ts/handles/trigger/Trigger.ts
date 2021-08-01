@@ -1,5 +1,9 @@
-import { Handle } from "../Handle";
-import { Sound } from "../Sound";
+/** @noSelfInFile **/
+//@ts-nocheck
+
+import { ErrorHandling } from "../../ErrorHandling"
+import { Handle } from "../Handle"
+import { Sound } from "../Sound"
 
 declare function CreateTrigger(): trigger
 declare function DestroyTrigger(whichTrigger: trigger): void
@@ -10,7 +14,6 @@ declare function IsTriggerEnabled(whichTrigger: trigger): boolean
 declare function TriggerWaitOnSleeps(whichTrigger: trigger, flag: boolean): void
 declare function IsTriggerWaitOnSleeps(whichTrigger: trigger): boolean
 declare function GetTriggeringTrigger(): trigger
-declare function GetTriggerEventId(): eventid
 declare function GetTriggerEvalCount(whichTrigger: trigger): integer
 declare function GetTriggerExecCount(whichTrigger: trigger): integer
 declare function TriggerAddCondition(
@@ -33,81 +36,79 @@ declare function TriggerExecuteWait(whichTrigger: trigger): void
 declare function TriggerSyncStart(): void
 declare function TriggerSyncReady(): void
 
-export abstract class Trigger extends Handle<trigger> {
-    public constructor() {
+export class Trigger extends Handle<trigger> {
+    constructor() {
         super(CreateTrigger())
     }
-
     public destroy() {
-        DestroyTrigger(this.getHandle)
+        DestroyTrigger(this.getHandle() as trigger)
         return this
     }
 
     public reset() {
-        ResetTrigger(this.getHandle)
+        ResetTrigger(this.getHandle() as trigger)
         return this
     }
 
     public enable() {
-        EnableTrigger(this.getHandle)
+        EnableTrigger(this.getHandle() as trigger)
         return this
     }
 
     public disable() {
-        DisableTrigger(this.getHandle)
+        DisableTrigger(this.getHandle() as trigger)
         return this
     }
 
-    public isEnabled(): boolean {
-        return IsTriggerEnabled(this.getHandle)
+    public isEnabled() {
+        return IsTriggerEnabled(this.getHandle() as trigger)
     }
 
     public waitOnSleeps(flag: boolean) {
-        TriggerWaitOnSleeps(this.getHandle, flag)
+        TriggerWaitOnSleeps(this.getHandle() as trigger, flag)
         return this
     }
 
-    public isWaitOnSleeps(): boolean {
-        return IsTriggerWaitOnSleeps(this.getHandle)
-    }
-
-    public static getEventId(): eventid {
-        return GetTriggerEventId()
+    public isWaitOnSleeps() {
+        return IsTriggerWaitOnSleeps(this.getHandle() as trigger)
     }
 
     public getEvalCount(): integer {
-        return GetTriggerEvalCount(this.getHandle)
+        return GetTriggerEvalCount(this.getHandle() as trigger)
     }
 
     public getExecCount(): integer {
-        return GetTriggerExecCount(this.getHandle)
+        return GetTriggerExecCount(this.getHandle() as trigger)
     }
 
     public addCondition(filterFunc: codeboolexpr): triggercondition {
-        return TriggerAddCondition(this.getHandle, Condition(filterFunc))
+        return TriggerAddCondition(this.getHandle() as trigger, Condition(filterFunc))
     }
 
     public removeCondition(whichCondition: triggercondition) {
-        TriggerRemoveCondition(this.getHandle, whichCondition)
+        TriggerRemoveCondition(this.getHandle() as trigger, whichCondition)
         return this
     }
 
     public clearConditions() {
-        TriggerClearConditions(this.getHandle)
+        TriggerClearConditions(this.getHandle() as trigger)
         return this
     }
 
     public addAction(actionFunc: code) {
-        return TriggerAddAction(this.getHandle, actionFunc)
+        return TriggerAddAction(
+            this.getHandle() as trigger,
+            ErrorHandling.getHandledCallback(actionFunc)
+        )
     }
 
     public removeAction(whichAction: triggeraction) {
-        TriggerRemoveAction(this.getHandle, whichAction)
+        TriggerRemoveAction(this.getHandle() as trigger, whichAction)
         return this
     }
 
     public clearActions() {
-        TriggerClearActions(this.getHandle)
+        TriggerClearActions(this.getHandle() as trigger)
         return this
     }
 
@@ -117,21 +118,21 @@ export abstract class Trigger extends Handle<trigger> {
     }
 
     public static waitForSound(s: Sound, offset: real) {
-        TriggerWaitForSound(s.getHandle, offset)
+        TriggerWaitForSound(s.getHandle() as sound, offset)
         return this
     }
 
-    public evaluate(): boolean {
-        return TriggerEvaluate(this.getHandle)
+    public evaluate() {
+        return TriggerEvaluate(this.getHandle() as trigger)
     }
 
     public execute() {
-        TriggerExecute(this.getHandle)
+        TriggerExecute(this.getHandle() as trigger)
         return this
     }
 
     public executeWait() {
-        TriggerExecuteWait(this.getHandle)
+        TriggerExecuteWait(this.getHandle() as trigger)
         return this
     }
 
@@ -145,15 +146,11 @@ export abstract class Trigger extends Handle<trigger> {
         return this
     }
 
-    public static fromHandle(handle: trigger): Trigger {
-        return this.getObject(handle)
+    public static fromHandle(handle: trigger) {
+        return this.getObject(handle) as Trigger
     }
 
     public static fromEvent() {
         return this.fromHandle(GetTriggeringTrigger())
-    }
-
-    public static fromObject(object: Trigger): trigger {
-        return this.getHandle(object)
     }
 }

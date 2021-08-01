@@ -13,7 +13,7 @@ export class MapFlag extends Field<mapflag> {
     }
 
     public set(value: boolean) {
-        SetMapFlag(this.getHandle, value)
+        SetMapFlag(this.getHandle() as mapflag, value)
         return this
     }
 }

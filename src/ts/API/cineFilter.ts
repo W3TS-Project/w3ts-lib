@@ -27,7 +27,7 @@ declare function IsCineFilterDisplayed(): boolean
 
 export abstract class CineFilter {
     public static setBlendMode(whichMode: BlendMode) {
-        SetCineFilterBlendMode(whichMode.getHandle)
+        SetCineFilterBlendMode(whichMode.getHandle() as blendmode)
         return this
     }
 
@@ -76,7 +76,7 @@ export abstract class CineFilter {
     }
 
     public static setTexMapFlags(whichFlags: TexMapFlag) {
-        SetCineFilterTexMapFlags(whichFlags.getHandle)
+        SetCineFilterTexMapFlags(whichFlags.getHandle() as texmapflags)
         return this
     }
 

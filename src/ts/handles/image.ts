@@ -122,22 +122,22 @@ export class Image extends Handle<image> {
     }
 
     public destroy() {
-        DestroyImage(this.getHandle)
+        DestroyImage(this.getHandle() as image)
         return this
     }
 
     public show(flag: boolean) {
-        ShowImage(this.getHandle, flag)
+        ShowImage(this.getHandle() as image, flag)
         return this
     }
 
     public setConstantHeight(flag: boolean, height: real) {
-        SetImageConstantHeight(this.getHandle, flag, height)
+        SetImageConstantHeight(this.getHandle() as image, flag, height)
         return this
     }
 
     public setCoords(x: real, y: real, z: real) {
-        SetImagePosition(this.getHandle, x, y, z)
+        SetImagePosition(this.getHandle() as image, x, y, z)
         return this
     }
 
@@ -146,35 +146,37 @@ export class Image extends Handle<image> {
     }
 
     public setColor(red: integer, green: integer, blue: integer, alpha: integer) {
-        SetImageColor(this.getHandle, Math.floor(red), Math.floor(green), Math.floor(blue), Math.floor(alpha))
+        SetImageColor(
+            this.getHandle() as image,
+            Math.floor(red),
+            Math.floor(green),
+            Math.floor(blue),
+            Math.floor(alpha)
+        )
         return this
     }
 
     public setRender(flag: boolean) {
-        SetImageRender(this.getHandle, flag)
+        SetImageRender(this.getHandle() as image, flag)
         return this
     }
 
     public setRenderAlways(flag: boolean) {
-        SetImageRenderAlways(this.getHandle, flag)
+        SetImageRenderAlways(this.getHandle() as image, flag)
         return this
     }
 
     public setAboveWater(flag: boolean, useWaterAlpha: boolean) {
-        SetImageAboveWater(this.getHandle, flag, useWaterAlpha)
+        SetImageAboveWater(this.getHandle() as image, flag, useWaterAlpha)
         return this
     }
 
     public setType(imageType: ImageType) {
-        SetImageType(this.getHandle, imageType)
+        SetImageType(this.getHandle() as image, imageType)
         return this
     }
 
     public static fromHandle(handle: image): Image {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: Image): image {
-        return this.getHandle(object)
+        return this.getObject(handle) as Image
     }
 }

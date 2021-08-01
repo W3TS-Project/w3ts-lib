@@ -1,10 +1,25 @@
+const map: Map<integer, RawCode> = new Map<integer, RawCode>()
+
 export class RawCode {
     protected readonly id: integer
     protected readonly chars: string
+    protected static readonly map: Map<integer, RawCode> = new Map<integer, RawCode>()
 
     public constructor(id: rawcode) {
         this.id = RawCode.toId(id)
         this.chars = RawCode.toChars(id)
+        if (!RawCode.map.has(this.id)) {
+            RawCode.map.set(this.id, this)
+        }
+    }
+
+    public static get(rawCode: rawcode) {
+        rawCode = this.toId(rawCode)
+        if (map.has(rawCode)) {
+            return RawCode.map.get(rawCode)
+        } else {
+            return new this(rawCode)
+        }
     }
 
     public getId() {

@@ -14,7 +14,7 @@ export class VolumeGroup extends Field<volumegroup> {
     }
 
     public setVolume(scale: real) {
-        VolumeGroupSetVolume(this.getHandle, scale)
+        VolumeGroupSetVolume(this.getHandle() as volumegroup, scale)
         return this
     }
 
@@ -23,11 +23,7 @@ export class VolumeGroup extends Field<volumegroup> {
         return this
     }
 
-    public static fromHandle(handle: volumegroup): VolumeGroup {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: VolumeGroup): volumegroup {
-        return this.getHandle(object)
+    public static fromHandle(handle: volumegroup) {
+        return this.getObject(handle) as VolumeGroup
     }
 }

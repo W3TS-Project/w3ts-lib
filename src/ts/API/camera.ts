@@ -1,7 +1,6 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { Handle } from "../handles/Handle"
 import { MapLocation } from "../handles/MapLocation"
 import { Point } from "../handles/Point"
 import { Unit } from "../handles/Unit"
@@ -64,7 +63,7 @@ export abstract class Camera {
     }
 
     public static setPos(p: Position) {
-        return this.setCoords(p.x, p.y)
+        return this.setCoords(p.getX(), p.getY())
     }
 
     public static setQuickCoords(x: real, y: real) {
@@ -73,7 +72,7 @@ export abstract class Camera {
     }
 
     public static setQuickPos(p: Position) {
-        return this.setQuickCoords(p.x, p.y)
+        return this.setQuickCoords(p.getX(), p.getY())
     }
 
     public static setBoundsCoords(
@@ -91,7 +90,16 @@ export abstract class Camera {
     }
 
     public static setBoundsPos(p1: Position, p2: Position, p3: Position, p4: Position) {
-        return this.setBoundsCoords(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, p4.x, p4.y)
+        return this.setBoundsCoords(
+            p1.getX(),
+            p1.getY(),
+            p2.getX(),
+            p2.getY(),
+            p3.getX(),
+            p3.getY(),
+            p4.getX(),
+            p4.getY()
+        )
     }
 
     public static stop() {
@@ -114,7 +122,7 @@ export abstract class Camera {
     }
 
     public static panToPos(p: Position) {
-        return this.panToCoords(p.x, p.y, p.z)
+        return this.panToCoords(p.getX(), p.getY(), p.getZ())
     }
 
     public static panToCoordsTimed(
@@ -132,7 +140,7 @@ export abstract class Camera {
     }
 
     public static panToPosTimed(p: Position, duration: real) {
-        return this.panToCoordsTimed(p.x, p.y, duration, p.z)
+        return this.panToCoordsTimed(p.getX(), p.getY(), duration, p.getZ())
     }
 
     public static setRotateMode(x: real, y: real, radiansToSweep: real, duration: real) {
@@ -156,7 +164,7 @@ export abstract class Camera {
         yOffset: real,
         inheritOrientation: boolean
     ) {
-        SetCameraTargetController(whichUnit.handle, xOffset, yOffset, inheritOrientation)
+        SetCameraTargetController(whichUnit.getHandle() as unit, xOffset, yOffset, inheritOrientation)
         return this
     }
 
@@ -165,16 +173,16 @@ export abstract class Camera {
         p: Position,
         inheritOrientation: boolean
     ) {
-        return this.setTargetControllerCoords(whichUnit, p.x, p.y, inheritOrientation)
+        return this.setTargetControllerCoords(whichUnit, p.getX(), p.getY(), inheritOrientation)
     }
 
     public static setOrientControllerCoords(whichUnit: Unit, xOffset: real, yOffset: real) {
-        SetCameraOrientController(whichUnit.handle, xOffset, yOffset)
+        SetCameraOrientController(whichUnit.getHandle() as unit, xOffset, yOffset)
         return this
     }
 
     public static setOrientControllerPos(whichUnit: Unit, p: Position) {
-        return this.setOrientControllerCoords(whichUnit, p.x, p.y)
+        return this.setOrientControllerCoords(whichUnit, p.getX(), p.getY())
     }
 
     public static setTargetNoise(mag: real, velocity: real, vertOnly = false) {

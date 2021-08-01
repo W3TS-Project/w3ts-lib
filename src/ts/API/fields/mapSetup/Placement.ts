@@ -11,11 +11,7 @@ export class Placement extends Field<placement> {
         super(ConvertPlacement(id), id)
     }
 
-    public static fromHandle(handle: placement): Placement {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: Placement): placement {
-        return this.getHandle(object)
+    public static fromHandle(handle: placement) {
+        return this.getObject(handle) as Placement
     }
 }

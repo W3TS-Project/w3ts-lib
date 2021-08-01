@@ -37,66 +37,66 @@ export class Force extends Handle<force> {
     }
 
     public addPlayer(whichPlayer: MapPlayer) {
-        ForceAddPlayer(this.getHandle, whichPlayer.getHandle)
+        ForceAddPlayer(this.getHandle() as force, whichPlayer.getHandle() as player)
         return this
     }
 
     public clear() {
-        ForceClear(this.getHandle)
+        ForceClear(this.getHandle() as force)
         return this
     }
 
     public destroy() {
-        DestroyForce(this.getHandle)
+        DestroyForce(this.getHandle() as force)
         return this
     }
 
     public enumAllies(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        ForceEnumAllies(this.getHandle, whichPlayer.getHandle, filter)
+        ForceEnumAllies(this.getHandle() as force, whichPlayer.getHandle() as player, filter)
         DestroyCondition(filter)
         return this
     }
 
     public enumEnemies(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        ForceEnumEnemies(this.getHandle, whichPlayer.getHandle, filter)
+        ForceEnumEnemies(this.getHandle() as force, whichPlayer.getHandle() as player, filter)
         DestroyCondition(filter)
         return this
     }
 
     public enumPlayers(filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        ForceEnumPlayers(this.getHandle, filter)
+        ForceEnumPlayers(this.getHandle() as force, filter)
         DestroyCondition(filter)
         return this
     }
 
     public enumPlayersCounted(countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        ForceEnumPlayersCounted(this.getHandle, filter, Math.floor(countLimit))
+        ForceEnumPlayersCounted(this.getHandle() as force, filter, Math.floor(countLimit))
         DestroyCondition(filter)
         return this
     }
 
     public forEach(callback: code) {
-        ForForce(this.getHandle, callback)
+        ForForce(this.getHandle() as force, callback)
         return this
     }
 
     public hasPlayer(whichPlayer: MapPlayer) {
-        return IsPlayerInForce(whichPlayer.getHandle, this.getHandle)
+        return IsPlayerInForce(whichPlayer.getHandle() as player, this.getHandle() as force)
+    }
+
+    public has(whichPlayer: MapPlayer) {
+        return BlzForceHasPlayer(this.getHandle() as force, whichPlayer.getHandle() as player)
     }
 
     public removePlayer(whichPlayer: MapPlayer) {
-        ForceRemovePlayer(this.getHandle, whichPlayer.getHandle)
+        ForceRemovePlayer(this.getHandle() as force, whichPlayer.getHandle() as player)
     }
 
-    public static fromHandle(handle: force): Force {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(handleObject: Force): force {
-        return this.getHandle(handleObject)
+    public static fromHandle(handle: force) {
+        return this.getObject(handle) as Force
     }
 }

@@ -11,11 +11,7 @@ export class FogState extends Field<fogstate> {
         super(ConvertFogState(id), id)
     }
 
-    public static fromHandle(handle: fogstate): FogState {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: FogState): fogstate {
-        return this.getHandle(object)
+    public static fromHandle(handle: fogstate) {
+        return this.getObject(handle) as FogState
     }
 }

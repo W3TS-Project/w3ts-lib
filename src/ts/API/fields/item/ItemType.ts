@@ -11,11 +11,7 @@ export class ItemType extends Field<itemtype> {
         super(ConvertItemType(id), id)
     }
 
-    public static fromHandle(handle: itemtype): ItemType {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: ItemType): itemtype {
-        return this.getHandle(object)
+    public static fromHandle(handle: itemtype) {
+        return this.getObject(handle) as ItemType
     }
 }

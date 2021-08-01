@@ -4,7 +4,6 @@
 import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { MapLocation } from "./MapLocation"
-import { Point } from "./Point"
 import { Rectangle } from "./Rectangle"
 import { Unit } from "./Unit"
 
@@ -27,7 +26,7 @@ export class Region extends Handle<region> {
     }
 
     public addCellCoords(x: real, y: real) {
-        RegionAddCell(this.getHandle, x, y)
+        RegionAddCell(this.getHandle() as region, x, y)
         return this
     }
 
@@ -36,17 +35,17 @@ export class Region extends Handle<region> {
     }
 
     public addCellLoc(whichLoc: MapLocation) {
-        RegionAddCellAtLoc(this.getHandle, whichLoc.getHandle)
+        RegionAddCellAtLoc(this.getHandle() as region, whichLoc.getHandle() as location)
         return this
     }
 
     public addRect(r: Rectangle) {
-        RegionAddRect(this.getHandle, r.getHandle)
+        RegionAddRect(this.getHandle() as region, r.getHandle() as rect)
         return this
     }
 
     public clearCellCoords(x: real, y: real) {
-        RegionClearCell(this.getHandle, x, y)
+        RegionClearCell(this.getHandle() as region, x, y)
         return this
     }
 
@@ -55,17 +54,17 @@ export class Region extends Handle<region> {
     }
 
     public clearCellLoc(whichLoc: MapLocation) {
-        RegionClearCellAtLoc(this.getHandle, whichLoc.getHandle)
+        RegionClearCellAtLoc(this.getHandle() as region, whichLoc.getHandle() as location)
         return this
     }
 
     public clearRect(r: Rectangle) {
-        RegionClearRect(this.getHandle, r.getHandle)
+        RegionClearRect(this.getHandle() as region, r.getHandle() as rect)
         return this
     }
 
     public containsCoords(x: real, y: real): boolean {
-        return IsPointInRegion(this.getHandle, x, y)
+        return IsPointInRegion(this.getHandle() as region, x, y)
     }
 
     public containsPos(p: Position) {
@@ -73,27 +72,23 @@ export class Region extends Handle<region> {
     }
 
     public containsLoc(whichLoc: MapLocation): boolean {
-        return IsLocationInRegion(this.getHandle, whichLoc.getHandle)
+        return IsLocationInRegion(this.getHandle() as region, whichLoc.getHandle() as location)
     }
 
     public containsUnit(whichUnit: Unit): boolean {
-        return IsUnitInRegion(this.getHandle, whichUnit.getHandle)
+        return IsUnitInRegion(this.getHandle() as region, whichUnit.getHandle() as unit)
     }
 
     public destroy() {
-        RemoveRegion(this.getHandle)
+        RemoveRegion(this.getHandle() as region)
         return this
     }
 
-    public static fromHandle(handle: region): Region {
-        return this.getObject(handle)
+    public static fromHandle(handle: region) {
+        return this.getObject(handle) as Region
     }
 
     public static fromEvent() {
         return this.fromHandle(GetTriggeringRegion())
-    }
-
-    public static fromObject(object: Region): region {
-        return this.getHandle(object)
     }
 }

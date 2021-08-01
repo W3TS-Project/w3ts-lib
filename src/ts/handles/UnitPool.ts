@@ -19,21 +19,21 @@ export class UnitPool extends Handle<unitpool> {
     }
 
     public destroy() {
-        DestroyUnitPool(this.getHandle)
+        DestroyUnitPool(this.getHandle() as unitpool)
         return this
     }
 
     public addUnitType(unitCode: UnitRawCode, weight: real) {
-        UnitPoolAddUnitType(this.getHandle, unitCode.getId(), weight)
+        UnitPoolAddUnitType(this.getHandle() as unitpool, unitCode.getId(), weight)
         return this
     }
 
     public removeUnitType(unitCode: UnitRawCode) {
-        UnitPoolRemoveUnitType(this.getHandle, unitCode.getId())
+        UnitPoolRemoveUnitType(this.getHandle() as unitpool, unitCode.getId())
     }
 
     public placeRandomUnitCoords(forWhichPlayer: MapPlayer, x: real, y: real, facing: real): Unit {
-        return Unit.fromHandle(PlaceRandomUnit(this.getHandle, forWhichPlayer.getHandle, x, y, facing))
+        return Unit.fromHandle(PlaceRandomUnit(this.getHandle() as unitpool, forWhichPlayer.getHandle() as player, x, y, facing))
     }
 
     public placeRandomUnitPos(forWhichPlayer: MapPlayer, p: Position, facing: real): Unit {
@@ -41,11 +41,7 @@ export class UnitPool extends Handle<unitpool> {
     }
 
     public static fromHandle(handle: unitpool): UnitPool {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: UnitPool): unitpool {
-        return this.getHandle(object)
+        return this.getObject(handle) as UnitPool
     }
 }
 

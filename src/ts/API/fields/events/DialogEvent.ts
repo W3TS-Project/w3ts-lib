@@ -11,11 +11,7 @@ export class DialogEvent extends Event<dialogevent> {
         super(ConvertDialogEvent(id), id)
     }
 
-    public static fromHandle(handle: dialogevent): DialogEvent {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: DialogEvent): dialogevent {
-        return this.getHandle(object)
+    public static fromHandle(handle: dialogevent) {
+        return this.getObject(handle) as DialogEvent
     }
 }

@@ -11,11 +11,7 @@ export class LimitOperation extends Event<limitop> {
         super(ConvertLimitOp(id), id)
     }
 
-    public static fromHandle(handle: limitop): LimitOperation {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: LimitOperation): limitop {
-        return this.getHandle(object)
+    public static fromHandle(handle: limitop) {
+        return this.getObject(handle) as LimitOperation
     }
 }

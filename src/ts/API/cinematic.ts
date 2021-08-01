@@ -28,7 +28,7 @@ export abstract class Cinematic {
     ) {
         SetCinematicScene(
             portraitUnitId.getId(),
-            color.getHandle,
+            color.getHandle() as playercolor,
             speakerTitle,
             text,
             sceneDuration,

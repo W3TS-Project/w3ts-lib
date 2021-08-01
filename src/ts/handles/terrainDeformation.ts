@@ -3,7 +3,6 @@
 
 import { Position } from "../Package"
 import { Handle } from "./Handle"
-import { Point } from "./Point"
 
 declare function TerrainDeformCrater(
     x: real,
@@ -218,7 +217,7 @@ export class TerrainDeformation extends Handle<terraindeformation> {
     }
 
     public stop(duration: integer) {
-        TerrainDeformStop(this.getHandle, Math.floor(duration))
+        TerrainDeformStop(this.getHandle() as terraindeformation, Math.floor(duration))
         return this
     }
 
@@ -227,11 +226,7 @@ export class TerrainDeformation extends Handle<terraindeformation> {
         return this
     }
 
-    public static fromHandle(handle: terraindeformation): TerrainDeformation {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: TerrainDeformation): terraindeformation {
-        return this.getHandle(object)
+    public static fromHandle(handle: terraindeformation) {
+        return this.getObject(handle) as TerrainDeformation
     }
 }

@@ -16,41 +16,41 @@ import { AIDifficulty } from "./fields/other/AIDifficulty"
 
 export abstract class ComputerAI {
     public static startMelee(num: MapPlayer, script: string) {
-        StartMeleeAI(num.getHandle, script)
+        StartMeleeAI(num.getHandle() as player, script)
         return this
     }
 
     public static startCampaign(num: MapPlayer, script: string) {
-        StartCampaignAI(num.getHandle, script)
+        StartCampaignAI(num.getHandle() as player, script)
         return this
     }
 
     public static command(num: MapPlayer, command: integer, data: integer) {
-        CommandAI(num.getHandle, Math.floor(command), Math.floor(data))
+        CommandAI(num.getHandle() as player, Math.floor(command), Math.floor(data))
         return this
     }
 
     public static pauseComp(p: MapPlayer, pause: boolean) {
-        PauseCompAI(p.getHandle, pause)
+        PauseCompAI(p.getHandle() as player, pause)
         return this
     }
 
     public static getDifficulty(num: MapPlayer): AIDifficulty {
-        return AIDifficulty.fromHandle(GetAIDifficulty(num.getHandle))
+        return AIDifficulty.fromHandle(GetAIDifficulty(num.getHandle() as player)) as AIDifficulty
     }
 
     public static removeGuardPosition(hUnit: Unit) {
-        RemoveGuardPosition(hUnit.getHandle)
+        RemoveGuardPosition(hUnit.getHandle() as unit)
         return this
     }
 
     public static recycleGuardPosition(hUnit: Unit) {
-        RecycleGuardPosition(hUnit.getHandle)
+        RecycleGuardPosition(hUnit.getHandle() as unit)
         return this
     }
 
     public static removeAllGuardPositions(num: MapPlayer) {
-        RemoveAllGuardPositions(num.getHandle)
+        RemoveAllGuardPositions(num.getHandle() as player)
         return this
     }
 }

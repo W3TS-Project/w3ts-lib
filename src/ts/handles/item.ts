@@ -96,16 +96,16 @@ export class Item extends Widget {
     }
 
     public destroy() {
-        RemoveItem(this.getHandle)
+        RemoveItem(this.getHandle() as item)
         return this
     }
 
     public getOwner() {
-        return MapPlayer.fromHandle(GetItemPlayer(this.getHandle))
+        return MapPlayer.fromHandle(GetItemPlayer(this.getHandle() as item))
     }
 
     public getTypeId(): integer {
-        return GetItemTypeId(this.getHandle)
+        return GetItemTypeId(this.getHandle() as item)
     }
 
     public getRawCode(): RawCode {
@@ -113,24 +113,24 @@ export class Item extends Widget {
     }
 
     public getX(): real {
-        return GetItemX(this.getHandle)
+        return GetItemX(this.getHandle() as item)
     }
 
     public getY(): real {
-        return GetItemY(this.getHandle)
+        return GetItemY(this.getHandle() as item)
     }
 
     public setCoords(x: real, y: real) {
-        SetItemPosition(this.getHandle, x, y)
+        SetItemPosition(this.getHandle() as item, x, y)
         return this
     }
 
     public setX(x: real) {
-        this.setCoords(x, this.y)
+        this.setCoords(x, this.getY())
     }
 
     public setY(y: real) {
-        this.setCoords(this.x, y)
+        this.setCoords(this.getX(), y)
     }
 
     public setPos(pos: Position) {
@@ -138,146 +138,154 @@ export class Item extends Widget {
     }
 
     public setDropOnDeath(flag: boolean) {
-        SetItemDropOnDeath(this.getHandle, flag)
+        SetItemDropOnDeath(this.getHandle() as item, flag)
         return this
     }
 
     public setDroppable(flag: boolean) {
-        SetItemDroppable(this.getHandle, flag)
+        SetItemDroppable(this.getHandle() as item, flag)
         return this
     }
 
     public setPawnable(flag: boolean) {
-        SetItemPawnable(this.getHandle, flag)
+        SetItemPawnable(this.getHandle() as item, flag)
         return this
     }
 
     public setPlayer(whichPlayer: MapPlayer, changeColor: boolean) {
-        SetItemPlayer(this.getHandle, whichPlayer.getHandle, changeColor)
+        SetItemPlayer(this.getHandle() as item, whichPlayer.getHandle() as player, changeColor)
         return this
     }
 
     public setInvulnerable(flag: boolean) {
-        SetItemInvulnerable(this.getHandle, flag)
+        SetItemInvulnerable((this.getHandle() as item) as item, flag)
         return this
     }
 
     public isInvulnerable(): boolean {
-        return IsItemInvulnerable(this.getHandle)
+        return IsItemInvulnerable(this.getHandle() as item)
     }
 
     public setVisible(show: boolean) {
-        SetItemVisible(this.getHandle, show)
+        SetItemVisible(this.getHandle() as item, show)
         return this
     }
 
     public isVisible(): boolean {
-        return IsItemVisible(this.getHandle)
+        return IsItemVisible(this.getHandle() as item)
     }
 
     public isOwned(): boolean {
-        return IsItemOwned(this.getHandle)
+        return IsItemOwned(this.getHandle() as item)
     }
 
     public isPowerup(): boolean {
-        return IsItemPowerup(this.getHandle)
+        return IsItemPowerup(this.getHandle() as item)
     }
 
     public isSellable(): boolean {
-        return IsItemSellable(this.getHandle)
+        return IsItemSellable(this.getHandle() as item)
     }
 
     public isPawnable(): boolean {
-        return IsItemPawnable(this.getHandle)
+        return IsItemPawnable(this.getHandle() as item)
     }
 
     public static enumInRect(r: Rectangle, filterFunc: codeboolexpr, actionFunc: code) {
         const filter = Condition(filterFunc)
-        EnumItemsInRect(r.getHandle, filter, actionFunc)
+        EnumItemsInRect(r.getHandle() as rect, filter, actionFunc)
         DestroyCondition(filter)
         return this
     }
 
     public getLevel(): integer {
-        return GetItemLevel(this.getHandle)
+        return GetItemLevel(this.getHandle() as item)
     }
 
     public getType(): ItemType {
-        return ItemType.fromHandle(GetItemType(this.getHandle))
+        return ItemType.fromHandle(GetItemType(this.getHandle() as item))
     }
 
     public setDropID(unitId: rawcode) {
-        SetItemDropID(this.getHandle, RawCode.toId(unitId))
+        SetItemDropID(this.getHandle() as item, RawCode.toId(unitId))
         return this
     }
 
     public setDropCode(unitCode: RawCode) {
-        SetItemDropID(this.getHandle, unitCode.getId())
+        SetItemDropID(this.getHandle() as item, unitCode.getId())
         return this
     }
 
     public setName(value: string) {
-        BlzSetItemName(this.getHandle, value)
+        BlzSetItemName(this.getHandle() as item, value)
         return this
     }
 
     public getName(): string {
-        return GetItemName(this.getHandle)
+        return GetItemName(this.getHandle() as item)
     }
 
     public getCharges(): integer {
-        return GetItemCharges(this.getHandle)
+        return GetItemCharges(this.getHandle() as item)
     }
 
     public setCharges(value: integer) {
-        SetItemCharges(this.getHandle, Math.floor(value))
+        SetItemCharges(this.getHandle() as item, Math.floor(value))
         return this
     }
 
     public getUserData(): integer {
-        return GetItemUserData(this.getHandle)
+        return GetItemUserData(this.getHandle() as item)
     }
 
     public setUserData(data: integer) {
-        SetItemUserData(this.getHandle, Math.floor(data))
+        SetItemUserData(this.getHandle() as item, Math.floor(data))
         return this
     }
 
     public getAbilityByIndex(index: integer) {
-        return Ability.fromHandle(BlzGetItemAbilityByIndex(this.getHandle, Math.floor(index)))
+        return Ability.fromHandle(
+            BlzGetItemAbilityByIndex(this.getHandle() as item, Math.floor(index))
+        )
     }
 
     public getAbilityByCode(abilCode: RawCode) {
-        return Ability.fromHandle(BlzGetItemAbility(this.getHandle, abilCode.getId()))
+        return Ability.fromHandle(BlzGetItemAbility(this.getHandle() as item, abilCode.getId()))
     }
 
     public addAbility(abilCode: RawCode): boolean {
-        return BlzItemAddAbility(this.getHandle, abilCode.getId())
+        return BlzItemAddAbility(this.getHandle() as item, abilCode.getId())
     }
 
     public getSkin(): RawCode {
-        return new RawCode(BlzGetItemSkin(this.getHandle))
+        return new RawCode(BlzGetItemSkin(this.getHandle() as item))
     }
 
     public setSkin(skinCode: RawCode) {
-        BlzSetItemSkin(this.getHandle, skinCode.getId())
+        BlzSetItemSkin(this.getHandle() as item, skinCode.getId())
         return this
     }
 
     public getBooleanField(field: ItemBooleanField) {
-        return BlzGetItemBooleanField(this.getHandle, field.getHandle)
+        return BlzGetItemBooleanField(
+            this.getHandle() as item,
+            field.getHandle() as itembooleanfield
+        )
     }
 
     public getIntegerField(field: ItemIntegerField) {
-        return BlzGetItemIntegerField(this.getHandle, field.getHandle)
+        return BlzGetItemIntegerField(
+            this.getHandle() as item,
+            field.getHandle() as itemintegerfield
+        )
     }
 
     public getRealField(field: ItemRealField) {
-        return BlzGetItemRealField(this.getHandle, field.getHandle)
+        return BlzGetItemRealField(this.getHandle() as item, field.getHandle() as itemrealfield)
     }
 
     public getStringField(field: ItemStringField) {
-        return BlzGetItemStringField(this.getHandle, field.getHandle)
+        return BlzGetItemStringField(this.getHandle() as item, field.getHandle() as itemstringfield)
     }
 
     public getField(field: ItemFieldType): Primitive | undefined {
@@ -295,19 +303,35 @@ export class Item extends Widget {
     }
 
     public setBooleanField(field: ItemBooleanField, value: boolean) {
-        return BlzSetItemBooleanField(this.getHandle, field.getHandle, value)
+        return BlzSetItemBooleanField(
+            this.getHandle() as item,
+            field.getHandle() as itembooleanfield,
+            value
+        )
     }
 
     public setIntegerField(field: ItemIntegerField, value: integer) {
-        return BlzSetItemIntegerField(this.getHandle, field.getHandle, Math.floor(value))
+        return BlzSetItemIntegerField(
+            this.getHandle() as item,
+            field.getHandle() as itemintegerfield,
+            Math.floor(value)
+        )
     }
 
     public setRealField(field: ItemRealField, value: real) {
-        return BlzSetItemRealField(this.getHandle, field.getHandle, value)
+        return BlzSetItemRealField(
+            this.getHandle() as item,
+            field.getHandle() as itemrealfield,
+            value
+        )
     }
 
     public setStringField(field: ItemStringField, value: string) {
-        return BlzSetItemStringField(this.getHandle, field.getHandle, value)
+        return BlzSetItemStringField(
+            this.getHandle() as item,
+            field.getHandle() as itemstringfield,
+            value
+        )
     }
 
     public setField(field: ItemFieldType, value: Primitive) {
@@ -325,47 +349,47 @@ export class Item extends Widget {
     }
 
     public removeAbility(abilCode: RawCode): boolean {
-        return BlzItemRemoveAbility(this.getHandle, abilCode.getId())
+        return BlzItemRemoveAbility(this.getHandle() as item, abilCode.getId())
     }
 
     public setDescription(description: string) {
-        BlzSetItemDescription(this.getHandle, description)
+        BlzSetItemDescription(this.getHandle() as item, description)
         return this
     }
 
     public getDescription() {
-        return BlzGetItemDescription(this.getHandle)
+        return BlzGetItemDescription(this.getHandle() as item)
     }
 
     public setTooltip(tooltip: string) {
-        BlzSetItemTooltip(this.getHandle, tooltip)
+        BlzSetItemTooltip(this.getHandle() as item, tooltip)
         return this
     }
 
     public getTooltip() {
-        return BlzGetItemTooltip(this.getHandle)
+        return BlzGetItemTooltip(this.getHandle() as item)
     }
 
     public setExtendedTooltip(extendedTooltip: string) {
-        BlzSetItemExtendedTooltip(this.getHandle, extendedTooltip)
+        BlzSetItemExtendedTooltip(this.getHandle() as item, extendedTooltip)
         return this
     }
 
     public getExtendedTooltip() {
-        return BlzGetItemExtendedTooltip(this.getHandle)
+        return BlzGetItemExtendedTooltip(this.getHandle() as item)
     }
 
     public setIconPath(iconPath: string) {
-        BlzSetItemIconPath(this.getHandle, iconPath)
+        BlzSetItemIconPath(this.getHandle() as item, iconPath)
         return this
     }
 
     public getIconPath() {
-        return BlzGetItemIconPath(this.getHandle)
+        return BlzGetItemIconPath(this.getHandle() as item)
     }
 
-    public static fromHandle(handle: item): Item {
-        return this.getObject(handle)
+    public static fromHandle(handle: item) {
+        return this.getObject(handle) as Item
     }
 
     public static fromFilter() {
@@ -374,9 +398,5 @@ export class Item extends Widget {
 
     public static fromEnum() {
         return this.fromHandle(GetEnumItem())
-    }
-
-    public static fromObject(object: Item): item {
-        return this.getHandle(object)
     }
 }

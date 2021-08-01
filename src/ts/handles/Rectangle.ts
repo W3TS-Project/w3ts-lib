@@ -28,50 +28,50 @@ export class Rectangle extends Handle<rect> {
     }
 
     public getCenterX(): real {
-        return GetRectCenterX(this.getHandle)
+        return GetRectCenterX(this.getHandle() as rect)
     }
 
     public getCenterY(): real {
-        return GetRectCenterY(this.getHandle)
+        return GetRectCenterY(this.getHandle() as rect)
     }
 
     public getMaxX(): real {
-        return GetRectMaxX(this.getHandle)
+        return GetRectMaxX(this.getHandle() as rect)
     }
 
     public getMaxY(): real {
-        return GetRectMaxY(this.getHandle)
+        return GetRectMaxY(this.getHandle() as rect)
     }
 
     public getMinX(): real {
-        return GetRectMinX(this.getHandle)
+        return GetRectMinX(this.getHandle() as rect)
     }
 
     public getMinY(): real {
-        return GetRectMinY(this.getHandle)
+        return GetRectMinY(this.getHandle() as rect)
     }
 
     public destroy() {
-        RemoveRect(this.getHandle)
+        RemoveRect(this.getHandle() as rect)
         return this
     }
 
     public enumDestructables(filterFunc: codeboolexpr, actionFunc: code) {
         const filter = Condition(filterFunc)
-        EnumDestructablesInRect(this.getHandle, filter, actionFunc)
+        EnumDestructablesInRect(this.getHandle() as rect, filter, actionFunc)
         DestroyCondition(filter)
         return this
     }
 
     public enumItems(filterFunc: codeboolexpr, actionFunc: code) {
         const filter = Condition(filterFunc)
-        EnumItemsInRect(this.getHandle, filter, actionFunc)
+        EnumItemsInRect(this.getHandle() as rect, filter, actionFunc)
         DestroyCondition(filter)
         return this
     }
 
     public moveCoords(newCenterX: real, newCenterY: real) {
-        MoveRectTo(this.getHandle, newCenterX, newCenterY)
+        MoveRectTo(this.getHandle() as rect, newCenterX, newCenterY)
         return this
     }
 
@@ -80,12 +80,12 @@ export class Rectangle extends Handle<rect> {
     }
 
     public moveLoc(newCenterPoint: MapLocation) {
-        MoveRectToLoc(this.getHandle, newCenterPoint.getHandle)
+        MoveRectToLoc(this.getHandle() as rect, newCenterPoint.getHandle() as location)
         return this
     }
 
     public setCoords(minX: real, minY: real, maxX: real, maxY: real) {
-        SetRect(this.handle, minX, minY, maxX, maxY)
+        SetRect(this.getHandle() as rect, minX, minY, maxX, maxY)
         return this
     }
 
@@ -94,12 +94,16 @@ export class Rectangle extends Handle<rect> {
     }
 
     public setLoc(minLoc: MapLocation, maxLoc: MapLocation) {
-        SetRectFromLoc(this.getHandle, minLoc.getHandle, maxLoc.getHandle)
+        SetRectFromLoc(
+            this.getHandle() as rect,
+            minLoc.getHandle() as location,
+            maxLoc.getHandle() as location
+        )
         return this
     }
 
-    public static fromHandle(handle: rect): Rectangle {
-        return this.getObject(handle)
+    public static fromHandle(handle: rect) {
+        return this.getObject(handle) as Rectangle
     }
 
     public static fromCoords(minX: real, minY: real, maxX: real, maxY: real) {
@@ -111,15 +115,13 @@ export class Rectangle extends Handle<rect> {
     }
 
     public static fromLoc(min: MapLocation, max: MapLocation) {
-        return this.fromHandle(RectFromLoc(min.getHandle, max.getHandle))
+        return this.fromHandle(
+            RectFromLoc(min.getHandle() as location, max.getHandle() as location)
+        )
     }
 
     // Returns full map bounds, including unplayable borders, in world coordinates
     public static getWorldBounds() {
         return this.fromHandle(GetWorldBounds())
-    }
-
-    public static fromObject(object: Rectangle): rect {
-        return this.getHandle(object)
     }
 }

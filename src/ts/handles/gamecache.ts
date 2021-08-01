@@ -96,30 +96,35 @@ export class GameCache extends Handle<gamecache> {
     }
 
     public save(): boolean {
-        return SaveGameCache(this.getHandle)
+        return SaveGameCache(this.getHandle() as gamecache)
     }
 
     public storeInteger(missionKey: string, key: string, value: integer) {
-        StoreInteger(this.getHandle, missionKey, key, Math.floor(value))
+        StoreInteger(this.getHandle() as gamecache, missionKey, key, Math.floor(value))
         return this
     }
 
     public storeReal(missionKey: string, key: string, value: real) {
-        StoreReal(this.getHandle, missionKey, key, value)
+        StoreReal(this.getHandle() as gamecache, missionKey, key, value)
         return this
     }
 
     public storeBoolean(missionKey: string, key: string, value: boolean) {
-        StoreBoolean(this.getHandle, missionKey, key, value)
+        StoreBoolean(this.getHandle() as gamecache, missionKey, key, value)
         return this
     }
 
     public storeUnit(missionKey: string, key: string, whichUnit: Unit) {
-        return StoreUnit(this.getHandle, missionKey, key, whichUnit.getHandle)
+        return StoreUnit(
+            this.getHandle() as gamecache,
+            missionKey,
+            key,
+            whichUnit.getHandle() as unit
+        )
     }
 
     public storeString(missionKey: string, key: string, value: string) {
-        return StoreString(this.getHandle, missionKey, key, value)
+        return StoreString(this.getHandle() as gamecache, missionKey, key, value)
     }
 
     public store(missionKey: string, key: string, value: StoreValueType, type?: StoreType) {
@@ -138,38 +143,38 @@ export class GameCache extends Handle<gamecache> {
     }
 
     public syncInteger(missionKey: string, key: string) {
-        SyncStoredInteger(this.getHandle, missionKey, key)
+        SyncStoredInteger(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public syncReal(missionKey: string, key: string) {
-        SyncStoredReal(this.getHandle, missionKey, key)
+        SyncStoredReal(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public syncBoolean(missionKey: string, key: string) {
-        SyncStoredBoolean(this.getHandle, missionKey, key)
+        SyncStoredBoolean(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public syncUnit(missionKey: string, key: string) {
-        SyncStoredUnit(this.getHandle, missionKey, key)
+        SyncStoredUnit(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public syncString(missionKey: string, key: string) {
-        SyncStoredString(this.getHandle, missionKey, key)
+        SyncStoredString(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public sync(missionKey: string, key: string, type: StoreType) {
-        if (type === 'integer') {
+        if (type === "integer") {
             return this.syncInteger(missionKey, key)
-        } else if (type === 'real') {
+        } else if (type === "real") {
             return this.syncReal(missionKey, key)
-        } else if (type === 'boolean') {
+        } else if (type === "boolean") {
             return this.syncBoolean(missionKey, key)
-        } else if (type === 'string') {
+        } else if (type === "string") {
             return this.syncString(missionKey, key)
         } else {
             return this.syncUnit(missionKey, key)
@@ -177,33 +182,33 @@ export class GameCache extends Handle<gamecache> {
     }
 
     public hasInteger(missionKey: string, key: string): boolean {
-        return HaveStoredInteger(this.getHandle, missionKey, key)
+        return HaveStoredInteger(this.getHandle() as gamecache, missionKey, key)
     }
 
     public hasReal(missionKey: string, key: string): boolean {
-        return HaveStoredReal(this.getHandle, missionKey, key)
+        return HaveStoredReal(this.getHandle() as gamecache, missionKey, key)
     }
 
     public hasBoolean(missionKey: string, key: string): boolean {
-        return HaveStoredBoolean(this.getHandle, missionKey, key)
+        return HaveStoredBoolean(this.getHandle() as gamecache, missionKey, key)
     }
 
     public hasUnit(missionKey: string, key: string): boolean {
-        return HaveStoredUnit(this.getHandle, missionKey, key)
+        return HaveStoredUnit(this.getHandle() as gamecache, missionKey, key)
     }
 
     public hasString(missionKey: string, key: string): boolean {
-        return HaveStoredString(this.getHandle, missionKey, key)
+        return HaveStoredString(this.getHandle() as gamecache, missionKey, key)
     }
 
     public has(missionKey: string, key: string, type: StoreType): boolean {
-        if (type === 'boolean') {
+        if (type === "boolean") {
             return this.hasBoolean(missionKey, key)
-        } else if (type === 'integer') {
+        } else if (type === "integer") {
             return this.hasInteger(missionKey, key)
-        } else if (type === 'real') {
+        } else if (type === "real") {
             return this.hasReal(missionKey, key)
-        } else if (type === 'string') {
+        } else if (type === "string") {
             return this.hasString(missionKey, key)
         } else {
             return this.hasUnit(missionKey, key)
@@ -211,48 +216,48 @@ export class GameCache extends Handle<gamecache> {
     }
 
     public destroy() {
-        FlushGameCache(this.getHandle)
+        FlushGameCache(this.getHandle() as gamecache)
         return this
     }
 
     public flushMission(missionKey: string) {
-        FlushStoredMission(this.getHandle, missionKey)
+        FlushStoredMission(this.getHandle() as gamecache, missionKey)
         return this
     }
 
     public flushInteger(missionKey: string, key: string) {
-        FlushStoredInteger(this.getHandle, missionKey, key)
+        FlushStoredInteger(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public flushReal(missionKey: string, key: string) {
-        FlushStoredReal(this.getHandle, missionKey, key)
+        FlushStoredReal(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public flushBoolean(missionKey: string, key: string) {
-        FlushStoredBoolean(this.getHandle, missionKey, key)
+        FlushStoredBoolean(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public flushUnit(missionKey: string, key: string) {
-        FlushStoredUnit(this.getHandle, missionKey, key)
+        FlushStoredUnit(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public flushString(missionKey: string, key: string) {
-        FlushStoredString(this.getHandle, missionKey, key)
+        FlushStoredString(this.getHandle() as gamecache, missionKey, key)
         return this
     }
 
     public flush(missionKey: string, key: string, type: StoreType) {
-        if (type === 'boolean') {
+        if (type === "boolean") {
             return this.flushBoolean(missionKey, key)
-        } else if (type === 'integer') {
+        } else if (type === "integer") {
             return this.flushInteger(missionKey, key)
-        } else if (type === 'real') {
+        } else if (type === "real") {
             return this.flushReal(missionKey, key)
-        } else if (type === 'string') {
+        } else if (type === "string") {
             return this.flushString(missionKey, key)
         } else {
             return this.flushUnit(missionKey, key)
@@ -260,31 +265,27 @@ export class GameCache extends Handle<gamecache> {
     }
 
     public getInteger(missionKey: string, key: string): integer {
-        return GetStoredInteger(this.getHandle, missionKey, key)
+        return GetStoredInteger(this.getHandle() as gamecache, missionKey, key)
     }
 
     public getReal(missionKey: string, key: string): real {
-        return GetStoredReal(this.getHandle, missionKey, key)
+        return GetStoredReal(this.getHandle() as gamecache, missionKey, key)
     }
 
     public getBoolean(missionKey: string, key: string): boolean {
-        return GetStoredBoolean(this.getHandle, missionKey, key)
+        return GetStoredBoolean(this.getHandle() as gamecache, missionKey, key)
     }
 
     public getString(missionKey: string, key: string): string {
-        return GetStoredString(this.getHandle, missionKey, key)
+        return GetStoredString(this.getHandle() as gamecache, missionKey, key)
     }
 
-    public get(
-        missionKey: string,
-        key: string,
-        type: StoreType
-    ): Primitive {
-        if (type === 'boolean') {
+    public get(missionKey: string, key: string, type: StoreType): Primitive {
+        if (type === "boolean") {
             return this.getBoolean(missionKey, key)
-        } else if (type === 'integer') {
+        } else if (type === "integer") {
             return this.getInteger(missionKey, key)
-        } else if (type === 'real') {
+        } else if (type === "real") {
             return this.getReal(missionKey, key)
         } else {
             return this.getString(missionKey, key)
@@ -300,20 +301,30 @@ export class GameCache extends Handle<gamecache> {
         face: real
     ) {
         return Unit.fromHandle(
-            RestoreUnit(this.getHandle, missionKey, key, forWhichPlayer.getHandle, x, y, face)
+            RestoreUnit(
+                this.getHandle() as gamecache,
+                missionKey,
+                key,
+                forWhichPlayer.getHandle() as player,
+                x,
+                y,
+                face
+            )
         )
     }
 
-    public restoreUnitPos(missionKey: string, key: string, forWhichPlayer: MapPlayer, p: Position, face: real) {
+    public restoreUnitPos(
+        missionKey: string,
+        key: string,
+        forWhichPlayer: MapPlayer,
+        p: Position,
+        face: real
+    ) {
         this.restoreUnitCoords(missionKey, key, forWhichPlayer, p.getX(), p.getY(), face)
     }
 
-    public static fromHandle(handle: gamecache): GameCache {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(handleObject: GameCache): gamecache {
-        return this.getHandle(handleObject)
+    public static fromHandle(handle: gamecache) {
+        return this.getObject(handle) as GameCache
     }
 
     public static reloadFromDisk() {

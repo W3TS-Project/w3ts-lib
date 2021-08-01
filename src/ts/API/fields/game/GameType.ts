@@ -15,23 +15,19 @@ export class GameType extends Field<gametype> {
     }
 
     public setSupported(value: boolean) {
-        SetGameTypeSupported(this.getHandle, value)
+        SetGameTypeSupported(this.getHandle() as gametype, value)
         return this
     }
 
     public isSupported() {
-        return IsGameTypeSupported(this.getHandle)
+        return IsGameTypeSupported(this.getHandle() as gametype)
+    }
+
+    public static fromHandle(handle: gametype) {
+        return this.getObject(handle) as GameType
     }
 
     public static getSelected() {
         return this.fromHandle(GetGameTypeSelected())
-    }
-
-    public static fromHandle(handle: gametype): GameType {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: GameType): gametype {
-        return this.getHandle(object)
     }
 }

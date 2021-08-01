@@ -11,11 +11,7 @@ export class WidgetEvent extends Event<widgetevent> {
         super(ConvertWidgetEvent(id), id)
     }
 
-    public static fromHandle(handle: widgetevent): WidgetEvent {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: WidgetEvent): widgetevent {
-        return this.getHandle(object)
+    public static fromHandle(handle: widgetevent) {
+        return this.getObject(handle) as WidgetEvent
     }
 }

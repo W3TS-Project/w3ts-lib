@@ -11,24 +11,24 @@ declare function RemoveItemFromAllStock(itemId: integer): void
 
 export class ItemRawCode extends RawCode {
     public isPowerup() {
-        return IsItemIdPowerup(this.getId())
+        return IsItemIdPowerup(this.id)
     }
 
     public isSellable() {
-        return IsItemIdSellable(this.getId())
+        return IsItemIdSellable(this.id)
     }
 
     public isPawnable() {
-        return IsItemIdPawnable(this.getId())
+        return IsItemIdPawnable(this.id)
     }
 
     public addToAllStock(currentStock: integer, stockMax: integer) {
-        AddItemToAllStock(this.getId(), Math.floor(currentStock), Math.floor(stockMax))
+        AddItemToAllStock(this.id, Math.floor(currentStock), Math.floor(stockMax))
         return this
     }
 
     public removeFromAllStock() {
-        RemoveItemFromAllStock(this.getId())
+        RemoveItemFromAllStock(this.id)
         return this
     }
 }

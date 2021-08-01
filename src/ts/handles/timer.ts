@@ -25,47 +25,43 @@ export class Timer extends Handle<timer> {
     }
 
     public getElapsed(): real {
-        return TimerGetElapsed(this.getHandle)
+        return TimerGetElapsed(this.getHandle() as timer)
     }
 
     public getRemaining(): real {
-        return TimerGetRemaining(this.getHandle)
+        return TimerGetRemaining(this.getHandle() as timer)
     }
 
     public getTimeout(): real {
-        return TimerGetTimeout(this.getHandle)
+        return TimerGetTimeout(this.getHandle() as timer)
     }
 
     public destroy() {
-        DestroyTimer(this.getHandle)
+        DestroyTimer(this.getHandle() as timer)
         return this
     }
 
     public pause() {
-        PauseTimer(this.getHandle)
+        PauseTimer(this.getHandle() as timer)
         return this
     }
 
     public resume() {
-        ResumeTimer(this.getHandle)
+        ResumeTimer(this.getHandle() as timer)
         return this
     }
 
     public start(timeout: real, periodic: boolean, handlerFunc: code) {
-        TimerStart(this.getHandle, timeout, periodic, ErrorHandling.getHandledCallback(handlerFunc))
+        TimerStart(this.getHandle() as timer, timeout, periodic, ErrorHandling.getHandledCallback(handlerFunc))
         return this
     }
 
     public static fromHandle(handle: timer): Timer {
-        return this.getObject(handle)
+        return this.getObject(handle) as Timer
     }
 
     public static fromExpired(): Timer {
         return this.fromHandle(GetExpiredTimer())
-    }
-
-    public static fromObject(object: Timer): timer {
-        return this.getHandle(object)
     }
 
     public setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {

@@ -1,3 +1,6 @@
+/** @noSelfInFile **/
+// @ts-nocheck
+
 import { GameDifficulty } from "./fields/game/GameDifficulty"
 import { GameSpeed } from "./fields/game/GameSpeed"
 import { Placement } from "./fields/mapSetup/Placement"
@@ -11,7 +14,7 @@ declare function GetGameDifficulty(): gamedifficulty
 
 export abstract class GameSetup {
     public static setSpeed(whichspeed: GameSpeed) {
-        SetGameSpeed(whichspeed.getHandle)
+        SetGameSpeed(whichspeed.getHandle() as gamespeed)
         return this
     }
 
@@ -20,7 +23,7 @@ export abstract class GameSetup {
     }
 
     public static setDifficulty(whichdifficulty: GameDifficulty) {
-        SetGameDifficulty(whichdifficulty.getHandle)
+        SetGameDifficulty(whichdifficulty.getHandle() as gamedifficulty)
         return this
     }
 
@@ -29,7 +32,7 @@ export abstract class GameSetup {
     }
 
     public static setPlacement(whichPlacementType: Placement) {
-        SetGamePlacement(whichPlacementType.getHandle)
+        SetGamePlacement(whichPlacementType.getHandle() as placement)
         return this
     }
 

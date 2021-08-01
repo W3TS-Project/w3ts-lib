@@ -38,7 +38,7 @@ export abstract class MapRandom {
     }
 
     public static chooseItemEx(whichType: ItemType, level: integer): integer {
-        return ChooseRandomItemEx(whichType.getHandle, Math.floor(level))
+        return ChooseRandomItemEx(whichType.getHandle() as itemtype, Math.floor(level))
     }
 
     public static setSeed(seed: integer) {

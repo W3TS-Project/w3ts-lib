@@ -11,11 +11,7 @@ export class PlayerColor extends Field<playercolor> {
         super(ConvertPlayerColor(id), id)
     }
 
-    public static fromHandle(handle: playercolor): PlayerColor {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: PlayerColor): playercolor {
-        return this.getHandle(object)
+    public static fromHandle(handle: playercolor) {
+        return this.getObject(handle) as PlayerColor
     }
 }

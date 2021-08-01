@@ -12,15 +12,11 @@ export class FrameEventType extends Field<frameeventtype> {
         super(ConvertFrameEventType(id), id)
     }
 
-    public static fromHandle(handle: frameeventtype): FrameEventType {
-        return this.getObject(handle)
+    public static fromHandle(handle: frameeventtype) {
+        return this.getObject(handle) as FrameEventType
     }
 
     public static fromEvent() {
         return this.fromHandle(BlzGetTriggerFrameEvent())
-    }
-
-    public static fromObject(object: FrameEventType): frameeventtype {
-        return this.getHandle(object)
     }
 }

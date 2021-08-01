@@ -23,20 +23,6 @@ declare function SetUbersplatRender(whichSplat: ubersplat, flag: boolean): void
 declare function SetUbersplatRenderAlways(whichSplat: ubersplat, flag: boolean): void
 
 export class Ubersplat extends Handle<ubersplat> {
-    // public constructor(
-    //     x: real,
-    //     y: real,
-    //     name: string,
-    //     red: integer,
-    //     green: integer,
-    //     blue: integer,
-    //     alpha: integer,
-    //     forcePaused: boolean,
-    //     noBirthTime: boolean
-    // ) {
-    //     super(CreateUbersplat(x, y, name, red, green, blue, alpha, forcePaused, noBirthTime))
-    // }
-
     public static createCoords(
         x: real,
         y: real,
@@ -87,39 +73,35 @@ export class Ubersplat extends Handle<ubersplat> {
     }
 
     public destroy() {
-        DestroyUbersplat(this.getHandle)
+        DestroyUbersplat(this.getHandle() as ubersplat)
         return this
     }
 
     public finish() {
-        FinishUbersplat(this.getHandle)
+        FinishUbersplat(this.getHandle() as ubersplat)
         return this
     }
 
     public render(flag: boolean, always = false) {
         if (always) {
-            SetUbersplatRenderAlways(this.getHandle, flag)
+            SetUbersplatRenderAlways(this.getHandle() as ubersplat, flag)
         } else {
-            SetUbersplatRender(this.getHandle, flag)
+            SetUbersplatRender(this.getHandle() as ubersplat, flag)
         }
         return this
     }
 
     public reset() {
-        ResetUbersplat(this.getHandle)
+        ResetUbersplat(this.getHandle() as ubersplat)
         return this
     }
 
     public show(flag: boolean) {
-        ShowUbersplat(this.getHandle, flag)
+        ShowUbersplat(this.getHandle() as ubersplat, flag)
         return this
     }
 
-    public static fromHandle(handle: ubersplat): Ubersplat {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: Ubersplat): ubersplat {
-        return this.getHandle(object)
+    public static fromHandle(handle: ubersplat) {
+        return this.getObject(handle) as Ubersplat
     }
 }

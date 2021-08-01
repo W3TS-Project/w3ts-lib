@@ -1,5 +1,5 @@
-/** @noSelfInFile **/
-//@ts-nocheck
+// /** @noSelfInFile **/
+// //@ts-nocheck
 
 import { EffectType } from "../API/fields/other/EffectType"
 import { AnimType } from "../API/fields/unit/AnimType"
@@ -78,7 +78,7 @@ declare function BlzPlaySpecialEffectWithTimeScale(
 
 export class SpellEffect extends Handle<effect> {
     public static addCoords(abilityString: string, t: EffectType, x: real, y: real) {
-        return new this(AddSpellEffect(abilityString, t.getHandle, x, y))
+        return new this(AddSpellEffect(abilityString, t.getHandle() as effecttype, x, y))
     }
 
     public static addPos(abilityString: string, t: EffectType, p: Position) {
@@ -86,11 +86,17 @@ export class SpellEffect extends Handle<effect> {
     }
 
     public static addLoc(abilityString: string, t: EffectType, loc: MapLocation) {
-        return new this(AddSpellEffectLoc(abilityString, t.getHandle, loc.getHandle))
+        return new this(
+            AddSpellEffectLoc(
+                abilityString,
+                t.getHandle() as effecttype,
+                loc.getHandle() as location
+            )
+        )
     }
 
     public static addCoordsByCode(rawCode: RawCode, t: EffectType, x: real, y: real) {
-        return new this(AddSpellEffectById(rawCode.getId(), t.getHandle, x, y))
+        return new this(AddSpellEffectById(rawCode.getId(), t.getHandle() as effecttype, x, y))
     }
 
     public static addPosById(rawCode: RawCode, t: EffectType, p: Position) {
@@ -98,7 +104,13 @@ export class SpellEffect extends Handle<effect> {
     }
 
     public static addLocById(rawCode: RawCode, t: EffectType, loc: MapLocation) {
-        return new this(AddSpellEffectByIdLoc(rawCode.getId(), t.getHandle, loc.getHandle))
+        return new this(
+            AddSpellEffectByIdLoc(
+                rawCode.getId(),
+                t.getHandle() as effecttype,
+                loc.getHandle() as location
+            )
+        )
     }
 
     public static addTarget(
@@ -108,7 +120,12 @@ export class SpellEffect extends Handle<effect> {
         attachPoint: string
     ) {
         return new this(
-            AddSpellEffectTarget(modelName, t.getHandle, targetWidget.getHandle, attachPoint)
+            AddSpellEffectTarget(
+                modelName,
+                t.getHandle() as effecttype,
+                targetWidget.getHandle() as widget,
+                attachPoint
+            )
         )
     }
 
@@ -121,19 +138,19 @@ export class SpellEffect extends Handle<effect> {
         return new this(
             AddSpellEffectTargetById(
                 rawCode.getId(),
-                t.getHandle,
-                targetWidget.getHandle,
+                t.getHandle() as effecttype,
+                targetWidget.getHandle() as widget,
                 attachPoint
             )
         )
     }
 
     public getScale(): real {
-        return BlzGetSpecialEffectScale(this.getHandle)
+        return BlzGetSpecialEffectScale(this.getHandle() as effect)
     }
 
     public setScale(scale: real) {
-        BlzSetSpecialEffectScale(this.getHandle, scale)
+        BlzSetSpecialEffectScale(this.getHandle() as effect, scale)
         return this
     }
 
@@ -141,11 +158,11 @@ export class SpellEffect extends Handle<effect> {
      * Warning: asynchronous
      */
     public getX(): real {
-        return BlzGetLocalSpecialEffectX(this.getHandle)
+        return BlzGetLocalSpecialEffectX(this.getHandle() as effect)
     }
 
     public setX(x: real) {
-        BlzSetSpecialEffectX(this.getHandle, x)
+        BlzSetSpecialEffectX(this.getHandle() as effect, x)
         return this
     }
 
@@ -153,11 +170,11 @@ export class SpellEffect extends Handle<effect> {
      * Warning: asynchronous
      */
     public getY(): real {
-        return BlzGetLocalSpecialEffectY(this.getHandle)
+        return BlzGetLocalSpecialEffectY(this.getHandle() as effect)
     }
 
     public setY(y: real) {
-        BlzSetSpecialEffectY(this.getHandle, y)
+        BlzSetSpecialEffectY(this.getHandle() as effect, y)
         return this
     }
 
@@ -165,86 +182,99 @@ export class SpellEffect extends Handle<effect> {
      * Warning: asynchronous
      */
     public getZ(): real {
-        return BlzGetLocalSpecialEffectZ(this.getHandle)
+        return BlzGetLocalSpecialEffectZ(this.getHandle() as effect)
     }
 
     public setZ(z: real) {
-        BlzSetSpecialEffectZ(this.getHandle, z)
+        BlzSetSpecialEffectZ(this.getHandle() as effect, z)
         return this
     }
 
     public addSubAnimation(subAnim: SubAnimType) {
-        BlzSpecialEffectAddSubAnimation(this.getHandle, subAnim.getHandle)
+        BlzSpecialEffectAddSubAnimation(
+            this.getHandle() as effect,
+            subAnim.getHandle() as subanimtype
+        )
         return this
     }
 
     public clearSubAnimations() {
-        BlzSpecialEffectClearSubAnimations(this.getHandle)
+        BlzSpecialEffectClearSubAnimations(this.getHandle() as effect)
         return this
     }
 
     public destroy() {
-        DestroyEffect(this.getHandle)
+        DestroyEffect(this.getHandle() as effect)
         return this
     }
 
     public playAnimation(animType: AnimType) {
-        BlzPlaySpecialEffect(this.getHandle, animType.getHandle)
+        BlzPlaySpecialEffect(this.getHandle() as effect, animType.getHandle() as animtype)
         return this
     }
 
     public playWithTimeScale(animType: AnimType, timeScale: real) {
-        BlzPlaySpecialEffectWithTimeScale(this.getHandle, animType.getHandle, timeScale)
+        BlzPlaySpecialEffectWithTimeScale(
+            this.getHandle() as effect,
+            animType.getHandle() as animtype,
+            timeScale
+        )
         return this
     }
 
     public removeSubAnimation(subAnim: SubAnimType) {
-        BlzSpecialEffectRemoveSubAnimation(this.getHandle, subAnim.getHandle)
+        BlzSpecialEffectRemoveSubAnimation(
+            this.getHandle() as effect,
+            subAnim.getHandle() as subanimtype
+        )
         return this
     }
 
     public resetScaleMatrix() {
-        BlzResetSpecialEffectMatrix(this.getHandle)
+        BlzResetSpecialEffectMatrix(this.getHandle() as effect)
         return this
     }
 
     public setAlpha(alpha: integer) {
-        BlzSetSpecialEffectAlpha(this.getHandle, Math.floor(alpha))
+        BlzSetSpecialEffectAlpha(this.getHandle() as effect, Math.floor(alpha))
         return this
     }
 
     public setColor(red: real, green: real, blue: real) {
-        BlzSetSpecialEffectColor(this.getHandle, red, green, blue)
+        BlzSetSpecialEffectColor(this.getHandle() as effect, red, green, blue)
         return this
     }
 
     public setColorByPlayer(whichPlayer: MapPlayer) {
-        BlzSetSpecialEffectColorByPlayer(this.getHandle, whichPlayer.getHandle)
+        BlzSetSpecialEffectColorByPlayer(
+            this.getHandle() as effect,
+            whichPlayer.getHandle() as player
+        )
         return this
     }
 
     public setHeight(height: real) {
-        BlzSetSpecialEffectHeight(this.getHandle, height)
+        BlzSetSpecialEffectHeight(this.getHandle() as effect, height)
         return this
     }
 
     public setOrientation(yaw: real, pitch: real, roll: real) {
-        BlzSetSpecialEffectOrientation(this.getHandle, yaw, pitch, roll)
+        BlzSetSpecialEffectOrientation(this.getHandle() as effect, yaw, pitch, roll)
         return this
     }
 
     public setPitch(pitch: real) {
-        BlzSetSpecialEffectPitch(this.getHandle, pitch)
+        BlzSetSpecialEffectPitch(this.getHandle() as effect, pitch)
         return this
     }
 
     public setLoc(p: MapLocation) {
-        BlzSetSpecialEffectPositionLoc(this.getHandle, p.getHandle)
+        BlzSetSpecialEffectPositionLoc(this.getHandle() as effect, p.getHandle() as location)
         return this
     }
 
     public setCoords(x: real, y: real, z: real) {
-        BlzSetSpecialEffectPosition(this.getHandle, x, y, z)
+        BlzSetSpecialEffectPosition(this.getHandle() as effect, x, y, z)
         return this
     }
 
@@ -254,35 +284,31 @@ export class SpellEffect extends Handle<effect> {
     }
 
     public setRoll(roll: real) {
-        BlzSetSpecialEffectRoll(this.getHandle, roll)
+        BlzSetSpecialEffectRoll(this.getHandle() as effect, roll)
         return this
     }
 
     public setScaleMatrix(x: real, y: real, z: real) {
-        BlzSetSpecialEffectMatrixScale(this.getHandle, x, y, z)
+        BlzSetSpecialEffectMatrixScale(this.getHandle() as effect, x, y, z)
         return this
     }
 
     public setTime(value: real) {
-        BlzSetSpecialEffectTime(this.getHandle, value)
+        BlzSetSpecialEffectTime(this.getHandle() as effect, value)
         return this
     }
 
     public setTimeScale(timeScale: real) {
-        BlzSetSpecialEffectTimeScale(this.getHandle, timeScale)
+        BlzSetSpecialEffectTimeScale(this.getHandle() as effect, timeScale)
         return this
     }
 
     public setYaw(y: real) {
-        BlzSetSpecialEffectYaw(this.getHandle, y)
+        BlzSetSpecialEffectYaw(this.getHandle() as effect, y)
         return this
     }
 
-    public static fromHandle(handle: effect): SpellEffect {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(handleObject: SpellEffect): effect {
-        return this.getHandle(handleObject)
+    public static fromHandle(handle: effect) {
+        return this.getObject(handle) as SpellEffect
     }
 }

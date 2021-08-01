@@ -11,11 +11,7 @@ export class GameSpeed extends Field<gamespeed> {
         super(ConvertGameSpeed(id), id)
     }
 
-    public static fromHandle(handle: gamespeed): GameSpeed {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: GameSpeed): gamespeed {
-        return this.getHandle(object)
+    public static fromHandle(handle: gamespeed) {
+        return this.getObject(handle) as GameSpeed
     }
 }

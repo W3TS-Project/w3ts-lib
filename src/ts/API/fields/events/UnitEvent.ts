@@ -11,11 +11,7 @@ export class UnitEvent extends Event<unitevent> {
         super(ConvertUnitEvent(id), id)
     }
 
-    public static fromHandle(handle: unitevent): UnitEvent {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: UnitEvent): unitevent {
-        return this.getHandle(object)
+    public static fromHandle(handle: unitevent) {
+        return this.getObject(handle) as UnitEvent
     }
 }

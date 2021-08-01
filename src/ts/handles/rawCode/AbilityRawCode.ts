@@ -1,6 +1,8 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { EffectType } from "../../API/fields/other/EffectType"
+import { SoundType } from "../../API/fields/sound/SoundType"
 import { RawCode } from "../../RawCode"
 
 declare function BlzSetAbilityTooltip(abilCode: integer, tooltip: string, level: integer): void
@@ -49,6 +51,10 @@ declare function BlzSetAbilityActivatedPosX(abilCode: integer, x: integer): void
 declare function BlzSetAbilityActivatedPosY(abilCode: integer, y: integer): void
 declare function BlzGetAbilityManaCost(abilId: integer, level: integer): integer
 declare function BlzGetAbilityCooldown(abilId: integer, level: integer): real
+declare function GetAbilityEffect(abilityString: string, t: effecttype, index: integer): string
+declare function GetAbilityEffectById(abilityId: integer, t: effecttype, index: integer): string
+declare function GetAbilitySound(abilityString: string, t: soundtype): string
+declare function GetAbilitySoundById(abilityId: integer, t: soundtype): string
 
 export class AbilityRawCode extends RawCode {
     public setTooltip(tooltip: string, level: integer) {
@@ -165,5 +171,21 @@ export class AbilityRawCode extends RawCode {
 
     public getCooldown(level: integer): real {
         return BlzGetAbilityCooldown(this.id, Math.floor(level))
+    }
+
+    public getEffect(t: EffectType, index: integer) {
+        return GetAbilityEffect(this.chars, t.getHandle() as effecttype, Math.floor(index))
+    }
+
+    public getEffectById(t: EffectType, index: integer) {
+        return GetAbilityEffectById(this.id, t.getHandle() as effecttype, Math.floor(index))
+    }
+
+    public getSound(t: SoundType) {
+        return GetAbilitySound(this.chars, t.getHandle() as soundtype)
+    }
+
+    public getSoundById(t: SoundType) {
+        return GetAbilitySoundById(this.id, t.getHandle() as soundtype)
     }
 }

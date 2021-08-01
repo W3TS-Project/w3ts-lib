@@ -35,12 +35,12 @@ declare function IsFogEnabled(): boolean
 
 export abstract class Fog {
     public static setStateRect(forWhichPlayer: MapPlayer, whichState: FogState, where: Rectangle, useSharedVision: boolean) {
-        SetFogStateRect(forWhichPlayer.getHandle, whichState.getHandle, where.getHandle, useSharedVision)
+        SetFogStateRect(forWhichPlayer.getHandle() as player, whichState.getHandle() as fogstate, where.getHandle() as rect, useSharedVision)
         return this
     }
 
     public static setStateRadiusCoords(forWhichPlayer: MapPlayer, whichState: FogState, centerX: real, centerY: real, radius: real, useSharedVision: boolean) {
-        SetFogStateRadius(forWhichPlayer.getHandle, whichState.getHandle, centerX, centerY, radius, useSharedVision)
+        SetFogStateRadius(forWhichPlayer.getHandle() as player, whichState.getHandle() as fogstate, centerX, centerY, radius, useSharedVision)
         return this
     }
 
@@ -49,7 +49,7 @@ export abstract class Fog {
     }
 
     public static setStateRadiusLoc(forWhichPlayer: MapPlayer, whichState: FogState, center: MapLocation, radius: real, useSharedVision: boolean) {
-        SetFogStateRadiusLoc(forWhichPlayer.getHandle, whichState.getHandle, center.getHandle, radius, useSharedVision)
+        SetFogStateRadiusLoc(forWhichPlayer.getHandle() as player, whichState.getHandle() as fogstate, center.getHandle() as location, radius, useSharedVision)
         return this
     }
 

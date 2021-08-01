@@ -13,12 +13,8 @@ export class MapDensity extends Field<mapdensity> {
         super(ConvertMapDensity(id), id)
     }
 
-    public static fromHandle(handle: mapdensity): MapDensity {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: MapDensity): mapdensity {
-        return this.getHandle(object)
+    public static fromHandle(handle: mapdensity) {
+        return this.getObject(handle) as MapDensity
     }
 
     public static getResource() {

@@ -156,27 +156,27 @@ export class Sound extends Handle<sound> {
     }
 
     public setParamsFromLabel(soundLabel: string) {
-        SetSoundParamsFromLabel(this.getHandle, soundLabel)
+        SetSoundParamsFromLabel(this.getHandle() as sound, soundLabel)
         return this
     }
 
     public setDistanceCutoff(cutoff: real) {
-        SetSoundDistanceCutoff(this.getHandle, cutoff)
+        SetSoundDistanceCutoff(this.getHandle() as sound, cutoff)
         return this
     }
 
     public setChannel(channel: integer) {
-        SetSoundChannel(this.getHandle, Math.floor(channel))
+        SetSoundChannel(this.getHandle() as sound, Math.floor(channel))
         return this
     }
 
     public setVolume(volume: integer) {
-        SetSoundVolume(this.getHandle, Math.floor(volume))
+        SetSoundVolume(this.getHandle() as sound, Math.floor(volume))
         return this
     }
 
     public setPitch(pitch: real) {
-        SetSoundPitch(this.getHandle, pitch)
+        SetSoundPitch(this.getHandle() as sound, pitch)
         return this
     }
 
@@ -185,22 +185,22 @@ export class Sound extends Handle<sound> {
      * @param millisecs
      */
     public setPlayPosition(millisecs: integer) {
-        SetSoundPlayPosition(this.getHandle, Math.floor(millisecs))
+        SetSoundPlayPosition(this.getHandle() as sound, Math.floor(millisecs))
         return this
     }
 
     public setDistances(minDist: real, maxDist: real) {
-        SetSoundDistances(this.getHandle, minDist, maxDist)
+        SetSoundDistances(this.getHandle() as sound, minDist, maxDist)
         return this
     }
 
     public setConeAngles(inside: real, outside: real, outsideVolume: integer) {
-        SetSoundConeAngles(this.getHandle, inside, outside, Math.floor(outsideVolume))
+        SetSoundConeAngles(this.getHandle() as sound, inside, outside, Math.floor(outsideVolume))
         return this
     }
 
     public setConeOrientationCoords(x: real, y: real, z: real) {
-        SetSoundConeOrientation(this.getHandle, x, y, z)
+        SetSoundConeOrientation(this.getHandle() as sound, x, y, z)
         return this
     }
 
@@ -209,7 +209,7 @@ export class Sound extends Handle<sound> {
     }
 
     public setPositionCoords(x: real, y: real, z: real) {
-        SetSoundPosition(this.getHandle, x, y, z)
+        SetSoundPosition(this.getHandle() as sound, x, y, z)
         return this
     }
 
@@ -218,7 +218,7 @@ export class Sound extends Handle<sound> {
     }
 
     public setVelocityCoords(x: real, y: real, z: real) {
-        SetSoundVelocity(this.getHandle, x, y, z)
+        SetSoundVelocity(this.getHandle() as sound, x, y, z)
         return this
     }
 
@@ -227,31 +227,31 @@ export class Sound extends Handle<sound> {
     }
 
     public attachToUnit(whichUnit: Unit) {
-        AttachSoundToUnit(this.getHandle, whichUnit.getHandle)
+        AttachSoundToUnit(this.getHandle() as sound, whichUnit.getHandle() as unit)
         return this
     }
 
     public start() {
-        StartSound(this.getHandle)
+        StartSound(this.getHandle() as sound)
         return this
     }
 
     public stop(killWhenDone: boolean, fadeOut: boolean) {
-        StopSound(this.getHandle, killWhenDone, fadeOut)
+        StopSound(this.getHandle() as sound, killWhenDone, fadeOut)
         return this
     }
 
     public killWhenDone() {
-        KillSoundWhenDone(this.getHandle)
+        KillSoundWhenDone(this.getHandle() as sound)
         return this
     }
 
     public getDuration(): integer {
-        return GetSoundDuration(this.getHandle)
+        return GetSoundDuration(this.getHandle() as sound)
     }
 
     public setDuration(duration: integer) {
-        SetSoundDuration(this.getHandle, Math.floor(duration))
+        SetSoundDuration(this.getHandle() as sound, Math.floor(duration))
         return this
     }
 
@@ -260,61 +260,57 @@ export class Sound extends Handle<sound> {
     }
 
     public isPlaying(): boolean {
-        return GetSoundIsPlaying(this.getHandle)
+        return GetSoundIsPlaying(this.getHandle() as sound)
     }
 
     public isLoading(): boolean {
-        return GetSoundIsLoading(this.getHandle)
+        return GetSoundIsLoading(this.getHandle() as sound)
     }
 
     public registerStacked(byPosition: boolean, rectWidth: real, rectHeight: real) {
-        RegisterStackedSound(this.getHandle, byPosition, rectWidth, rectHeight)
+        RegisterStackedSound(this.getHandle() as sound, byPosition, rectWidth, rectHeight)
         return this
     }
 
     public unregisterStacked(byPosition: boolean, rectWidth: real, rectHeight: real) {
-        UnregisterStackedSound(this.getHandle, byPosition, rectWidth, rectHeight)
+        UnregisterStackedSound(this.getHandle() as sound, byPosition, rectWidth, rectHeight)
         return this
     }
 
     public getDialogueSpeakerNameKey(): string {
-        return GetDialogueSpeakerNameKey(this.getHandle)
+        return GetDialogueSpeakerNameKey(this.getHandle() as sound)
     }
 
     public setDialogueSpeakerNameKey(speakerName: string) {
-        SetDialogueSpeakerNameKey(this.getHandle, speakerName)
+        SetDialogueSpeakerNameKey(this.getHandle() as sound, speakerName)
         return this
     }
 
     public getDalogueTextKey(): string {
-        return GetDialogueTextKey(this.getHandle)
+        return GetDialogueTextKey(this.getHandle() as sound)
     }
 
     public setDialogueTextKey(dialogueText: string) {
-        SetDialogueTextKey(this.getHandle, dialogueText)
+        SetDialogueTextKey(this.getHandle() as sound, dialogueText)
         return this
     }
 
     public setFacialAnimationFilepath(animationSetFilepath: string) {
-        SetSoundFacialAnimationSetFilepath(this.getHandle, animationSetFilepath)
+        SetSoundFacialAnimationSetFilepath(this.getHandle() as sound, animationSetFilepath)
         return this
     }
 
     public setFacialAnimationGroupLabel(groupLabel: string) {
-        SetSoundFacialAnimationGroupLabel(this.getHandle, groupLabel)
+        SetSoundFacialAnimationGroupLabel(this.getHandle() as sound, groupLabel)
         return this
     }
 
     public setFacialAnimationLabel(animationLabel: string) {
-        SetSoundFacialAnimationLabel(this.getHandle, animationLabel)
+        SetSoundFacialAnimationLabel(this.getHandle() as sound, animationLabel)
         return this
     }
 
-    public static fromHandle(handle: sound): Sound {
-        return this.getObject(handle)
-    }
-
-    public static fromObject(object: Sound): sound {
-        return this.getHandle(object)
+    public static fromHandle(handle: sound) {
+        return this.getObject(handle) as Sound
     }
 }

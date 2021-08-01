@@ -12,6 +12,6 @@ export class AIDifficulty extends Field<aidifficulty> {
     }
 
     public static fromHandle(handle: aidifficulty) {
-        return this.getObject(handle)
+        return this.getObject(handle) as AIDifficulty
     }
 }
