@@ -23,6 +23,6 @@ export abstract class PlayerEvents {
     public static readonly MOUSE_MOVE = new PlayerEvent(307)
     public static readonly SYNC_DATA = new PlayerEvent(309)
     public static readonly KEY = new PlayerEvent(311)
-    public static readonly DOWN_KEY = new PlayerEvent(312)
-    public static readonly UP_KEY = new PlayerEvent(313)
+    public static readonly KEY_DOWN = new PlayerEvent(312)
+    public static readonly KEY_UP = new PlayerEvent(313)
 }

@@ -3,7 +3,7 @@ import { RawCode } from "../../RawCode"
 
 export abstract class ItemStringFields {
     public static readonly MODEL_USED = new ItemStringField(
-        new RawCode("ifil"),
+        RawCode.get("ifil"),
         "Используемая модель"
     )
 }

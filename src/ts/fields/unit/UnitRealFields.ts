@@ -3,140 +3,140 @@ import { RawCode } from "../../RawCode"
 
 export abstract class UnitRealFields {
     public static readonly STRENGTH_PER_LEVEL = new UnitRealField(
-        new RawCode("ustp"),
+        RawCode.get("ustp"),
         "Характеристики - Повышение силы с каждым уровнем"
     )
     public static readonly AGILITY_PER_LEVEL = new UnitRealField(
-        new RawCode("uagp"),
+        RawCode.get("uagp"),
         "Характеристики - Повышение ловкости с каждым уровнем"
     )
     public static readonly INTELLIGENCE_PER_LEVEL = new UnitRealField(
-        new RawCode("uinp"),
+        RawCode.get("uinp"),
         "Характеристики - Повышение разума с каждым уровнем"
     )
     public static readonly HIT_POINTS_REGENERATION_RATE = new UnitRealField(
-        new RawCode("uhpr"),
+        RawCode.get("uhpr"),
         "Характеристики - Скорость восстановления здоровья"
     )
     public static readonly MANA_REGENERATION = new UnitRealField(
-        new RawCode("umpr"),
+        RawCode.get("umpr"),
         "Характеристики - Восстановление маны"
     )
     public static readonly DEATH_TIME = new UnitRealField(
-        new RawCode("udtm"),
-        "Графика - Время смерти UnitRealField(new RawCode(сек.)"
+        RawCode.get("udtm"),
+        "Графика - Время смерти (сек.)"
     )
     /**
      * Не найдено в РО
      */
-    public static readonly FLY_HEIGHT = new UnitRealField(new RawCode("ufyh"))
+    public static readonly FLY_HEIGHT = new UnitRealField(RawCode.get("ufyh"))
     public static readonly TURN_RATE = new UnitRealField(
-        new RawCode("umvr"),
+        RawCode.get("umvr"),
         "Движение - Скорость поворота"
     )
     public static readonly ELEVATION_SAMPLE_RADIUS = new UnitRealField(
-        new RawCode("uerd"),
-        "Графика - Наводка UnitRealField(new RawCode(контрольный радиус)"
+        RawCode.get("uerd"),
+        "Графика - Наводка (контрольный радиус)"
     )
     public static readonly FOG_OF_WAR_SAMPLE_RADIUS = new UnitRealField(
-        new RawCode("ufrd"),
+        RawCode.get("ufrd"),
         "Графика - Туман войны: контрольный радиус"
     )
     public static readonly MAXIMUM_PITCH_ANGLE_DEGREES = new UnitRealField(
-        new RawCode("umxp"),
-        "Графика - Максимальный угол крена UnitRealField(new RawCode(град.)"
+        RawCode.get("umxp"),
+        "Графика - Максимальный угол крена (град.)"
     )
     public static readonly MAXIMUM_ROLL_ANGLE_DEGREES = new UnitRealField(
-        new RawCode("umxr"),
-        "Графика - Максимальный угол поворота UnitRealField(new RawCode(град.)"
+        RawCode.get("umxr"),
+        "Графика - Максимальный угол поворота (град.)"
     )
     public static readonly SCALING_VALUE = new UnitRealField(
-        new RawCode("usca"),
+        RawCode.get("usca"),
         "Графика - Масштабирование"
     )
     public static readonly ANIMATION_RUN_SPEED = new UnitRealField(
-        new RawCode("urun"),
+        RawCode.get("urun"),
         "Графика - Анимация: скорость бега"
     )
     public static readonly SELECTION_SCALE = new UnitRealField(
-        new RawCode("ussc"),
+        RawCode.get("ussc"),
         "Графика - Шкала выбора"
     )
     public static readonly SELECTION_CIRCLE_HEIGHT = new UnitRealField(
-        new RawCode("uslz"),
+        RawCode.get("uslz"),
         "Графика - Высота выбора"
     )
     public static readonly SHADOW_IMAGE_HEIGHT = new UnitRealField(
-        new RawCode("ushh"),
+        RawCode.get("ushh"),
         "Графика - Отображение тени: высота"
     )
     public static readonly SHADOW_IMAGE_WIDTH = new UnitRealField(
-        new RawCode("ushw"),
+        RawCode.get("ushw"),
         "Графика - Отображение тени: ширина"
     )
     public static readonly SHADOW_IMAGE_CENTER_X = new UnitRealField(
-        new RawCode("ushx"),
-        "Графика - Отображение тени: центр UnitRealField(new RawCode(X)"
+        RawCode.get("ushx"),
+        "Графика - Отображение тени: центр (X)"
     )
     public static readonly SHADOW_IMAGE_CENTER_Y = new UnitRealField(
-        new RawCode("ushy"),
-        "Графика - Отображение тени: центр UnitRealField(new RawCode(Y)"
+        RawCode.get("ushy"),
+        "Графика - Отображение тени: центр (Y)"
     )
     public static readonly ANIMATION_WALK_SPEED = new UnitRealField(
-        new RawCode("uwal"),
+        RawCode.get("uwal"),
         "Графика - Анимация: скорость ходьбы"
     )
     /**
      * Не найдено в РО
      */
-    public static readonly DEFENSE = new UnitRealField(new RawCode("udfc"), "Бой - Исходная защита")
+    public static readonly DEFENSE = new UnitRealField(RawCode.get("udfc"), "Бой - Исходная защита")
     /**
      * Не найдено в РО
      */
-    public static readonly SIGHT_RADIUS = new UnitRealField(new RawCode("usir"))
+    public static readonly SIGHT_RADIUS = new UnitRealField(RawCode.get("usir"))
     public static readonly PRIORITY = new UnitRealField(
-        new RawCode("upri"),
+        RawCode.get("upri"),
         "Характеристики - Приоритет"
     )
     /**
      * Не найдено в РО
      */
     public static readonly SPEED = new UnitRealField(
-        new RawCode("umvc"),
+        RawCode.get("umvc"),
         "Движение - Базовая скорость"
     )
     public static readonly OCCLUDER_HEIGHT = new UnitRealField(
-        new RawCode("uocc"),
+        RawCode.get("uocc"),
         "Графика - Радиус взаимодействия"
     )
     /**
      * Не найдено в РО
      */
     public static readonly HP = new UnitRealField(
-        new RawCode("uhpc"),
-        "Характеристики - Максимум здоровья UnitRealField(new RawCode(базовый)"
+        RawCode.get("uhpc"),
+        "Характеристики - Максимум здоровья (базовый)"
     )
     /**
      * Не найдено в РО
      */
     public static readonly MANA = new UnitRealField(
-        new RawCode("umpc"),
+        RawCode.get("umpc"),
         "Характеристики - Максимум маны"
     )
     public static readonly ACQUISITION_RANGE = new UnitRealField(
-        new RawCode("uacq"),
+        RawCode.get("uacq"),
         "Бой - Дистанция получения приказа"
     )
     public static readonly CAST_BACK_SWING = new UnitRealField(
-        new RawCode("ucbs"),
+        RawCode.get("ucbs"),
         "Графика - Анимация: обратный ход броска"
     )
     public static readonly CAST_POINT = new UnitRealField(
-        new RawCode("ucpt"),
+        RawCode.get("ucpt"),
         "Графика - Анимация: точка броска"
     )
     public static readonly MINIMUM_ATTACK_RANGE = new UnitRealField(
-        new RawCode("uamn"),
+        RawCode.get("uamn"),
         "Бой - Минимальная дистанция атаки"
     )
 }

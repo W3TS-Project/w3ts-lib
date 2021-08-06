@@ -1,5 +1,5 @@
-// /** @noSelfInFile **/
-// //@ts-nocheck
+/** @noSelfInFile **/
+//@ts-nocheck
 
 const map: WeakMap<handle, any> = new WeakMap<handle, any>()
 

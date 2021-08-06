@@ -12,6 +12,9 @@ import { ItemBooleanField } from "../API/fields/item/ItemBooleanField"
 import { ItemIntegerField } from "../API/fields/item/ItemIntegerField"
 import { ItemRealField } from "../API/fields/item/ItemRealField"
 import { ItemStringField } from "../API/fields/item/ItemStringField"
+import { ItemRawCode } from "./rawCode/ItemRawCode"
+import { UnitRawCode } from "./rawCode/UnitRawCode"
+import { AbilityRawCode } from "./rawCode/AbilityRawCode"
 
 declare function BlzCreateItemWithSkin(itemid: integer, x: real, y: real, skinId: integer): item
 declare function CreateItem(itemid: integer, x: real, y: real): item
@@ -87,7 +90,7 @@ declare function BlzGetItemIconPath(whichItem: item): string
 export type ItemFieldType = ItemBooleanField | ItemIntegerField | ItemRealField | ItemStringField
 
 export class Item extends Widget {
-    public constructor(itemId: RawCode, x: real, y: real, skinId?: RawCode) {
+    public constructor(itemId: ItemRawCode, x: real, y: real, skinId?: ItemRawCode) {
         if (skinId) {
             super(BlzCreateItemWithSkin(itemId.getId(), x, y, skinId.getId()))
         } else {
@@ -108,8 +111,8 @@ export class Item extends Widget {
         return GetItemTypeId(this.getHandle() as item)
     }
 
-    public getRawCode(): RawCode {
-        return new RawCode(this.getTypeId())
+    public getRawCode() {
+        return ItemRawCode.get(this.getTypeId())
     }
 
     public getX(): real {
@@ -207,11 +210,11 @@ export class Item extends Widget {
     }
 
     public setDropID(unitId: rawcode) {
-        SetItemDropID(this.getHandle() as item, RawCode.toId(unitId))
+        SetItemDropID(this.getHandle() as item, UnitRawCode.toId(unitId))
         return this
     }
 
-    public setDropCode(unitCode: RawCode) {
+    public setDropCode(unitCode: UnitRawCode) {
         SetItemDropID(this.getHandle() as item, unitCode.getId())
         return this
     }
@@ -249,16 +252,16 @@ export class Item extends Widget {
         )
     }
 
-    public getAbilityByCode(abilCode: RawCode) {
+    public getAbilityByCode(abilCode: AbilityRawCode) {
         return Ability.fromHandle(BlzGetItemAbility(this.getHandle() as item, abilCode.getId()))
     }
 
-    public addAbility(abilCode: RawCode): boolean {
+    public addAbility(abilCode: AbilityRawCode): boolean {
         return BlzItemAddAbility(this.getHandle() as item, abilCode.getId())
     }
 
-    public getSkin(): RawCode {
-        return new RawCode(BlzGetItemSkin(this.getHandle() as item))
+    public getSkin() {
+        return ItemRawCode.get(BlzGetItemSkin(this.getHandle() as item))
     }
 
     public setSkin(skinCode: RawCode) {
@@ -336,19 +339,19 @@ export class Item extends Widget {
 
     public setField(field: ItemFieldType, value: Primitive) {
         if (field instanceof ItemBooleanField && typeof value === "boolean") {
-            this.setBooleanField(field, value)
+            return this.setBooleanField(field, value)
         } else if (field instanceof ItemIntegerField && typeof value === "number") {
-            this.setIntegerField(field, value)
+            return this.setIntegerField(field, value)
         } else if (field instanceof ItemRealField && typeof value === "number") {
-            this.setRealField(field, value)
+            return this.setRealField(field, value)
         } else if (field instanceof ItemStringField && typeof value === "string") {
-            this.setStringField(field, value)
+            return this.setStringField(field, value)
         } else {
             error("Неверные аргументы вызова метода setField объекта класса Item", 2)
         }
     }
 
-    public removeAbility(abilCode: RawCode): boolean {
+    public removeAbility(abilCode: AbilityRawCode): boolean {
         return BlzItemRemoveAbility(this.getHandle() as item, abilCode.getId())
     }
 

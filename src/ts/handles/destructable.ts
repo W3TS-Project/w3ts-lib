@@ -2,8 +2,8 @@
 //@ts-nocheck
 
 import { Position } from "../Package"
-import { RawCode } from "../RawCode"
 import { Handle } from "./Handle"
+import { DestructableRawCode } from "./rawCode/DestructableRawCode"
 
 declare function CreateDestructable(
     objectid: integer,
@@ -69,7 +69,7 @@ declare function GetEnumDestructable(): destructable
 
 export class Destructable extends Handle<destructable> {
     public static createCoords(
-        rawCode: RawCode,
+        rawCode: DestructableRawCode,
         x: real,
         y: real,
         face: real,
@@ -82,7 +82,7 @@ export class Destructable extends Handle<destructable> {
     }
 
     public static createZCoords(
-        rawCode: RawCode,
+        rawCode: DestructableRawCode,
         x: real,
         y: real,
         z: real,
@@ -96,7 +96,7 @@ export class Destructable extends Handle<destructable> {
     }
 
     public static createPos(
-        rawCode: RawCode,
+        rawCode: DestructableRawCode,
         p: Position,
         face: real,
         scale: real,
@@ -106,7 +106,7 @@ export class Destructable extends Handle<destructable> {
     }
 
     public static createDeadCoords(
-        rawCode: RawCode,
+        rawCode: DestructableRawCode,
         x: real,
         y: real,
         face: real,
@@ -119,7 +119,7 @@ export class Destructable extends Handle<destructable> {
     }
 
     public static createDeadZCoords(
-        rawCode: RawCode,
+        rawCode: DestructableRawCode,
         x: real,
         y: real,
         z: real,
@@ -133,7 +133,7 @@ export class Destructable extends Handle<destructable> {
     }
 
     public static createDeadPos(
-        rawCode: RawCode,
+        rawCode: DestructableRawCode,
         p: Position,
         face: real,
         scale: real,
@@ -187,7 +187,7 @@ export class Destructable extends Handle<destructable> {
     }
 
     public getRawCode() {
-        return new RawCode(this.getTypeId())
+        return DestructableRawCode.get(this.getTypeId())
     }
 
     public getX(): real {

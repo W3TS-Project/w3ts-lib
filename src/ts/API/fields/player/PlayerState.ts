@@ -10,4 +10,8 @@ export class PlayerState extends Field<playerstate> {
         id = Math.floor(id)
         super(ConvertPlayerState(id), id)
     }
+
+    public static fromHandle(handle: playerstate) {
+        return this.getObject(handle) as PlayerState
+    }
 }

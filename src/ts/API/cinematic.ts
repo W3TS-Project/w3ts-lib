@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { RawCode } from "../RawCode"
+import { UnitRawCode } from "../handles/rawCode/UnitRawCode"
 import { PlayerColor } from "./fields/player/PlayerColor"
 
 declare function SetCinematicCamera(cameraModelFile: string): void
@@ -19,7 +19,7 @@ declare function SetCinematicAudio(cinematicAudio: boolean): void
 
 export abstract class Cinematic {
     public static setScene(
-        portraitUnitId: RawCode,
+        portraitUnitId: UnitRawCode,
         color: PlayerColor,
         speakerTitle: string,
         text: string,

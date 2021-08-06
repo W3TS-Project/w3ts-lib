@@ -8,7 +8,6 @@ import { Item } from "./Item"
 import { MapPlayer } from "./MapPlayer"
 import { MapLocation } from "./MapLocation"
 import { Widget } from "./Widget"
-import { UnitStates } from "../fields/unit/UnitStates"
 import { UnitState } from "../API/fields/unit/UnitState"
 import { UnitRawCode } from "./rawCode/UnitRawCode"
 import { Position } from "../Package"
@@ -16,6 +15,23 @@ import { PlayerColor } from "../API/fields/player/PlayerColor"
 import { RarityControl } from "../API/fields/camera/RarityControl"
 import { AbilityRawCode } from "./rawCode/AbilityRawCode"
 import { ItemRawCode } from "./rawCode/ItemRawCode"
+import { Race } from "../API/fields/other/Race"
+import { Point } from "./Point"
+import { UnitType } from "../API/fields/unit/UnitType"
+import { BuffRawCode } from "./rawCode/BuffRawCode"
+import { AttackType } from "../API/fields/unit/AttackType"
+import { DamageType } from "../API/fields/unit/DamageType"
+import { WeaponType } from "../API/fields/unit/WeaponType"
+import { Order } from "../Order"
+import { Ability } from "./Ability"
+import { UnitBooleanField } from "../API/fields/unit/UnitBooleanField"
+import { UnitIntegerField } from "../API/fields/unit/UnitIntegerField"
+import { UnitRealField } from "../API/fields/unit/UnitRealField"
+import { UnitStringField } from "../API/fields/unit/UnitStringField"
+import { UnitWeaponBooleanField } from "../API/fields/unit/UnitWeaponBooleanField"
+import { UnitWeaponIntegerField } from "../API/fields/unit/UnitWeaponIntegerField"
+import { UnitWeaponRealField } from "../API/fields/unit/UnitWeaponRealField"
+import { UnitWeaponStringField } from "../API/fields/unit/UnitWeaponStringField"
 
 declare function CreateUnit(id: player, unitid: integer, x: real, y: real, face: real): unit
 declare function CreateUnitByName(
@@ -163,8 +179,6 @@ declare function GetUnitRace(whichUnit: unit): race
 declare function GetUnitName(whichUnit: unit): string
 declare function GetUnitFoodUsed(whichUnit: unit): integer
 declare function GetUnitFoodMade(whichUnit: unit): integer
-declare function GetFoodMade(unitId: integer): integer
-declare function GetFoodUsed(unitId: integer): integer
 declare function SetUnitUseFood(whichUnit: unit, useFood: boolean): void
 declare function GetUnitRallyPoint(whichUnit: unit): location
 declare function GetUnitRallyUnit(whichUnit: unit): unit
@@ -190,8 +204,6 @@ declare function IsUnitHidden(whichUnit: unit): boolean
 declare function IsUnitIllusion(whichUnit: unit): boolean
 declare function IsUnitInTransport(whichUnit: unit, whichTransport: unit): boolean
 declare function IsUnitLoaded(whichUnit: unit): boolean
-declare function IsHeroUnitId(unitId: integer): boolean
-declare function IsUnitIdType(unitId: integer, whichUnitType: unittype): boolean
 declare function UnitShareVision(whichUnit: unit, whichPlayer: player, share: boolean): void
 declare function UnitSuspendDecay(whichUnit: unit, suspend: boolean): void
 declare function UnitAddType(whichUnit: unit, whichUnitType: unittype): boolean
@@ -566,6 +578,14 @@ declare function BlzStartUnitAbilityCooldown(
 declare function BlzSetUnitFacingEx(whichUnit: unit, facingAngle: real): void
 declare function BlzShowUnitTeamGlow(whichUnit: unit, show: boolean): void
 
+export type UnitFieldType = UnitBooleanField | UnitIntegerField | UnitRealField | UnitStringField
+
+export type UnitWeaponFieldType =
+    | UnitWeaponBooleanField
+    | UnitWeaponIntegerField
+    | UnitWeaponRealField
+    | UnitWeaponStringField
+
 export class Unit extends Widget {
     public static createCoords(
         owner: MapPlayer,
@@ -681,6 +701,14 @@ export class Unit extends Widget {
         skinCode: UnitRawCode
     ) {
         return this.createCoordsWithSkin(whichPlayer, unitCode, p.getX(), p.getY(), face, skinCode)
+    }
+
+    public static createBlightedGoldmineCoords(id: MapPlayer, x: real, y: real, face: real) {
+        return new this(CreateBlightedGoldmine(id.getHandle() as player, x, y, face))
+    }
+
+    public static createBlightedGoldminePos(id: MapPlayer, p: Position, face: real) {
+        return this.createBlightedGoldmineCoords(id, p.getX(), p.getY(), face)
     }
 
     public kill() {
@@ -936,625 +964,6 @@ export class Unit extends Widget {
         return this
     }
 
-    public get armor() {
-        return BlzGetUnitArmor(this.getHandle() as unit)
-    }
-
-    public set armor(armorAmount: number) {
-        BlzSetUnitArmor(this.getHandle() as unit, armorAmount)
-    }
-
-    public set canSleep(flag: boolean) {
-        UnitAddSleep(this.getHandle() as unit, flag)
-    }
-
-    public get canSleep() {
-        return UnitCanSleep(this.getHandle() as unit)
-    }
-
-    public get collisionSize() {
-        return BlzGetUnitCollisionSize(this.getHandle() as unit)
-    }
-
-    public get currentOrder() {
-        return GetUnitCurrentOrder(this.getHandle() as unit)
-    }
-
-    public get foodMade() {
-        return GetUnitFoodMade(this.getHandle() as unit)
-    }
-
-    public get foodUsed() {
-        return GetUnitFoodUsed(this.getHandle() as unit)
-    }
-
-    public get ignoreAlarmToggled() {
-        return UnitIgnoreAlarmToggled(this.getHandle() as unit)
-    }
-
-    public set intelligence(value: number) {
-        SetHeroInt(this.getHandle() as unit, value, true)
-    }
-
-    public get invulnerable() {
-        return BlzIsUnitInvulnerable(this.getHandle() as unit)
-    }
-
-    public get localZ() {
-        return BlzGetLocalUnitZ(this.getHandle() as unit)
-    }
-
-    public get mana() {
-        return this.getState(UnitStates.MANA)
-    }
-
-    public set mana(value: number) {
-        this.setState(UnitStates.MANA, value)
-    }
-
-    public get maxLife() {
-        return BlzGetUnitMaxHP(this.getHandle() as unit)
-    }
-
-    public set maxLife(value: number) {
-        BlzSetUnitMaxHP(this.getHandle() as unit, value)
-    }
-
-    public get maxMana() {
-        return BlzGetUnitMaxMana(this.getHandle() as unit)
-    }
-
-    public set maxMana(value: number) {
-        BlzSetUnitMaxMana(this.getHandle() as unit, value)
-    }
-
-    get name() {
-        return GetUnitName(this.getHandle() as unit)
-    }
-
-    set name(value: string) {
-        BlzSetUnitName(this.getHandle() as unit, value)
-    }
-
-    public set nameProper(value: string) {
-        BlzSetHeroProperName(this.getHandle() as unit, value)
-    }
-
-    public get race() {
-        return GetUnitRace(this.getHandle() as unit)
-    }
-
-    public get rallyDestructable() {
-        return Destructable.fromHandle(GetUnitRallyDestructable(this.getHandle() as unit))
-    }
-
-    public get rallyPoint() {
-        return MapLocation.fromHandle(GetUnitRallyPoint(this.getHandle() as unit))
-    }
-
-    public get rallyUnit() {
-        return Unit.fromHandle(GetUnitRallyUnit(this.getHandle() as unit))
-    }
-
-    public set resourceAmount(amount: number) {
-        SetResourceAmount(this.getHandle() as unit, amount)
-    }
-
-    public get resourceAmount() {
-        return GetResourceAmount(this.getHandle() as unit)
-    }
-
-    public get selectable() {
-        return BlzIsUnitSelectable(this.getHandle() as unit)
-    }
-
-    // public set selectionScale(scale: number) {
-    //     this.setField(UNIT_RF_SELECTION_SCALE, scale)
-    // }
-
-    // public get selectionScale() {
-    //     const result = this.getField(UNIT_RF_SELECTION_SCALE)
-    //     return typeof result === "number" ? result : 0
-    // }
-
-    public get show() {
-        return IsUnitHidden(this.getHandle() as unit)
-    }
-
-    public get skin() {
-        return BlzGetUnitSkin(this.getHandle() as unit)
-    }
-
-    public set skin(skinId: number) {
-        BlzSetUnitSkin(this.getHandle() as unit, skinId)
-    }
-
-    public get sleeping() {
-        return UnitIsSleeping(this.getHandle() as unit)
-    }
-
-    public get userData() {
-        return GetUnitUserData(this.getHandle() as unit)
-    }
-
-    public set userData(value: number) {
-        SetUnitUserData(this.getHandle() as unit, value)
-    }
-
-    public set waygateActive(flag: boolean) {
-        WaygateActivate(this.getHandle() as unit, flag)
-    }
-
-    public get waygateActive() {
-        return WaygateIsActive(this.getHandle() as unit)
-    }
-
-    public get z() {
-        return BlzGetUnitZ(this.getHandle() as unit)
-    }
-
-    public addAbility(abilityId: number) {
-        return UnitAddAbility(this.getHandle() as unit, abilityId)
-    }
-
-    // public addIndicator(red: number, blue: number, green: number, alpha: number) {
-    //     UnitAddIndicator(this.getHandle() as unit, red, blue, green, alpha)
-    // }
-
-    public addItemToStock(itemId: number, currentStock: number, stockMax: number) {
-        AddItemToStock(this.getHandle() as unit, itemId, currentStock, stockMax)
-    }
-
-    public addResourceAmount(amount: number) {
-        AddResourceAmount(this.getHandle() as unit, amount)
-    }
-
-    public addSleepPerm(add: boolean) {
-        UnitAddSleepPerm(this.getHandle() as unit, add)
-    }
-
-    public addType(whichUnitType: unittype) {
-        return UnitAddType(this.getHandle() as unit, whichUnitType)
-    }
-
-    public addUnitToStock(unitId: number, currentStock: number, stockMax: number) {
-        AddUnitToStock(this.getHandle() as unit, unitId, currentStock, stockMax)
-    }
-
-    public applyTimedLife(buffId: number, duration: number) {
-        UnitApplyTimedLife(this.getHandle() as unit, buffId, duration)
-    }
-
-    public cancelTimedLife() {
-        BlzUnitCancelTimedLife(this.getHandle() as unit)
-    }
-
-    public canSleepPerm() {
-        return UnitCanSleepPerm(this.getHandle() as unit)
-    }
-
-    public countBuffs(
-        removePositive: boolean,
-        removeNegative: boolean,
-        magic: boolean,
-        physical: boolean,
-        timedLife: boolean,
-        aura: boolean,
-        autoDispel: boolean
-    ) {
-        return UnitCountBuffsEx(
-            this.getHandle() as unit,
-            removePositive,
-            removeNegative,
-            magic,
-            physical,
-            timedLife,
-            aura,
-            autoDispel
-        )
-    }
-
-    public damageAt(
-        delay: number,
-        radius: number,
-        x: number,
-        y: number,
-        amount: number,
-        attack: boolean,
-        ranged: boolean,
-        attackType: attacktype,
-        damageType: damagetype,
-        weaponType: weapontype
-    ) {
-        return UnitDamagePoint(
-            this.getHandle() as unit,
-            delay,
-            radius,
-            x,
-            y,
-            amount,
-            attack,
-            ranged,
-            attackType,
-            damageType,
-            weaponType
-        )
-    }
-
-    public damageTarget(
-        target: widget,
-        amount: number,
-        radius: number,
-        attack: boolean,
-        ranged: boolean,
-        attackType: attacktype,
-        damageType: damagetype,
-        weaponType: weapontype
-    ) {
-        return UnitDamageTarget(
-            this.getHandle() as unit,
-            target,
-            amount,
-            attack,
-            ranged,
-            attackType,
-            damageType,
-            weaponType
-        )
-    }
-
-    public disableAbility(abilId: number, flag: boolean, hideUI: boolean) {
-        BlzUnitHideAbility(this.getHandle() as unit, abilId, flag)
-    }
-
-    public endAbilityCooldown(abilCode: number) {
-        BlzEndUnitAbilityCooldown(this.getHandle() as unit, abilCode)
-    }
-
-    public getAbility(abilId: number) {
-        return BlzGetUnitAbility(this.getHandle() as unit, abilId)
-    }
-
-    public getAbilityByIndex(index: number) {
-        return BlzGetUnitAbilityByIndex(this.getHandle() as unit, index)
-    }
-
-    public getAbilityCooldown(abilId: number, level: number) {
-        return BlzGetUnitAbilityCooldown(this.getHandle() as unit, abilId, level)
-    }
-
-    public getAbilityCooldownRemaining(abilId: number, level: number) {
-        return BlzGetUnitAbilityCooldownRemaining(this.getHandle() as unit, abilId)
-    }
-
-    public getAbilityManaCost(abilId: number, level: number) {
-        return BlzGetUnitAbilityManaCost(this.getHandle() as unit, abilId, level)
-    }
-
-    public getAttackCooldown(weaponIndex: number) {
-        return BlzGetUnitAttackCooldown(this.getHandle() as unit, weaponIndex)
-    }
-
-    public getBaseDamage(weaponIndex: number) {
-        return BlzGetUnitBaseDamage(this.getHandle() as unit, weaponIndex)
-    }
-
-    public getDiceNumber(weaponIndex: number) {
-        return BlzGetUnitDiceNumber(this.getHandle() as unit, weaponIndex)
-    }
-
-    public getDiceSides(weaponIndex: number) {
-        return BlzGetUnitDiceSides(this.getHandle() as unit, weaponIndex)
-    }
-
-    public getField(field: unitbooleanfield | unitintegerfield | unitrealfield | unitstringfield) {
-        const fieldType = field.toString().substr(0, field.toString().indexOf(":"))
-
-        switch (fieldType) {
-            case "unitbooleanfield":
-                const fieldBool: unitbooleanfield = field as unitbooleanfield
-
-                return BlzGetUnitBooleanField(this.getHandle() as unit, fieldBool)
-            case "unitintegerfield":
-                const fieldInt: unitintegerfield = field as unitintegerfield
-
-                return BlzGetUnitIntegerField(this.getHandle() as unit, fieldInt)
-            case "unitrealfield":
-                const fieldReal: unitrealfield = field as unitrealfield
-
-                return BlzGetUnitRealField(this.getHandle() as unit, fieldReal)
-            case "unitstringfield":
-                const fieldString: unitstringfield = field as unitstringfield
-
-                return BlzGetUnitStringField(this.getHandle() as unit, fieldString)
-            default:
-                return 0
-        }
-    }
-
-    public getIgnoreAlarm(flag: boolean) {
-        return UnitIgnoreAlarm(this.getHandle() as unit, flag)
-    }
-
-    public hasBuffs(
-        removePositive: boolean,
-        removeNegative: boolean,
-        magic: boolean,
-        physical: boolean,
-        timedLife: boolean,
-        aura: boolean,
-        autoDispel: boolean
-    ) {
-        return UnitHasBuffsEx(
-            this.getHandle() as unit,
-            removePositive,
-            removeNegative,
-            magic,
-            physical,
-            timedLife,
-            aura,
-            autoDispel
-        )
-    }
-
-    public hideAbility(abilId: number, flag: boolean) {
-        BlzUnitHideAbility(this.getHandle() as unit, abilId, flag)
-    }
-
-    public inForce(whichForce: Force) {
-        return IsUnitInForce(this.getHandle() as unit, whichForce.getHandle)
-    }
-
-    public inGroup(whichGroup: Group) {
-        return IsUnitInGroup(this.getHandle() as unit, whichGroup.getHandle)
-    }
-
-    public inRange(x: number, y: number, distance: number) {
-        return IsUnitInRangeXY(this.getHandle() as unit, x, y, distance)
-    }
-
-    public inRangeOfPoint(whichPoint: MapLocation, distance: number) {
-        return IsUnitInRangeLoc(
-            this.getHandle() as unit,
-            whichPoint.getHandle() as location,
-            distance
-        )
-    }
-
-    public inRangeOfUnit(otherUnit: Unit, distance: number) {
-        return IsUnitInRange(this.getHandle() as unit, otherUnit.handle, distance)
-    }
-
-    public interruptAttack() {
-        BlzUnitInterruptAttack(this.getHandle() as unit)
-    }
-
-    public inTransport(whichTransport: Unit) {
-        return IsUnitInTransport(this.getHandle() as unit, whichTransport.handle)
-    }
-
-    public isAlly(whichPlayer: MapPlayer) {
-        return IsUnitAlly(this.getHandle() as unit, whichPlayer.getHandle() as player)
-    }
-
-    public isEnemy(whichPlayer: MapPlayer) {
-        return IsUnitEnemy(this.getHandle() as unit, whichPlayer.getHandle() as player)
-    }
-
-    public isFogged(whichPlayer: MapPlayer) {
-        return IsUnitFogged(this.getHandle() as unit, whichPlayer.getHandle() as player)
-    }
-
-    public isHero() {
-        return IsHeroUnitId(this.typeId)
-    }
-
-    public isIllusion() {
-        return IsUnitIllusion(this.getHandle() as unit)
-    }
-
-    public isLoaded() {
-        return IsUnitLoaded(this.getHandle() as unit)
-    }
-
-    public isMasked(whichPlayer: MapPlayer) {
-        return IsUnitMasked(this.getHandle() as unit, whichPlayer.getHandle() as player)
-    }
-
-    public isSelected(whichPlayer: MapPlayer) {
-        return IsUnitSelected(this.getHandle() as unit, whichPlayer.getHandle() as player)
-    }
-
-    public issueBuildOrder(unit: string | number, x: number, y: number) {
-        return typeof unit === "string"
-            ? IssueBuildOrder(this.getHandle() as unit, unit, x, y)
-            : IssueBuildOrderById(this.getHandle() as unit, unit, x, y)
-    }
-
-    public issueImmediateOrder(order: string | number) {
-        return typeof order === "string"
-            ? IssueImmediateOrder(this.getHandle() as unit, order)
-            : IssueImmediateOrderById(this.getHandle() as unit, order)
-    }
-
-    public issueInstantOrderAt(
-        order: string | number,
-        x: number,
-        y: number,
-        instantTargetWidget: Widget
-    ) {
-        return typeof order === "string"
-            ? IssueInstantPointOrder(
-                  this.getHandle() as unit,
-                  order,
-                  x,
-                  y,
-                  instantTargetWidget.getHandle
-              )
-            : IssueInstantPointOrderById(
-                  this.getHandle() as unit,
-                  order,
-                  x,
-                  y,
-                  instantTargetWidget.getHandle
-              )
-    }
-
-    public issueInstantTargetOrder(
-        order: string | number,
-        targetWidget: Widget,
-        instantTargetWidget: Widget
-    ) {
-        return typeof order === "string"
-            ? IssueInstantTargetOrder(
-                  this.getHandle() as unit,
-                  order,
-                  targetWidget.getHandle,
-                  instantTargetWidget.getHandle
-              )
-            : IssueInstantTargetOrderById(
-                  this.getHandle() as unit,
-                  order,
-                  targetWidget.getHandle,
-                  instantTargetWidget.getHandle
-              )
-    }
-
-    public issueOrderAt(order: string | number, x: number, y: number) {
-        return typeof order === "string"
-            ? IssuePointOrder(this.getHandle() as unit, order, x, y)
-            : IssuePointOrderById(this.getHandle() as unit, order, x, y)
-    }
-
-    public issuePointOrder(order: string | number, whichPoint: MapLocation) {
-        return typeof order === "string"
-            ? IssuePointOrderLoc(
-                  this.getHandle() as unit,
-                  order,
-                  whichPoint.getHandle() as location
-              )
-            : IssuePointOrderByIdLoc(
-                  this.getHandle() as unit,
-                  order,
-                  whichPoint.getHandle() as location
-              )
-    }
-
-    public issueTargetOrder(order: string | number, targetWidget: Widget) {
-        return typeof order === "string"
-            ? IssueTargetOrder(this.getHandle() as unit, order, targetWidget.getHandle)
-            : IssueTargetOrderById(this.getHandle() as unit, order, targetWidget.getHandle)
-    }
-
-    public isUnit(whichSpecifiedUnit: Unit) {
-        return IsUnit(this.getHandle() as unit, whichSpecifiedUnit.handle)
-    }
-
-    public isUnitType(whichUnitType: unittype) {
-        return IsUnitType(this.getHandle() as unit, whichUnitType)
-    }
-
-    public isVisible(whichPlayer: MapPlayer) {
-        return IsUnitVisible(this.getHandle() as unit, whichPlayer.getHandle() as player)
-    }
-
-    public makeAbilityPermanent(permanent: boolean, abilityId: number) {
-        UnitMakeAbilityPermanent(this.getHandle() as unit, permanent, abilityId)
-    }
-
-    public pauseEx(flag: boolean) {
-        BlzPauseUnitEx(this.getHandle() as unit, flag)
-    }
-
-    public pauseTimedLife(flag: boolean) {
-        UnitPauseTimedLife(this.getHandle() as unit, flag)
-    }
-
-    public recycleGuardPosition() {
-        RecycleGuardPosition(this.getHandle() as unit)
-    }
-
-    public removeAbility(abilityId: number) {
-        return UnitRemoveAbility(this.getHandle() as unit, abilityId)
-    }
-
-    public removeBuffs(removePositive: boolean, removeNegative: boolean) {
-        UnitRemoveBuffs(this.getHandle() as unit, removePositive, removeNegative)
-    }
-
-    public removeBuffsEx(
-        removePositive: boolean,
-        removeNegative: boolean,
-        magic: boolean,
-        physical: boolean,
-        timedLife: boolean,
-        aura: boolean,
-        autoDispel: boolean
-    ) {
-        UnitRemoveBuffsEx(
-            this.getHandle() as unit,
-            removePositive,
-            removeNegative,
-            magic,
-            physical,
-            timedLife,
-            aura,
-            autoDispel
-        )
-    }
-
-    public removeGuardPosition() {
-        RemoveGuardPosition(this.getHandle() as unit)
-    }
-
-    public removeItemFromStock(itemId: number) {
-        RemoveItemFromStock(this.getHandle() as unit, itemId)
-    }
-
-    public removeType(whichUnitType: unittype) {
-        return UnitAddType(this.getHandle() as unit, whichUnitType)
-    }
-
-    public removeUnitFromStock(itemId: number) {
-        RemoveUnitFromStock(this.getHandle() as unit, itemId)
-    }
-
-    public resetCooldown() {
-        UnitResetCooldown(this.getHandle() as unit)
-    }
-
-    public setAbilityCooldown(abilId: number, level: number, cooldown: number) {
-        BlzSetUnitAbilityCooldown(this.getHandle() as unit, abilId, level, cooldown)
-    }
-
-    public setAbilityManaCost(abilId: number, level: number, manaCost: number) {
-        BlzSetUnitAbilityManaCost(this.getHandle() as unit, abilId, level, manaCost)
-    }
-
-    public setAttackCooldown(cooldown: number, weaponIndex: number) {
-        BlzSetUnitAttackCooldown(this.getHandle() as unit, cooldown, weaponIndex)
-    }
-
-    public setBaseDamage(baseDamage: number, weaponIndex: number) {
-        BlzSetUnitBaseDamage(this.getHandle() as unit, baseDamage, weaponIndex)
-    }
-
-    public setConstructionProgress(constructionPercentage: number) {
-        UnitSetConstructionProgress(this.getHandle() as unit, constructionPercentage)
-    }
-
-    public setDiceNumber(diceNumber: number, weaponIndex: number) {
-        BlzSetUnitDiceNumber(this.getHandle() as unit, diceNumber, weaponIndex)
-    }
-
-    public setDiceSides(diceSides: number, weaponIndex: number) {
-        BlzSetUnitDiceSides(this.getHandle() as unit, diceSides, weaponIndex)
-    }
-
-    public setExperience(newXpVal: number, showEyeCandy: boolean) {
-        SetHeroXP(this.getHandle() as unit, newXpVal, showEyeCandy)
-    }
-
     public getSkillPoints(): integer {
         return GetHeroSkillPoints(this.getHandle() as unit)
     }
@@ -1775,152 +1184,1051 @@ export class Unit extends Widget {
         return MapPlayer.fromHandle(GetOwningPlayer(this.getHandle() as unit))
     }
 
-    public getTypeId() {
+    public getTypeId(): integer {
         return GetUnitTypeId(this.getHandle() as unit)
     }
 
-    public setFacingEx(facingAngle: number) {
-        BlzSetUnitFacingEx(this.getHandle() as unit, facingAngle)
+    public getRawCode() {
+        return UnitRawCode.get(this.getTypeId())
     }
 
-    public setField(
-        field: unitbooleanfield | unitintegerfield | unitrealfield | unitstringfield,
-        value: boolean | number | string
-    ) {
-        const fieldType = field.toString().substr(0, field.toString().indexOf(":"))
-
-        if (fieldType === "unitbooleanfield" && typeof value === "boolean") {
-            return BlzSetUnitBooleanField(
-                this.getHandle() as unit,
-                field as unitbooleanfield,
-                value
-            )
-        } else if (fieldType === "unitintegerfield" && typeof value === "number") {
-            return BlzSetUnitIntegerField(
-                this.getHandle() as unit,
-                field as unitintegerfield,
-                value
-            )
-        } else if (fieldType === "unitrealfield" && typeof value === "number") {
-            return BlzSetUnitRealField(this.getHandle() as unit, field as unitrealfield, value)
-        } else if (fieldType === "unitstringfield" && typeof value === "string") {
-            return BlzSetUnitStringField(this.getHandle() as unit, field as unitstringfield, value)
-        }
-
-        return false
+    public getRace() {
+        return Race.fromHandle(GetUnitRace(this.getHandle() as unit))
     }
 
-    public setItemTypeSlots(slots: number) {
-        SetItemTypeSlots(this.getHandle() as unit, slots)
+    public getName() {
+        return GetUnitName(this.getHandle() as unit)
     }
 
-    public setUnitAttackCooldown(cooldown: number, weaponIndex: number) {
-        BlzSetUnitAttackCooldown(this.getHandle() as unit, cooldown, weaponIndex)
+    public getFoodUsedCount(): integer {
+        return GetUnitFoodUsed(this.getHandle() as unit)
     }
 
-    public setUnitTypeSlots(slots: number) {
-        SetUnitTypeSlots(this.getHandle() as unit, slots)
-    }
-
-    public setUpgradeProgress(upgradePercentage: number) {
-        UnitSetUpgradeProgress(this.getHandle() as unit, upgradePercentage)
-    }
-
-    public setUseAltIcon(flag: boolean) {
-        UnitSetUsesAltIcon(this.getHandle() as unit, flag)
+    public getFoodMadeCount(): integer {
+        return GetUnitFoodMade(this.getHandle() as unit)
     }
 
     public setUseFood(useFood: boolean) {
         SetUnitUseFood(this.getHandle() as unit, useFood)
+        return this
+    }
+
+    public getRallyLoc() {
+        return MapLocation.fromHandle(GetUnitRallyPoint(this.getHandle() as unit))
+    }
+
+    public getRallyPoint() {
+        return Point.fromLoc(this.getRallyLoc())
+    }
+
+    public getRallyUnit() {
+        return Unit.fromHandle(GetUnitRallyUnit(this.getHandle() as unit))
+    }
+
+    public getRallyDestructable() {
+        return Destructable.fromHandle(GetUnitRallyDestructable(this.getHandle() as unit))
+    }
+
+    public isInGroup(whichGroup: Group) {
+        return IsUnitInGroup(this.getHandle() as unit, whichGroup.getHandle() as group)
+    }
+
+    public isInForce(whichForce: Force) {
+        return IsUnitInForce(this.getHandle() as unit, whichForce.getHandle() as force)
+    }
+
+    public isOwnedByPlayer(whichPlayer: MapPlayer) {
+        return IsUnitOwnedByPlayer(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isAlly(whichPlayer: MapPlayer) {
+        return IsUnitAlly(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isEnemy(whichPlayer: MapPlayer) {
+        return IsUnitEnemy(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isVisible(whichPlayer: MapPlayer) {
+        return IsUnitVisible(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isDetected(whichPlayer: MapPlayer) {
+        return IsUnitDetected(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isInvisible(whichPlayer: MapPlayer) {
+        return IsUnitInvisible(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isFogged(whichPlayer: MapPlayer) {
+        return IsUnitFogged(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isMasked(whichPlayer: MapPlayer) {
+        return IsUnitMasked(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isSelected(whichPlayer: MapPlayer) {
+        return IsUnitSelected(this.getHandle() as unit, whichPlayer.getHandle() as player)
+    }
+
+    public isRace(whichRace: Race) {
+        return IsUnitRace(this.getHandle() as unit, whichRace.getHandle() as race)
+    }
+
+    public isType(whichUnitType: UnitType) {
+        return IsUnitType(this.getHandle() as unit, whichUnitType.getHandle() as unittype)
+    }
+
+    public isUnit(whichSpecifiedUnit: Unit) {
+        return IsUnit(this.getHandle() as unit, whichSpecifiedUnit.getHandle() as unit)
+    }
+
+    public isInRangeOfUnit(otherUnit: Unit, distance: real) {
+        return IsUnitInRange(this.getHandle() as unit, otherUnit.getHandle() as unit, distance)
+    }
+
+    public isInRangeCoords(x: real, y: real, distance: real) {
+        return IsUnitInRangeXY(this.getHandle() as unit, x, y, distance)
+    }
+
+    public isInRangePos(p: Position, distance: real) {
+        return this.isInRangeCoords(p.getX(), p.getY(), distance)
+    }
+
+    public isInRangeOfLoc(whichPoint: MapLocation, distance: real) {
+        return IsUnitInRangeLoc(
+            this.getHandle() as unit,
+            whichPoint.getHandle() as location,
+            distance
+        )
+    }
+
+    public isHidden() {
+        return IsUnitHidden(this.getHandle() as unit)
+    }
+
+    public isIllusion() {
+        return IsUnitIllusion(this.getHandle() as unit)
+    }
+
+    public isInTransport(whichTransport: Unit) {
+        return IsUnitInTransport(this.getHandle() as unit, whichTransport.getHandle() as unit)
+    }
+
+    public isLoaded() {
+        return IsUnitLoaded(this.getHandle() as unit)
     }
 
     public shareVision(whichPlayer: MapPlayer, share: boolean) {
         UnitShareVision(this.getHandle() as unit, whichPlayer.getHandle() as player, share)
-    }
-
-    public showTeamGlow(show: boolean) {
-        BlzShowUnitTeamGlow(this.getHandle() as unit, show)
-    }
-
-    public startAbilityCooldown(abilCode: number, cooldown: number) {
-        BlzStartUnitAbilityCooldown(this.getHandle() as unit, abilCode, cooldown)
+        return this
     }
 
     public suspendDecay(suspend: boolean) {
         UnitSuspendDecay(this.getHandle() as unit, suspend)
+        return this
+    }
+
+    public addType(whichUnitType: UnitType) {
+        return UnitAddType(this.getHandle() as unit, whichUnitType.getHandle() as unittype)
+    }
+
+    public removeType(whichUnitType: UnitType) {
+        return UnitRemoveType(this.getHandle() as unit, whichUnitType.getHandle() as unittype)
+    }
+
+    public addAbility(abilityCode: AbilityRawCode) {
+        return UnitAddAbility(this.getHandle() as unit, abilityCode.getId())
+    }
+
+    public removeAbility(abilityCode: AbilityRawCode) {
+        return UnitRemoveAbility(this.getHandle() as unit, abilityCode.getId())
+    }
+
+    public makeAbilityPermanent(abilityCode: AbilityRawCode, permanent: boolean) {
+        UnitMakeAbilityPermanent(this.getHandle() as unit, permanent, abilityCode.getId())
+    }
+
+    public removeBuffs(removePositive: boolean, removeNegative: boolean) {
+        UnitRemoveBuffs(this.getHandle() as unit, removePositive, removeNegative)
+        return this
+    }
+
+    public removeBuffsEx(
+        removePositive: boolean,
+        removeNegative: boolean,
+        magic: boolean,
+        physical: boolean,
+        timedLife: boolean,
+        aura: boolean,
+        autoDispel: boolean
+    ) {
+        UnitRemoveBuffsEx(
+            this.getHandle() as unit,
+            removePositive,
+            removeNegative,
+            magic,
+            physical,
+            timedLife,
+            aura,
+            autoDispel
+        )
+    }
+
+    public hasBuffs(
+        removePositive: boolean,
+        removeNegative: boolean,
+        magic: boolean,
+        physical: boolean,
+        timedLife: boolean,
+        aura: boolean,
+        autoDispel: boolean
+    ) {
+        return UnitHasBuffsEx(
+            this.getHandle() as unit,
+            removePositive,
+            removeNegative,
+            magic,
+            physical,
+            timedLife,
+            aura,
+            autoDispel
+        )
+    }
+
+    public countBuffs(
+        removePositive: boolean,
+        removeNegative: boolean,
+        magic: boolean,
+        physical: boolean,
+        timedLife: boolean,
+        aura: boolean,
+        autoDispel: boolean
+    ) {
+        return UnitCountBuffsEx(
+            this.getHandle() as unit,
+            removePositive,
+            removeNegative,
+            magic,
+            physical,
+            timedLife,
+            aura,
+            autoDispel
+        )
+    }
+
+    public addSleep(add: boolean) {
+        UnitAddSleep(this.getHandle() as unit, add)
+        return this
+    }
+
+    public canSleep() {
+        return UnitCanSleep(this.getHandle() as unit)
+    }
+
+    public addSleepPerm(add: boolean) {
+        UnitAddSleepPerm(this.getHandle() as unit, add)
+        return this
+    }
+
+    public canSleepPerm() {
+        return UnitCanSleepPerm(this.getHandle() as unit)
+    }
+
+    public isSleeping() {
+        return UnitIsSleeping(this.getHandle() as unit)
     }
 
     public wakeUp() {
         UnitWakeUp(this.getHandle() as unit)
+        return this
     }
 
-    public waygateGetDestinationX() {
+    public applyTimedLife(buffCode: BuffRawCode, duration: real) {
+        UnitApplyTimedLife(this.getHandle() as unit, buffCode.getId(), duration)
+        return this
+    }
+
+    public ignoreAlarm(flag: boolean) {
+        return UnitIgnoreAlarm(this.getHandle() as unit, flag)
+    }
+
+    public ignoreAlarmToggled() {
+        return UnitIgnoreAlarmToggled(this.getHandle() as unit)
+    }
+
+    public resetCooldown() {
+        UnitResetCooldown(this.getHandle() as unit)
+        return this
+    }
+
+    public setConstructionProgress(constructionPercentage: integer) {
+        UnitSetConstructionProgress(this.getHandle() as unit, Math.floor(constructionPercentage))
+        return this
+    }
+
+    public setUpgradeProgress(upgradePercentage: integer) {
+        UnitSetUpgradeProgress(this.getHandle() as unit, Math.floor(upgradePercentage))
+        return this
+    }
+
+    public pauseTimedLife(flag: boolean) {
+        UnitPauseTimedLife(this.getHandle() as unit, flag)
+        return this
+    }
+
+    public setUsesAltIcon(flag: boolean) {
+        UnitSetUsesAltIcon(this.getHandle() as unit, flag)
+        return this
+    }
+
+    public damageCoords(
+        delay: real,
+        radius: real,
+        x: real,
+        y: real,
+        amount: real,
+        attack: boolean,
+        ranged: boolean,
+        attackType: AttackType,
+        damageType: DamageType,
+        weaponType: WeaponType
+    ) {
+        return UnitDamagePoint(
+            this.getHandle() as unit,
+            delay,
+            radius,
+            x,
+            y,
+            amount,
+            attack,
+            ranged,
+            attackType.getHandle() as attacktype,
+            damageType.getHandle() as damagetype,
+            weaponType.getHandle() as weapontype
+        )
+    }
+
+    public damagePos(
+        delay: real,
+        radius: real,
+        p: Position,
+        amount: real,
+        attack: boolean,
+        ranged: boolean,
+        attackType: AttackType,
+        damageType: DamageType,
+        weaponType: WeaponType
+    ) {
+        return this.damageCoords(
+            delay,
+            radius,
+            p.getX(),
+            p.getY(),
+            amount,
+            attack,
+            ranged,
+            attackType,
+            damageType,
+            weaponType
+        )
+    }
+
+    public damageTarget(
+        target: Widget,
+        amount: real,
+        attack: boolean,
+        ranged: boolean,
+        attackType: AttackType,
+        damageType: DamageType,
+        weaponType: WeaponType
+    ) {
+        return UnitDamageTarget(
+            this.getHandle() as unit,
+            target.getHandle() as widget,
+            amount,
+            attack,
+            ranged,
+            attackType.getHandle() as attacktype,
+            damageType.getHandle() as damagetype,
+            weaponType.getHandle() as weapontype
+        )
+    }
+
+    public issueImmediateOrder(order: Order | order) {
+        return IssueImmediateOrderById(this.getHandle() as unit, Order.toId(order))
+    }
+
+    public issuePointOrderCoords(order: Order | order, x: real, y: real) {
+        return IssuePointOrderById(this.getHandle() as unit, Order.toId(order), x, y)
+    }
+
+    public issuePointOrderPos(order: Order | order, p: Position) {
+        return this.issuePointOrderCoords(order, p.getX(), p.getY())
+    }
+
+    public issuePointOrderLoc(order: Order | order, whichLocation: MapLocation) {
+        return IssuePointOrderByIdLoc(
+            this.getHandle() as unit,
+            Order.toId(order),
+            whichLocation.getHandle() as location
+        )
+    }
+
+    public issueTargetOrder(order: Order | order, targetWidget: Widget) {
+        return IssueTargetOrderById(
+            this.getHandle() as unit,
+            Order.toId(order),
+            targetWidget.getHandle() as widget
+        )
+    }
+
+    public issueInstantPointOrderCoords(
+        order: Order | order,
+        x: real,
+        y: real,
+        instantTargetWidget: Widget
+    ) {
+        return IssueInstantPointOrderById(
+            this.getHandle() as unit,
+            Order.toId(order),
+            x,
+            y,
+            instantTargetWidget.getHandle() as widget
+        )
+    }
+
+    public issueInstantPointOrderPos(
+        order: Order | order,
+        p: Position,
+        instantTargetWidget: Widget
+    ) {
+        return this.issueInstantPointOrderCoords(order, p.getX(), p.getY(), instantTargetWidget)
+    }
+
+    public issueInstantTargetOrder(
+        order: Order | order,
+        targetWidget: Widget,
+        instantTargetWidget: Widget
+    ) {
+        return IssueInstantTargetOrderById(
+            this.getHandle() as unit,
+            Order.toId(order),
+            targetWidget.getHandle() as widget,
+            instantTargetWidget.getHandle() as widget
+        )
+    }
+
+    public issueBuildOrderCoords(unit: Order | order, x: real, y: real) {
+        return IssueBuildOrderById(this.getHandle() as unit, Order.toId(unit), x, y)
+    }
+
+    public issueBuildOrderPos(unit: Order | order, p: Position) {
+        return this.issueBuildOrderCoords(unit, p.getX(), p.getY())
+    }
+
+    public issueNeutralImmediateOrder(unit: Order | order, forWhichPlayer: MapPlayer) {
+        return IssueNeutralImmediateOrderById(
+            forWhichPlayer.getHandle() as player,
+            this.getHandle() as unit,
+            Order.toId(unit)
+        )
+    }
+
+    public issueNeutralPointOrderCoords(
+        unit: Order | order,
+        forWhichPlayer: MapPlayer,
+        x: real,
+        y: real
+    ) {
+        return IssueNeutralPointOrderById(
+            forWhichPlayer.getHandle() as player,
+            this.getHandle() as unit,
+            Order.toId(unit),
+            x,
+            y
+        )
+    }
+
+    public issueNeutralPointOrderPos(unit: Order | order, forWhichPlayer: MapPlayer, p: Position) {
+        return this.issueNeutralPointOrderCoords(unit, forWhichPlayer, p.getX(), p.getY())
+    }
+
+    public issueNeutralTargetOrder(unit: Order | order, forWhichPlayer: MapPlayer, target: Widget) {
+        return IssueNeutralTargetOrderById(
+            forWhichPlayer.getHandle() as player,
+            this.getHandle() as unit,
+            Order.toId(unit),
+            target.getHandle() as widget
+        )
+    }
+
+    public getCurrentOrderId(): integer {
+        return GetUnitCurrentOrder(this.getHandle() as unit)
+    }
+
+    public getCurrentOrder() {
+        return Order.get(this.getCurrentOrderId())
+    }
+
+    public setResourceAmount(amount: integer) {
+        SetResourceAmount(this.getHandle() as unit, Math.floor(amount))
+        return this
+    }
+
+    public addResourceAmount(amount: integer) {
+        AddResourceAmount(this.getHandle() as unit, Math.floor(amount))
+        return this
+    }
+
+    public getResourceAmount(): integer {
+        return GetResourceAmount(this.getHandle() as unit)
+    }
+
+    public getWaygateDestinationX(): real {
         return WaygateGetDestinationX(this.getHandle() as unit)
     }
 
-    public waygateGetDestinationY() {
+    public getWaygateDestinationY(): real {
         return WaygateGetDestinationY(this.getHandle() as unit)
     }
 
-    public waygateSetDestination(x: number, y: number) {
+    public getWaygateDestinationPoint() {
+        return new Point(this.getWaygateDestinationX(), this.getWaygateDestinationY())
+    }
+
+    public setWaygateDestinationCoords(x: real, y: real) {
         WaygateSetDestination(this.getHandle() as unit, x, y)
+        return this
     }
 
-    public static foodMadeByType(unitId: number) {
-        return GetFoodMade(unitId)
+    public setWaygateDestinationPos(p: Position) {
+        return this.setWaygateDestinationCoords(p.getX(), p.getY())
     }
 
-    public static foodUsedByType(unitId: number) {
-        return GetFoodUsed(unitId)
+    public waygateActivate(flag: boolean) {
+        WaygateActivate(this.getHandle() as unit, flag)
+        return this
     }
 
-    public static fromHandle(handle: unit): Unit {
-        return this.getObject(handle)
+    public isWaygateActive() {
+        return WaygateIsActive(this.getHandle() as unit)
+    }
+
+    public addItemToStock(itemCode: ItemRawCode, currentStock: integer, stockMax: integer) {
+        AddItemToStock(
+            this.getHandle() as unit,
+            itemCode.getId(),
+            Math.floor(currentStock),
+            Math.floor(stockMax)
+        )
+        return this
+    }
+
+    public addUnitToStock(unitCode: UnitRawCode, currentStock: integer, stockMax: integer) {
+        AddUnitToStock(
+            this.getHandle() as unit,
+            unitCode.getId(),
+            Math.floor(currentStock),
+            Math.floor(stockMax)
+        )
+        return this
+    }
+
+    public removeItemFromStock(itemCode: ItemRawCode) {
+        RemoveItemFromStock(this.getHandle() as unit, itemCode.getId())
+        return this
+    }
+
+    public removeUnitFromStock(unitCode: UnitRawCode) {
+        RemoveUnitFromStock(this.getHandle() as unit, unitCode.getId())
+        return this
+    }
+
+    public static setAllItemTypeSlots(slots: integer) {
+        SetAllItemTypeSlots(Math.floor(slots))
+        return this
+    }
+
+    public static setAllUnitTypeSlots(slots: integer) {
+        SetAllUnitTypeSlots(Math.floor(slots))
+        return this
+    }
+
+    public setItemTypeSlots(slots: integer) {
+        SetItemTypeSlots(this.getHandle() as unit, Math.floor(slots))
+        return this
+    }
+
+    public setUnitTypeSlots(slots: integer) {
+        SetUnitTypeSlots(this.getHandle() as unit, Math.floor(slots))
+        return this
+    }
+
+    public getUserData(): integer {
+        return GetUnitUserData(this.getHandle() as unit)
+    }
+
+    public setUserData(value: integer) {
+        SetUnitUserData(this.getHandle() as unit, Math.floor(value))
+        return this
+    }
+
+    public getMaxHP(): integer {
+        return BlzGetUnitMaxHP(this.getHandle() as unit)
+    }
+
+    public setMaxHP(value: integer) {
+        BlzSetUnitMaxHP(this.getHandle() as unit, Math.floor(value))
+        return this
+    }
+
+    public getMaxMana(): integer {
+        return BlzGetUnitMaxMana(this.getHandle() as unit)
+    }
+
+    public setMaxMana(value: integer) {
+        BlzSetUnitMaxMana(this.getHandle() as unit, Math.floor(value))
+        return this
+    }
+
+    public setName(value: string) {
+        BlzSetUnitName(this.getHandle() as unit, value)
+        return this
+    }
+
+    public setHeroProperName(value: string) {
+        BlzSetHeroProperName(this.getHandle() as unit, value)
+        return this
+    }
+
+    public getBaseDamage(weaponIndex: integer): integer {
+        return BlzGetUnitBaseDamage(this.getHandle() as unit, Math.floor(weaponIndex))
+    }
+
+    public setBaseDamage(baseDamage: integer, weaponIndex: integer) {
+        BlzSetUnitBaseDamage(
+            this.getHandle() as unit,
+            Math.floor(baseDamage),
+            Math.floor(weaponIndex)
+        )
+        return this
+    }
+
+    public getDiceNumber(weaponIndex: integer): integer {
+        return BlzGetUnitDiceNumber(this.getHandle() as unit, Math.floor(weaponIndex))
+    }
+
+    public setDiceNumber(diceNumber: integer, weaponIndex: integer) {
+        BlzSetUnitDiceNumber(
+            this.getHandle() as unit,
+            Math.floor(diceNumber),
+            Math.floor(weaponIndex)
+        )
+        return this
+    }
+
+    public getDiceSides(weaponIndex: integer): integer {
+        return BlzGetUnitDiceSides(this.getHandle() as unit, Math.floor(weaponIndex))
+    }
+
+    public setDiceSides(diceSides: integer, weaponIndex: integer) {
+        BlzSetUnitDiceSides(
+            this.getHandle() as unit,
+            Math.floor(diceSides),
+            Math.floor(weaponIndex)
+        )
+        return this
+    }
+
+    public getAttackCooldown(weaponIndex: integer): real {
+        return BlzGetUnitAttackCooldown(this.getHandle() as unit, Math.floor(weaponIndex))
+    }
+
+    public setAttackCooldown(cooldown: real, weaponIndex: integer) {
+        BlzSetUnitAttackCooldown(this.getHandle() as unit, cooldown, Math.floor(weaponIndex))
+        return this
+    }
+
+    public getArmor(): real {
+        return BlzGetUnitArmor(this.getHandle() as unit)
+    }
+
+    public setArmor(armorAmount: real) {
+        BlzSetUnitArmor(this.getHandle() as unit, armorAmount)
+        return this
+    }
+
+    public hideAbility(abilCode: AbilityRawCode, flag: boolean) {
+        BlzUnitHideAbility(this.getHandle() as unit, abilCode.getId(), flag)
+        return this
+    }
+
+    public disableAbility(abilCode: AbilityRawCode, flag: boolean, hideUI: boolean) {
+        BlzUnitDisableAbility(this.getHandle() as unit, abilCode.getId(), flag, hideUI)
+        return this
+    }
+
+    public cancelTimedLife() {
+        BlzUnitCancelTimedLife(this.getHandle() as unit)
+        return this
+    }
+
+    public isSelectable() {
+        return BlzIsUnitSelectable(this.getHandle() as unit)
+    }
+
+    public isInvulnerable() {
+        return BlzIsUnitInvulnerable(this.getHandle() as unit)
+    }
+
+    public interruptAttack() {
+        BlzUnitInterruptAttack(this.getHandle() as unit)
+        return this
+    }
+
+    public getCollisionSize(): real {
+        return BlzGetUnitCollisionSize(this.getHandle() as unit)
+    }
+
+    public setAbilityCooldown(abilCode: AbilityRawCode, level: integer, cooldown: real) {
+        BlzSetUnitAbilityCooldown(
+            this.getHandle() as unit,
+            abilCode.getId(),
+            Math.floor(level),
+            cooldown
+        )
+        return this
+    }
+
+    public getAbilityCooldown(abilCode: AbilityRawCode, level: integer): real {
+        return BlzGetUnitAbilityCooldown(
+            this.getHandle() as unit,
+            abilCode.getId(),
+            Math.floor(level)
+        )
+    }
+
+    public getAbilityCooldownRemaining(abilCode: AbilityRawCode): real {
+        return BlzGetUnitAbilityCooldownRemaining(this.getHandle() as unit, abilCode.getId())
+    }
+
+    public endAbilityCooldown(abilCode: AbilityRawCode) {
+        BlzEndUnitAbilityCooldown(this.getHandle() as unit, abilCode.getId())
+        return this
+    }
+
+    public getAbilityManaCost(abilCode: AbilityRawCode, level: integer): integer {
+        return BlzGetUnitAbilityManaCost(
+            this.getHandle() as unit,
+            abilCode.getId(),
+            Math.floor(level)
+        )
+    }
+
+    public setAbilityManaCost(abilCode: AbilityRawCode, level: integer, manaCost: integer) {
+        BlzSetUnitAbilityManaCost(
+            this.getHandle() as unit,
+            abilCode.getId(),
+            Math.floor(level),
+            Math.floor(manaCost)
+        )
+        return this
+    }
+
+    public getLocalZ(): real {
+        return BlzGetLocalUnitZ(this.getHandle() as unit)
+    }
+
+    public getZ(): real {
+        return BlzGetUnitZ(this.getHandle() as unit)
+    }
+
+    public getAbility(abilCode: AbilityRawCode | rawcode) {
+        return Ability.fromHandle(
+            BlzGetUnitAbility(this.getHandle() as unit, AbilityRawCode.toId(abilCode))
+        )
+    }
+
+    public getAbilityByIndex(index: integer) {
+        return Ability.fromHandle(
+            BlzGetUnitAbilityByIndex(this.getHandle() as unit, Math.floor(index))
+        )
+    }
+
+    public pauseEx(flag: boolean) {
+        BlzPauseUnitEx(this.getHandle() as unit, flag)
+        return this
+    }
+
+    public getBooleanField(whichField: UnitBooleanField) {
+        return BlzGetUnitBooleanField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitbooleanfield
+        )
+    }
+
+    public getIntegerField(whichField: UnitIntegerField) {
+        return BlzGetUnitIntegerField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitintegerfield
+        )
+    }
+
+    public getRealField(whichField: UnitRealField) {
+        return BlzGetUnitRealField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitrealfield
+        )
+    }
+
+    public getStringField(whichField: UnitStringField) {
+        return BlzGetUnitStringField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitstringfield
+        )
+    }
+
+    public getField(whichField: UnitFieldType): Primitive | undefined {
+        let result: Primitive | undefined
+        if (whichField instanceof UnitBooleanField) {
+            result = this.getBooleanField(whichField)
+        } else if (whichField instanceof UnitIntegerField) {
+            result = this.getIntegerField(whichField)
+        } else if (whichField instanceof UnitRealField) {
+            result = this.getRealField(whichField)
+        } else if (whichField instanceof UnitStringField) {
+            result = this.getStringField(whichField)
+        }
+        return result
+    }
+
+    public setBooleanField(whichField: UnitBooleanField, value: boolean) {
+        return BlzSetUnitBooleanField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitbooleanfield,
+            value
+        )
+    }
+
+    public setIntegerField(whichField: UnitIntegerField, value: integer) {
+        return BlzSetUnitIntegerField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitintegerfield,
+            Math.floor(value)
+        )
+    }
+
+    public setRealField(whichField: UnitRealField, value: real) {
+        return BlzSetUnitRealField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitrealfield,
+            value
+        )
+    }
+
+    public setStringField(whichField: UnitStringField, value: string) {
+        return BlzSetUnitStringField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitstringfield,
+            value
+        )
+    }
+
+    public setField(field: UnitFieldType, value: Primitive) {
+        if (field instanceof UnitBooleanField && typeof value === "boolean") {
+            return this.setBooleanField(field, value)
+        } else if (field instanceof UnitIntegerField && typeof value === "number") {
+            return this.setIntegerField(field, value)
+        } else if (field instanceof UnitRealField && typeof value === "number") {
+            return this.setRealField(field, value)
+        } else if (field instanceof UnitStringField && typeof value === "string") {
+            return this.setStringField(field, value)
+        } else {
+            error("Неверные аргументы вызова метода setField объекта класса Unit", 2)
+        }
+    }
+
+    public getWeaponBooleanField(whichField: UnitWeaponBooleanField, index: integer) {
+        return BlzGetUnitWeaponBooleanField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitweaponbooleanfield,
+            Math.floor(index)
+        )
+    }
+
+    public getWeaponIntegerField(whichField: UnitWeaponIntegerField, index: integer) {
+        return BlzGetUnitWeaponIntegerField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitweaponintegerfield,
+            Math.floor(index)
+        )
+    }
+
+    public getWeaponRealField(whichField: UnitWeaponRealField, index: integer) {
+        return BlzGetUnitWeaponRealField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitweaponrealfield,
+            Math.floor(index)
+        )
+    }
+
+    public getWeaponStringField(whichField: UnitWeaponStringField, index: integer) {
+        return BlzGetUnitWeaponStringField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitweaponstringfield,
+            Math.floor(index)
+        )
+    }
+
+    public getWeaponField(field: UnitWeaponFieldType, index: integer): Primitive | undefined {
+        let result: Primitive | undefined
+        if (field instanceof UnitWeaponBooleanField) {
+            result = this.getWeaponBooleanField(field, index)
+        } else if (field instanceof UnitWeaponIntegerField) {
+            result = this.getWeaponIntegerField(field, index)
+        } else if (field instanceof UnitWeaponRealField) {
+            result = this.getWeaponRealField(field, index)
+        } else if (field instanceof UnitWeaponStringField) {
+            result = this.getWeaponStringField(field, index)
+        }
+        return result
+    }
+
+    public setWeaponBooleanField(
+        whichField: UnitWeaponBooleanField,
+        index: integer,
+        value: boolean
+    ) {
+        return BlzSetUnitWeaponBooleanField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitweaponbooleanfield,
+            Math.floor(index),
+            value
+        )
+    }
+
+    public setWeaponIntegerField(
+        whichField: UnitWeaponIntegerField,
+        index: integer,
+        value: integer
+    ) {
+        return BlzSetUnitWeaponIntegerField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitweaponintegerfield,
+            Math.floor(index),
+            Math.floor(value)
+        )
+    }
+
+    public setWeaponRealField(whichField: UnitWeaponRealField, index: integer, value: real) {
+        return BlzSetUnitWeaponRealField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitweaponrealfield,
+            Math.floor(index),
+            value
+        )
+    }
+
+    public setWeaponStringField(whichField: UnitWeaponStringField, index: integer, value: string) {
+        return BlzSetUnitWeaponStringField(
+            this.getHandle() as unit,
+            whichField.getHandle() as unitweaponstringfield,
+            Math.floor(index),
+            value
+        )
+    }
+
+    public setWeaponField(field: UnitWeaponFieldType, index: integer, value: Primitive) {
+        if (field instanceof UnitWeaponBooleanField && typeof value === "boolean") {
+            return this.setWeaponBooleanField(field, index, value)
+        } else if (field instanceof UnitWeaponIntegerField && typeof value === "number") {
+            return this.setWeaponIntegerField(field, index, value)
+        } else if (field instanceof UnitWeaponRealField && typeof value === "number") {
+            return this.setWeaponRealField(field, index, value)
+        } else if (field instanceof UnitWeaponStringField && typeof value === "string") {
+            return this.setWeaponStringField(field, index, value)
+        } else {
+            error("Неверные аргументы вызова метода setWeaponField объекта класса Unit", 2)
+        }
+    }
+
+    public addIndicator(red: integer, blue: integer, green: integer, alpha: integer) {
+        UnitAddIndicator(
+            this.getHandle() as unit,
+            Math.floor(red),
+            Math.floor(blue),
+            Math.floor(green),
+            Math.floor(alpha)
+        )
+        return this
+    }
+
+    public removeGuardPosition() {
+        RemoveGuardPosition(this.getHandle() as unit)
+        return this
+    }
+
+    public recycleGuardPosition() {
+        RecycleGuardPosition(this.getHandle() as unit)
+        return this
+    }
+
+    public getSkin() {
+        return UnitRawCode.get(BlzGetUnitSkin(this.getHandle() as unit))
+    }
+
+    public setSkin(skinId: UnitRawCode | rawcode) {
+        BlzSetUnitSkin(this.getHandle() as unit, UnitRawCode.toId(skinId))
+        return this
+    }
+
+    public startAbilityCooldown(abilCode: AbilityRawCode | rawcode, cooldown: real) {
+        BlzStartUnitAbilityCooldown(this.getHandle() as unit, AbilityRawCode.toId(abilCode), cooldown)
+        return this
+    }
+
+    public setFacingEx(facingAngle: real) {
+        BlzSetUnitFacingEx(this.getHandle() as unit, facingAngle)
+        return this
+    }
+
+    public showTeamGlow(show: boolean) {
+        BlzShowUnitTeamGlow(this.getHandle() as unit, show)
+        return this
+    }
+
+    public static fromHandle(handle: unit) {
+        return super.getObject(handle) as Unit
     }
 
     public static fromEvent() {
         return this.fromHandle(GetTriggerUnit())
     }
 
-    public static isUnitIdHero(unitId: number) {
-        return IsHeroUnitId(unitId)
-    }
-
-    public static isUnitIdType(unitId: number, whichUnitType: unittype) {
-        return IsUnitIdType(unitId, whichUnitType)
-    }
-
-    public static fromEnum(): Unit {
-        return this.fromHandle(GetEnumUnit())
-    }
-
-    public static fromFilter(): Unit {
-        return this.fromHandle(GetFilterUnit())
-    }
-
-    public static getEntering(): Unit {
+    public static getEntering() {
         return this.fromHandle(GetEnteringUnit())
     }
 
-    public static getLeaving(): Unit {
+    public static getLeaving() {
         return this.fromHandle(GetLeavingUnit())
     }
 
-    /**
-     * EVENT_PLAYER_HERO_LEVEL
-     * EVENT_UNIT_HERO_LEVEL
-     * @returns Unit
-     */
     public static getLeveling(): Unit {
         return this.fromHandle(GetLevelingUnit())
     }
 
-    /**
-     * EVENT_PLAYER_HERO_SKILL
-     * EVENT_UNIT_HERO_SKILL
-     * @returns Unit
-     */
     public static getLearning(): Unit {
         return this.fromHandle(GetLearningUnit())
+    }
+
+    public static fromFilter() {
+        return this.fromHandle(GetFilterUnit())
+    }
+
+    public static fromEnum() {
+        return this.fromHandle(GetEnumUnit())
     }
 }

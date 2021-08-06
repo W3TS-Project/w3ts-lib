@@ -5,5 +5,5 @@
 /// <reference types="ceres-decl/ceres"/>
 
 import { Timer } from "./handles/Timer"
-import { Package } from "./Package"
-Timer.setTimeout(0, () => Package.config(), true)
+import { init } from "./Package"
+Timer.setTimeout(0, init, true)

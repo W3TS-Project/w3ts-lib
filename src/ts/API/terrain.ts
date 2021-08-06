@@ -46,7 +46,7 @@ export abstract class Terrain {
     }
 
     public static getTypeFromCoords(x: real, y: real): integer {
-        return GetTerrainType(x, y)
+        return RawCode.get(GetTerrainType(x, y))
     }
 
     public static getTypeFromPos(p: Position): integer {

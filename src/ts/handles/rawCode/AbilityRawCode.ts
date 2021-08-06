@@ -57,6 +57,30 @@ declare function GetAbilitySound(abilityString: string, t: soundtype): string
 declare function GetAbilitySoundById(abilityId: integer, t: soundtype): string
 
 export class AbilityRawCode extends RawCode {
+    protected static readonly ERROR_MESSAGE = "Равкод не является равкодом способности"
+    public icon: string
+    public activatedIcon: string
+    public posX: integer
+    public posY: integer
+    public activatedPosX: integer
+    public activatedPosY: integer
+
+    public constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
+        if (isCheck) {
+            AbilityRawCode.checkAnError(id)
+        }
+        if (isBasicCheck) {
+            RawCode.checkAnError(id)
+        }
+        super(id, !isBasicCheck)
+        this.icon = this.getIcon()
+        this.activatedIcon = this.getActivatedIcon()
+        this.posX = this.getPosX()
+        this.posY = this.getPosY()
+        this.activatedPosX = this.getActivatedPosX()
+        this.activatedPosY = this.getActivatedPosY()
+    }
+
     public setTooltip(tooltip: string, level: integer) {
         BlzSetAbilityTooltip(this.id, tooltip, Math.floor(level))
         return this
@@ -113,6 +137,7 @@ export class AbilityRawCode extends RawCode {
 
     public setIcon(iconPath: string) {
         BlzSetAbilityIcon(this.id, iconPath)
+        this.icon = iconPath
         return this
     }
 
@@ -122,6 +147,7 @@ export class AbilityRawCode extends RawCode {
 
     public setActivatedIcon(iconPath: string) {
         BlzSetAbilityActivatedIcon(this.id, iconPath)
+        this.activatedIcon = iconPath
         return this
     }
 
@@ -139,11 +165,13 @@ export class AbilityRawCode extends RawCode {
 
     public setPosX(x: integer) {
         BlzSetAbilityPosX(this.id, Math.floor(x))
+        this.posX = x
         return this
     }
 
     public setPosY(y: integer) {
         BlzSetAbilityPosY(this.id, Math.floor(y))
+        this.posY = y
         return this
     }
 
@@ -157,11 +185,13 @@ export class AbilityRawCode extends RawCode {
 
     public setActivatedPosX(x: integer) {
         BlzSetAbilityActivatedPosX(this.id, Math.floor(x))
+        this.activatedPosX = x
         return this
     }
 
     public setActivatedPosY(y: integer) {
         BlzSetAbilityActivatedPosY(this.id, Math.floor(y))
+        this.activatedPosY = y
         return this
     }
 
@@ -187,5 +217,26 @@ export class AbilityRawCode extends RawCode {
 
     public getSoundById(t: SoundType) {
         return GetAbilitySoundById(this.id, t.getHandle() as soundtype)
+    }
+
+    public static get(rawCode: rawcode, isCheck = true, isBasicCheck = true) {
+        if (isCheck) {
+            this.checkAnError(rawCode)
+        }
+        return super.get(rawCode, isBasicCheck) as AbilityRawCode
+    }
+
+    protected static check(id: rawcode): boolean {
+        if (!super.check(id)) {
+            return false
+        }
+        //TODO
+        return true
+    }
+
+    protected static checkAnError(id: rawcode) {
+        if (!this.check(id)) {
+            error(this.ERROR_MESSAGE, 2)
+        }
     }
 }

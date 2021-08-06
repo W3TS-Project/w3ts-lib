@@ -10,4 +10,8 @@ export class MouseButtonType extends Field<mousebuttontype> {
         id = Math.floor(id)
         super(ConvertMouseButtonType(id), id)
     }
+
+    public static fromHandle(handle: mousebuttontype) {
+        return this.getObject(handle) as MouseButtonType
+    }
 }
