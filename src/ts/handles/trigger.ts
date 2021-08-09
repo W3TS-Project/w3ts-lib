@@ -1,55 +1,6 @@
 // /** @noSelfInFile **/
 // //@ts-nocheck
 
-import { Dialog } from "./Dialog"
-import { DialogButton } from "./DialogButton"
-import { Frame } from "./Frame"
-import { Handle } from "./Handle"
-import { MapPlayer } from "./MapPlayer"
-import { Region } from "./Region"
-import { Timer } from "./Timer"
-import { Trackable } from "./Trackable"
-import { Unit } from "./Unit"
-import { Widget } from "./Widget"
-
-// trigger player based event
-declare function TriggerRegisterPlayerUnitEvent(
-    whichTrigger: trigger,
-    whichPlayer: player,
-    whichPlayerUnitEvent: playerunitevent,
-    filter: boolexpr | null
-): event
-declare function TriggerRegisterPlayerAllianceChange(
-    whichTrigger: trigger,
-    whichPlayer: player,
-    whichAlliance: alliancetype
-): event
-declare function TriggerRegisterPlayerStateEvent(
-    whichTrigger: trigger,
-    whichPlayer: player,
-    whichState: playerstate,
-    opcode: limitop,
-    limitval: number
-): event
-declare function TriggerRegisterPlayerChatEvent(
-    whichTrigger: trigger,
-    whichPlayer: player,
-    chatMessageToDetect: string,
-    exactMatchOnly: boolean
-): event
-declare function BlzTriggerRegisterPlayerSyncEvent(
-    whichTrigger: trigger,
-    whichPlayer: player,
-    prefix: string,
-    fromServer: boolean
-): event
-declare function BlzTriggerRegisterPlayerKeyEvent(
-    whichTrigger: trigger,
-    whichPlayer: player,
-    key: oskeytype,
-    metaKey: number,
-    keyDown: boolean
-): event
 
 // trigger unit based event
 declare function TriggerRegisterUnitStateEvent(
@@ -58,11 +9,6 @@ declare function TriggerRegisterUnitStateEvent(
     whichState: unitstate,
     opcode: limitop,
     limitval: number
-): event
-declare function TriggerRegisterUnitEvent(
-    whichTrigger: trigger,
-    whichUnit: unit,
-    whichEvent: unitevent
 ): event
 declare function TriggerRegisterFilterUnitEvent(
     whichTrigger: trigger,
@@ -164,7 +110,6 @@ declare function TriggerRegisterUpgradeCommandEvent(
     whichTrigger: trigger,
     whichUpgrade: number
 ): event
-declare function TriggerRegisterDeathEvent(whichTrigger: trigger, whichWidget: widget): event
 
 declare function BlzTriggerRegisterFrameEvent(
     whichTrigger: trigger,

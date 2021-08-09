@@ -2,8 +2,8 @@
 
 declare type integer = number
 declare type real = number
-declare type code = () => void
-declare type codeboolexpr = () => boolean | null
+declare type code = () => void | null | undefined
+declare type codeboolexpr = (() => boolean) | null | undefined
 declare type rawcode = integer | string
 declare type order = integer | string
 declare type Primitive = boolean | integer | real | string
@@ -12,7 +12,7 @@ declare function FourCC(str: string): integer
 declare function OrderId(orderIdString: string): integer
 declare function OrderId2String(orderId: integer): string
 
-declare function Condition(func: () => void): conditionfunc
+declare function Condition(func: codeboolexpr): conditionfunc
 declare function DestroyCondition(c: conditionfunc): void
 
 declare function ExecuteFunc(funcName: string): void

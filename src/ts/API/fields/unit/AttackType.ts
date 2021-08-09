@@ -10,4 +10,8 @@ export class AttackType extends Field<attacktype> {
         id = Math.floor(id)
         super(ConvertAttackType(id), id)
     }
+
+    public static fromHandle(handle: attacktype) {
+        return this.getObject(handle) as AttackType
+    }
 }

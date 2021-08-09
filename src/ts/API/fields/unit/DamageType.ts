@@ -10,4 +10,8 @@ export class DamageType extends Field<damagetype> {
         id = Math.floor(id)
         super(ConvertDamageType(id), id)
     }
+
+    public static fromHandle(handle: damagetype) {
+        return this.getObject(handle) as DamageType
+    }
 }

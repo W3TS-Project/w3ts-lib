@@ -10,4 +10,8 @@ export class WeaponType extends Field<weapontype> {
         id = Math.floor(id)
         super(ConvertWeaponType(id), id)
     }
+
+    public static fromHandle(handle: weapontype) {
+        return this.getObject(handle) as WeaponType
+    }
 }

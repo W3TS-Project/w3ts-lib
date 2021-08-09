@@ -153,7 +153,12 @@ export class Group extends Handle<group> {
 
     public enumCountedOfType(unitname: string, countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsOfTypeCounted(this.getHandle() as group, unitname, filter, Math.floor(countLimit))
+        GroupEnumUnitsOfTypeCounted(
+            this.getHandle() as group,
+            unitname,
+            filter,
+            Math.floor(countLimit)
+        )
         DestroyCondition(filter)
         return this
     }
@@ -167,7 +172,12 @@ export class Group extends Handle<group> {
 
     public enumCountedInRect(r: Rectangle, countLimit: integer, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRectCounted(this.getHandle() as group, r.getHandle() as rect, filter, Math.floor(countLimit))
+        GroupEnumUnitsInRectCounted(
+            this.getHandle() as group,
+            r.getHandle() as rect,
+            filter,
+            Math.floor(countLimit)
+        )
         DestroyCondition(filter)
         return this
     }
@@ -185,7 +195,12 @@ export class Group extends Handle<group> {
 
     public enumLocInRange(whichLocation: MapLocation, radius: real, filterFunc: codeboolexpr) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRangeOfLoc(this.getHandle() as group, whichLocation.getHandle() as location, radius, filter)
+        GroupEnumUnitsInRangeOfLoc(
+            this.getHandle() as group,
+            whichLocation.getHandle() as location,
+            radius,
+            filter
+        )
         DestroyCondition(filter)
         return this
     }
@@ -198,7 +213,14 @@ export class Group extends Handle<group> {
         filterFunc: codeboolexpr
     ) {
         const filter = Condition(filterFunc)
-        GroupEnumUnitsInRangeCounted(this.getHandle() as group, x, y, radius, filter, Math.floor(countLimit))
+        GroupEnumUnitsInRangeCounted(
+            this.getHandle() as group,
+            x,
+            y,
+            radius,
+            filter,
+            Math.floor(countLimit)
+        )
         DestroyCondition(filter)
         return this
     }
@@ -268,19 +290,35 @@ export class Group extends Handle<group> {
     }
 
     public locOrder(order: Order, whichLocation: MapLocation): boolean {
-        return GroupPointOrderLoc(this.getHandle() as group, order.getStr(), whichLocation.getHandle() as location)
+        return GroupPointOrderLoc(
+            this.getHandle() as group,
+            order.getStr(),
+            whichLocation.getHandle() as location
+        )
     }
 
     public locOrderById(order: Order, whichLocation: MapLocation): boolean {
-        return GroupPointOrderByIdLoc(this.getHandle() as group, order.getId(), whichLocation.getHandle() as location)
+        return GroupPointOrderByIdLoc(
+            this.getHandle() as group,
+            order.getId(),
+            whichLocation.getHandle() as location
+        )
     }
 
     public targetOrder(order: Order, targetWidget: Widget): boolean {
-        return GroupTargetOrder(this.getHandle() as group, order.getStr(), targetWidget.getHandle() as widget)
+        return GroupTargetOrder(
+            this.getHandle() as group,
+            order.getStr(),
+            targetWidget.getHandle() as widget
+        )
     }
 
     public targetOrderById(order: Order, targetWidget: Widget): boolean {
-        return GroupTargetOrderById(this.getHandle() as group, order.getId(), targetWidget.getHandle() as widget)
+        return GroupTargetOrderById(
+            this.getHandle() as group,
+            order.getId(),
+            targetWidget.getHandle() as widget
+        )
     }
 
     public forEach(callback: code) {

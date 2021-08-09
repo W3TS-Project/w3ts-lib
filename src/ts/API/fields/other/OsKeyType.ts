@@ -10,4 +10,8 @@ export class OsKeyType extends Field<oskeytype> {
         id = Math.floor(id)
         super(ConvertOsKeyType(id), id)
     }
+
+    public static fromHandle(handle: oskeytype) {
+        return this.getObject(handle) as OsKeyType
+    }
 }
