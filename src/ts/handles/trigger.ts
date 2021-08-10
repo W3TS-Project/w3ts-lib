@@ -1,28 +1,3 @@
-// /** @noSelfInFile **/
-// //@ts-nocheck
-
-
-// trigger unit based event
-declare function TriggerRegisterUnitStateEvent(
-    whichTrigger: trigger,
-    whichUnit: unit,
-    whichState: unitstate,
-    opcode: limitop,
-    limitval: number
-): event
-declare function TriggerRegisterFilterUnitEvent(
-    whichTrigger: trigger,
-    whichUnit: unit,
-    whichEvent: unitevent,
-    filter: boolexpr | null
-): event
-declare function TriggerRegisterUnitInRange(
-    whichTrigger: trigger,
-    whichUnit: unit,
-    range: number,
-    filter: boolexpr | null
-): event
-
 // BJ-event
 declare function TriggerRegisterTimerEventPeriodic(trig: trigger, timeout: number): event
 declare function TriggerRegisterTimerEventSingle(trig: trigger, timeout: number): event
@@ -100,19 +75,3 @@ declare function TriggerRegisterGameLoadedEventBJ(trig: trigger): event
 declare function TriggerRegisterGameSavedEventBJ(trig: trigger): event
 declare function RegisterDestDeathInRegionEnum(): void
 declare function TriggerRegisterDestDeathInRegionEvent(trig: trigger, r: rect): void
-
-declare function TriggerRegisterCommandEvent(
-    whichTrigger: trigger,
-    whichAbility: number,
-    order: string
-): event
-declare function TriggerRegisterUpgradeCommandEvent(
-    whichTrigger: trigger,
-    whichUpgrade: number
-): event
-
-declare function BlzTriggerRegisterFrameEvent(
-    whichTrigger: trigger,
-    frame: framehandle,
-    eventId: frameeventtype
-): event

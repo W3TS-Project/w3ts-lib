@@ -5,7 +5,7 @@ import { PlayerEvent } from "../../../API/fields/events/PlayerEvent"
 import { AllianceType } from "../../../API/fields/player/AllianceType"
 import { MapPlayer } from "../../MapPlayer"
 import { Trigger } from "../Trigger"
-import { PlayerTriggerCallback } from "./PlayerTrigger"
+import { PlayerTriggerCallback } from "./PlayerTriggers"
 import { PlayerEventResponse } from "./response/PlayerEventResponse"
 
 declare function TriggerRegisterPlayerAllianceChange(

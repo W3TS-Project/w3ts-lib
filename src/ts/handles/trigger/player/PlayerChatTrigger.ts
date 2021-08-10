@@ -44,7 +44,7 @@ export class PlayerChatTrigger extends Trigger {
         callback?: PlayerChatTriggerCallback
     ) {
         super()
-        if (whichPlayer && chatMessageToDetect && exactMatchOnly && callback) {
+        if (whichPlayer && chatMessageToDetect && exactMatchOnly) {
             this.register(whichPlayer, chatMessageToDetect, exactMatchOnly, callback)
         }
     }

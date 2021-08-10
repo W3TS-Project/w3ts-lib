@@ -1,5 +1,5 @@
-/** @noSelfInFile **/
-//@ts-nocheck
+// /** @noSelfInFile **/
+// //@ts-nocheck
 
 import { PlayerUnitEvent } from "../../../API/fields/events/PlayerUnitEvent"
 import { PlayerUnitEvents } from "../../../fields/events/PlayerUnitEvents"
@@ -29,7 +29,7 @@ import { PlayerUnitResearchEventResponse } from "./response/PlayerUnitResearchEv
 import { PlayerUnitSellEventResponse } from "./response/PlayerUnitSellEventResponse"
 import { PlayerUnitSellItemEventResponse } from "./response/PlayerUnitSellItemEventResponse"
 import { PlayerUnitSpellEventResponse } from "./response/PlayerUnitSpellEventResponse"
-import { PlayerUnitSummonEventResponse } from "./response/PlayerUnitSummonedEventResponse"
+import { PlayerUnitSummonEventResponse } from "./response/PlayerUnitSummonEventResponse"
 import { PlayerUnitTrainEventResponse } from "./response/PlayerUnitTrainEventResponse"
 import { PlayerUnitTrainFinishEventResponse } from "./response/PlayerUnitTrainFinishEventResponse"
 
@@ -86,6 +86,8 @@ const getPlayerUnitTriggerClass = <
         }
     }
 
+const defaultResponse = () => new PlayerUnitEventResponse()
+
 export const PlayerUnitHeroLevelTrigger = getPlayerUnitTriggerClass(
     PlayerUnitEvents.HERO_LEVEL,
     () => new PlayerUnitHeroLevelEventResponse()
@@ -128,7 +130,7 @@ export const PlayerUnitDecayTrigger = getPlayerUnitTriggerClass(
 )
 export const PlayerUnitSelectedTrigger = getPlayerUnitTriggerClass(
     PlayerUnitEvents.SELECTED,
-    () => new PlayerUnitEventResponse()
+    defaultResponse
 )
 export const PlayerUnitConstructStartTrigger = getPlayerUnitTriggerClass(
     PlayerUnitEvents.CONSTRUCT_START,
@@ -148,7 +150,7 @@ export const PlayerUnitResearchStartTrigger = getPlayerUnitTriggerClass(
 )
 export const PlayerUnitResearchCancelTrigger = getPlayerUnitTriggerClass(
     PlayerUnitEvents.RESEARCH_CANCEL,
-    () => new PlayerUnitRescuedEventResponse()
+    () => new PlayerUnitResearchEventResponse()
 )
 export const PlayerUnitResearchFinishTrigger = getPlayerUnitTriggerClass(
     PlayerUnitEvents.RESEARCH_FINISH,
@@ -230,7 +232,7 @@ export const PlayerUnitSpellFinishTrigger = getPlayerUnitTriggerClass(
     PlayerUnitEvents.SPELL_FINISH,
     () => new PlayerUnitSpellEventResponse()
 )
-export const PlayerUnitSpellEndcastTrigger = getPlayerUnitTriggerClass(
+export const PlayerUnitSpellEndCastTrigger = getPlayerUnitTriggerClass(
     PlayerUnitEvents.SPELL_END_CAST,
     () => new PlayerUnitSpellEventResponse()
 )
@@ -241,4 +243,28 @@ export const PlayerUnitDamagedTrigger = getPlayerUnitTriggerClass(
 export const PlayerUnitDamagingTrigger = getPlayerUnitTriggerClass(
     PlayerUnitEvents.DAMAGING,
     () => new PlayerUnitDamageEventResponse()
+)
+export const PlayerUnitDeselectedTrigger = getPlayerUnitTriggerClass(
+    PlayerUnitEvents.DESELECTED,
+    defaultResponse
+)
+export const PlayerUnitHiddenTrigger = getPlayerUnitTriggerClass(
+    PlayerUnitEvents.HIDDEN,
+    defaultResponse
+)
+export const PlayerUnitPawnItemTrigger = getPlayerUnitTriggerClass(
+    PlayerUnitEvents.PAWN_ITEM,
+    () => new PlayerUnitSellItemEventResponse()
+)
+export const PlayerUnitUpgradeStartTrigger = getPlayerUnitTriggerClass(
+    PlayerUnitEvents.UPGRADE_START,
+    defaultResponse
+)
+export const PlayerUnitUpgradeCancelTrigger = getPlayerUnitTriggerClass(
+    PlayerUnitEvents.UPGRADE_CANCEL,
+    defaultResponse
+)
+export const PlayerUnitUpgradeFinishTrigger = getPlayerUnitTriggerClass(
+    PlayerUnitEvents.UPGRADE_FINISH,
+    defaultResponse
 )

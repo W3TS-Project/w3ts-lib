@@ -10,4 +10,8 @@ export class UnitState extends Field<unitstate> {
         id = Math.floor(id)
         super(ConvertUnitState(id), id)
     }
+
+    public static fromHandle(handle: unitstate) {
+        return this.getObject(handle) as UnitState
+    }
 }

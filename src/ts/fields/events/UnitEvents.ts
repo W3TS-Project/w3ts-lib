@@ -16,7 +16,7 @@ export abstract class UnitEvents {
     public static readonly ACQUIRED_TARGET = new UnitEvent(60)
     public static readonly TARGET_IN_RANGE = new UnitEvent(61)
     public static readonly ATTACKED = new UnitEvent(62)
-    public static readonly RESUCED = new UnitEvent(63)
+    public static readonly RESCUED = new UnitEvent(63)
 
     public static readonly CONSTRUCT_CANCEL = new UnitEvent(64)
     public static readonly CONSTRUCT_FINISH = new UnitEvent(65)

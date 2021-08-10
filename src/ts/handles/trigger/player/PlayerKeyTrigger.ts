@@ -49,7 +49,7 @@ export class PlayerKeyTrigger extends Trigger {
         callback?: PlayerKeyTriggerCallback
     ) {
         super()
-        if (whichPlayer && key && metaKey && keyDown && callback) {
+        if (whichPlayer && key && metaKey && keyDown) {
             this.register(whichPlayer, key, metaKey, keyDown, callback)
         }
     }

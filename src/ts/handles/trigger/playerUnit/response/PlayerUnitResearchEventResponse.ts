@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { UnitRawCode } from "../../../rawCode/UnitRawCode"
+import { TechRawCode } from "../../../rawCode/TechRawCode"
 import { Unit } from "../../../Unit"
 import { PlayerUnitEventResponse } from "./PlayerUnitEventResponse"
 
@@ -10,5 +10,5 @@ declare function GetResearched(): integer
 
 export class PlayerUnitResearchEventResponse extends PlayerUnitEventResponse {
     researching = Unit.fromHandle(GetResearchingUnit())
-    researched = UnitRawCode.get(GetResearched())
+    researched = TechRawCode.get(GetResearched())
 }
