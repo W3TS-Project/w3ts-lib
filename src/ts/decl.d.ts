@@ -2,7 +2,7 @@
 
 declare type integer = number
 declare type real = number
-declare type code = () => void | null | undefined
+declare type code = (() => void) | null | undefined
 declare type codeboolexpr = (() => boolean) | null | undefined
 declare type rawcode = integer | string
 declare type order = integer | string

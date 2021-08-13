@@ -1,21 +1,15 @@
-import { RawCode } from "../../../RawCode"
+import { RawCode, RawCodeType } from "../../../RawCode"
 import { Field } from "../Field"
 
 export abstract class ItemField<T extends handle> extends Field<T> {
-    protected rawCode: RawCode
-    protected title?: string
+    rawCode: RawCode
+    title?: string
 
-    protected constructor(field: T, rawCode: RawCode, title?: string) {
-        super(field, rawCode.getId())
-        this.rawCode = rawCode
+    protected constructor(field: (id: integer) => T, rawCode: RawCodeType, title?: string) {
+        const id = RawCode.toId(rawCode)
+        super(field(id))
+        this.id = id
+        this.rawCode = RawCode.get(id)
         this.title = title
-    }
-
-    public getRawCode(): RawCode {
-        return this.rawCode
-    }
-
-    public getTitle(): string | undefined {
-        return this.title
     }
 }

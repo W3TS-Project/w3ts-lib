@@ -1,10 +1,10 @@
 import { Race } from "../API/fields/other/Race"
 
 export abstract class Races {
-    public static readonly HUMAN = new Race(1)
-    public static readonly ORC = new Race(2)
-    public static readonly UNDEAD = new Race(3)
-    public static readonly NIGHT_ELF = new Race(4)
-    public static readonly DEMON = new Race(5)
-    public static readonly OTHER = new Race(7)
+    static readonly HUMAN = Race.convert(1)
+    static readonly ORC = Race.convert(2)
+    static readonly UNDEAD = Race.convert(3)
+    static readonly NIGHT_ELF = Race.convert(4)
+    static readonly DEMON = Race.convert(5)
+    static readonly OTHER = Race.convert(7)
 }

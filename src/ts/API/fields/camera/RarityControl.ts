@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertRarityControl(i: integer): raritycontrol
 
 export class RarityControl extends Field<raritycontrol> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertRarityControl(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertRarityControl, id)
     }
 }

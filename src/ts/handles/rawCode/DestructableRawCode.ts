@@ -1,9 +1,11 @@
 import { RawCode } from "../../RawCode"
 
+export type DestructableRawCodeType = DestructableRawCode | rawcode
+
 export class DestructableRawCode extends RawCode {
     protected static readonly ERROR_MESSAGE = "Равкод не является равкодом разрушаемого объекта"
 
-    public constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
+    constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             DestructableRawCode.checkAnError(id)
         }
@@ -13,22 +15,22 @@ export class DestructableRawCode extends RawCode {
         super(id, !isBasicCheck)
     }
 
-    public static get(rawCode: rawcode, isCheck = true, isBasicCheck = true) {
+    static get(rawCode: DestructableRawCodeType, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             this.checkAnError(rawCode)
         }
-        return super.get(rawCode, isBasicCheck) as DestructableRawCode
+        return RawCode.get(rawCode, isBasicCheck) as DestructableRawCode
     }
 
-    protected static check(id: rawcode): boolean {
-        if (!super.check(id)) {
+    static check(id: DestructableRawCodeType): boolean {
+        if (!RawCode.check(id)) {
             return false
         }
         //TODO
         return true
     }
 
-    protected static checkAnError(id: rawcode) {
+    protected static checkAnError(id: DestructableRawCodeType) {
         if (!this.check(id)) {
             error(this.ERROR_MESSAGE, 2)
         }

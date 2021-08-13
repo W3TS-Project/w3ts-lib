@@ -46,12 +46,10 @@ const getPlayerTriggerClass = <T extends PlayerEventResponseType, R extends (res
             )
         }
 
-        constructor(whichPlayer: MapPlayer, whichPlayerEvent: PlayerEvent, callback?: R) {
+        constructor(whichPlayer: MapPlayer, callback?: R) {
             super()
             this.event = event
-            if (callback) {
-                this.register(whichPlayer, callback)
-            }
+            this.register(whichPlayer, callback)
         }
 
         addEventListener(callback: R) {

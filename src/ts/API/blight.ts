@@ -24,7 +24,7 @@ import { Rectangle } from "../handles/Rectangle"
 import { Position } from "../Package"
 
 export abstract class Blight {
-    public static setAreaCoords(
+    static setAreaCoords(
         whichPlayer: MapPlayer,
         x: real,
         y: real,
@@ -35,7 +35,7 @@ export abstract class Blight {
         return this
     }
 
-    public static setAreaPos(
+    static setAreaPos(
         whichPlayer: MapPlayer,
         p: Position,
         radius: real,
@@ -44,7 +44,7 @@ export abstract class Blight {
         return this.setAreaCoords(whichPlayer, p.getX(), p.getY(), radius, addBlight)
     }
 
-    public static setArea(
+    static setArea(
         whichPlayer: MapPlayer,
         loc: MapLocation,
         radius: real,
@@ -59,29 +59,29 @@ export abstract class Blight {
         return this
     }
 
-    public static setRect(whichPlayer: MapPlayer, r: Rectangle, addBlight: boolean) {
+    static setRect(whichPlayer: MapPlayer, r: Rectangle, addBlight: boolean) {
         SetBlightRect(whichPlayer.getHandle() as player, r.getHandle() as rect, addBlight)
         return this
     }
 
-    public static setCoords(whichPlayer: MapPlayer, x: real, y: real, addBlight: boolean) {
+    static setCoords(whichPlayer: MapPlayer, x: real, y: real, addBlight: boolean) {
         SetBlightPoint(whichPlayer.getHandle() as player, x, y, addBlight)
         return this
     }
 
-    public static setPos(whichPlayer: MapPlayer, p: Position, addBlight: boolean) {
+    static setPos(whichPlayer: MapPlayer, p: Position, addBlight: boolean) {
         return this.setCoords(whichPlayer, p.getX(), p.getY(), addBlight)
     }
 
-    public static setLoc(whichPlayer: MapPlayer, loc: MapLocation, addBlight: boolean) {
+    static setLoc(whichPlayer: MapPlayer, loc: MapLocation, addBlight: boolean) {
         return this.setCoords(whichPlayer, loc.getX(), loc.getY(), addBlight)
     }
 
-    public static isBlightedCoords(x: real, y: real) {
+    static isBlightedCoords(x: real, y: real) {
         return IsPointBlighted(x, y)
     }
 
-    public static isBlightedPos(p: Position) {
+    static isBlightedPos(p: Position) {
         return this.isBlightedCoords(p.getX(), p.getY())
     }
 }

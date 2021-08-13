@@ -95,8 +95,30 @@ declare function GroupTargetOrderById(
     order: integer,
     targetWidget: widget
 ): boolean
-declare function ForGroup(whichGroup: group, callback: () => void): void
+declare function ForGroup(whichGroup: group, callback: code): void
 declare function FirstOfGroup(whichGroup: group): unit
+
+export class GroupFilterResponse {
+    group: Group
+    unit = Unit.fromFilter()
+
+    constructor(group: Group) {
+        this.group = group
+    }
+}
+
+export type GroupFilterCallback = ((response: GroupFilterResponse) => boolean) | null | undefined
+
+export class GroupEnumResponse {
+    group: Group
+    unit = Unit.fromEnum()
+
+    constructor(group: Group) {
+        this.group = group
+    }
+}
+
+export type GroupEnumCallback = ((response: GroupEnumResponse) => void) | null | undefined
 
 export class Group extends Handle<group> {
     public constructor() {
@@ -137,22 +159,30 @@ export class Group extends Handle<group> {
         return Unit.fromHandle(BlzGroupUnitAt(this.getHandle() as group, Math.floor(index)))
     }
 
-    public enumOfType(unitname: string, filterFunc: codeboolexpr) {
-        const filter = Condition(filterFunc)
+    private getFilter(func: GroupFilterCallback) {
+        if (func) {
+            return Condition(() => func(new GroupFilterResponse(this)))
+        } else {
+            return Condition(func)
+        }
+    }
+
+    public enumOfType(unitname: string, func: GroupFilterCallback) {
+        const filter = this.getFilter(func)
         GroupEnumUnitsOfType(this.getHandle() as group, unitname, filter)
         DestroyCondition(filter)
         return this
     }
 
-    public enumOfPlayer(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
-        const filter = Condition(filterFunc)
+    public enumOfPlayer(whichPlayer: MapPlayer, func: GroupFilterCallback) {
+        const filter = this.getFilter(func)
         GroupEnumUnitsOfPlayer(this.getHandle() as group, whichPlayer.getHandle() as player, filter)
         DestroyCondition(filter)
         return this
     }
 
-    public enumCountedOfType(unitname: string, countLimit: integer, filterFunc: codeboolexpr) {
-        const filter = Condition(filterFunc)
+    public enumCountedOfType(unitname: string, countLimit: integer, func: GroupFilterCallback) {
+        const filter = this.getFilter(func)
         GroupEnumUnitsOfTypeCounted(
             this.getHandle() as group,
             unitname,
@@ -163,15 +193,15 @@ export class Group extends Handle<group> {
         return this
     }
 
-    public enumInRect(r: Rectangle, filterFunc: codeboolexpr) {
-        const filter = Condition(filterFunc)
+    public enumInRect(r: Rectangle, func: GroupFilterCallback) {
+        const filter = this.getFilter(func)
         GroupEnumUnitsInRect(this.getHandle() as group, r.getHandle() as rect, filter)
         DestroyCondition(filter)
         return this
     }
 
-    public enumCountedInRect(r: Rectangle, countLimit: integer, filterFunc: codeboolexpr) {
-        const filter = Condition(filterFunc)
+    public enumCountedInRect(r: Rectangle, countLimit: integer, func: GroupFilterCallback) {
+        const filter = this.getFilter(func)
         GroupEnumUnitsInRectCounted(
             this.getHandle() as group,
             r.getHandle() as rect,
@@ -182,19 +212,19 @@ export class Group extends Handle<group> {
         return this
     }
 
-    public enumCoordsInRange(x: real, y: real, radius: real, filterFunc: codeboolexpr) {
-        const filter = Condition(filterFunc)
+    public enumCoordsInRange(x: real, y: real, radius: real, func: GroupFilterCallback) {
+        const filter = this.getFilter(func)
         GroupEnumUnitsInRange(this.getHandle() as group, x, y, radius, filter)
         DestroyCondition(filter)
         return this
     }
 
-    public enumPosInRange(p: Position, radius: real, filterFunc: codeboolexpr) {
-        return this.enumCoordsInRange(p.getX(), p.getY(), radius, filterFunc)
+    public enumPosInRange(p: Position, radius: real, func: GroupFilterCallback) {
+        return this.enumCoordsInRange(p.getX(), p.getY(), radius, func)
     }
 
-    public enumLocInRange(whichLocation: MapLocation, radius: real, filterFunc: codeboolexpr) {
-        const filter = Condition(filterFunc)
+    public enumLocInRange(whichLocation: MapLocation, radius: real, func: GroupFilterCallback) {
+        const filter = this.getFilter(func)
         GroupEnumUnitsInRangeOfLoc(
             this.getHandle() as group,
             whichLocation.getHandle() as location,
@@ -210,9 +240,9 @@ export class Group extends Handle<group> {
         y: real,
         radius: real,
         countLimit: integer,
-        filterFunc: codeboolexpr
+        func: GroupFilterCallback
     ) {
-        const filter = Condition(filterFunc)
+        const filter = this.getFilter(func)
         GroupEnumUnitsInRangeCounted(
             this.getHandle() as group,
             x,
@@ -229,14 +259,14 @@ export class Group extends Handle<group> {
         p: Position,
         radius: real,
         countLimit: integer,
-        filterFunc: codeboolexpr
+        func: GroupFilterCallback
     ) {
         return this.enumCoordsCountedInRange(
             p.getX(),
             p.getY(),
             radius,
             Math.floor(countLimit),
-            filterFunc
+            func
         )
     }
 
@@ -244,9 +274,9 @@ export class Group extends Handle<group> {
         whichLocation: MapLocation,
         radius: real,
         countLimit: integer,
-        filterFunc: codeboolexpr
+        func: GroupFilterCallback
     ) {
-        const filter = Condition(filterFunc)
+        const filter = this.getFilter(func)
         GroupEnumUnitsInRangeOfLocCounted(
             this.getHandle() as group,
             whichLocation.getHandle() as location,
@@ -258,8 +288,8 @@ export class Group extends Handle<group> {
         return this
     }
 
-    public enumSelected(whichPlayer: MapPlayer, filterFunc: codeboolexpr) {
-        const filter = Condition(filterFunc)
+    public enumSelected(whichPlayer: MapPlayer, func: GroupFilterCallback) {
+        const filter = this.getFilter(func)
         GroupEnumUnitsSelected(this.getHandle() as group, whichPlayer.getHandle() as player, filter)
         DestroyCondition(filter)
         return this
@@ -321,8 +351,15 @@ export class Group extends Handle<group> {
         )
     }
 
-    public forEach(callback: code) {
-        ForGroup(this.getHandle() as group, callback)
+    private getEnumCallback(func: GroupEnumCallback) {
+        if (func) {
+            return () => func(new GroupEnumResponse(this))
+        }
+        return undefined
+    }
+
+    public forEach(func: GroupEnumCallback) {
+        ForGroup(this.getHandle() as group, this.getEnumCallback(func))
         return this
     }
 

@@ -19,8 +19,10 @@ declare function TriggerRegisterPlayerStateEvent(
     limitval: real
 ): event
 
+export type PlayerStateTriggerCallback = (response: PlayerStateEventResponse) => void
+
 export class PlayerStateTrigger extends Trigger {
-    public register(
+    register(
         whichPlayer: MapPlayer,
         whichState: PlayerState,
         opcode: LimitOperation,
@@ -43,20 +45,18 @@ export class PlayerStateTrigger extends Trigger {
         )
     }
 
-    public constructor(
-        whichPlayer?: MapPlayer,
-        whichState?: PlayerState,
-        opcode?: LimitOperation,
-        limitval?: real,
+    constructor(
+        whichPlayer: MapPlayer,
+        whichState: PlayerState,
+        opcode: LimitOperation,
+        limitval: real,
         callback?: PlayerStateTriggerCallback
     ) {
         super()
-        if (whichPlayer && whichState && opcode && limitval && callback) {
-            this.register(whichPlayer, whichState, opcode, limitval, callback)
-        }
+        this.register(whichPlayer, whichState, opcode, limitval, callback)
     }
 
-    public addEventListener(callback: PlayerStateTriggerCallback) {
+    addEventListener(callback: PlayerStateTriggerCallback) {
         this.addAction(() => callback(new PlayerStateEventResponse()))
     }
 }

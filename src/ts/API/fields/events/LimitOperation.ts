@@ -6,12 +6,11 @@ import { Event } from "./Event"
 declare function ConvertLimitOp(i: integer): limitop
 
 export class LimitOperation extends Event<limitop> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertLimitOp(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertLimitOp, id)
     }
 
-    public static fromHandle(handle: limitop) {
+    static fromHandle(handle: limitop) {
         return this.getObject(handle) as LimitOperation
     }
 }

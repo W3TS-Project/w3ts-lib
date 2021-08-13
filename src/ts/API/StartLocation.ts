@@ -22,7 +22,7 @@ declare function GetStartLocationY(whichStartLocation: integer): real
 declare function GetStartLocationLoc(whichStartLocation: integer): location
 
 export class StartLocation {
-    protected readonly num: integer
+    readonly num: integer
     static arr: StartLocation[]
 
     protected constructor(num: integer) {
@@ -30,32 +30,28 @@ export class StartLocation {
         StartLocation.arr[num] = this
     }
 
-    public getNum() {
-        return this.num
-    }
-
-    public static defineCoords(whichStartLoc: integer, x: real, y: real) {
+    static defineCoords(whichStartLoc: integer, x: real, y: real) {
         whichStartLoc = Math.floor(whichStartLoc)
         DefineStartLocation(whichStartLoc, x, y)
         return new this(whichStartLoc)
     }
 
-    public static definePos(whichStartLoc: integer, p: Position) {
+    static definePos(whichStartLoc: integer, p: Position) {
         return this.defineCoords(whichStartLoc, p.getX(), p.getY())
     }
 
-    public static defineLoc(whichStartLoc: integer, whichLocation: MapLocation) {
+    static defineLoc(whichStartLoc: integer, whichLocation: MapLocation) {
         whichStartLoc = Math.floor(whichStartLoc)
         DefineStartLocationLoc(whichStartLoc, whichLocation.getHandle() as location)
         return new this(whichStartLoc)
     }
 
-    public setCount(prioSlotCount: integer) {
+    setCount(prioSlotCount: integer) {
         SetStartLocPrioCount(this.num, Math.floor(prioSlotCount))
         return this
     }
 
-    public set(prioSlotIndex: integer, otherStartLocIndex: integer, priority: StartLocPrio) {
+    set(prioSlotIndex: integer, otherStartLocIndex: integer, priority: StartLocPrio) {
         SetStartLocPrio(
             this.num,
             Math.floor(prioSlotIndex),
@@ -65,27 +61,27 @@ export class StartLocation {
         return this
     }
 
-    public getSlot(prioSlotIndex: integer): integer {
+    getSlot(prioSlotIndex: integer): integer {
         return GetStartLocPrioSlot(this.num, Math.floor(prioSlotIndex))
     }
 
-    public get(prioSlotIndex: integer): StartLocPrio {
+    get(prioSlotIndex: integer): StartLocPrio {
         return StartLocPrio.fromHandle(GetStartLocPrio(this.num, prioSlotIndex))
     }
 
-    public getX(): real {
+    getX(): real {
         return GetStartLocationX(this.num)
     }
 
-    public getY(): real {
+    getY(): real {
         return GetStartLocationY(this.num)
     }
 
-    public getPos(): Position {
+    getPos(): Position {
         return new Point(this.getX(), this.getY())
     }
 
-    public getLoc(): MapLocation {
+    getLoc(): MapLocation {
         return MapLocation.fromHandle(GetStartLocationLoc(this.num))
     }
 }

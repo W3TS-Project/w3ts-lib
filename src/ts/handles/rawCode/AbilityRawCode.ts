@@ -56,16 +56,18 @@ declare function GetAbilityEffectById(abilityId: integer, t: effecttype, index: 
 declare function GetAbilitySound(abilityString: string, t: soundtype): string
 declare function GetAbilitySoundById(abilityId: integer, t: soundtype): string
 
-export class AbilityRawCode extends RawCode {
-    protected static readonly ERROR_MESSAGE = "Равкод не является равкодом способности"
-    public icon: string
-    public activatedIcon: string
-    public posX: integer
-    public posY: integer
-    public activatedPosX: integer
-    public activatedPosY: integer
+export type AbilityRawCodeType = AbilityRawCode | rawcode
 
-    public constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
+export class AbilityRawCode extends RawCode {
+    static readonly ERROR_MESSAGE = "Равкод не является равкодом способности"
+    icon: string
+    activatedIcon: string
+    posX: integer
+    posY: integer
+    activatedPosX: integer
+    activatedPosY: integer
+
+    constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             AbilityRawCode.checkAnError(id)
         }
@@ -81,160 +83,160 @@ export class AbilityRawCode extends RawCode {
         this.activatedPosY = this.getActivatedPosY()
     }
 
-    public setTooltip(tooltip: string, level: integer) {
+    setTooltip(tooltip: string, level: integer) {
         BlzSetAbilityTooltip(this.id, tooltip, Math.floor(level))
         return this
     }
 
-    public setActivatedTooltip(tooltip: string, level: integer) {
+    setActivatedTooltip(tooltip: string, level: integer) {
         BlzSetAbilityActivatedTooltip(this.id, tooltip, Math.floor(level))
         return this
     }
 
-    public setExtendedTooltip(extendedTooltip: string, level: integer) {
+    setExtendedTooltip(extendedTooltip: string, level: integer) {
         BlzSetAbilityExtendedTooltip(this.id, extendedTooltip, Math.floor(level))
         return this
     }
 
-    public setActivatedExtendedTooltip(extendedTooltip: string, level: integer) {
+    setActivatedExtendedTooltip(extendedTooltip: string, level: integer) {
         BlzSetAbilityActivatedExtendedTooltip(this.id, extendedTooltip, Math.floor(level))
         return this
     }
 
-    public setResearchTooltip(researchTooltip: string, level: integer) {
+    setResearchTooltip(researchTooltip: string, level: integer) {
         BlzSetAbilityResearchTooltip(this.id, researchTooltip, Math.floor(level))
         return this
     }
 
-    public setResearchExtendedTooltip(researchExtendedTooltip: string, level: integer) {
+    setResearchExtendedTooltip(researchExtendedTooltip: string, level: integer) {
         BlzSetAbilityResearchExtendedTooltip(this.id, researchExtendedTooltip, Math.floor(level))
         return this
     }
 
-    public getTooltip(level: integer): string {
+    getTooltip(level: integer): string {
         return BlzGetAbilityTooltip(this.id, Math.floor(level))
     }
 
-    public getActivatedTooltip(level: integer): string {
+    getActivatedTooltip(level: integer): string {
         return BlzGetAbilityActivatedTooltip(this.id, Math.floor(level))
     }
 
-    public getExtendedTooltip(level: integer): string {
+    getExtendedTooltip(level: integer): string {
         return BlzGetAbilityExtendedTooltip(this.id, Math.floor(level))
     }
 
-    public getActivatedExtendedTooltip(level: integer): string {
+    getActivatedExtendedTooltip(level: integer): string {
         return BlzGetAbilityActivatedExtendedTooltip(this.id, Math.floor(level))
     }
 
-    public getResearchTooltip(level: integer): string {
+    getResearchTooltip(level: integer): string {
         return BlzGetAbilityResearchTooltip(this.id, Math.floor(level))
     }
 
-    public getResearchExtendedTooltip(level: integer): string {
+    getResearchExtendedTooltip(level: integer): string {
         return BlzGetAbilityResearchExtendedTooltip(this.id, Math.floor(level))
     }
 
-    public setIcon(iconPath: string) {
+    setIcon(iconPath: string) {
         BlzSetAbilityIcon(this.id, iconPath)
         this.icon = iconPath
         return this
     }
 
-    public getIcon(): string {
+    getIcon(): string {
         return BlzGetAbilityIcon(this.id)
     }
 
-    public setActivatedIcon(iconPath: string) {
+    setActivatedIcon(iconPath: string) {
         BlzSetAbilityActivatedIcon(this.id, iconPath)
         this.activatedIcon = iconPath
         return this
     }
 
-    public getActivatedIcon(): string {
+    getActivatedIcon(): string {
         return BlzGetAbilityActivatedIcon(this.id)
     }
 
-    public getPosX(): integer {
+    getPosX(): integer {
         return BlzGetAbilityPosX(this.id)
     }
 
-    public getPosY(): integer {
+    getPosY(): integer {
         return BlzGetAbilityPosY(this.id)
     }
 
-    public setPosX(x: integer) {
+    setPosX(x: integer) {
         BlzSetAbilityPosX(this.id, Math.floor(x))
         this.posX = x
         return this
     }
 
-    public setPosY(y: integer) {
+    setPosY(y: integer) {
         BlzSetAbilityPosY(this.id, Math.floor(y))
         this.posY = y
         return this
     }
 
-    public getActivatedPosX(): integer {
+    getActivatedPosX(): integer {
         return BlzGetAbilityActivatedPosX(this.id)
     }
 
-    public getActivatedPosY(): integer {
+    getActivatedPosY(): integer {
         return BlzGetAbilityActivatedPosY(this.id)
     }
 
-    public setActivatedPosX(x: integer) {
+    setActivatedPosX(x: integer) {
         BlzSetAbilityActivatedPosX(this.id, Math.floor(x))
         this.activatedPosX = x
         return this
     }
 
-    public setActivatedPosY(y: integer) {
+    setActivatedPosY(y: integer) {
         BlzSetAbilityActivatedPosY(this.id, Math.floor(y))
         this.activatedPosY = y
         return this
     }
 
-    public getManaCost(level: integer): integer {
+    getManaCost(level: integer): integer {
         return BlzGetAbilityManaCost(this.id, Math.floor(level))
     }
 
-    public getCooldown(level: integer): real {
+    getCooldown(level: integer): real {
         return BlzGetAbilityCooldown(this.id, Math.floor(level))
     }
 
-    public getEffect(t: EffectType, index: integer) {
+    getEffect(t: EffectType, index: integer) {
         return GetAbilityEffect(this.chars, t.getHandle() as effecttype, Math.floor(index))
     }
 
-    public getEffectById(t: EffectType, index: integer) {
+    getEffectById(t: EffectType, index: integer) {
         return GetAbilityEffectById(this.id, t.getHandle() as effecttype, Math.floor(index))
     }
 
-    public getSound(t: SoundType) {
+    getSound(t: SoundType) {
         return GetAbilitySound(this.chars, t.getHandle() as soundtype)
     }
 
-    public getSoundById(t: SoundType) {
+    getSoundById(t: SoundType) {
         return GetAbilitySoundById(this.id, t.getHandle() as soundtype)
     }
 
-    public static get(rawCode: rawcode, isCheck = true, isBasicCheck = true) {
+    static get(rawCode: AbilityRawCodeType, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             this.checkAnError(rawCode)
         }
-        return super.get(rawCode, isBasicCheck) as AbilityRawCode
+        return RawCode.get(rawCode, isBasicCheck) as AbilityRawCode
     }
 
-    protected static check(id: rawcode): boolean {
-        if (!super.check(id)) {
+    static check(id: AbilityRawCodeType): boolean {
+        if (!RawCode.check(id)) {
             return false
         }
         //TODO
         return true
     }
 
-    protected static checkAnError(id: rawcode) {
+    protected static checkAnError(id: AbilityRawCodeType) {
         if (!this.check(id)) {
             error(this.ERROR_MESSAGE, 2)
         }

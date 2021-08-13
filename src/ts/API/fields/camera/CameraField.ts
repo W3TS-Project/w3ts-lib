@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertCameraField(i: integer): camerafield
 
 export class CameraField extends Field<camerafield> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertCameraField(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertCameraField, id)
     }
 }

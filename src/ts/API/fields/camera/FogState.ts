@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertFogState(i: integer): fogstate
 
 export class FogState extends Field<fogstate> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertFogState(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertFogState, id)
     }
 
-    public static fromHandle(handle: fogstate) {
+    static fromHandle(handle: fogstate) {
         return this.getObject(handle) as FogState
     }
 }

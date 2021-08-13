@@ -1,10 +1,10 @@
 import { MapControl } from "../../API/fields/mapSetup/MapControl"
 
 export abstract class MapControls {
-    public static readonly USER = new MapControl(0)
-    public static readonly COMPUTER = new MapControl(1)
-    public static readonly RESCUABLE = new MapControl(2)
-    public static readonly NEUTRAL = new MapControl(3)
-    public static readonly CREEP = new MapControl(4)
-    public static readonly NONE = new MapControl(5)
+    static readonly USER = MapControl.convert(0)
+    static readonly COMPUTER = MapControl.convert(1)
+    static readonly RESCUABLE = MapControl.convert(2)
+    static readonly NEUTRAL = MapControl.convert(3)
+    static readonly CREEP = MapControl.convert(4)
+    static readonly NONE = MapControl.convert(5)
 }

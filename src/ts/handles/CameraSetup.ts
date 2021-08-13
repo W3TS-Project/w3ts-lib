@@ -1,9 +1,11 @@
-/** @noSelfInFile **/
-//@ts-nocheck
+// /** @noSelfInFile **/
+// //@ts-nocheck
 
 import { CameraField } from "../API/fields/camera/CameraField"
+import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { MapLocation } from "./MapLocation"
+import { Point } from "./Point"
 
 declare function CreateCameraSetup(): camerasetup
 declare function CameraSetupGetDestPositionLoc(whichSetup: camerasetup): location
@@ -46,54 +48,69 @@ declare function BlzCameraSetupApplyForceDurationSmooth(
 ): void
 
 export class CameraSetup extends Handle<camerasetup> {
+    destPoint: Point
+    label: string
+
     constructor() {
         super(CreateCameraSetup())
+        this.destPoint = this.getDestPoint()
+        this.label = this.getLabel()
     }
 
-    public getDestLoc() {
+    getDestLoc() {
         return MapLocation.fromHandle(
             CameraSetupGetDestPositionLoc(this.getHandle() as camerasetup)
         )
     }
 
-    public getDestX(): real {
+    getDestX(): real {
         return CameraSetupGetDestPositionX(this.getHandle() as camerasetup)
     }
 
-    public setDestX(x: real) {
+    setDestX(x: real) {
         CameraSetupSetDestPosition(this.getHandle() as camerasetup, x, this.getDestY(), 0)
         return this
     }
 
-    public getDestY() {
+    getDestY() {
         return CameraSetupGetDestPositionY(this.getHandle() as camerasetup)
     }
 
-    public setDestY(y: real) {
+    setDestY(y: real) {
         CameraSetupSetDestPosition(this.getHandle() as camerasetup, this.getDestX(), y, 0)
         return this
     }
 
-    public setLabel(label: string) {
+    getDestPoint() {
+        return new Point(this.getDestX(), this.getDestY())
+    }
+
+    setDestPos(p: Position) {
+        this.setDestX(p.x).setDestY(p.y)
+        this.destPoint.setPos(p)
+    }
+
+    setLabel(label: string) {
         BlzCameraSetupSetLabel(this.getHandle() as camerasetup, label)
+        this.label = label
         return this
     }
 
-    public getLabel() {
+    getLabel(): string {
         return BlzCameraSetupGetLabel(this.getHandle() as camerasetup)
     }
 
-    public apply(doPan: boolean, panTimed: boolean) {
+    apply(doPan: boolean, panTimed: boolean) {
         CameraSetupApply(this.getHandle() as camerasetup, doPan, panTimed)
         return this
     }
 
-    public applyForceDuration(doPan: boolean, forceDuration: real) {
+    applyForceDuration(doPan: boolean, forceDuration: real) {
         CameraSetupApplyForceDuration(this.getHandle() as camerasetup, doPan, forceDuration)
         return this
     }
 
-    public applyForceDurationSmooth(
+    applyForceDurationSmooth(
         doPan: boolean,
         forcedDuration: real,
         easeInDuration: real,
@@ -111,7 +128,7 @@ export class CameraSetup extends Handle<camerasetup> {
         return this
     }
 
-    public applyForceDurationZ(zDestOffset: real, forceDuration: real) {
+    applyForceDurationZ(zDestOffset: real, forceDuration: real) {
         CameraSetupApplyForceDurationWithZ(
             this.getHandle() as camerasetup,
             zDestOffset,
@@ -120,24 +137,25 @@ export class CameraSetup extends Handle<camerasetup> {
         return this
     }
 
-    public applyZ(zDestOffset: real) {
+    applyZ(zDestOffset: real) {
         CameraSetupApplyWithZ(this.getHandle() as camerasetup, zDestOffset)
         return this
     }
 
-    public getField(whichField: CameraField): real {
+    getField(whichField: CameraField): real {
         return CameraSetupGetField(
             this.getHandle() as camerasetup,
             whichField.getHandle() as camerafield
         )
     }
 
-    public setDestCoords(x: real, y: real, duration: real) {
+    setDestCoords(x: real, y: real, duration: real) {
         CameraSetupSetDestPosition(this.getHandle() as camerasetup, x, y, duration)
+        this.destPoint.setCoords(x, y)
         return this
     }
 
-    public setField(whichField: CameraField, value: real, duration: real) {
+    setField(whichField: CameraField, value: real, duration: real) {
         CameraSetupSetField(
             this.getHandle() as camerasetup,
             whichField.getHandle() as camerafield,
@@ -147,7 +165,7 @@ export class CameraSetup extends Handle<camerasetup> {
         return this
     }
 
-    public static fromHandle(handle: camerasetup) {
+    static fromHandle(handle: camerasetup) {
         return this.getObject(handle) as CameraSetup
     }
 }

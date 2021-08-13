@@ -7,6 +7,7 @@ declare function GetHandleId(h: handle): integer
 
 export class Handle<T extends handle> {
     protected readonly handle: T | 0
+    protected id: integer = 0
 
     protected constructor(handle: T) {
         if (handle === null || handle === undefined) {
@@ -20,7 +21,7 @@ export class Handle<T extends handle> {
         return GetHandleId(this.getHandle)
     }
 
-    protected static getObject<T extends handle, R extends Handle<T>>(handle: T): R {
+    static getObject<T extends handle, R extends Handle<T>>(handle: T): R {
         const obj = map.get(handle)
         if (obj !== undefined && obj !== null) {
             return obj

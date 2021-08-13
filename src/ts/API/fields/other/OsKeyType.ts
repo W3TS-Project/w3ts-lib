@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertOsKeyType(i: integer): oskeytype
 
 export class OsKeyType extends Field<oskeytype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertOsKeyType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertOsKeyType, id)
     }
 
-    public static fromHandle(handle: oskeytype) {
+    static fromHandle(handle: oskeytype) {
         return this.getObject(handle) as OsKeyType
     }
 }

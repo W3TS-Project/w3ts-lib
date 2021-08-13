@@ -1,15 +1,15 @@
 import { CameraField } from "../../API/fields/camera/CameraField"
 
 export abstract class CameraFields {
-    public static readonly TARGET_DISTANCE = new CameraField(0)
-    public static readonly FARZ = new CameraField(1)
-    public static readonly ANGLE_OF_ATTACK = new CameraField(2)
-    public static readonly FIELD_OF_VIEW = new CameraField(3)
-    public static readonly ROLL = new CameraField(4)
-    public static readonly ROTATION = new CameraField(5)
-    public static readonly Z_OFFSET = new CameraField(6)
-    public static readonly NEARZ = new CameraField(7)
-    public static readonly LOCAL_PITCH = new CameraField(8)
-    public static readonly LOCAL_YAW = new CameraField(9)
-    public static readonly LOCAL_ROLL = new CameraField(10)
+    static readonly TARGET_DISTANCE = CameraField.convert(0)
+    static readonly FARZ = CameraField.convert(1)
+    static readonly ANGLE_OF_ATTACK = CameraField.convert(2)
+    static readonly FIELD_OF_VIEW = CameraField.convert(3)
+    static readonly ROLL = CameraField.convert(4)
+    static readonly ROTATION = CameraField.convert(5)
+    static readonly Z_OFFSET = CameraField.convert(6)
+    static readonly NEARZ = CameraField.convert(7)
+    static readonly LOCAL_PITCH = CameraField.convert(8)
+    static readonly LOCAL_YAW = CameraField.convert(9)
+    static readonly LOCAL_ROLL = CameraField.convert(10)
 }

@@ -4,7 +4,7 @@
 import { UnitEvent } from "../../../API/fields/events/UnitEvent"
 import { Unit } from "../../Unit"
 import { Trigger } from "../Trigger"
-import { UnitTargetInRangeEventResponse } from "./UnitTargetInRangeEventResponse"
+import { UnitTargetInRangeEventResponse } from "./response/UnitTargetInRangeEventResponse"
 
 declare function TriggerRegisterUnitInRange(
     whichTrigger: trigger,
@@ -13,19 +13,40 @@ declare function TriggerRegisterUnitInRange(
     filter: boolexpr | null
 ): event
 
+export class UnitInRangeFilterResponse {
+    unit = Unit.fromFilter()
+    range: real
+
+    constructor(range: real) {
+        this.range = range
+    }
+}
+
+export type UnitInRangeFilterCallback =
+    | ((response: UnitInRangeFilterResponse) => boolean)
+    | null
+    | undefined
+
+export const getUnitInRangeFilter = (func: UnitInRangeFilterCallback, range: real) => {
+    let result
+    if (func) result = Condition(() => func(new UnitInRangeFilterResponse(range)))
+    else result = Condition(func)
+    return result
+}
+
 export type UnitInRangeTriggerCallback = (response: UnitTargetInRangeEventResponse) => void
 
 export class UnitInRangeTrigger extends Trigger {
     register(
         whichUnit: Unit,
         range: real,
-        filterFunc?: codeboolexpr,
+        filterFunc?: UnitInRangeFilterCallback,
         callback?: UnitInRangeTriggerCallback
     ) {
         if (callback) {
             this.addEventListener(callback)
         }
-        const filter = Condition(filterFunc)
+        const filter = getUnitInRangeFilter(filterFunc, range)
         const result = UnitEvent.fromHandle(
             (<unknown>(
                 TriggerRegisterUnitInRange(
@@ -36,19 +57,18 @@ export class UnitInRangeTrigger extends Trigger {
                 )
             )) as unitevent
         )
+        DestroyCondition(filter)
         return result
     }
 
     constructor(
         whichUnit: Unit,
         range: real,
-        filterFunc?: codeboolexpr,
+        filterFunc?: UnitInRangeFilterCallback,
         callback?: UnitInRangeTriggerCallback
     ) {
         super()
-        if (whichUnit && range) {
-            this.register(whichUnit, range, filterFunc, callback)
-        }
+        this.register(whichUnit, range, filterFunc, callback)
     }
 
     addEventListener(callback: UnitInRangeTriggerCallback) {

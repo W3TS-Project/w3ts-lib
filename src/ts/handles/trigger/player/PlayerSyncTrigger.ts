@@ -16,8 +16,10 @@ declare function BlzTriggerRegisterPlayerSyncEvent(
     fromServer: boolean
 ): event
 
+export type PlayerSyncTriggerCallback = (response: PlayerSyncDataEventResponse) => void
+
 export class PlayerSyncTrigger extends Trigger {
-    public register(
+    register(
         whichPlayer: MapPlayer,
         prefix: string,
         fromServer: boolean,
@@ -38,19 +40,17 @@ export class PlayerSyncTrigger extends Trigger {
         )
     }
 
-    public constructor(
-        whichPlayer?: MapPlayer,
-        prefix?: string,
-        fromServer?: boolean,
+    constructor(
+        whichPlayer: MapPlayer,
+        prefix: string,
+        fromServer: boolean,
         callback?: PlayerSyncTriggerCallback
     ) {
         super()
-        if (whichPlayer && prefix && fromServer && callback) {
-            this.register(whichPlayer, prefix, fromServer, callback)
-        }
+        this.register(whichPlayer, prefix, fromServer, callback)
     }
 
-    public addEventListener(callback: PlayerSyncTriggerCallback) {
+    addEventListener(callback: PlayerSyncTriggerCallback) {
         this.addAction(() => callback(new PlayerSyncDataEventResponse()))
     }
 }

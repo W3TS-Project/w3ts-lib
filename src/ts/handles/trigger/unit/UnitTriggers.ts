@@ -6,34 +6,34 @@ import { UnitEvents } from "../../../fields/events/UnitEvents"
 import { Unit } from "../../Unit"
 import { PlayerUnitDecayEventResponse } from "../playerUnit/response/PlayerUnitDecayEventResponse"
 import { Trigger } from "../Trigger"
-import { UnitAcquiredTargetEventResponse } from "./UnitAcquiredTargetEventResponse"
-import { UnitAttackedEventResponse } from "./UnitAttackedEventResponse"
-import { UnitChangeOwnerEventResponse } from "./UnitChangeOwnerEventResponse"
-import { UnitConstructCancelEventResponse } from "./UnitConstructCancelEventResponse"
-import { UnitConstructFinishEventResponse } from "./UnitConstructFinishEventResponse"
-import { UnitDamageEventResponse } from "./UnitDamageEventResponse"
-import { UnitDeathEventResponse } from "./UnitDeathEventResponse"
-import { UnitDetectedEventResponse } from "./UnitDetectedEventResponse"
-import { UnitEventResponse } from "./UnitEventResponse"
-import { UnitHeroLevelEventResponse } from "./UnitHeroLevelEventResponse"
-import { UnitHeroRevivableEventResponse } from "./UnitHeroRevivableEventResponse"
-import { UnitHeroReviveEventResponse } from "./UnitHeroReviveEventResponse"
-import { UnitHeroSkillEventResponse } from "./UnitHeroSkillEventResponse"
-import { UnitIssuedOrderEventResponse } from "./UnitIssuedOrderEventResponse"
-import { UnitIssuedPointOrderEventResponse } from "./UnitIssuedPointOrderEventResponse"
-import { UnitIssuedTargetOrderEventResponse } from "./UnitIssuedTargetOrderEventResponse"
-import { UnitItemEventResponse } from "./UnitItemEventResponse"
-import { UnitLoadedEventResponse } from "./UnitLoadedEventResponse"
-import { UnitRescuedEventResponse } from "./UnitRescuedEventResponse"
-import { UnitResearchEventResponse } from "./UnitResearchEventResponse"
-import { UnitSellEventResponse } from "./UnitSellEventResponse"
-import { UnitSellItemEventResponse } from "./UnitSellItemEventResponse"
-import { UnitSpellEventResponse } from "./UnitSpellEventResponse"
-import { UnitStateLimitEventResponse } from "./UnitStateLimitEventResponse"
-import { UnitSummonEventResponse } from "./UnitSummonEventResponse"
-import { UnitTargetInRangeEventResponse } from "./UnitTargetInRangeEventResponse"
-import { UnitTrainEventResponse } from "./UnitTrainEventResponse"
-import { UnitTrainFinishEventResponse } from "./UnitTrainFinishEventResponse"
+import { UnitAcquiredTargetEventResponse } from "./response/UnitAcquiredTargetEventResponse"
+import { UnitAttackedEventResponse } from "./response/UnitAttackedEventResponse"
+import { UnitChangeOwnerEventResponse } from "./response/UnitChangeOwnerEventResponse"
+import { UnitConstructCancelEventResponse } from "./response/UnitConstructCancelEventResponse"
+import { UnitConstructFinishEventResponse } from "./response/UnitConstructFinishEventResponse"
+import { UnitDamageEventResponse } from "./response/UnitDamageEventResponse"
+import { UnitDeathEventResponse } from "./response/UnitDeathEventResponse"
+import { UnitDetectedEventResponse } from "./response/UnitDetectedEventResponse"
+import { UnitEventResponse } from "./response/UnitEventResponse"
+import { UnitHeroLevelEventResponse } from "./response/UnitHeroLevelEventResponse"
+import { UnitHeroRevivableEventResponse } from "./response/UnitHeroRevivableEventResponse"
+import { UnitHeroReviveEventResponse } from "./response/UnitHeroReviveEventResponse"
+import { UnitHeroSkillEventResponse } from "./response/UnitHeroSkillEventResponse"
+import { UnitIssuedOrderEventResponse } from "./response/UnitIssuedOrderEventResponse"
+import { UnitIssuedPointOrderEventResponse } from "./response/UnitIssuedPointOrderEventResponse"
+import { UnitIssuedTargetOrderEventResponse } from "./response/UnitIssuedTargetOrderEventResponse"
+import { UnitItemEventResponse } from "./response/UnitItemEventResponse"
+import { UnitLoadedEventResponse } from "./response/UnitLoadedEventResponse"
+import { UnitRescuedEventResponse } from "./response/UnitRescuedEventResponse"
+import { UnitResearchEventResponse } from "./response/UnitResearchEventResponse"
+import { UnitSellEventResponse } from "./response/UnitSellEventResponse"
+import { UnitSellItemEventResponse } from "./response/UnitSellItemEventResponse"
+import { UnitSpellEventResponse } from "./response/UnitSpellEventResponse"
+import { UnitStateLimitEventResponse } from "./response/UnitStateLimitEventResponse"
+import { UnitSummonEventResponse } from "./response/UnitSummonEventResponse"
+import { UnitTargetInRangeEventResponse } from "./response/UnitTargetInRangeEventResponse"
+import { UnitTrainEventResponse } from "./response/UnitTrainEventResponse"
+import { UnitTrainFinishEventResponse } from "./response/UnitTrainFinishEventResponse"
 
 declare function TriggerRegisterFilterUnitEvent(
     whichTrigger: trigger,
@@ -42,6 +42,19 @@ declare function TriggerRegisterFilterUnitEvent(
     filter: boolexpr | null
 ): event
 
+export class UnitFilterResponse {
+    unit = Unit.fromFilter()
+}
+
+export type UnitFilterCallback = ((response: UnitFilterResponse) => boolean) | null | undefined
+
+export const getUnitFilter = (func: UnitFilterCallback) => {
+    let result
+    if (func) result = Condition(() => func(new UnitFilterResponse()))
+    else result = Condition(func)
+    return result
+}
+
 const getUnitTriggerClass = <T extends UnitEventResponse, R extends (response: T) => void>(
     event: UnitEvent,
     func: () => T
@@ -49,11 +62,11 @@ const getUnitTriggerClass = <T extends UnitEventResponse, R extends (response: T
     class extends Trigger {
         event: UnitEvent
 
-        register(whichUnit: Unit, filterFunc?: codeboolexpr, callback?: R) {
+        register(whichUnit: Unit, filterFunc?: UnitFilterCallback, callback?: R) {
             if (callback) {
                 this.addEventListener(callback)
             }
-            const filter = Condition(filterFunc)
+            const filter = getUnitFilter(filterFunc)
             const result = UnitEvent.fromHandle(
                 (<unknown>(
                     TriggerRegisterFilterUnitEvent(
@@ -68,12 +81,10 @@ const getUnitTriggerClass = <T extends UnitEventResponse, R extends (response: T
             return result
         }
 
-        constructor(whichUnit?: Unit, filterFunc?: codeboolexpr, callback?: R) {
+        constructor(whichUnit: Unit, filterFunc?: UnitFilterCallback, callback?: R) {
             super()
             this.event = event
-            if (whichUnit && callback) {
-                this.register(whichUnit, filterFunc, callback)
-            }
+            this.register(whichUnit, filterFunc, callback)
         }
 
         addEventListener(callback: R) {

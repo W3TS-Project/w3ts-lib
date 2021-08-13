@@ -1,21 +1,17 @@
-// @ts-nocheck
-
 import { MapPlayer } from "../handles/MapPlayer"
+import { Rectangle } from "../handles/Rectangle"
 
-declare function Player(number: number): player
+declare const bj_MAX_PLAYER_SLOTS: integer
+declare const bj_mapInitialPlayableArea: rect
 
 export const AllPlayers: MapPlayer[] = []
+export let MAP_AREA: Rectangle
 
-for (let i = 0; i < bj_MAX_PLAYER_SLOTS; i++) {
-    AllPlayers[i] = MapPlayer.fromHandle(Player(i))
+export const Constants = {
+    init: () => {
+        for (let i = 0; i < bj_MAX_PLAYER_SLOTS; i++) {
+            AllPlayers[i] = MapPlayer.fromIndex(i)
+        }
+        MAP_AREA = Rectangle.fromHandle(bj_mapInitialPlayableArea)
+    }
 }
-
-export const FALSE = false
-export const TRUE = true
-export const JASS_MAX_ARRAY_SIZE = 32768
-
-declare const GetPlayerNeutralPassive = () => number
-declare const GetPlayerNeutralAggressive = () => number
-
-MapPlayer.NeutralPassive = GetPlayerNeutralPassive()
-MapPlayer.NeutralAggressive = GetPlayerNeutralAggressive()

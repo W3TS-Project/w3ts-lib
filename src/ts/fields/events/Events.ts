@@ -7,11 +7,11 @@ import { UnitEvents } from "./UnitEvents";
 import { WidgetEvents } from "./WidgetEvents";
 
 export abstract class Events {
-    public static readonly DIALOG_EVENTS = DialogEvents
-    public static readonly GAME_EVENTS = GameEvents
-    public static readonly LIMIT_OPERATIONS = LimitOperations
-    public static readonly PLAYER_EVENTS = PlayerEvents
-    public static readonly PLAYER_UNIT_EVENTS = PlayerUnitEvents
-    public static readonly UNIT_EVENTS = UnitEvents
-    public static readonly WIDGET_EVENTS = WidgetEvents
+    static readonly DIALOG_EVENTS = DialogEvents
+    static readonly GAME_EVENTS = GameEvents
+    static readonly LIMIT_OPERATIONS = LimitOperations
+    static readonly PLAYER_EVENTS = PlayerEvents
+    static readonly PLAYER_UNIT_EVENTS = PlayerUnitEvents
+    static readonly UNIT_EVENTS = UnitEvents
+    static readonly WIDGET_EVENTS = WidgetEvents
 }

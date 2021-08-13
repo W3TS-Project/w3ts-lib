@@ -16,7 +16,7 @@ declare function TriggerRegisterPlayerChatEvent(
 export type PlayerChatTriggerCallback = (callback: PlayerChatEventResponse) => void
 
 export class PlayerChatTrigger extends Trigger {
-    public register(
+    register(
         whichPlayer: MapPlayer,
         chatMessageToDetect: string,
         exactMatchOnly: boolean,
@@ -37,19 +37,17 @@ export class PlayerChatTrigger extends Trigger {
         )
     }
 
-    public constructor(
-        whichPlayer?: MapPlayer,
-        chatMessageToDetect?: string,
-        exactMatchOnly?: boolean,
+    constructor(
+        whichPlayer: MapPlayer,
+        chatMessageToDetect: string,
+        exactMatchOnly: boolean,
         callback?: PlayerChatTriggerCallback
     ) {
         super()
-        if (whichPlayer && chatMessageToDetect && exactMatchOnly) {
-            this.register(whichPlayer, chatMessageToDetect, exactMatchOnly, callback)
-        }
+        this.register(whichPlayer, chatMessageToDetect, exactMatchOnly, callback)
     }
 
-    public addEventListener(callback: PlayerChatTriggerCallback) {
+    addEventListener(callback: PlayerChatTriggerCallback) {
         this.addAction(() => callback(new PlayerChatEventResponse()))
     }
 }

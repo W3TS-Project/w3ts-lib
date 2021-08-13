@@ -6,7 +6,7 @@ import { UnitEvent } from "../../../API/fields/events/UnitEvent"
 import { UnitState } from "../../../API/fields/unit/UnitState"
 import { Unit } from "../../Unit"
 import { Trigger } from "../Trigger"
-import { UnitStateLimitEventResponse } from "./UnitStateLimitEventResponse"
+import { UnitStateLimitEventResponse } from "./response/UnitStateLimitEventResponse"
 
 declare function TriggerRegisterUnitStateEvent(
     whichTrigger: trigger,
@@ -50,9 +50,7 @@ export class UnitStateTrigger extends Trigger {
         callback?: UnitStateTriggerCallback
     ) {
         super()
-        if (whichUnit && whichState && opcode && limitval) {
-            this.register(whichUnit, whichState, opcode, limitval, callback)
-        }
+        this.register(whichUnit, whichState, opcode, limitval, callback)
     }
 
     addEventListener(callback: UnitStateTriggerCallback) {

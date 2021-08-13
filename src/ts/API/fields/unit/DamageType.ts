@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertDamageType(i: integer): damagetype
 
 export class DamageType extends Field<damagetype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertDamageType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertDamageType, id)
     }
 
-    public static fromHandle(handle: damagetype) {
+    static fromHandle(handle: damagetype) {
         return this.getObject(handle) as DamageType
     }
 }

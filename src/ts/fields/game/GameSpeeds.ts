@@ -1,9 +1,9 @@
 import { GameSpeed } from "../../API/fields/game/GameSpeed"
 
 export abstract class GameSpeeds {
-    public static readonly SLOWEST = new GameSpeed(0)
-    public static readonly SLOW = new GameSpeed(1)
-    public static readonly NORMAL = new GameSpeed(2)
-    public static readonly FAST = new GameSpeed(3)
-    public static readonly FASTEST = new GameSpeed(4)
+    static readonly SLOWEST = GameSpeed.convert(0)
+    static readonly SLOW = GameSpeed.convert(1)
+    static readonly NORMAL = GameSpeed.convert(2)
+    static readonly FAST = GameSpeed.convert(3)
+    static readonly FASTEST = GameSpeed.convert(4)
 }

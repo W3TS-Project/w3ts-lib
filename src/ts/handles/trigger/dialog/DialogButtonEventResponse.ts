@@ -1,13 +1,6 @@
 import { DialogButton } from "../../DialogButton"
+import { EventResponse } from "../Trigger"
 
-export class DialogButtonEventResponse {
-    protected buttonClicked: DialogButton
-
-    public constructor() {
-        this.buttonClicked = DialogButton.getClicked()
-    }
-
-    public getButtonClicked() {
-        return this.buttonClicked
-    }
+export class DialogButtonEventResponse extends EventResponse {
+    buttonClicked = DialogButton.getClicked()
 }

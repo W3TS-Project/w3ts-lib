@@ -32,9 +32,7 @@ export class FrameTrigger extends Trigger {
 
     constructor(frame: Frame, eventId: FrameEventType, callback?: FrameTriggerCallback) {
         super()
-        if (frame && eventId) {
-            this.register(frame, eventId, callback)
-        }
+        this.register(frame, eventId, callback)
     }
 
     addEventListener(callback: FrameTriggerCallback) {

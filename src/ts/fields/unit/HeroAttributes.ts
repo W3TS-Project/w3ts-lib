@@ -1,7 +1,7 @@
 import { HeroAttribute } from "../../API/fields/unit/HeroAttribute"
 
 export abstract class HeroAttributes {
-    public static readonly STR = new HeroAttribute(1)
-    public static readonly INT = new HeroAttribute(2)
-    public static readonly AGI = new HeroAttribute(3)
+    static readonly STR = HeroAttribute.convert(1)
+    static readonly INT = HeroAttribute.convert(2)
+    static readonly AGI = HeroAttribute.convert(3)
 }

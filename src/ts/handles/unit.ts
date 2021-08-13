@@ -2201,7 +2201,7 @@ export class Unit extends Widget {
     }
 
     public static fromHandle(handle: unit) {
-        return super.getObject(handle) as Unit
+        return this.getObject(handle) as Unit
     }
 
     public static fromEvent() {

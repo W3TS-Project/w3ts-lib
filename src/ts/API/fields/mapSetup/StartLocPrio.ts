@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertStartLocPrio(i: integer): startlocprio
 
 export class StartLocPrio extends Field<startlocprio> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertStartLocPrio(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertStartLocPrio, id)
     }
 
-    public static fromHandle(handle: startlocprio) {
+    static fromHandle(handle: startlocprio) {
         return this.getObject(handle) as StartLocPrio
     }
 }

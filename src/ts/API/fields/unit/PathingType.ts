@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertPathingType(i: integer): pathingtype
 
 export class PathingType extends Field<pathingtype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertPathingType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertPathingType, id)
     }
 }

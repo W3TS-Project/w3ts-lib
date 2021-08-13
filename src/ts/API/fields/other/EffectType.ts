@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertEffectType(i: integer): effecttype
 
 export class EffectType extends Field<effecttype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertEffectType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertEffectType, id)
     }
 }

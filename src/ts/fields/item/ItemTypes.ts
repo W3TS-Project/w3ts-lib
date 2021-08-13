@@ -1,15 +1,15 @@
 import { ItemType } from "../../API/fields/item/ItemType"
 
 export abstract class ItemTypes {
-    public static readonly PERMANENT = new ItemType(0)
-    public static readonly CHARGED = new ItemType(1)
-    public static readonly POWERUP = new ItemType(2)
-    public static readonly ARTIFACT = new ItemType(3)
-    public static readonly PURCHASABLE = new ItemType(4)
-    public static readonly CAMPAIGN = new ItemType(5)
-    public static readonly MISCELLANEOUS = new ItemType(6)
-    public static readonly UNKNOWN = new ItemType(7)
-    public static readonly ANY = new ItemType(8)
+    static readonly PERMANENT = ItemType.convert(0)
+    static readonly CHARGED = ItemType.convert(1)
+    static readonly POWERUP = ItemType.convert(2)
+    static readonly ARTIFACT = ItemType.convert(3)
+    static readonly PURCHASABLE = ItemType.convert(4)
+    static readonly CAMPAIGN = ItemType.convert(5)
+    static readonly MISCELLANEOUS = ItemType.convert(6)
+    static readonly UNKNOWN = ItemType.convert(7)
+    static readonly ANY = ItemType.convert(8)
     // Deprecated, should use ITEM_TYPE_POWERUP
-    public static readonly TOME = new ItemType(2)
+    static readonly TOME = ItemType.convert(2)
 }

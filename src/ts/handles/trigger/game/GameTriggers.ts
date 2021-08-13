@@ -52,9 +52,7 @@ const getGameTriggerClass = <T extends GameEventResponse, R extends (response: T
         constructor(callback?: R) {
             super()
             this.event = event
-            if (callback) {
-                this.register(callback)
-            }
+            this.register(callback)
         }
 
         addEventListener(callback: R) {

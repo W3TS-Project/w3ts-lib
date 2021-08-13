@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertPlayerColor(i: integer): playercolor
 
 export class PlayerColor extends Field<playercolor> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertPlayerColor(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertPlayerColor, id)
     }
 
-    public static fromHandle(handle: playercolor) {
+    static fromHandle(handle: playercolor) {
         return this.getObject(handle) as PlayerColor
     }
 }

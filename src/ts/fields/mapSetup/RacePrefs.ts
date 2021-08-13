@@ -1,11 +1,11 @@
 import { RacePref } from "../../API/fields/mapSetup/RacePref"
 
 export abstract class RacePrefs {
-    public static readonly HUMAN = new RacePref(1)
-    public static readonly ORC = new RacePref(2)
-    public static readonly NIGHT_ELF = new RacePref(4)
-    public static readonly UNDEAD = new RacePref(8)
-    public static readonly DEMON = new RacePref(16)
-    public static readonly RANDOM = new RacePref(32)
-    public static readonly USER_SELECTABLE = new RacePref(64)
+    static readonly HUMAN = RacePref.convert(1)
+    static readonly ORC = RacePref.convert(2)
+    static readonly NIGHT_ELF = RacePref.convert(4)
+    static readonly UNDEAD = RacePref.convert(8)
+    static readonly DEMON = RacePref.convert(16)
+    static readonly RANDOM = RacePref.convert(32)
+    static readonly USER_SELECTABLE = RacePref.convert(64)
 }

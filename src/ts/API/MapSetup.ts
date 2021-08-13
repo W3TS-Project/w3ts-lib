@@ -15,44 +15,44 @@ declare function GetPlayers(): integer
 declare function IsMapFlagSet(whichMapFlag: mapflag): boolean
 
 export abstract class MapSetup {
-    public static setName(name: string) {
+    static setName(name: string) {
         SetMapName(name)
         return this
     }
 
-    public static setDescription(description: string) {
+    static setDescription(description: string) {
         SetMapDescription(description)
         return this
     }
 
-    public static setTeams(teamcount: integer) {
+    static setTeams(teamcount: integer) {
         SetTeams(Math.floor(teamcount))
         return this
     }
 
-    public static setPlayers(playercount: integer) {
+    static setPlayers(playercount: integer) {
         SetPlayers(Math.floor(playercount))
         return this
     }
 
-    public static getTeams(): integer {
+    static getTeams(): integer {
         return GetTeams()
     }
 
-    public static getPlayers(): integer {
+    static getPlayers(): integer {
         return GetPlayers()
     }
 
-    public static isFlagSet(whichMapFlag: MapFlag): boolean {
+    static isFlagSet(whichMapFlag: MapFlag): boolean {
         return IsMapFlagSet(whichMapFlag.getHandle() as mapflag)
     }
 
-    public static setResourceDensity(whichDensity: MapDensity) {
+    static setResourceDensity(whichDensity: MapDensity) {
         SetResourceDensity(whichDensity.getHandle() as mapdensity)
         return this
     }
 
-    public static setCreatureDensity(whichDensity: MapDensity) {
+    static setCreatureDensity(whichDensity: MapDensity) {
         SetCreatureDensity(whichDensity.getHandle() as mapdensity)
         return this
     }

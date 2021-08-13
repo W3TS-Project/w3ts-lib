@@ -1,6 +1,6 @@
 import { SoundType } from "../../API/fields/sound/SoundType"
 
 export abstract class SoundTypes {
-    public static readonly EFFECT = new SoundType(0)
-    public static readonly LOOPED_EFFECT = new SoundType(1)
+    static readonly EFFECT = SoundType.convert(0)
+    static readonly LOOPED_EFFECT = SoundType.convert(1)
 }

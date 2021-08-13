@@ -1,10 +1,10 @@
 import { ArmorType } from "../../API/fields/unit/ArmorType"
 
 export abstract class ArmorTypes {
-    public static readonly WHOKNOWS = new ArmorType(0)
-    public static readonly FLESH = new ArmorType(1)
-    public static readonly METAL = new ArmorType(2)
-    public static readonly WOOD = new ArmorType(3)
-    public static readonly ETHREAL = new ArmorType(4)
-    public static readonly STONE = new ArmorType(5)
+    static readonly WHOKNOWS = ArmorType.convert(0)
+    static readonly FLESH = ArmorType.convert(1)
+    static readonly METAL = ArmorType.convert(2)
+    static readonly WOOD = ArmorType.convert(3)
+    static readonly ETHREAL = ArmorType.convert(4)
+    static readonly STONE = ArmorType.convert(5)
 }

@@ -1,8 +1,8 @@
 import { PlayerGameResult } from "../../API/fields/player/PlayerGameResult"
 
 export abstract class PlayerGameResults {
-    public static readonly VICTORY = new PlayerGameResult(0)
-    public static readonly DEFEAT = new PlayerGameResult(1)
-    public static readonly TIE = new PlayerGameResult(2)
-    public static readonly NEUTRAL = new PlayerGameResult(3)
+    static readonly VICTORY = PlayerGameResult.convert(0)
+    static readonly DEFEAT = PlayerGameResult.convert(1)
+    static readonly TIE = PlayerGameResult.convert(2)
+    static readonly NEUTRAL = PlayerGameResult.convert(3)
 }

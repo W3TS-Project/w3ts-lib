@@ -1,9 +1,11 @@
 import { RawCode } from "../../RawCode"
 
-export class BuffRawCode extends RawCode {
-    protected static readonly ERROR_MESSAGE = "Равкод не является равкодом заклинания"
+export type BuffRawCodeType = BuffRawCode | rawcode
 
-    public constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
+export class BuffRawCode extends RawCode {
+    static readonly ERROR_MESSAGE = "Равкод не является равкодом заклинания"
+
+    constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             BuffRawCode.checkAnError(id)
         }
@@ -13,22 +15,22 @@ export class BuffRawCode extends RawCode {
         super(id, !isBasicCheck)
     }
 
-    public static get(rawCode: rawcode, isCheck = true, isBasicCheck = true) {
+    static get(rawCode: BuffRawCodeType, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             this.checkAnError(rawCode)
         }
-        return super.get(rawCode, isBasicCheck) as BuffRawCode
+        return RawCode.get(rawCode, isBasicCheck) as BuffRawCode
     }
 
-    protected static check(id: rawcode): boolean {
-        if (!super.check(id)) {
+    static check(id: BuffRawCodeType): boolean {
+        if (!RawCode.check(id)) {
             return false
         }
         //TODO
         return true
     }
 
-    protected static checkAnError(id: rawcode) {
+    protected static checkAnError(id: BuffRawCodeType) {
         if (!this.check(id)) {
             error(this.ERROR_MESSAGE, 2)
         }

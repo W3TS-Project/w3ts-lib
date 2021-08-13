@@ -1,7 +1,9 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { Position } from "../Package"
 import { Handle } from "./Handle"
+import { Point } from "./Point"
 
 declare function Location(x: real, y: real): location
 declare function RemoveLocation(whichLocation: location): void
@@ -11,35 +13,48 @@ declare function GetLocationY(whichLocation: location): real
 declare function GetLocationZ(whichLocation: location): real
 
 export class MapLocation extends Handle<location> {
-    public constructor(x: real, y: real, z?: real) {
-        super(Location(x, y))
+    x: real
+    y: real
+    z: real
+
+    constructor(handle: location) {
+        super(handle)
+        this.x = this.getX()
+        this.y = this.getY()
+        this.z = this.getZ()
     }
 
-    public destroy() {
+    static fromCoords(x: real, y: real) {
+        return new this(Location(x, y))
+    }
+
+    destroy() {
         RemoveLocation(this.getHandle() as location)
         return this
     }
 
-    public move(x: real, y: real) {
+    move(x: real, y: real) {
         MoveLocation(this.getHandle() as location, x, y)
+        this.x = x
+        this.y = y
         return this
     }
 
-    public setX(newX: real) {
-        this.move(newX, this.getY())
+    setX(newX: real) {
+        this.move(newX, this.y)
         return this
     }
 
-    public getX(): real {
+    getX(): real {
         return GetLocationX(this.getHandle() as location)
     }
 
-    public setY(newY: real) {
-        this.move(this.getX(), newY)
+    setY(newY: real) {
+        this.move(this.x, newY)
         return this
     }
 
-    public getY(): real {
+    getY(): real {
         return GetLocationY(this.getHandle() as location)
     }
 
@@ -47,11 +62,19 @@ export class MapLocation extends Handle<location> {
      * This function is asynchronous. The values it returns are not guaranteed synchronous between each player.
      * If you attempt to use it in a synchronous manner, it may cause a desync.
      */
-    public getZ(): real {
+    getZ(): real {
         return GetLocationZ(this.getHandle() as location)
     }
 
-    public static fromHandle(handle: location) {
+    setPos(p: Position) {
+        return this.setX(p.x).setY(p.y)
+    }
+
+    toPoint() {
+        return new Point(this.x, this.y, this.z)
+    }
+
+    static fromHandle(handle: location) {
         return this.getObject(handle) as MapLocation
     }
 }

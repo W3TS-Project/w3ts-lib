@@ -17,55 +17,55 @@ declare function GetLocalizedString(source: string): string
 declare function GetLocalizedHotkey(source: string): integer
 
 export abstract class MapString {
-    public static integerToReal(i: integer): real {
+    static integerToReal(i: integer): real {
         return I2R(i)
     }
 
-    public static realToInteger(r: real): integer {
+    static realToInteger(r: real): integer {
         return R2I(r)
     }
 
-    public static integerToString(i: integer): string {
+    static integerToString(i: integer): string {
         return I2S(i)
     }
 
-    public static realToString(r: real): string {
+    static realToString(r: real): string {
         return R2S(r)
     }
 
-    public static realToStringW(r: real, width: integer, precision: integer): string {
+    static realToStringW(r: real, width: integer, precision: integer): string {
         return R2SW(r, Math.floor(width), Math.floor(precision))
     }
 
-    public static stringToInteger(s: string): integer {
+    static stringToInteger(s: string): integer {
         return S2I(s)
     }
 
-    public static stringToReal(s: string): real {
+    static stringToReal(s: string): real {
         return S2R(s)
     }
 
-    public static subString(source: string, start: integer, ending: integer): string {
+    static subString(source: string, start: integer, ending: integer): string {
         return SubString(source, Math.floor(start), Math.floor(ending))
     }
 
-    public static stringLength(s: string): integer {
+    static stringLength(s: string): integer {
         return StringLength(s)
     }
 
-    public static stringCase(source: string, upper: boolean): string {
+    static stringCase(source: string, upper: boolean): string {
         return StringCase(source, upper)
     }
 
-    public static stringHash(s: string): integer {
+    static stringHash(s: string): integer {
         return StringHash(s)
     }
 
-    public static getLocalizedString(source: string): string {
+    static getLocalizedString(source: string): string {
         return GetLocalizedString(source)
     }
 
-    public static getLocalizedHotkey(source: string): integer {
+    static getLocalizedHotkey(source: string): integer {
         return GetLocalizedHotkey(source)
     }
 }

@@ -1,16 +1,10 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { EventResponse } from "../../Trigger";
+
 declare function GetSaveBasicFilename(): string
 
-export class GameSaveEventResponse {
-    protected basicFilename: string
-
-    public constructor() {
-        this.basicFilename = GetSaveBasicFilename()
-    }
-
-    public getBasicFilename() {
-        return this.basicFilename
-    }
+export class GameSaveEventResponse extends EventResponse {
+    basicFilename = GetSaveBasicFilename()
 }

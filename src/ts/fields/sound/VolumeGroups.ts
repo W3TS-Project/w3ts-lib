@@ -1,12 +1,12 @@
 import { VolumeGroup } from "../../API/fields/sound/VolumeGroup"
 
 export abstract class VolumeGroups {
-    public static readonly UNIT_MOVEMENT = new VolumeGroup(0)
-    public static readonly UNIT_SOUNDS = new VolumeGroup(1)
-    public static readonly COMBAT = new VolumeGroup(2)
-    public static readonly SPELLS = new VolumeGroup(3)
-    public static readonly UI = new VolumeGroup(4)
-    public static readonly MUSIC = new VolumeGroup(5)
-    public static readonly AMBIENT_SOUNDS = new VolumeGroup(6)
-    public static readonly FIRE = new VolumeGroup(7)
+    static readonly UNIT_MOVEMENT = VolumeGroup.convert(0)
+    static readonly UNIT_SOUNDS = VolumeGroup.convert(1)
+    static readonly COMBAT = VolumeGroup.convert(2)
+    static readonly SPELLS = VolumeGroup.convert(3)
+    static readonly UI = VolumeGroup.convert(4)
+    static readonly MUSIC = VolumeGroup.convert(5)
+    static readonly AMBIENT_SOUNDS = VolumeGroup.convert(6)
+    static readonly FIRE = VolumeGroup.convert(7)
 }

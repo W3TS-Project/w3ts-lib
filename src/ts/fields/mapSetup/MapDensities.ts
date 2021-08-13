@@ -1,8 +1,8 @@
 import { MapDensity } from "../../API/fields/mapSetup/MapDensity"
 
 export abstract class MapDensities {
-    public static readonly NONE = new MapDensity(0)
-    public static readonly LIGHT = new MapDensity(1)
-    public static readonly MEDIUM = new MapDensity(2)
-    public static readonly HEAVY = new MapDensity(3)
+    static readonly NONE = MapDensity.convert(0)
+    static readonly LIGHT = MapDensity.convert(1)
+    static readonly MEDIUM = MapDensity.convert(2)
+    static readonly HEAVY = MapDensity.convert(3)
 }

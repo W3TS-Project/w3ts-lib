@@ -8,20 +8,19 @@ declare function GetResourceDensity(): mapdensity
 declare function GetCreatureDensity(): mapdensity
 
 export class MapDensity extends Field<mapdensity> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertMapDensity(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertMapDensity, id)
     }
 
-    public static fromHandle(handle: mapdensity) {
+    static fromHandle(handle: mapdensity) {
         return this.getObject(handle) as MapDensity
     }
 
-    public static getResource() {
+    static getResource() {
         return this.fromHandle(GetResourceDensity())
     }
 
-    public static getCreature() {
+    static getCreature() {
         return this.fromHandle(GetCreatureDensity())
     }
 }

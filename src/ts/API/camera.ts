@@ -57,25 +57,25 @@ declare function GetCameraEyePositionZ(): real
 declare function GetCameraEyePositionLoc(): location
 
 export abstract class Camera {
-    public static setCoords(x: real, y: real) {
+    static setCoords(x: real, y: real) {
         SetCameraPosition(x, y)
         return this
     }
 
-    public static setPos(p: Position) {
+    static setPos(p: Position) {
         return this.setCoords(p.getX(), p.getY())
     }
 
-    public static setQuickCoords(x: real, y: real) {
+    static setQuickCoords(x: real, y: real) {
         SetCameraQuickPosition(x, y)
         return this
     }
 
-    public static setQuickPos(p: Position) {
+    static setQuickPos(p: Position) {
         return this.setQuickCoords(p.getX(), p.getY())
     }
 
-    public static setBoundsCoords(
+    static setBoundsCoords(
         x1: real,
         y1: real,
         x2: real,
@@ -89,7 +89,7 @@ export abstract class Camera {
         return this
     }
 
-    public static setBoundsPos(p1: Position, p2: Position, p3: Position, p4: Position) {
+    static setBoundsPos(p1: Position, p2: Position, p3: Position, p4: Position) {
         return this.setBoundsCoords(
             p1.getX(),
             p1.getY(),
@@ -102,17 +102,17 @@ export abstract class Camera {
         )
     }
 
-    public static stop() {
+    static stop() {
         StopCamera()
         return this
     }
 
-    public static reset(duration: real) {
+    static reset(duration: real) {
         ResetToGameCamera(duration)
         return this
     }
 
-    public static panToCoords(x: real, y: real, zOffsetDest: real | undefined) {
+    static panToCoords(x: real, y: real, zOffsetDest: real | undefined) {
         if (!zOffsetDest) {
             PanCameraTo(x, y)
         } else {
@@ -121,11 +121,11 @@ export abstract class Camera {
         return this
     }
 
-    public static panToPos(p: Position) {
+    static panToPos(p: Position) {
         return this.panToCoords(p.getX(), p.getY(), p.getZ())
     }
 
-    public static panToCoordsTimed(
+    static panToCoordsTimed(
         x: real,
         y: real,
         duration: real,
@@ -139,26 +139,26 @@ export abstract class Camera {
         return this
     }
 
-    public static panToPosTimed(p: Position, duration: real) {
+    static panToPosTimed(p: Position, duration: real) {
         return this.panToCoordsTimed(p.getX(), p.getY(), duration, p.getZ())
     }
 
-    public static setRotateMode(x: real, y: real, radiansToSweep: real, duration: real) {
+    static setRotateMode(x: real, y: real, radiansToSweep: real, duration: real) {
         SetCameraRotateMode(x, y, radiansToSweep, duration)
         return this
     }
 
-    public static setField(whichField: camerafield, value: real, duration: real) {
+    static setField(whichField: camerafield, value: real, duration: real) {
         SetCameraField(whichField, value, duration)
         return this
     }
 
-    public static adjustField(whichField: camerafield, offset: real, duration: real) {
+    static adjustField(whichField: camerafield, offset: real, duration: real) {
         AdjustCameraField(whichField, offset, duration)
         return this
     }
 
-    public static setTargetControllerCoords(
+    static setTargetControllerCoords(
         whichUnit: Unit,
         xOffset: real,
         yOffset: real,
@@ -168,7 +168,7 @@ export abstract class Camera {
         return this
     }
 
-    public static setTargetControllerPos(
+    static setTargetControllerPos(
         whichUnit: Unit,
         p: Position,
         inheritOrientation: boolean
@@ -176,113 +176,113 @@ export abstract class Camera {
         return this.setTargetControllerCoords(whichUnit, p.getX(), p.getY(), inheritOrientation)
     }
 
-    public static setOrientControllerCoords(whichUnit: Unit, xOffset: real, yOffset: real) {
+    static setOrientControllerCoords(whichUnit: Unit, xOffset: real, yOffset: real) {
         SetCameraOrientController(whichUnit.getHandle() as unit, xOffset, yOffset)
         return this
     }
 
-    public static setOrientControllerPos(whichUnit: Unit, p: Position) {
+    static setOrientControllerPos(whichUnit: Unit, p: Position) {
         return this.setOrientControllerCoords(whichUnit, p.getX(), p.getY())
     }
 
-    public static setTargetNoise(mag: real, velocity: real, vertOnly = false) {
+    static setTargetNoise(mag: real, velocity: real, vertOnly = false) {
         CameraSetTargetNoiseEx(mag, velocity, vertOnly)
     }
 
-    public static setSourceNoise(mag: real, velocity: real, vertOnly = false) {
+    static setSourceNoise(mag: real, velocity: real, vertOnly = false) {
         CameraSetSourceNoiseEx(mag, velocity, vertOnly)
     }
 
-    public static setSmoothingFactor(factor: real) {
+    static setSmoothingFactor(factor: real) {
         CameraSetSmoothingFactor(factor)
     }
 
-    public static getMargin(whichMargin: integer): real {
+    static getMargin(whichMargin: integer): real {
         return GetCameraMargin(Math.floor(whichMargin))
     }
 
-    public static getBoundMinX(): real {
+    static getBoundMinX(): real {
         return GetCameraBoundMinX()
     }
 
-    public static getBoundMinY(): real {
+    static getBoundMinY(): real {
         return GetCameraBoundMinY()
     }
 
-    public static getBoundMinPoint(): Point {
+    static getBoundMinPoint(): Point {
         return new Point(this.getBoundMinX(), this.getBoundMinY())
     }
 
-    public static getBoundMinLoc(): MapLocation {
+    static getBoundMinLoc(): MapLocation {
         return new MapLocation(this.getBoundMinX(), this.getBoundMinY())
     }
 
-    public static getBoundMaxX(): real {
+    static getBoundMaxX(): real {
         return GetCameraBoundMaxX()
     }
 
-    public static getBoundMaxY(): real {
+    static getBoundMaxY(): real {
         return GetCameraBoundMaxY()
     }
 
-    public static getBoundMaxPoint(): Point {
+    static getBoundMaxPoint(): Point {
         return new Point(this.getBoundMaxX(), this.getBoundMaxY())
     }
 
-    public static getBoundMaxLoc(): MapLocation {
+    static getBoundMaxLoc(): MapLocation {
         return new MapLocation(this.getBoundMaxX(), this.getBoundMaxY())
     }
 
-    public static getField(whichField: camerafield): real {
+    static getField(whichField: camerafield): real {
         return GetCameraField(whichField)
     }
 
-    public static getTargetX(): real {
+    static getTargetX(): real {
         return GetCameraTargetPositionX()
     }
 
-    public static getTargetY(): real {
+    static getTargetY(): real {
         return GetCameraTargetPositionY()
     }
 
-    public static getTargetZ(): real {
+    static getTargetZ(): real {
         return GetCameraTargetPositionZ()
     }
 
-    public static getTargetPoint(): Point {
+    static getTargetPoint(): Point {
         return new Point(this.getTargetX(), this.getTargetY(), this.getTargetZ())
     }
 
-    public static getTargetLoc() {
+    static getTargetLoc() {
         return MapLocation.fromHandle(GetCameraTargetPositionLoc())
     }
 
-    public static getEyeX(): real {
+    static getEyeX(): real {
         return GetCameraEyePositionX()
     }
 
-    public static getEyeY(): real {
+    static getEyeY(): real {
         return GetCameraEyePositionY()
     }
 
-    public static getEyeZ(): real {
+    static getEyeZ(): real {
         return GetCameraEyePositionZ()
     }
 
-    public static getEyeLoc(): MapLocation {
+    static getEyeLoc(): MapLocation {
         return MapLocation.fromHandle(GetCameraEyePositionLoc())
     }
 
-    public static getEyePoint(): Point {
+    static getEyePoint(): Point {
         return new Point(this.getEyeX(), this.getEyeY(), this.getEyeZ())
     }
 
-    public static setDepthOfFieldScale(scale: real) {
+    static setDepthOfFieldScale(scale: real) {
         CameraSetDepthOfFieldScale(scale)
         return this
     }
 
-    public static setFocalDistance(distance: real) {
+    static setFocalDistance(distance: real) {
         CameraSetFocalDistance(distance)
         return this
     }

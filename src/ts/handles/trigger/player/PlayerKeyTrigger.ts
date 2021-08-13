@@ -18,7 +18,7 @@ declare function BlzTriggerRegisterPlayerKeyEvent(
 export type PlayerKeyTriggerCallback = (response: PlayerKeyEventResponse) => void
 
 export class PlayerKeyTrigger extends Trigger {
-    public register(
+    register(
         whichPlayer: MapPlayer,
         key: OsKeyType,
         metaKey: integer,
@@ -41,20 +41,18 @@ export class PlayerKeyTrigger extends Trigger {
         )
     }
 
-    public constructor(
-        whichPlayer?: MapPlayer,
-        key?: OsKeyType,
-        metaKey?: integer,
-        keyDown?: boolean,
+    constructor(
+        whichPlayer: MapPlayer,
+        key: OsKeyType,
+        metaKey: integer,
+        keyDown: boolean,
         callback?: PlayerKeyTriggerCallback
     ) {
         super()
-        if (whichPlayer && key && metaKey && keyDown) {
-            this.register(whichPlayer, key, metaKey, keyDown, callback)
-        }
+        this.register(whichPlayer, key, metaKey, keyDown, callback)
     }
 
-    public addEventListener(callback: PlayerKeyTriggerCallback) {
+    addEventListener(callback: PlayerKeyTriggerCallback) {
         this.addAction(() => callback(new PlayerKeyEventResponse()))
     }
 }

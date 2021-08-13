@@ -1,14 +1,14 @@
 import { AllianceType } from "../../API/fields/player/AllianceType"
 
 export abstract class AllianceTypes {
-    public static readonly PASSIVE = new AllianceType(0)
-    public static readonly HELP_REQUEST = new AllianceType(1)
-    public static readonly HELP_RESPONSE = new AllianceType(2)
-    public static readonly SHARED_XP = new AllianceType(3)
-    public static readonly SHARED_SPELLS = new AllianceType(4)
-    public static readonly SHARED_VISION = new AllianceType(5)
-    public static readonly SHARED_CONTROL = new AllianceType(6)
-    public static readonly SHARED_ADVANCED_CONTROL = new AllianceType(7)
-    public static readonly RESCUABLE = new AllianceType(8)
-    public static readonly SHARED_VISION_FORCED = new AllianceType(9)
+    static readonly PASSIVE = AllianceType.convert(0)
+    static readonly HELP_REQUEST = AllianceType.convert(1)
+    static readonly HELP_RESPONSE = AllianceType.convert(2)
+    static readonly SHARED_XP = AllianceType.convert(3)
+    static readonly SHARED_SPELLS = AllianceType.convert(4)
+    static readonly SHARED_VISION = AllianceType.convert(5)
+    static readonly SHARED_CONTROL = AllianceType.convert(6)
+    static readonly SHARED_ADVANCED_CONTROL = AllianceType.convert(7)
+    static readonly RESCUABLE = AllianceType.convert(8)
+    static readonly SHARED_VISION_FORCED = AllianceType.convert(9)
 }

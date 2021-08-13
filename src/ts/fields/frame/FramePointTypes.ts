@@ -1,13 +1,13 @@
 import { FramePointType } from "../../API/fields/frame/FramePointType"
 
 export abstract class FramePointTypes {
-    public static readonly LEFT_TOP = new FramePointType(0)
-    public static readonly TOP = new FramePointType(1)
-    public static readonly TOP_RIGHT = new FramePointType(2)
-    public static readonly LEFT = new FramePointType(3)
-    public static readonly CENTER = new FramePointType(4)
-    public static readonly RIGHT = new FramePointType(5)
-    public static readonly LEFT_BOTTOM = new FramePointType(6)
-    public static readonly BOTTOM = new FramePointType(7)
-    public static readonly RIGHT_BOTTOM = new FramePointType(8)
+    static readonly LEFT_TOP = FramePointType.convert(0)
+    static readonly TOP = FramePointType.convert(1)
+    static readonly TOP_RIGHT = FramePointType.convert(2)
+    static readonly LEFT = FramePointType.convert(3)
+    static readonly CENTER = FramePointType.convert(4)
+    static readonly RIGHT = FramePointType.convert(5)
+    static readonly LEFT_BOTTOM = FramePointType.convert(6)
+    static readonly BOTTOM = FramePointType.convert(7)
+    static readonly RIGHT_BOTTOM = FramePointType.convert(8)
 }

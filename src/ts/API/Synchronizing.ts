@@ -6,15 +6,15 @@ declare function BlzGetTriggerSyncPrefix(): string
 declare function BlzGetTriggerSyncData(): string
 
 export abstract class Synchronizing {
-    public static sendData(prefix: string, data: string) {
+    static sendData(prefix: string, data: string) {
         return BlzSendSyncData(prefix, data)
     }
 
-    public static getEventPrefix() {
+    static getEventPrefix() {
         return BlzGetTriggerSyncPrefix()
     }
 
-    public static getEventData() {
+    static getEventData() {
         return BlzGetTriggerSyncData()
     }
 }

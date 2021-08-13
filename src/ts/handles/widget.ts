@@ -2,6 +2,7 @@
 //@ts-nocheck
 
 import { Handle } from "./Handle"
+import { Point } from "./Point"
 
 declare function GetWidgetLife(whichWidget: widget): real
 declare function SetWidgetLife(whichWidget: widget, newLife: real): void
@@ -17,39 +18,52 @@ declare function AddIndicator(
 ): void
 
 export class Widget extends Handle<widget> {
-    public getLife() {
+    life: real = this.getLife()
+    point: Point = this.getPoint()
+    indicatorRed: real = 255
+    indicatorGreen: real = 255
+    indicatorBlue: real = 255
+    indicatorAlpha: real = 0
+
+    getLife() {
         return GetWidgetLife(this.getHandle() as widget)
     }
 
-    public setLife(value: real) {
+    setLife(value: real) {
         SetWidgetLife(this.getHandle() as widget, value)
+        this.life = value
         return this
     }
 
-    public getX(): real {
+    getX(): real {
         return GetWidgetX(this.getHandle() as widget)
     }
 
-    public getY(): real {
+    getY(): real {
         return GetWidgetY(this.getHandle() as widget)
     }
 
-    public addIndicator(red: integer, green: integer, blue: integer, alpha: integer) {
-        AddIndicator(
-            this.getHandle() as widget,
-            Math.floor(red),
-            Math.floor(green),
-            Math.floor(blue),
-            Math.floor(alpha)
-        )
+    getPoint() {
+        return new Point(this.getX(), this.getY())
+    }
+
+    addIndicator(red: integer, green: integer, blue: integer, alpha: integer) {
+        red = Math.floor(red)
+        green = Math.floor(green)
+        blue = Math.floor(green)
+        alpha = Math.floor(alpha)
+        AddIndicator(this.getHandle() as widget, red, green, blue, alpha)
+        this.indicatorRed = red
+        this.indicatorGreen = green
+        this.indicatorBlue = blue
         return this
     }
 
-    public static fromHandle(handle: widget) {
+    static fromHandle(handle: widget) {
         return this.getObject(handle) as Widget
     }
 
-    public static fromEvent() {
+    static fromEvent() {
         return this.fromHandle(GetTriggerWidget())
     }
 }

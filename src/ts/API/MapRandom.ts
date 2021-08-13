@@ -12,11 +12,11 @@ declare function ChooseRandomItemEx(whichType: itemtype, level: integer): intege
 declare function SetRandomSeed(seed: integer): void
 
 export abstract class MapRandom {
-    public static getInt(lowBound: integer, highBound: integer): integer {
+    static getInt(lowBound: integer, highBound: integer): integer {
         return GetRandomInt(Math.floor(lowBound), Math.floor(highBound))
     }
 
-    public static getReal(lowBound: real, highBound: real): real {
+    static getReal(lowBound: real, highBound: real): real {
         return GetRandomReal(lowBound, highBound)
     }
 
@@ -25,23 +25,23 @@ export abstract class MapRandom {
      * @param level level
      * @returns integer
      */
-    public static chooseCreep(level: integer): integer {
+    static chooseCreep(level: integer): integer {
         return ChooseRandomCreep(Math.floor(level))
     }
 
-    public static chooseNPBuilding(): integer {
+    static chooseNPBuilding(): integer {
         return ChooseRandomNPBuilding()
     }
 
-    public static chooseItem(level: integer): integer {
+    static chooseItem(level: integer): integer {
         return ChooseRandomItem(Math.floor(level))
     }
 
-    public static chooseItemEx(whichType: ItemType, level: integer): integer {
+    static chooseItemEx(whichType: ItemType, level: integer): integer {
         return ChooseRandomItemEx(whichType.getHandle() as itemtype, Math.floor(level))
     }
 
-    public static setSeed(seed: integer) {
+    static setSeed(seed: integer) {
         SetRandomSeed(Math.floor(seed))
         return this
     }

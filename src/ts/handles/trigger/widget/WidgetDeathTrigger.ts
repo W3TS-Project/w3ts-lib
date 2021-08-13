@@ -1,5 +1,5 @@
-/** @noSelfInFile **/
-//@ts-nocheck
+// /** @noSelfInFile **/
+// //@ts-nocheck
 
 import { WidgetEvent } from "../../../API/fields/events/WidgetEvent"
 import { Widget } from "../../Widget"
@@ -11,7 +11,7 @@ declare function TriggerRegisterDeathEvent(whichTrigger: trigger, whichWidget: w
 export type WidgetDeathTriggerCallback = (response: WidgetDeathEventResponse) => void
 
 export class WidgetDeathTrigger extends Trigger {
-    public register(whichWidget: Widget, callback?: WidgetDeathTriggerCallback) {
+    register(whichWidget: Widget, callback?: WidgetDeathTriggerCallback) {
         if (callback) {
             this.addEventListener(callback)
         }
@@ -25,14 +25,12 @@ export class WidgetDeathTrigger extends Trigger {
         )
     }
 
-    public constructor(whichWidget?: Widget, callback?: WidgetDeathTriggerCallback) {
+    constructor(whichWidget: Widget, callback?: WidgetDeathTriggerCallback) {
         super()
-        if (whichWidget && callback) {
-            this.register(whichWidget, callback)
-        }
+        this.register(whichWidget, callback)
     }
 
-    public addEventListener(callback: WidgetDeathTriggerCallback) {
-        this.addAction(() => callback(new WidgetDeathEventResponse()))
+    addEventListener(callback: WidgetDeathTriggerCallback) {
+        return this.addAction(() => callback(new WidgetDeathEventResponse()))
     }
 }

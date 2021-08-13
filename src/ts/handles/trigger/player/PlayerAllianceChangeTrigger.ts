@@ -15,13 +15,12 @@ declare function TriggerRegisterPlayerAllianceChange(
 ): event
 
 export class PlayerAllianceChangeTrigger extends Trigger {
-    public register(
+    register(
         whichPlayer: MapPlayer,
         whichAlliance: AllianceType,
         callback?: PlayerTriggerCallback
     ) {
-        if (callback) {
-        }
+        if (callback) this.addEventListener(callback)
         return PlayerEvent.fromHandle(
             (<unknown>(
                 TriggerRegisterPlayerAllianceChange(
@@ -33,18 +32,16 @@ export class PlayerAllianceChangeTrigger extends Trigger {
         )
     }
 
-    public constructor(
-        whichPlayer?: MapPlayer,
-        whichAlliance?: AllianceType,
+    constructor(
+        whichPlayer: MapPlayer,
+        whichAlliance: AllianceType,
         callback?: PlayerTriggerCallback
     ) {
         super()
-        if (whichPlayer && whichAlliance && callback) {
-            this.register(whichPlayer, whichAlliance, callback)
-        }
+        this.register(whichPlayer, whichAlliance, callback)
     }
 
-    public addEventListener(callback: PlayerTriggerCallback) {
+    addEventListener(callback: PlayerTriggerCallback) {
         this.addAction(() => callback(new PlayerEventResponse()))
     }
 }

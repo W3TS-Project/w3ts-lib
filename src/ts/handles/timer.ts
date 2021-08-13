@@ -1,5 +1,5 @@
-/** @noSelfInFile **/
-//@ts-nocheck
+// /** @noSelfInFile **/
+// //@ts-nocheck
 
 import { ErrorHandling } from "../ErrorHandling"
 import { Handle } from "./Handle"
@@ -19,54 +19,64 @@ declare function PauseTimer(whichTimer: timer): void
 declare function ResumeTimer(whichTimer: timer): void
 declare function GetExpiredTimer(): timer
 
+export class TimerResponse {
+    timer = Timer.fromExpired()
+}
+
+export type TimerCallback = ((response: TimerResponse) => void) | null | undefined
+
 export class Timer extends Handle<timer> {
-    public constructor() {
+    constructor() {
         super(CreateTimer())
     }
 
-    public getElapsed(): real {
+    getElapsed(): real {
         return TimerGetElapsed(this.getHandle() as timer)
     }
 
-    public getRemaining(): real {
+    getRemaining(): real {
         return TimerGetRemaining(this.getHandle() as timer)
     }
 
-    public getTimeout(): real {
+    getTimeout(): real {
         return TimerGetTimeout(this.getHandle() as timer)
     }
 
-    public destroy() {
+    destroy() {
         DestroyTimer(this.getHandle() as timer)
         return this
     }
 
-    public pause() {
+    pause() {
         PauseTimer(this.getHandle() as timer)
         return this
     }
 
-    public resume() {
+    resume() {
         ResumeTimer(this.getHandle() as timer)
         return this
     }
 
-    public start(timeout: real, periodic: boolean, handlerFunc: code) {
-        TimerStart(this.getHandle() as timer, timeout, periodic, ErrorHandling.getHandledCallback(handlerFunc))
+    start(timeout: real, periodic: boolean, handlerFunc: TimerCallback) {
+        let callback
+        if (handlerFunc) {
+            callback = ErrorHandling.getHandledCallback(() => handlerFunc(new TimerResponse()))
+        }
+        TimerStart(this.getHandle() as timer, timeout, periodic, callback)
         return this
     }
 
-    public static fromHandle(handle: timer): Timer {
+    static fromHandle(handle: timer): Timer {
         return this.getObject(handle) as Timer
     }
 
-    public static fromExpired(): Timer {
+    static fromExpired(): Timer {
         return this.fromHandle(GetExpiredTimer())
     }
 
-    public setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
+    setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
         return this.start(time, false, () => {
-            call()
+            if (call) call()
             if (isDestroy) {
                 Timer.fromExpired()
                     .pause()
@@ -75,15 +85,15 @@ export class Timer extends Handle<timer> {
         })
     }
 
-    public static setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
+    static setTimeout(time: real, call: code, isDestroy: boolean = false): Timer {
         return new Timer().setTimeout(time, call, isDestroy)
     }
 
-    public setInterval(time: real, call: code): Timer {
-        return this.start(time, true, ErrorHandling.getHandledCallback(call))
+    setInterval(time: real, call: code): Timer {
+        return this.start(time, true, call)
     }
 
-    public static setInterval(time: real, call: code): Timer {
+    static setInterval(time: real, call: code): Timer {
         return new Timer().setInterval(time, call)
     }
 }

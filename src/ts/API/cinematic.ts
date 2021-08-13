@@ -18,7 +18,7 @@ declare function ForceCinematicSubtitles(flag: boolean): void
 declare function SetCinematicAudio(cinematicAudio: boolean): void
 
 export abstract class Cinematic {
-    public static setScene(
+    static setScene(
         portraitUnitId: UnitRawCode,
         color: PlayerColor,
         speakerTitle: string,
@@ -37,22 +37,22 @@ export abstract class Cinematic {
         return this
     }
 
-    public static endScene() {
+    static endScene() {
         EndCinematicScene()
         return this
     }
 
-    public static forceSubtitles(flag: boolean) {
+    static forceSubtitles(flag: boolean) {
         ForceCinematicSubtitles(flag)
         return this
     }
 
-    public static setCamera(cameraModelFile: string) {
+    static setCamera(cameraModelFile: string) {
         SetCinematicCamera(cameraModelFile)
         return this
     }
 
-    public static setAudio(cinematicAudio: boolean) {
+    static setAudio(cinematicAudio: boolean) {
         SetCinematicAudio(cinematicAudio)
         return this
     }

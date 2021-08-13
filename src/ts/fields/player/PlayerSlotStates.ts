@@ -1,7 +1,7 @@
 import { PlayerSlotState } from "../../API/fields/player/PlayerSlotState"
 
 export abstract class PlayerSlotStates {
-    public static readonly EMPTY = new PlayerSlotState(0)
-    public static readonly PLAYING = new PlayerSlotState(1)
-    public static readonly LEFT = new PlayerSlotState(2)
+    static readonly EMPTY = PlayerSlotState.convert(0)
+    static readonly PLAYING = PlayerSlotState.convert(1)
+    static readonly LEFT = PlayerSlotState.convert(2)
 }

@@ -2,7 +2,7 @@ import { UnitWeaponStringField } from "../../API/fields/unit/UnitWeaponStringFie
 import { RawCode } from "../../RawCode"
 
 export abstract class UnitWeaponStringFields {
-    public static readonly ATTACK_PROJECTILE_ART = new UnitWeaponStringField(
+    static readonly ATTACK_PROJECTILE_ART = new UnitWeaponStringField(
         RawCode.get("ua1m"),
         "Бой - Атака 1 - анимация снаряда"
     )

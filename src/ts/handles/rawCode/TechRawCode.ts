@@ -1,9 +1,11 @@
 import { RawCode } from "../../RawCode"
 
+export type TechRawCodeType = TechRawCode | rawcode
+
 export class TechRawCode extends RawCode {
     protected static readonly ERROR_MESSAGE = "Равкод не является равкодом улучшения"
 
-    public constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
+    constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             TechRawCode.checkAnError(id)
         }
@@ -13,22 +15,22 @@ export class TechRawCode extends RawCode {
         super(id, !isBasicCheck)
     }
 
-    public static get(rawCode: rawcode, isCheck = true, isBasicCheck = true) {
+    static get(rawCode: TechRawCodeType, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             this.checkAnError(rawCode)
         }
-        return super.get(rawCode, isBasicCheck) as TechRawCode
+        return RawCode.get(rawCode, isBasicCheck) as TechRawCode
     }
 
-    protected static check(id: rawcode): boolean {
-        if (!super.check(id)) {
+    static check(id: TechRawCodeType): boolean {
+        if (!RawCode.check(id)) {
             return false
         }
         //TODO
         return true
     }
 
-    protected static checkAnError(id: rawcode) {
+    protected static checkAnError(id: TechRawCodeType) {
         if (!this.check(id)) {
             error(this.ERROR_MESSAGE, 2)
         }

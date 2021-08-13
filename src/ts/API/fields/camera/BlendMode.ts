@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertBlendMode(i: integer): blendmode
 
 export class BlendMode extends Field<blendmode> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertBlendMode(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertBlendMode, id)
     }
 }

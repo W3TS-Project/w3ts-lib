@@ -7,16 +7,15 @@ declare function ConvertFGameState(i: integer): fgamestate
 declare function GetEventGameState(): gamestate
 
 export class GameFloatState extends GameState<fgamestate> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertFGameState(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertFGameState, id)
     }
 
-    public static fromEvent() {
+    static fromEvent() {
         return this.getObject(GetEventGameState()) as GameFloatState
     }
 
-    public static fromHandle(handle: fgamestate) {
+    static fromHandle(handle: fgamestate) {
         return this.getObject(handle) as GameFloatState
     }
 }

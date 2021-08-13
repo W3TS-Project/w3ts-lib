@@ -1,9 +1,9 @@
 import { RegenType } from "../../API/fields/unit/RegenType"
 
 export abstract class RegenTypes {
-    public static readonly NONE = new RegenType(0)
-    public static readonly ALWAYS = new RegenType(1)
-    public static readonly BLIGHT = new RegenType(2)
-    public static readonly DAY = new RegenType(3)
-    public static readonly NIGHT = new RegenType(4)
+    static readonly NONE = RegenType.convert(0)
+    static readonly ALWAYS = RegenType.convert(1)
+    static readonly BLIGHT = RegenType.convert(2)
+    static readonly DAY = RegenType.convert(3)
+    static readonly NIGHT = RegenType.convert(4)
 }

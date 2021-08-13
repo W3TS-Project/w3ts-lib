@@ -5,51 +5,43 @@ export abstract class UnitBooleanFields {
     /**
      * Не найдено в РО
      */
-    public static readonly RAISABLE = new UnitBooleanField(RawCode.get("urai"))
+    static readonly RAISABLE = new UnitBooleanField(RawCode.get("urai"))
     /**
      * Не найдено в РО
      */
-    public static readonly DECAYABLE = new UnitBooleanField(RawCode.get("udec"))
-    public static readonly IS_A_BUILDING = new UnitBooleanField(
-        RawCode.get("ubdg"),
-        "Является зданием"
-    )
-    public static readonly USE_EXTENDED_LINE_OF_SIGHT = new UnitBooleanField(
+    static readonly DECAYABLE = new UnitBooleanField(RawCode.get("udec"))
+    static readonly IS_A_BUILDING = new UnitBooleanField(RawCode.get("ubdg"), "Является зданием")
+    static readonly USE_EXTENDED_LINE_OF_SIGHT = new UnitBooleanField(
         RawCode.get("ulos"),
         "Использовать расширенную линию обзора"
     )
     /**
      * Не найдено в РО
      */
-    public static readonly NEUTRAL_BUILDING_SHOWS_MINIMAP_ICON = new UnitBooleanField(
-        RawCode.get("unbm")
-    )
-    public static readonly HERO_HIDE_HERO_INTERFACE_ICON = new UnitBooleanField(
+    static readonly NEUTRAL_BUILDING_SHOWS_MINIMAP_ICON = new UnitBooleanField(RawCode.get("unbm"))
+    static readonly HERO_HIDE_HERO_INTERFACE_ICON = new UnitBooleanField(
         RawCode.get("uhhb"),
         "Герой - скрыть пиктограмму на панели"
     )
-    public static readonly HIDE_HERO_MINIMAP_DISPLAY = new UnitBooleanField(
+    static readonly HIDE_HERO_MINIMAP_DISPLAY = new UnitBooleanField(
         RawCode.get("uhhm"),
         "Герой - не показывать на мини-карте"
     )
-    public static readonly HERO_HIDE_HERO_DEATH_MESSAGE = new UnitBooleanField(
+    static readonly HERO_HIDE_HERO_DEATH_MESSAGE = new UnitBooleanField(
         RawCode.get("uhhd"),
         "Герой: скрыть сообщение о гибели"
     )
-    public static readonly HIDE_MINIMAP_DISPLAY = new UnitBooleanField(
+    static readonly HIDE_MINIMAP_DISPLAY = new UnitBooleanField(
         RawCode.get("uhom"),
         "Скрыть мини-карту"
     )
-    public static readonly SCALE_PROJECTILES = new UnitBooleanField(
+    static readonly SCALE_PROJECTILES = new UnitBooleanField(
         RawCode.get("uscb"),
         "Масштабировать снаряды"
     )
-    public static readonly SELECTION_CIRCLE_ON_WATER = new UnitBooleanField(
+    static readonly SELECTION_CIRCLE_ON_WATER = new UnitBooleanField(
         RawCode.get("usew"),
         "Круг выбора на воде"
     )
-    public static readonly HAS_WATER_SHADOW = new UnitBooleanField(
-        RawCode.get("ushr"),
-        "Тень на воде"
-    )
+    static readonly HAS_WATER_SHADOW = new UnitBooleanField(RawCode.get("ushr"), "Тень на воде")
 }

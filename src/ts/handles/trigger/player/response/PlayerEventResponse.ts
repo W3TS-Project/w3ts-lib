@@ -1,13 +1,6 @@
-import { MapPlayer } from "../../../MapPlayer";
+import { MapPlayer } from "../../../MapPlayer"
+import { EventResponse } from "../../Trigger"
 
-export class PlayerEventResponse {
-    protected player: MapPlayer
-
-    public constructor() {
-        this.player = MapPlayer.fromEvent()
-    }
-
-    public getPlayer() {
-        return this.player
-    }
+export class PlayerEventResponse extends EventResponse {
+    player = MapPlayer.fromEvent()
 }

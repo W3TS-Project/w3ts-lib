@@ -21,16 +21,18 @@ declare function SetDoodadAnimationRect(
     animRandom: boolean
 ): void
 
+export type DoodadRawCodeType = DoodadRawCode | rawcode
+
 export class DoodadRawCode extends RawCode {
     protected static readonly ERROR_MESSAGE = "Равкод не является равкодом декорации"
-    public x: real
-    public y: real
-    public radius: real
-    public isNearestOnly: boolean
-    public animName: string
-    public isAnimRandom: boolean
+    x: real
+    y: real
+    radius: real
+    isNearestOnly: boolean
+    animName: string
+    isAnimRandom: boolean
 
-    public constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
+    constructor(id: rawcode, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             DoodadRawCode.checkAnError(id)
         }
@@ -46,7 +48,7 @@ export class DoodadRawCode extends RawCode {
         this.isAnimRandom = false
     }
 
-    public setAnimationCoords(
+    setAnimationCoords(
         x: real,
         y: real,
         radius: real,
@@ -64,7 +66,7 @@ export class DoodadRawCode extends RawCode {
         return this
     }
 
-    public setAnimationPos(
+    setAnimationPos(
         p: Position,
         radius: real,
         nearestOnly: boolean,
@@ -81,21 +83,21 @@ export class DoodadRawCode extends RawCode {
         )
     }
 
-    public setAnimationRect(r: Rectangle, animName: string, animRandom: boolean) {
+    setAnimationRect(r: Rectangle, animName: string, animRandom: boolean) {
         SetDoodadAnimationRect(r.getHandle() as rect, this.id, animName, animRandom)
         this.animName = animName
         this.isAnimRandom = animRandom
         return this
     }
 
-    public static get(rawCode: rawcode, isCheck = true, isBasicCheck = true) {
+    static get(rawCode: DoodadRawCodeType, isCheck = true, isBasicCheck = true) {
         if (isCheck) {
             this.checkAnError(rawCode)
         }
         return super.get(rawCode, isBasicCheck) as DoodadRawCode
     }
 
-    protected static check(id: rawcode): boolean {
+    static check(id: DoodadRawCodeType): boolean {
         if (!this.check(id)) {
             return false
         }
@@ -103,7 +105,7 @@ export class DoodadRawCode extends RawCode {
         return true
     }
 
-    protected static checkAnError(id: rawcode) {
+    protected static checkAnError(id: DoodadRawCodeType) {
         if (!this.check(id)) {
             error(this.ERROR_MESSAGE, 2)
         }

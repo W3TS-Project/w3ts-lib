@@ -9,25 +9,24 @@ declare function IsGameTypeSupported(whichGameType: gametype): boolean
 declare function GetGameTypeSelected(): gametype
 
 export class GameType extends Field<gametype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertGameType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertGameType, id)
     }
 
-    public setSupported(value: boolean) {
+    setSupported(value: boolean) {
         SetGameTypeSupported(this.getHandle() as gametype, value)
         return this
     }
 
-    public isSupported() {
+    isSupported() {
         return IsGameTypeSupported(this.getHandle() as gametype)
     }
 
-    public static fromHandle(handle: gametype) {
+    static fromHandle(handle: gametype) {
         return this.getObject(handle) as GameType
     }
 
-    public static getSelected() {
+    static getSelected() {
         return this.fromHandle(GetGameTypeSelected())
     }
 }

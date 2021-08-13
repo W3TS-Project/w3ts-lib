@@ -13,47 +13,47 @@ declare function PreloadGenEnd(filename: string): void
 declare function Preloader(filename: string): void
 
 export abstract class MapPreload {
-    public static preload(filename: string) {
+    static preload(filename: string) {
         Preload(filename)
         return this
     }
 
-    public static end(timeout: real) {
+    static end(timeout: real) {
         PreloadEnd(timeout)
         return this
     }
 
-    public static start() {
+    static start() {
         PreloadStart()
         return this
     }
 
-    public static refresh() {
+    static refresh() {
         PreloadRefresh()
         return this
     }
 
-    public static endEx() {
+    static endEx() {
         PreloadEndEx()
         return this
     }
 
-    public static genClear() {
+    static genClear() {
         PreloadGenClear()
         return this
     }
 
-    public static genStart() {
+    static genStart() {
         PreloadGenStart()
         return this
     }
 
-    public static genEnd(filename: string) {
+    static genEnd(filename: string) {
         PreloadGenEnd(filename)
         return this
     }
 
-    public static preloader(filename: string) {
+    static preloader(filename: string) {
         Preloader(filename)
         return this
     }

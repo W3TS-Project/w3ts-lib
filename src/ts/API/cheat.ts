@@ -6,16 +6,16 @@ declare function IsNoVictoryCheat(): boolean
 declare function IsNoDefeatCheat(): boolean
 
 export abstract class MapCheat {
-    public static cheat(cheatStr: string) {
+    static cheat(cheatStr: string) {
         Cheat(cheatStr)
         return this
     }
 
-    public static isNoVictoryCheat() {
+    static isNoVictoryCheat() {
         return IsNoVictoryCheat()
     }
 
-    public static isNoDefeatCheat() {
+    static isNoDefeatCheat() {
         return IsNoDefeatCheat()
     }
 }

@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertAnimType(i: integer): animtype
 
 export class AnimType extends Field<animtype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertAnimType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertAnimType, id)
     }
 }

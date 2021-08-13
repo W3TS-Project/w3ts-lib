@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertMouseButtonType(i: integer): mousebuttontype
 
 export class MouseButtonType extends Field<mousebuttontype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertMouseButtonType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertMouseButtonType, id)
     }
 
-    public static fromHandle(handle: mousebuttontype) {
+    static fromHandle(handle: mousebuttontype) {
         return this.getObject(handle) as MouseButtonType
     }
 }

@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertPathingFlag(i: integer): pathingflag
 
 export class PathingFlag extends Field<pathingflag> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertPathingFlag(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertPathingFlag, id)
     }
 }

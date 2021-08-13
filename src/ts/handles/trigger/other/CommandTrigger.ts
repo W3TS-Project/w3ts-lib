@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { AbilityRawCode } from "../../rawCode/AbilityRawCode"
+import { AbilityRawCode, AbilityRawCodeType } from "../../rawCode/AbilityRawCode"
 import { Trigger } from "../Trigger"
 
 declare function TriggerRegisterCommandEvent(
@@ -11,15 +11,22 @@ declare function TriggerRegisterCommandEvent(
 ): event
 
 export class CommandTrigger extends Trigger {
-    register(whichAbility: AbilityRawCode, order: string) {
-        TriggerRegisterCommandEvent(this.getHandle() as trigger, whichAbility.getId(), order)
+    register(whichAbility: AbilityRawCodeType, order: string, callback?: code) {
+        if (callback) this.addEventListener(callback)
+        TriggerRegisterCommandEvent(
+            this.getHandle() as trigger,
+            AbilityRawCode.toId(whichAbility),
+            order
+        )
         return this
     }
 
-    constructor(whichAbility: AbilityRawCode, order: string) {
+    constructor(whichAbility: AbilityRawCodeType, order: string, callback?: code) {
         super()
-        if (whichAbility && order) {
-            this.register(whichAbility, order)
-        }
+        this.register(whichAbility, order, callback)
+    }
+
+    addEventListener(callback: code) {
+        this.addAction(callback)
     }
 }

@@ -1,11 +1,13 @@
 import { GameFloatState } from "../../../../API/fields/game/GameFloatState";
 import { GameIntegerState } from "../../../../API/fields/game/GameIntegerState";
 import { GameStates } from "../../../../fields/game/GameStates";
+import { EventResponse } from "../../Trigger";
 
-export class GameStateEventResponse {
-    protected state: GameIntegerState | GameFloatState
+export class GameStateEventResponse extends EventResponse {
+    state: GameIntegerState | GameFloatState
 
-    public constructor() {
+    constructor() {
+        super()
         const integerState = GameIntegerState.fromEvent()
         const floatState = GameFloatState.fromEvent()
         if (
@@ -18,9 +20,5 @@ export class GameStateEventResponse {
         } else {
             this.state = integerState
         }
-    }
-
-    public getState() {
-        return this.state
     }
 }

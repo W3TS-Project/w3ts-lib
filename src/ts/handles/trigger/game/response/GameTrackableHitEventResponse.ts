@@ -1,13 +1,6 @@
 import { Trackable } from "../../../Trackable";
+import { EventResponse } from "../../Trigger";
 
-export class GameTrackableHitEventResponse {
-    protected trackable: Trackable
-
-    public constructor() {
-        this.trackable = Trackable.fromEvent()
-    }
-
-    public getTrackable() {
-        return this.trackable
-    }
+export class GameTrackableHitEventResponse extends EventResponse {
+    trackable = Trackable.fromEvent()
 }

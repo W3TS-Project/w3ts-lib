@@ -4,6 +4,7 @@
 import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { MapLocation } from "./MapLocation"
+import { Widget } from "./Widget"
 
 declare function Rect(minx: real, miny: real, maxx: real, maxy: real): rect
 declare function RectFromLoc(min: location, max: location): rect
@@ -23,10 +24,6 @@ declare function EnumItemsInRect(r: rect, filter: boolexpr | null, actionFunc: c
 declare function GetWorldBounds(): rect
 
 export class Rectangle extends Handle<rect> {
-    public constructor(minX: real, minY: real, maxX: real, maxY: real) {
-        super(Rect(minX, minY, maxX, maxY))
-    }
-
     public getCenterX(): real {
         return GetRectCenterX(this.getHandle() as rect)
     }
@@ -100,6 +97,12 @@ export class Rectangle extends Handle<rect> {
             maxLoc.getHandle() as location
         )
         return this
+    }
+
+    public contains<T extends Widget>(obj: T) {
+        const condX = this.getMinX() <= obj.getX() && this.getMaxX() >= obj.getX()
+        const condY = this.getMinY() <= obj.getY() && this.getMaxY() >= obj.getY()
+        return condX && condY
     }
 
     public static fromHandle(handle: rect) {

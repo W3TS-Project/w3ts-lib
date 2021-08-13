@@ -1,12 +1,12 @@
 import { PathingFlag } from "../../API/fields/unit/PathingFlag"
 
 export abstract class PathingFlags {
-    public static readonly UNWALKABLE = new PathingFlag(2)
-    public static readonly UNFLYABLE = new PathingFlag(4)
-    public static readonly UNBUILDABLE = new PathingFlag(8)
-    public static readonly UNPEONHARVEST = new PathingFlag(16)
-    public static readonly BLIGHTED = new PathingFlag(32)
-    public static readonly UNFLOATABLE = new PathingFlag(64)
-    public static readonly UNAMPHIBIOUS = new PathingFlag(128)
-    public static readonly UNITEMPLACABLE = new PathingFlag(256)
+    static readonly UNWALKABLE = PathingFlag.convert(2)
+    static readonly UNFLYABLE = PathingFlag.convert(4)
+    static readonly UNBUILDABLE = PathingFlag.convert(8)
+    static readonly UNPEONHARVEST = PathingFlag.convert(16)
+    static readonly BLIGHTED = PathingFlag.convert(32)
+    static readonly UNFLOATABLE = PathingFlag.convert(64)
+    static readonly UNAMPHIBIOUS = PathingFlag.convert(128)
+    static readonly UNITEMPLACABLE = PathingFlag.convert(256)
 }

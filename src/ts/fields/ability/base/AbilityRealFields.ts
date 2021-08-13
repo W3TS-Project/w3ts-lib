@@ -2,5 +2,5 @@ import { AbilityRealField } from "../../../API/fields/ability/base/AbilityRealFi
 import { RawCode } from "../../../RawCode"
 
 export class AbilityRealFields {
-    public static readonly ARF_MISSILE_ARC = new AbilityRealField(RawCode.get("amac"))
+    static readonly ARF_MISSILE_ARC = new AbilityRealField(RawCode.get("amac"))
 }

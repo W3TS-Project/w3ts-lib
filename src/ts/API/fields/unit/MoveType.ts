@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertMoveType(i: integer): movetype
 
 export class MoveType extends Field<movetype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertMoveType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertMoveType, id)
     }
 }

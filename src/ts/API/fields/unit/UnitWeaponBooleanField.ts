@@ -1,13 +1,13 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { RawCode } from "../../../RawCode"
+import { RawCodeType } from "../../../RawCode"
 import { UnitField } from "./UnitField"
 
 declare function ConvertUnitWeaponBooleanField(i: integer): unitweaponbooleanfield
 
 export class UnitWeaponBooleanField extends UnitField<unitweaponbooleanfield> {
-    public constructor(rawCode: RawCode, title?: string) {
-        super(ConvertUnitWeaponBooleanField(rawCode.getId()), rawCode, title)
+    constructor(rawCode: RawCodeType, title?: string) {
+        super(ConvertUnitWeaponBooleanField, rawCode, title)
     }
 }

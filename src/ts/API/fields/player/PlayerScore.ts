@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertPlayerScore(i: integer): playerscore
 
 export class PlayerScore extends Field<playerscore> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertPlayerScore(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertPlayerScore, id)
     }
 }

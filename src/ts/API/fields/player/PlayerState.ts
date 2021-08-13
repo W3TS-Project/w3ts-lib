@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertPlayerState(i: integer): playerstate
 
 export class PlayerState extends Field<playerstate> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertPlayerState(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertPlayerState, id)
     }
 
-    public static fromHandle(handle: playerstate) {
+    static fromHandle(handle: playerstate) {
         return this.getObject(handle) as PlayerState
     }
 }

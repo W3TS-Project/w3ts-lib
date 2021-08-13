@@ -11,7 +11,8 @@ declare function TriggerRegisterTimerEvent(
 ): event
 
 export class TimeTrigger extends Trigger {
-    public register(timeout: real, periodic: boolean): GameEvent {
+    register(timeout: real, periodic: boolean, callback?: code) {
+        if (callback) this.addEventListener(callback)
         return GameEvent.fromHandle(
             (<unknown>(
                 TriggerRegisterTimerEvent(this.getHandle() as trigger, timeout, periodic)
@@ -19,10 +20,12 @@ export class TimeTrigger extends Trigger {
         )
     }
 
-    public constructor(timeout?: real, periodic?: boolean) {
+    constructor(timeout: real, periodic: boolean, callback?: code) {
         super()
-        if (timeout && periodic) {
-            this.register(timeout, periodic)
-        }
+        this.register(timeout, periodic, callback)
+    }
+
+    addEventListener(callback: code) {
+        this.addAction(callback)
     }
 }

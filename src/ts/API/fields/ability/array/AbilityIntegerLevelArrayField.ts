@@ -1,13 +1,13 @@
 /** @noSelfInFile **/
 // @ts-nocheck
 
-import { RawCode } from "../../../../RawCode"
+import { RawCodeType } from "../../../../RawCode"
 import { AbilityField } from "../AbilityField"
 
 declare function ConvertAbilityIntegerLevelArrayField(i: integer): abilityintegerlevelarrayfield
 
 export class AbilityIntegerLevelArrayField extends AbilityField<abilityintegerlevelarrayfield> {
-    public constructor(rawCode: RawCode, title?: string, desc?: string) {
-        super(ConvertAbilityIntegerLevelArrayField(rawCode.getId()), rawCode, title, desc)
+    constructor(rawCode: RawCodeType, title?: string, desc?: string) {
+        super(ConvertAbilityIntegerLevelArrayField, rawCode, title, desc)
     }
 }

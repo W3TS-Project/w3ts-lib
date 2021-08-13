@@ -1,7 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { UnitRawCode } from "../../rawCode/UnitRawCode"
+import { UnitRawCode, UnitRawCodeType } from "../../rawCode/UnitRawCode"
 import { Trigger } from "../Trigger"
 
 declare function TriggerRegisterUpgradeCommandEvent(
@@ -10,15 +10,21 @@ declare function TriggerRegisterUpgradeCommandEvent(
 ): event
 
 export class UpgradeCommandTrigger extends Trigger {
-    register(whichUpgrade: UnitRawCode) {
-        TriggerRegisterUpgradeCommandEvent(this.getHandle() as trigger, whichUpgrade.getId())
+    register(whichUpgrade: UnitRawCodeType, callback?: code) {
+        if (callback) this.addEventListener(callback)
+        TriggerRegisterUpgradeCommandEvent(
+            this.getHandle() as trigger,
+            UnitRawCode.toId(whichUpgrade)
+        )
         return this
     }
 
-    constructor(whichUpgrade: UnitRawCode) {
+    constructor(whichUpgrade: UnitRawCodeType, callback?: code) {
         super()
-        if (whichUpgrade) {
-            this.register(whichUpgrade)
-        }
+        this.register(whichUpgrade, callback)
+    }
+
+    addEventListener(callback: code) {
+        this.addAction(callback)
     }
 }

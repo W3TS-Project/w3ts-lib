@@ -145,10 +145,6 @@ declare function GetFilterPlayer(): player
 declare function GetEnumPlayer(): player
 
 export class MapPlayer extends Handle<player> {
-    private constructor(index: integer) {
-        super(Player(Math.floor(index)))
-    }
-
     public setColor(color: PlayerColor) {
         SetPlayerColor(this.getHandle() as player, color.getHandle() as playercolor)
     }
@@ -495,7 +491,7 @@ export class MapPlayer extends Handle<player> {
     }
 
     public static fromIndex(index: integer): MapPlayer {
-        return this.fromHandle(Player(Math.floor(index)))
+        return this.fromHandle(Player(math.floor(index)))
     }
 
     public static fromLocal(): MapPlayer {

@@ -1,10 +1,14 @@
+import { ErrorHandling } from "./ErrorHandling"
+
+export type RawCodeType = RawCode | rawcode
+
 export class RawCode {
-    protected readonly id: integer
-    protected readonly chars: string
+    readonly id: integer
+    readonly chars: string
     protected static readonly map: Map<integer, RawCode> = new Map<integer, RawCode>()
     protected static RANGE_ERROR_MESSAGE = "Недопустимое значение равкода"
 
-    public constructor(id: rawcode, isBasicCheck: boolean = true) {
+    constructor(id: rawcode, isBasicCheck: boolean = true) {
         if (isBasicCheck) {
             RawCode.checkAnError(id)
         }
@@ -15,7 +19,7 @@ export class RawCode {
         }
     }
 
-    public static get(rawCode: rawcode, isBasicCheck: boolean = true) {
+    static get(rawCode: RawCodeType, isBasicCheck: boolean = true) {
         if (isBasicCheck) {
             this.checkAnError(rawCode)
         }
@@ -27,18 +31,8 @@ export class RawCode {
         }
     }
 
-    public getId(): integer {
-        return this.id
-    }
-
-    public getChars() {
-        return this.chars
-    }
-
-    public static toId(id: RawCode | rawcode, isBasicCheck: boolean = true): integer {
-        if (id instanceof this) {
-            return id.getId()
-        } else {
+    static toId(id: RawCodeType, isBasicCheck: boolean = true): integer {
+        if (typeof id === "string" || typeof id === "number") {
             if (isBasicCheck) {
                 this.checkAnError(id)
             }
@@ -47,13 +41,13 @@ export class RawCode {
             } else {
                 return FourCC(id)
             }
+        } else {
+            return id.id
         }
     }
 
-    public static toChars(id: RawCode | rawcode, isBasicCheck: boolean = true): string {
-        if (id instanceof this) {
-            return id.getChars()
-        } else {
+    static toChars(id: RawCodeType, isBasicCheck: boolean = true): string {
+        if (typeof id === "string" || typeof id === "number") {
             if (isBasicCheck) {
                 this.checkAnError(id)
             }
@@ -62,20 +56,22 @@ export class RawCode {
             } else {
                 return string.pack(">I4", Math.floor(id))
             }
+        } else {
+            return id.chars
         }
     }
 
-    protected static toLetter(id: rawcode, index: integer, isBasicCheck: boolean = false): string {
+    static toLetter(id: RawCodeType, index: integer, isBasicCheck: boolean = false): string {
         if (isBasicCheck) {
             this.checkAnError(id)
         }
         if (index < 0 || index > 4) {
-            error("Индекс равкода не верен", 2)
+            ErrorHandling.error("Индекс равкода не верен")
         }
         return this.toChars(id, !isBasicCheck).charAt(index)
     }
 
-    protected static check(id: rawcode): boolean {
+    static check(id: RawCodeType): boolean {
         const chars = this.toChars(id, false)
         if (chars.length !== 4) {
             return false
@@ -100,9 +96,9 @@ export class RawCode {
         return true
     }
 
-    protected static checkAnError(id: rawcode) {
+    protected static checkAnError(id: RawCodeType) {
         if (!this.check(id)) {
-            error(this.RANGE_ERROR_MESSAGE, 2)
+            ErrorHandling.error(this.RANGE_ERROR_MESSAGE)
         }
     }
 }

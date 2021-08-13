@@ -13,7 +13,8 @@ declare function TriggerRegisterVariableEvent(
 ): event
 
 export class VariableTrigger extends Trigger {
-    public register(varName: string, opcode: LimitOperation, limitval: real): GameEvent {
+    register(varName: string, opcode: LimitOperation, limitval: real, callback?: code) {
+        if (callback) this.addEventListener(callback)
         return GameEvent.fromHandle(
             (<unknown>(
                 TriggerRegisterVariableEvent(
@@ -26,10 +27,12 @@ export class VariableTrigger extends Trigger {
         )
     }
 
-    public constructor(varName?: string, opcode?: LimitOperation, limitval?: real) {
+    constructor(varName: string, opcode: LimitOperation, limitval: real, callback?: code) {
         super()
-        if (varName && opcode && limitval) {
-            this.register(varName, opcode, limitval)
-        }
+        this.register(varName, opcode, limitval, callback)
+    }
+
+    addEventListener(callback: code) {
+        this.addAction(callback)
     }
 }

@@ -34,40 +34,40 @@ declare function FogEnable(enable: boolean): void
 declare function IsFogEnabled(): boolean
 
 export abstract class Fog {
-    public static setStateRect(forWhichPlayer: MapPlayer, whichState: FogState, where: Rectangle, useSharedVision: boolean) {
+    static setStateRect(forWhichPlayer: MapPlayer, whichState: FogState, where: Rectangle, useSharedVision: boolean) {
         SetFogStateRect(forWhichPlayer.getHandle() as player, whichState.getHandle() as fogstate, where.getHandle() as rect, useSharedVision)
         return this
     }
 
-    public static setStateRadiusCoords(forWhichPlayer: MapPlayer, whichState: FogState, centerX: real, centerY: real, radius: real, useSharedVision: boolean) {
+    static setStateRadiusCoords(forWhichPlayer: MapPlayer, whichState: FogState, centerX: real, centerY: real, radius: real, useSharedVision: boolean) {
         SetFogStateRadius(forWhichPlayer.getHandle() as player, whichState.getHandle() as fogstate, centerX, centerY, radius, useSharedVision)
         return this
     }
 
-    public static setStateRadiusPos(forWhichPlayer: MapPlayer, whichState: FogState, centerPos: Position, radius: real, useSharedVision: boolean) {
+    static setStateRadiusPos(forWhichPlayer: MapPlayer, whichState: FogState, centerPos: Position, radius: real, useSharedVision: boolean) {
         return this.setStateRadiusCoords(forWhichPlayer, whichState, centerPos.getX(), centerPos.getY(), radius, useSharedVision)
     }
 
-    public static setStateRadiusLoc(forWhichPlayer: MapPlayer, whichState: FogState, center: MapLocation, radius: real, useSharedVision: boolean) {
+    static setStateRadiusLoc(forWhichPlayer: MapPlayer, whichState: FogState, center: MapLocation, radius: real, useSharedVision: boolean) {
         SetFogStateRadiusLoc(forWhichPlayer.getHandle() as player, whichState.getHandle() as fogstate, center.getHandle() as location, radius, useSharedVision)
         return this
     }
 
-    public static maskEnable(enable: boolean) {
+    static maskEnable(enable: boolean) {
         FogMaskEnable(enable)
         return this
     }
 
-    public static isMaskEnabled() {
+    static isMaskEnabled() {
         return IsFogMaskEnabled()
     }
 
-    public static enable(enable: boolean) {
+    static enable(enable: boolean) {
         FogEnable(enable)
         return this
     }
 
-    public static isEnabled() {
+    static isEnabled() {
         return IsFogEnabled()
     }
 }

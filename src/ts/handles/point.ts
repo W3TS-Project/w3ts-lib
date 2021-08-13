@@ -1,67 +1,43 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { Position } from "../Package"
 import { MapLocation } from "./MapLocation"
 
 declare function IsPointBlighted(x: real, y: real): boolean
 
 export class Point {
-    protected x: real
-    protected y: real
-    protected z: real
+    x: real
+    y: real
+    z: real
 
-    public constructor(x: real, y: real, z?: real) {
+    constructor(x: real, y: real, z?: real) {
         this.x = x
         this.y = y
         this.z = z || 0
         return this
     }
 
-    public getX(): real {
-        return this.x
+    static fromLoc(loc: MapLocation) {
+        return new this(loc.x, loc.y, loc.z)
     }
 
-    public getY(): real {
-        return this.y
+    static fromHandleLoc(handle: location) {
+        return this.fromLoc(MapLocation.fromHandle(handle))
     }
 
-    public getZ(): real {
-        return this.z
-    }
-
-    public setX(x: real) {
-        this.x = x
-    }
-
-    public setY(y: real) {
-        this.y = y
-    }
-
-    public setZ(z: real) {
-        this.z = z
-    }
-
-    public static fromLoc(loc: MapLocation) {
-        return new Point(loc.getX(), loc.getY(), loc.getZ())
-    }
-
-    public static fromHandleLoc(handle: location) {
-        const loc = MapLocation.fromHandle(handle)
-        return new Point(loc.getX(), loc.getY(), loc.getZ())
-    }
-
-    public setCoords(x: real, y: real, z: real) {
+    setCoords(x: real, y: real, z?: real) {
         this.x = x
         this.y = y
-        this.z = z
+        if (z) this.z = z
         return this
     }
 
-    public setPoint(p: Point) {
+    setPos(p: Position) {
         return this.setCoords(p.x, p.y, p.z)
     }
 
-    public isBlighted(): boolean {
+    isBlighted(): boolean {
         return IsPointBlighted(this.x, this.y)
     }
 }

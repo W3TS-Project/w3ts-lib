@@ -26,36 +26,36 @@ declare function DisplayCineFilter(flag: boolean): void
 declare function IsCineFilterDisplayed(): boolean
 
 export abstract class CineFilter {
-    public static setBlendMode(whichMode: BlendMode) {
+    static setBlendMode(whichMode: BlendMode) {
         SetCineFilterBlendMode(whichMode.getHandle() as blendmode)
         return this
     }
 
-    public static setDuration(duration: real) {
+    static setDuration(duration: real) {
         SetCineFilterDuration(duration)
         return this
     }
 
-    public static display(flag: boolean) {
+    static display(flag: boolean) {
         DisplayCineFilter(flag)
         return this
     }
 
-    public static isDisplayed(): boolean {
+    static isDisplayed(): boolean {
         return IsCineFilterDisplayed()
     }
 
-    public static setStartUV(minU: real, minV: real, maxU: real, maxV: real) {
+    static setStartUV(minU: real, minV: real, maxU: real, maxV: real) {
         SetCineFilterStartUV(minU, minV, maxU, maxV)
         return this
     }
 
-    public static setEndUV(minU: real, minV: real, maxU: real, maxV: real) {
+    static setEndUV(minU: real, minV: real, maxU: real, maxV: real) {
         SetCineFilterEndUV(minU, minV, maxU, maxV)
         return this
     }
 
-    public static setStartColor(red: integer, green: integer, blue: integer, alpha: integer) {
+    static setStartColor(red: integer, green: integer, blue: integer, alpha: integer) {
         SetCineFilterStartColor(
             Math.floor(red),
             Math.floor(green),
@@ -65,7 +65,7 @@ export abstract class CineFilter {
         return this
     }
 
-    public static setEndColor(red: integer, green: integer, blue: integer, alpha: integer) {
+    static setEndColor(red: integer, green: integer, blue: integer, alpha: integer) {
         SetCineFilterEndColor(
             Math.floor(red),
             Math.floor(green),
@@ -75,12 +75,12 @@ export abstract class CineFilter {
         return this
     }
 
-    public static setTexMapFlags(whichFlags: TexMapFlag) {
+    static setTexMapFlags(whichFlags: TexMapFlag) {
         SetCineFilterTexMapFlags(whichFlags.getHandle() as texmapflags)
         return this
     }
 
-    public static setTexture(fileName: string) {
+    static setTexture(fileName: string) {
         SetCineFilterTexture(fileName)
         return this
     }

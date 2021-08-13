@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertWeaponType(i: integer): weapontype
 
 export class WeaponType extends Field<weapontype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertWeaponType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertWeaponType, id)
     }
 
-    public static fromHandle(handle: weapontype) {
+    static fromHandle(handle: weapontype) {
         return this.getObject(handle) as WeaponType
     }
 }

@@ -1,12 +1,12 @@
 import { DefenseType } from "../../API/fields/unit/DefenseType"
 
 export abstract class DefenseTypes {
-    public static readonly LIGHT = new DefenseType(0)
-    public static readonly MEDIUM = new DefenseType(1)
-    public static readonly LARGE = new DefenseType(2)
-    public static readonly FORT = new DefenseType(3)
-    public static readonly NORMAL = new DefenseType(4)
-    public static readonly HERO = new DefenseType(5)
-    public static readonly DIVINE = new DefenseType(6)
-    public static readonly NONE = new DefenseType(7)
+    static readonly LIGHT = DefenseType.convert(0)
+    static readonly MEDIUM = DefenseType.convert(1)
+    static readonly LARGE = DefenseType.convert(2)
+    static readonly FORT = DefenseType.convert(3)
+    static readonly NORMAL = DefenseType.convert(4)
+    static readonly HERO = DefenseType.convert(5)
+    static readonly DIVINE = DefenseType.convert(6)
+    static readonly NONE = DefenseType.convert(7)
 }

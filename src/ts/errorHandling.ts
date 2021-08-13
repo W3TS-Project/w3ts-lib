@@ -1,5 +1,5 @@
 export abstract class ErrorHandling {
-    public static getHandledCallback(callback: code) {
+    static getHandledCallback(callback: () => void) {
         return () => {
             const result = pcall(callback)
             if (!result[0]) {
@@ -8,5 +8,9 @@ export abstract class ErrorHandling {
                 return result[1]
             }
         }
+    }
+
+    static error(message: string) {
+        error(message, 2)
     }
 }

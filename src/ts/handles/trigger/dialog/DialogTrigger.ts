@@ -8,26 +8,29 @@ import { DialogEventResponse } from "./DialogEventResponse"
 
 declare function TriggerRegisterDialogEvent(whichTrigger: trigger, whichDialog: dialog): event
 
-type Callback = (response: DialogEventResponse) => void
+export type DialogTriggerCallback = (response: DialogEventResponse) => void
 
 export class DialogTrigger extends Trigger {
-    public register(whichDialog: Dialog, callback?: Callback): DialogEvent {
+    register(whichDialog: Dialog, callback?: DialogTriggerCallback): DialogEvent {
         if (callback) {
             this.addEventListener(callback)
         }
-        return DialogEvent.getObject(
-            TriggerRegisterDialogEvent(this.getHandle, whichDialog.getHandle)
+        return DialogEvent.fromHandle(
+            (<unknown>(
+                TriggerRegisterDialogEvent(
+                    this.getHandle() as trigger,
+                    whichDialog.getHandle() as dialog
+                )
+            )) as dialogevent
         )
     }
 
-    public constructor(whichDialog?: Dialog, callback?: Callback) {
+    constructor(whichDialog: Dialog, callback?: DialogTriggerCallback) {
         super()
-        if (whichDialog && callback) {
-            this.register(whichDialog, callback)
-        }
+        this.register(whichDialog, callback)
     }
 
-    public addEventListener(callback: Callback) {
+    addEventListener(callback: DialogTriggerCallback) {
         this.addAction(() => callback(new DialogEventResponse()))
     }
 }

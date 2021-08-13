@@ -6,12 +6,11 @@ import { Event } from "./Event"
 declare function ConvertPlayerUnitEvent(i: integer): playerunitevent
 
 export class PlayerUnitEvent extends Event<playerunitevent> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertPlayerUnitEvent(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertPlayerUnitEvent, id)
     }
 
-    public static fromHandle(handle: playerunitevent) {
+    static fromHandle(handle: playerunitevent) {
         return this.getObject(handle) as PlayerUnitEvent
     }
 }

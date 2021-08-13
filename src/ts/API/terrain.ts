@@ -27,41 +27,41 @@ declare function IsTerrainPathable(x: real, y: real, t: pathingtype): boolean
 declare function SetTerrainPathable(x: real, y: real, t: pathingtype, flag: boolean): void
 
 export abstract class Terrain {
-    public static getCliffLevelFromCoords(x: real, y: real): integer {
+    static getCliffLevelFromCoords(x: real, y: real): integer {
         return GetTerrainCliffLevel(x, y)
     }
 
-    public static getCliffLevelFromPos(p: Position): integer {
+    static getCliffLevelFromPos(p: Position): integer {
         return this.getCliffLevelFromCoords(p.getX(), p.getY())
     }
 
-    public static setWaterBaseColor(red: integer, green: integer, blue: integer, alpha: integer) {
+    static setWaterBaseColor(red: integer, green: integer, blue: integer, alpha: integer) {
         SetWaterBaseColor(Math.floor(red), Math.floor(green), Math.floor(blue), Math.floor(alpha))
         return this
     }
 
-    public static setWaterDeforms(val: boolean) {
+    static setWaterDeforms(val: boolean) {
         SetWaterDeforms(val)
         return this
     }
 
-    public static getTypeFromCoords(x: real, y: real): integer {
+    static getTypeFromCoords(x: real, y: real) {
         return RawCode.get(GetTerrainType(x, y))
     }
 
-    public static getTypeFromPos(p: Position): integer {
+    static getTypeFromPos(p: Position) {
         return this.getTypeFromCoords(p.getX(), p.getY())
     }
 
-    public static getVarianceFromCoords(x: real, y: real): integer {
+    static getVarianceFromCoords(x: real, y: real): integer {
         return GetTerrainVariance(x, y)
     }
 
-    public static getVarianceFromPos(p: Position): integer {
+    static getVarianceFromPos(p: Position): integer {
         return this.getVarianceFromCoords(p.getX(), p.getY())
     }
 
-    public static setTypeWithCoords(
+    static setTypeWithCoords(
         x: real,
         y: real,
         terrainType: RawCode,
@@ -80,7 +80,7 @@ export abstract class Terrain {
         return this
     }
 
-    public static setTypeWithPos(
+    static setTypeWithPos(
         p: Position,
         terrainType: RawCode,
         variation: integer,
@@ -97,20 +97,20 @@ export abstract class Terrain {
         )
     }
 
-    public static isPathableWithCoords(x: real, y: real, t: PathingType): boolean {
+    static isPathableWithCoords(x: real, y: real, t: PathingType): boolean {
         return IsTerrainPathable(x, y, t.getHandle() as pathingtype)
     }
 
-    public static isPathableWithPos(p: Position, t: PathingType): boolean {
+    static isPathableWithPos(p: Position, t: PathingType): boolean {
         return this.isPathableWithCoords(p.getX(), p.getY(), t)
     }
 
-    public static setPathableWithCoords(x: real, y: real, t: PathingType, flag: boolean) {
+    static setPathableWithCoords(x: real, y: real, t: PathingType, flag: boolean) {
         SetTerrainPathable(x, y, t.getHandle() as pathingtype, flag)
         return this
     }
 
-    public static setPathableWithPos(p: Position, t: PathingType, flag: boolean) {
+    static setPathableWithPos(p: Position, t: PathingType, flag: boolean) {
         return this.setPathableWithCoords(p.getX(), p.getY(), t, flag)
     }
 }

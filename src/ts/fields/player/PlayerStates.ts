@@ -1,30 +1,30 @@
 import { PlayerState } from "../../API/fields/player/PlayerState"
 
 export abstract class PlayerStates {
-    public static readonly GAME_RESULT = new PlayerState(0)
+    static readonly GAME_RESULT = PlayerState.convert(0)
 
     // current resource levels
-    public static readonly RESOURCE_GOLD = new PlayerState(1)
-    public static readonly RESOURCE_LUMBER = new PlayerState(2)
-    public static readonly RESOURCE_HERO_TOKENS = new PlayerState(3)
-    public static readonly RESOURCE_FOOD_CAP = new PlayerState(4)
-    public static readonly RESOURCE_FOOD_USED = new PlayerState(5)
-    public static readonly FOOD_CAP_CEILING = new PlayerState(6)
+    static readonly RESOURCE_GOLD = PlayerState.convert(1)
+    static readonly RESOURCE_LUMBER = PlayerState.convert(2)
+    static readonly RESOURCE_HERO_TOKENS = PlayerState.convert(3)
+    static readonly RESOURCE_FOOD_CAP = PlayerState.convert(4)
+    static readonly RESOURCE_FOOD_USED = PlayerState.convert(5)
+    static readonly FOOD_CAP_CEILING = PlayerState.convert(6)
 
-    public static readonly GIVES_BOUNTY = new PlayerState(7)
-    public static readonly ALLIED_VICTORY = new PlayerState(8)
-    public static readonly PLACED = new PlayerState(9)
-    public static readonly ON_DEATH_OBSERVER = new PlayerState(10)
-    public static readonly OBSERVER = new PlayerState(11)
-    public static readonly UNFOLLOWABLE = new PlayerState(12)
+    static readonly GIVES_BOUNTY = PlayerState.convert(7)
+    static readonly ALLIED_VICTORY = PlayerState.convert(8)
+    static readonly PLACED = PlayerState.convert(9)
+    static readonly ON_DEATH_OBSERVER = PlayerState.convert(10)
+    static readonly OBSERVER = PlayerState.convert(11)
+    static readonly UNFOLLOWABLE = PlayerState.convert(12)
 
     // taxation rate for each resource
-    public static readonly GOLD_UPKEEP_RATE = new PlayerState(13)
-    public static readonly LUMBER_UPKEEP_RATE = new PlayerState(14)
+    static readonly GOLD_UPKEEP_RATE = PlayerState.convert(13)
+    static readonly LUMBER_UPKEEP_RATE = PlayerState.convert(14)
 
     // cumulative resources collected by the player during the mission
-    public static readonly GOLD_GATHERED = new PlayerState(15)
-    public static readonly LUMBER_GATHERED = new PlayerState(16)
+    static readonly GOLD_GATHERED = PlayerState.convert(15)
+    static readonly LUMBER_GATHERED = PlayerState.convert(16)
 
-    public static readonly NO_CREEP_SLEEP = new PlayerState(25)
+    static readonly NO_CREEP_SLEEP = PlayerState.convert(25)
 }

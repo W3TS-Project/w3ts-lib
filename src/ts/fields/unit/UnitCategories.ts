@@ -1,16 +1,16 @@
 import { UnitCategory } from "../../API/fields/unit/UnitCategory"
 
 export abstract class UnitCategories {
-    public static readonly GIANT = new UnitCategory(1)
-    public static readonly UNDEAD = new UnitCategory(2)
-    public static readonly SUMMONED = new UnitCategory(4)
-    public static readonly MECHANICAL = new UnitCategory(8)
-    public static readonly PEON = new UnitCategory(16)
-    public static readonly SAPPER = new UnitCategory(32)
-    public static readonly TOWN_HALL = new UnitCategory(64)
-    public static readonly ANCIENT = new UnitCategory(128)
-    public static readonly NEUTRAL = new UnitCategory(256)
-    public static readonly WARD = new UnitCategory(512)
-    public static readonly STANDON = new UnitCategory(1024)
-    public static readonly TAUREN = new UnitCategory(2048)
+    static readonly GIANT = UnitCategory.convert(1)
+    static readonly UNDEAD = UnitCategory.convert(2)
+    static readonly SUMMONED = UnitCategory.convert(4)
+    static readonly MECHANICAL = UnitCategory.convert(8)
+    static readonly PEON = UnitCategory.convert(16)
+    static readonly SAPPER = UnitCategory.convert(32)
+    static readonly TOWN_HALL = UnitCategory.convert(64)
+    static readonly ANCIENT = UnitCategory.convert(128)
+    static readonly NEUTRAL = UnitCategory.convert(256)
+    static readonly WARD = UnitCategory.convert(512)
+    static readonly STANDON = UnitCategory.convert(1024)
+    static readonly TAUREN = UnitCategory.convert(2048)
 }

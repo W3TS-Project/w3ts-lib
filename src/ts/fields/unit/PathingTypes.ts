@@ -1,12 +1,12 @@
 import { PathingType } from "../../API/fields/unit/PathingType"
 
 export abstract class PathingTypes {
-    public static readonly ANY = new PathingType(0)
-    public static readonly WALKABILITY = new PathingType(1)
-    public static readonly FLYABILITY = new PathingType(2)
-    public static readonly BUILDABILITY = new PathingType(3)
-    public static readonly PEONHARVESTPATHING = new PathingType(4)
-    public static readonly BLIGHTPATHING = new PathingType(5)
-    public static readonly FLOATABILITY = new PathingType(6)
-    public static readonly AMPHIBIOUSPATHING = new PathingType(7)
+    static readonly ANY = PathingType.convert(0)
+    static readonly WALKABILITY = PathingType.convert(1)
+    static readonly FLYABILITY = PathingType.convert(2)
+    static readonly BUILDABILITY = PathingType.convert(3)
+    static readonly PEONHARVESTPATHING = PathingType.convert(4)
+    static readonly BLIGHTPATHING = PathingType.convert(5)
+    static readonly FLOATABILITY = PathingType.convert(6)
+    static readonly AMPHIBIOUSPATHING = PathingType.convert(7)
 }

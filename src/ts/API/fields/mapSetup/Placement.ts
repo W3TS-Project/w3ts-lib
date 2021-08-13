@@ -6,12 +6,11 @@ import { Field } from "../Field"
 declare function ConvertPlacement(i: integer): placement
 
 export class Placement extends Field<placement> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertPlacement(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertPlacement, id)
     }
 
-    public static fromHandle(handle: placement) {
+    static fromHandle(handle: placement) {
         return this.getObject(handle) as Placement
     }
 }

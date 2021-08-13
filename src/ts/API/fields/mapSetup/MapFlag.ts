@@ -7,12 +7,11 @@ declare function ConvertMapFlag(i: integer): mapflag
 declare function SetMapFlag(whichMapFlag: mapflag, value: boolean): void
 
 export class MapFlag extends Field<mapflag> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertMapFlag(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertMapFlag, id)
     }
 
-    public set(value: boolean) {
+    set(value: boolean) {
         SetMapFlag(this.getHandle() as mapflag, value)
         return this
     }

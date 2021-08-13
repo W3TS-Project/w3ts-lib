@@ -8,22 +8,21 @@ declare function VolumeGroupSetVolume(vgroup: volumegroup, scale: real): void
 declare function VolumeGroupReset(): void
 
 export class VolumeGroup extends Field<volumegroup> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertVolumeGroup(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertVolumeGroup, id)
     }
 
-    public setVolume(scale: real) {
+    setVolume(scale: real) {
         VolumeGroupSetVolume(this.getHandle() as volumegroup, scale)
         return this
     }
 
-    public static reset() {
+    static reset() {
         VolumeGroupReset()
         return this
     }
 
-    public static fromHandle(handle: volumegroup) {
+    static fromHandle(handle: volumegroup) {
         return this.getObject(handle) as VolumeGroup
     }
 }

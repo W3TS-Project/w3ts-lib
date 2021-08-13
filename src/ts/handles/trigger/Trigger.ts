@@ -2,6 +2,7 @@
 //@ts-nocheck
 
 import { ErrorHandling } from "../../ErrorHandling"
+import { ObjectOptions } from "../../ObjectOptions"
 import { Handle } from "../Handle"
 import { Sound } from "../Sound"
 
@@ -36,121 +37,137 @@ declare function TriggerExecuteWait(whichTrigger: trigger): void
 declare function TriggerSyncStart(): void
 declare function TriggerSyncReady(): void
 
+export class EventResponse {
+    trigger = Trigger.fromEvent()
+}
+
+export type EventCallback = (response: EventResponse) => void
+
 export class Trigger extends Handle<trigger> {
+    readonly actions: WeakSet<triggeraction> = new WeakSet<triggeraction>()
+
     constructor() {
         super(CreateTrigger())
     }
-    public destroy() {
+
+    destroy() {
         DestroyTrigger(this.getHandle() as trigger)
         return this
     }
 
-    public reset() {
+    reset() {
         ResetTrigger(this.getHandle() as trigger)
         return this
     }
 
-    public enable() {
+    enable() {
         EnableTrigger(this.getHandle() as trigger)
         return this
     }
 
-    public disable() {
+    disable() {
         DisableTrigger(this.getHandle() as trigger)
         return this
     }
 
-    public isEnabled() {
+    isEnabled() {
         return IsTriggerEnabled(this.getHandle() as trigger)
     }
 
-    public waitOnSleeps(flag: boolean) {
+    waitOnSleeps(flag: boolean) {
         TriggerWaitOnSleeps(this.getHandle() as trigger, flag)
         return this
     }
 
-    public isWaitOnSleeps() {
+    isWaitOnSleeps() {
         return IsTriggerWaitOnSleeps(this.getHandle() as trigger)
     }
 
-    public getEvalCount(): integer {
+    getEvalCount(): integer {
         return GetTriggerEvalCount(this.getHandle() as trigger)
     }
 
-    public getExecCount(): integer {
+    getExecCount(): integer {
         return GetTriggerExecCount(this.getHandle() as trigger)
     }
 
-    public addCondition(filterFunc: codeboolexpr): triggercondition {
+    addCondition(filterFunc: codeboolexpr): triggercondition {
         return TriggerAddCondition(this.getHandle() as trigger, Condition(filterFunc))
     }
 
-    public removeCondition(whichCondition: triggercondition) {
+    removeCondition(whichCondition: triggercondition) {
         TriggerRemoveCondition(this.getHandle() as trigger, whichCondition)
         return this
     }
 
-    public clearConditions() {
+    clearConditions() {
         TriggerClearConditions(this.getHandle() as trigger)
         return this
     }
 
-    public addAction(actionFunc: code) {
-        return TriggerAddAction(
+    addAction(actionFunc: EventCallback) {
+        const action = TriggerAddAction(
             this.getHandle() as trigger,
-            ErrorHandling.getHandledCallback(actionFunc)
+            ErrorHandling.getHandledCallback(() => actionFunc(new EventResponse()))
         )
+        this.actions.add(action)
+        return action
     }
 
-    public removeAction(whichAction: triggeraction) {
+    removeAction(whichAction: triggeraction) {
         TriggerRemoveAction(this.getHandle() as trigger, whichAction)
+        this.actions.delete(whichAction)
         return this
     }
 
-    public clearActions() {
+    clearActions() {
         TriggerClearActions(this.getHandle() as trigger)
+        const actions = ObjectOptions.values(this.actions)
+        for (const action of actions) {
+            this.actions.delete(action)
+        }
         return this
     }
 
-    public static sleepAction(timeout: real) {
+    static sleepAction(timeout: real) {
         TriggerSleepAction(timeout)
         return this
     }
 
-    public static waitForSound(s: Sound, offset: real) {
+    static waitForSound(s: Sound, offset: real) {
         TriggerWaitForSound(s.getHandle() as sound, offset)
         return this
     }
 
-    public evaluate() {
+    evaluate() {
         return TriggerEvaluate(this.getHandle() as trigger)
     }
 
-    public execute() {
+    execute() {
         TriggerExecute(this.getHandle() as trigger)
         return this
     }
 
-    public executeWait() {
+    executeWait() {
         TriggerExecuteWait(this.getHandle() as trigger)
         return this
     }
 
-    public static syncStart() {
+    static syncStart() {
         TriggerSyncStart()
         return this
     }
 
-    public static syncReady() {
+    static syncReady() {
         TriggerSyncReady()
         return this
     }
 
-    public static fromHandle(handle: trigger) {
+    static fromHandle(handle: trigger) {
         return this.getObject(handle) as Trigger
     }
 
-    public static fromEvent() {
+    static fromEvent() {
         return this.fromHandle(GetTriggeringTrigger())
     }
 }

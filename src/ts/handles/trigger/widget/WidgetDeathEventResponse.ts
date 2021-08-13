@@ -1,13 +1,6 @@
 import { Widget } from "../../Widget"
+import { EventResponse } from "../Trigger"
 
-export class WidgetDeathEventResponse {
-    protected widget: Widget
-
-    public constructor() {
-        this.widget = Widget.fromEvent()
-    }
-
-    public getWidget() {
-        return this.widget
-    }
+export class WidgetDeathEventResponse extends EventResponse {
+    widget = Widget.fromEvent()
 }

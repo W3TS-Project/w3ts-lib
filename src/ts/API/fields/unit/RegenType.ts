@@ -6,8 +6,7 @@ import { Field } from "../Field"
 declare function ConvertRegenType(i: integer): regentype
 
 export class RegenType extends Field<regentype> {
-    public constructor(id: integer) {
-        id = Math.floor(id)
-        super(ConvertRegenType(id), id)
+    static convert(id: integer) {
+        return this.proto_convert(ConvertRegenType, id)
     }
 }

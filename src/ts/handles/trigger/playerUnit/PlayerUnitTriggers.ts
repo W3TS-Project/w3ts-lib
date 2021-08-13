@@ -1,9 +1,10 @@
-// /** @noSelfInFile **/
-// //@ts-nocheck
+/** @noSelfInFile **/
+//@ts-nocheck
 
 import { PlayerUnitEvent } from "../../../API/fields/events/PlayerUnitEvent"
 import { PlayerUnitEvents } from "../../../fields/events/PlayerUnitEvents"
 import { MapPlayer } from "../../MapPlayer"
+import { Unit } from "../../Unit"
 import { Trigger } from "../Trigger"
 import { PlayerUnitAttackedEventResponse } from "./response/PlayerUnitAttackedEventResponse"
 import { PlayerUnitChangeOwnerEventResponse } from "./response/PlayerUnitChangeOwnerEventResponse"
@@ -40,6 +41,23 @@ declare function TriggerRegisterPlayerUnitEvent(
     filter: boolexpr | null
 ): event
 
+export class PlayerUnitFilterResponse {
+    unit = Unit.fromFilter()
+}
+
+export type PlayerUnitFilterCallback =
+    | ((response: PlayerUnitFilterResponse) => boolean)
+    | null
+    | undefined
+
+export const getPlayerUnitFilter = (func: PlayerUnitFilterCallback) => {
+    if (func) {
+        return Condition(() => func(new PlayerUnitFilterResponse()))
+    } else {
+        return Condition(func)
+    }
+}
+
 const getPlayerUnitTriggerClass = <
     T extends PlayerUnitEventResponse,
     R extends (response: T) => void
@@ -48,13 +66,13 @@ const getPlayerUnitTriggerClass = <
     func: () => T
 ) =>
     class extends Trigger {
-        protected event: PlayerUnitEvent
+        event: PlayerUnitEvent
 
-        public register(whichPlayer: MapPlayer, filterFunc?: codeboolexpr, callback?: R) {
+        register(whichPlayer: MapPlayer, filterFunc?: PlayerUnitFilterCallback, callback?: R) {
             if (callback) {
                 this.addEventListener(callback)
             }
-            const filter = Condition(filterFunc)
+            const filter = getPlayerUnitFilter(filterFunc)
             const result = PlayerUnitEvent.fromHandle(
                 (<unknown>(
                     TriggerRegisterPlayerUnitEvent(
@@ -69,19 +87,13 @@ const getPlayerUnitTriggerClass = <
             return result
         }
 
-        public constructor(whichPlayer: MapPlayer, filterFunc?: codeboolexpr, callback?: R) {
+        constructor(whichPlayer: MapPlayer, filterFunc?: PlayerUnitFilterCallback, callback?: R) {
             super()
             this.event = event
-            if (callback) {
-                this.register(whichPlayer, filterFunc, callback)
-            }
+            this.register(whichPlayer, filterFunc, callback)
         }
 
-        public getEvent() {
-            return this.event
-        }
-
-        public addEventListener(callback: R) {
+        addEventListener(callback: R) {
             this.addAction(() => callback(func()))
         }
     }
