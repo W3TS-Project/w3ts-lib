@@ -1,6 +1,7 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
+import { SETTING_SOME_PROPERTIES } from "../Package"
 import { Handle } from "./Handle"
 import { Point } from "./Point"
 
@@ -18,12 +19,20 @@ declare function AddIndicator(
 ): void
 
 export class Widget extends Handle<widget> {
-    life: real = this.getLife()
-    point: Point = this.getPoint()
+    life?: real
+    point?: Point
     indicatorRed: real = 255
     indicatorGreen: real = 255
     indicatorBlue: real = 255
     indicatorAlpha: real = 0
+
+    constructor(handle: widget) {
+        super(handle)
+        if (SETTING_SOME_PROPERTIES) {
+            this.life = this.getLife()
+            this.point = this.getPoint()
+        }
+    }
 
     getLife() {
         return GetWidgetLife(this.getHandle() as widget)
@@ -31,7 +40,7 @@ export class Widget extends Handle<widget> {
 
     setLife(value: real) {
         SetWidgetLife(this.getHandle() as widget, value)
-        this.life = value
+        if (SETTING_SOME_PROPERTIES) this.life = value
         return this
     }
 

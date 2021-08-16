@@ -1,8 +1,8 @@
-// /** @noSelfInFile **/
-// //@ts-nocheck
+/** @noSelfInFile **/
+//@ts-nocheck
 
 import { CameraField } from "../API/fields/camera/CameraField"
-import { Position } from "../Package"
+import { Position, SETTING_SOME_PROPERTIES } from "../Package"
 import { Handle } from "./Handle"
 import { MapLocation } from "./MapLocation"
 import { Point } from "./Point"
@@ -48,13 +48,15 @@ declare function BlzCameraSetupApplyForceDurationSmooth(
 ): void
 
 export class CameraSetup extends Handle<camerasetup> {
-    destPoint: Point
-    label: string
+    destPoint?: Point
+    label?: string
 
     constructor() {
         super(CreateCameraSetup())
-        this.destPoint = this.getDestPoint()
-        this.label = this.getLabel()
+        if (SETTING_SOME_PROPERTIES) {
+            this.destPoint = this.getDestPoint()
+            this.label = this.getLabel()
+        }
     }
 
     getDestLoc() {
@@ -87,12 +89,12 @@ export class CameraSetup extends Handle<camerasetup> {
 
     setDestPos(p: Position) {
         this.setDestX(p.x).setDestY(p.y)
-        this.destPoint.setPos(p)
+        if (SETTING_SOME_PROPERTIES) this.destPoint!.setPos(p)
     }
 
     setLabel(label: string) {
         BlzCameraSetupSetLabel(this.getHandle() as camerasetup, label)
-        this.label = label
+        if (SETTING_SOME_PROPERTIES) this.label = label
         return this
     }
 
@@ -151,7 +153,6 @@ export class CameraSetup extends Handle<camerasetup> {
 
     setDestCoords(x: real, y: real, duration: real) {
         CameraSetupSetDestPosition(this.getHandle() as camerasetup, x, y, duration)
-        this.destPoint.setCoords(x, y)
         return this
     }
 

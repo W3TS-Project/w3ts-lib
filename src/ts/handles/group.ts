@@ -7,8 +7,8 @@ import { MapLocation } from "./MapLocation"
 import { Rectangle } from "./Rectangle"
 import { Unit } from "./Unit"
 import { Widget } from "./Widget"
-import { Position } from "../Package"
-import { Order } from "../Order"
+import { Position, SETTING_SOME_PROPERTIES } from "../Package"
+import { Order, OrderArgType } from "../Order"
 
 declare function CreateGroup(): group
 declare function DestroyGroup(whichGroup: group): void
@@ -121,41 +121,76 @@ export class GroupEnumResponse {
 export type GroupEnumCallback = ((response: GroupEnumResponse) => void) | null | undefined
 
 export class Group extends Handle<group> {
-    public constructor() {
+    size?: integer
+    cleared = false
+
+    constructor() {
         super(CreateGroup())
+        if (SETTING_SOME_PROPERTIES) {
+            this.size = 0
+        }
     }
 
-    public destroy() {
+    destroy() {
         DestroyGroup(this.getHandle() as group)
-        return this
+        super.destroy()
     }
 
-    public addUnit(whichUnit: Unit): boolean {
+    addUnit(whichUnit: Unit): boolean {
+        if (SETTING_SOME_PROPERTIES) {
+            this.size!++
+        }
+        this.cleared = false
         return GroupAddUnit(this.getHandle() as group, whichUnit.getHandle() as unit)
     }
 
-    public removeUnit(whichUnit: Unit): boolean {
-        return GroupRemoveUnit(this.getHandle() as group, whichUnit.getHandle() as unit)
+    removeUnit(whichUnit: Unit): boolean {
+        const result = GroupRemoveUnit(this.getHandle() as group, whichUnit.getHandle() as unit)
+        let size
+        if (SETTING_SOME_PROPERTIES) {
+            size = --this.size!
+        } else {
+            size = this.getSize()
+        }
+        this.cleared = size == 0
+        return result
     }
 
-    public fastAddGroup(addGroup: Group): integer {
+    fastAddGroup(addGroup: Group): integer {
+        if (SETTING_SOME_PROPERTIES) {
+            this.size! += addGroup.getSize()
+        }
+        this.cleared = false
         return BlzGroupAddGroupFast(this.getHandle() as group, addGroup.getHandle() as group)
     }
 
-    public fastRemoveGroup(removeGroup: Group): integer {
-        return BlzGroupRemoveGroupFast(this.getHandle() as group, removeGroup.getHandle() as group)
+    fastRemoveGroup(removeGroup: Group): integer {
+        const result = BlzGroupRemoveGroupFast(
+            this.getHandle() as group,
+            removeGroup.getHandle() as group
+        )
+        let size
+        if (SETTING_SOME_PROPERTIES) {
+            this.size! -= removeGroup.getSize()
+            size = this.size
+        } else {
+            size = this.getSize()
+        }
+        this.cleared = size == 0
+        return result
     }
 
-    public clear() {
+    clear() {
         GroupClear(this.getHandle() as group)
+        this.cleared = true
         return this
     }
 
-    public getSize(): integer {
+    getSize(): integer {
         return BlzGroupGetSize(this.getHandle() as group)
     }
 
-    public getUnitAt(index: integer): Unit {
+    getUnitAt(index: integer): Unit {
         return Unit.fromHandle(BlzGroupUnitAt(this.getHandle() as group, Math.floor(index)))
     }
 
@@ -167,207 +202,218 @@ export class Group extends Handle<group> {
         }
     }
 
-    public enumOfType(unitname: string, func: GroupFilterCallback) {
+    private enumCall(func: GroupFilterCallback, call: (filter: conditionfunc) => void) {
         const filter = this.getFilter(func)
-        GroupEnumUnitsOfType(this.getHandle() as group, unitname, filter)
+        call(filter)
         DestroyCondition(filter)
+        let size
+        if (SETTING_SOME_PROPERTIES) {
+            this.size = this.getSize()
+            size = this.size
+        } else {
+            size = this.getSize()
+        }
+        this.cleared = size == 0
         return this
     }
 
-    public enumOfPlayer(whichPlayer: MapPlayer, func: GroupFilterCallback) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsOfPlayer(this.getHandle() as group, whichPlayer.getHandle() as player, filter)
-        DestroyCondition(filter)
-        return this
-    }
-
-    public enumCountedOfType(unitname: string, countLimit: integer, func: GroupFilterCallback) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsOfTypeCounted(
-            this.getHandle() as group,
-            unitname,
-            filter,
-            Math.floor(countLimit)
+    enumOfType(unitname: string, func: GroupFilterCallback) {
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsOfType(this.getHandle() as group, unitname, filter)
         )
-        DestroyCondition(filter)
-        return this
     }
 
-    public enumInRect(r: Rectangle, func: GroupFilterCallback) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsInRect(this.getHandle() as group, r.getHandle() as rect, filter)
-        DestroyCondition(filter)
-        return this
-    }
-
-    public enumCountedInRect(r: Rectangle, countLimit: integer, func: GroupFilterCallback) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsInRectCounted(
-            this.getHandle() as group,
-            r.getHandle() as rect,
-            filter,
-            Math.floor(countLimit)
+    enumOfPlayer(whichPlayer: MapPlayer, func: GroupFilterCallback) {
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsOfPlayer(
+                this.getHandle() as group,
+                whichPlayer.getHandle() as player,
+                filter
+            )
         )
-        DestroyCondition(filter)
-        return this
     }
 
-    public enumCoordsInRange(x: real, y: real, radius: real, func: GroupFilterCallback) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsInRange(this.getHandle() as group, x, y, radius, filter)
-        DestroyCondition(filter)
-        return this
-    }
-
-    public enumPosInRange(p: Position, radius: real, func: GroupFilterCallback) {
-        return this.enumCoordsInRange(p.getX(), p.getY(), radius, func)
-    }
-
-    public enumLocInRange(whichLocation: MapLocation, radius: real, func: GroupFilterCallback) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsInRangeOfLoc(
-            this.getHandle() as group,
-            whichLocation.getHandle() as location,
-            radius,
-            filter
+    enumCountedOfType(unitname: string, countLimit: integer, func: GroupFilterCallback) {
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsOfTypeCounted(
+                this.getHandle() as group,
+                unitname,
+                filter,
+                Math.floor(countLimit)
+            )
         )
-        DestroyCondition(filter)
-        return this
     }
 
-    public enumCoordsCountedInRange(
+    enumInRect(r: Rectangle, func: GroupFilterCallback) {
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsInRect(this.getHandle() as group, r.getHandle() as rect, filter)
+        )
+    }
+
+    enumCountedInRect(r: Rectangle, countLimit: integer, func: GroupFilterCallback) {
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsInRectCounted(
+                this.getHandle() as group,
+                r.getHandle() as rect,
+                filter,
+                Math.floor(countLimit)
+            )
+        )
+    }
+
+    enumCoordsInRange(x: real, y: real, radius: real, func: GroupFilterCallback) {
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsInRange(this.getHandle() as group, x, y, radius, filter)
+        )
+    }
+
+    enumPosInRange(p: Position, radius: real, func: GroupFilterCallback) {
+        return this.enumCoordsInRange(p.x, p.y, radius, func)
+    }
+
+    enumLocInRange(whichLocation: MapLocation, radius: real, func: GroupFilterCallback) {
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsInRangeOfLoc(
+                this.getHandle() as group,
+                whichLocation.getHandle() as location,
+                radius,
+                filter
+            )
+        )
+    }
+
+    enumCoordsCountedInRange(
         x: real,
         y: real,
         radius: real,
         countLimit: integer,
         func: GroupFilterCallback
     ) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsInRangeCounted(
-            this.getHandle() as group,
-            x,
-            y,
-            radius,
-            filter,
-            Math.floor(countLimit)
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsInRangeCounted(
+                this.getHandle() as group,
+                x,
+                y,
+                radius,
+                filter,
+                Math.floor(countLimit)
+            )
         )
-        DestroyCondition(filter)
-        return this
     }
 
-    public enumPosCountedInRange(
+    enumPosCountedInRange(
         p: Position,
         radius: real,
         countLimit: integer,
         func: GroupFilterCallback
     ) {
-        return this.enumCoordsCountedInRange(
-            p.getX(),
-            p.getY(),
-            radius,
-            Math.floor(countLimit),
-            func
-        )
+        return this.enumCoordsCountedInRange(p.x, p.y, radius, Math.floor(countLimit), func)
     }
 
-    public enumLocCountedInRange(
+    enumLocCountedInRange(
         whichLocation: MapLocation,
         radius: real,
         countLimit: integer,
         func: GroupFilterCallback
     ) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsInRangeOfLocCounted(
-            this.getHandle() as group,
-            whichLocation.getHandle() as location,
-            radius,
-            filter,
-            Math.floor(countLimit)
-        )
-        DestroyCondition(filter)
-        return this
-    }
-
-    public enumSelected(whichPlayer: MapPlayer, func: GroupFilterCallback) {
-        const filter = this.getFilter(func)
-        GroupEnumUnitsSelected(this.getHandle() as group, whichPlayer.getHandle() as player, filter)
-        DestroyCondition(filter)
-        return this
-    }
-
-    public immediateOrder(order: Order): boolean {
-        return GroupImmediateOrder(this.getHandle() as group, order.getStr())
-    }
-
-    public immediateOrderById(order: Order): boolean {
-        return GroupImmediateOrderById(this.getHandle() as group, order.getId())
-    }
-
-    public coordsOrder(order: Order, x: real, y: real): boolean {
-        return GroupPointOrder(this.getHandle() as group, order.getStr(), x, y)
-    }
-
-    public coordsOrderById(order: Order, x: real, y: real): boolean {
-        return GroupPointOrderById(this.getHandle() as group, order.getId(), x, y)
-    }
-
-    public posOrder(order: Order, pos: Position): boolean {
-        return this.coordsOrder(order, pos.getX(), pos.getY())
-    }
-
-    public posOrderById(order: Order, pos: Position): boolean {
-        return this.coordsOrderById(order, pos.getX(), pos.getY())
-    }
-
-    public locOrder(order: Order, whichLocation: MapLocation): boolean {
-        return GroupPointOrderLoc(
-            this.getHandle() as group,
-            order.getStr(),
-            whichLocation.getHandle() as location
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsInRangeOfLocCounted(
+                this.getHandle() as group,
+                whichLocation.getHandle() as location,
+                radius,
+                filter,
+                Math.floor(countLimit)
+            )
         )
     }
 
-    public locOrderById(order: Order, whichLocation: MapLocation): boolean {
+    enumSelected(whichPlayer: MapPlayer, func: GroupFilterCallback) {
+        return this.enumCall(func, filter =>
+            GroupEnumUnitsSelected(
+                this.getHandle() as group,
+                whichPlayer.getHandle() as player,
+                filter
+            )
+        )
+    }
+
+    getRandom() {
+        return this.getUnitAt(math.random(0, this.getSize()))
+    }
+
+    immediateOrder(order: OrderArgType): boolean {
+        return GroupImmediateOrderById(this.getHandle() as group, Order.toId(order))
+    }
+
+    // immediateOrderById(order: Order): boolean {
+    //     return GroupImmediateOrderById(this.getHandle() as group, order.getId())
+    // }
+
+    coordsOrder(order: OrderArgType, x: real, y: real): boolean {
+        return GroupPointOrderById(this.getHandle() as group, Order.toId(order), x, y)
+    }
+
+    // coordsOrderById(order: Order, x: real, y: real): boolean {
+    //     return GroupPointOrderById(this.getHandle() as group, order.getId(), x, y)
+    // }
+
+    posOrder(order: OrderArgType, pos: Position): boolean {
+        return this.coordsOrder(order, pos.x, pos.y)
+    }
+
+    // posOrderById(order: Order, pos: Position): boolean {
+    //     return this.coordsOrderById(order, pos.x, pos.y)
+    // }
+
+    locOrder(order: OrderArgType, whichLocation: MapLocation): boolean {
         return GroupPointOrderByIdLoc(
             this.getHandle() as group,
-            order.getId(),
+            Order.toId(order),
             whichLocation.getHandle() as location
         )
     }
 
-    public targetOrder(order: Order, targetWidget: Widget): boolean {
-        return GroupTargetOrder(
+    // locOrderById(order: Order, whichLocation: MapLocation): boolean {
+    //     return GroupPointOrderByIdLoc(
+    //         this.getHandle() as group,
+    //         order.getId(),
+    //         whichLocation.getHandle() as location
+    //     )
+    // }
+
+    targetOrder(order: OrderArgType, targetWidget: Widget): boolean {
+        return GroupTargetOrderById(
             this.getHandle() as group,
-            order.getStr(),
+            Order.toId(order),
             targetWidget.getHandle() as widget
         )
     }
 
-    public targetOrderById(order: Order, targetWidget: Widget): boolean {
-        return GroupTargetOrderById(
-            this.getHandle() as group,
-            order.getId(),
-            targetWidget.getHandle() as widget
-        )
-    }
+    // targetOrderById(order: Order, targetWidget: Widget): boolean {
+    //     return GroupTargetOrderById(
+    //         this.getHandle() as group,
+    //         order.getId(),
+    //         targetWidget.getHandle() as widget
+    //     )
+    // }
 
     private getEnumCallback(func: GroupEnumCallback) {
         if (func) {
             return () => func(new GroupEnumResponse(this))
         }
-        return undefined
+        return null
     }
 
-    public forEach(func: GroupEnumCallback) {
+    forEach(func: GroupEnumCallback) {
         ForGroup(this.getHandle() as group, this.getEnumCallback(func))
         return this
     }
 
-    public first() {
+    first() {
         return Unit.fromHandle(FirstOfGroup(this.getHandle() as group))
     }
 
-    public static fromHandle(handle: group): Group {
+    static fromHandle(handle: group): Group {
         return this.getObject(handle) as Group
     }
 }

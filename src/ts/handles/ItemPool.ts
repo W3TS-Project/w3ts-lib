@@ -4,7 +4,7 @@
 import { Position } from "../Package"
 import { Handle } from "./Handle"
 import { Item } from "./Item"
-import { ItemRawCode } from "./rawCode/ItemRawCode"
+import { ItemRawCode, ItemRawCodeType } from "./rawCode/ItemRawCode"
 
 declare function CreateItemPool(): itempool
 declare function DestroyItemPool(whichItemPool: itempool): void
@@ -13,34 +13,34 @@ declare function ItemPoolRemoveItemType(whichItemPool: itempool, itemId: integer
 declare function PlaceRandomItem(whichItemPool: itempool, x: real, y: real): item
 
 export class ItemPool extends Handle<itempool> {
-    public constructor() {
+    constructor() {
         super(CreateItemPool())
     }
 
-    public destroy() {
+    destroy() {
         DestroyItemPool(this.getHandle() as itempool)
+        super.destroy()
+    }
+
+    addItemType(itemCode: ItemRawCodeType, weight: real) {
+        ItemPoolAddItemType(this.getHandle() as itempool, ItemRawCode.toId(itemCode), weight)
         return this
     }
 
-    public addItemType(itemCode: ItemRawCode, weight: real) {
-        ItemPoolAddItemType(this.getHandle() as itempool, itemCode.getId(), weight)
+    removeItemType(itemCode: ItemRawCodeType) {
+        ItemPoolRemoveItemType(this.getHandle() as itempool, ItemRawCode.toId(itemCode))
         return this
     }
 
-    public removeItemType(itemCode: ItemRawCode) {
-        ItemPoolRemoveItemType(this.getHandle() as itempool, itemCode.getId())
-        return this
-    }
-
-    public placeRandomItemCoords(x: real, y: real): Item {
+    placeRandomItemCoords(x: real, y: real): Item {
         return Item.fromHandle(PlaceRandomItem(this.getHandle() as itempool, x, y))
     }
 
-    public placeRandomItemPos(p: Position): Item {
-        return this.placeRandomItemCoords(p.getX(), p.getY())
+    placeRandomItemPos(p: Position): Item {
+        return this.placeRandomItemCoords(p.x, p.y)
     }
 
-    public static fromHandle(handle: itempool) {
+    static fromHandle(handle: itempool) {
         return this.getObject(handle) as ItemPool
     }
 }

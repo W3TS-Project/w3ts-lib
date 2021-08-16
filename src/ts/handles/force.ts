@@ -52,23 +52,30 @@ export class ForceEnumResponse {
 export type ForceEnumCallback = ((response: ForceEnumResponse) => void) | null | undefined
 
 export class Force extends Handle<force> {
-    public constructor() {
+    cleared = false
+    size: integer = 0
+
+    constructor() {
         super(CreateForce())
     }
 
-    public addPlayer(whichPlayer: MapPlayer) {
+    addPlayer(whichPlayer: MapPlayer) {
         ForceAddPlayer(this.getHandle() as force, whichPlayer.getHandle() as player)
+        this.size++
+        this.cleared = false
         return this
     }
 
-    public clear() {
+    clear() {
         ForceClear(this.getHandle() as force)
+        this.size = 0
+        this.cleared = true
         return this
     }
 
-    public destroy() {
+    destroy() {
         DestroyForce(this.getHandle() as force)
-        return this
+        super.destroy()
     }
 
     private getFilter(func: ForceFilterCallback) {
@@ -79,31 +86,37 @@ export class Force extends Handle<force> {
         }
     }
 
-    public enumAllies(whichPlayer: MapPlayer, func: ForceFilterCallback) {
+    private enumCall(func: ForceFilterCallback, call: (filter: conditionfunc) => void) {
         const filter = this.getFilter(func)
-        ForceEnumAllies(this.getHandle() as force, whichPlayer.getHandle() as player, filter)
+        call(filter)
         DestroyCondition(filter)
+        this.size = this.getCount()
+        this.cleared = this.size > 0
+    }
+
+    enumAllies(whichPlayer: MapPlayer, func: ForceFilterCallback) {
+        this.enumCall(func, filter =>
+            ForceEnumAllies(this.getHandle() as force, whichPlayer.getHandle() as player, filter)
+        )
         return this
     }
 
-    public enumEnemies(whichPlayer: MapPlayer, func: ForceFilterCallback) {
-        const filter = this.getFilter(func)
-        ForceEnumEnemies(this.getHandle() as force, whichPlayer.getHandle() as player, filter)
-        DestroyCondition(filter)
+    enumEnemies(whichPlayer: MapPlayer, func: ForceFilterCallback) {
+        this.enumCall(func, filter =>
+            ForceEnumEnemies(this.getHandle() as force, whichPlayer.getHandle() as player, filter)
+        )
         return this
     }
 
-    public enumPlayers(func: ForceFilterCallback) {
-        const filter = this.getFilter(func)
-        ForceEnumPlayers(this.getHandle() as force, filter)
-        DestroyCondition(filter)
+    enumPlayers(func: ForceFilterCallback) {
+        this.enumCall(func, filter => ForceEnumPlayers(this.getHandle() as force, filter))
         return this
     }
 
-    public enumPlayersCounted(countLimit: integer, func: ForceFilterCallback) {
-        const filter = this.getFilter(func)
-        ForceEnumPlayersCounted(this.getHandle() as force, filter, Math.floor(countLimit))
-        DestroyCondition(filter)
+    enumPlayersCounted(countLimit: integer, func: ForceFilterCallback) {
+        this.enumCall(func, filter =>
+            ForceEnumPlayersCounted(this.getHandle() as force, filter, Math.floor(countLimit))
+        )
         return this
     }
 
@@ -111,27 +124,35 @@ export class Force extends Handle<force> {
         if (func) {
             return () => func(new ForceEnumResponse(this))
         }
-        return undefined
+        return null
     }
 
-    public forEach(func: ForceEnumCallback) {
+    forEach(func: ForceEnumCallback) {
         ForForce(this.getHandle() as force, this.getEnumCallback(func))
         return this
     }
 
-    public hasPlayer(whichPlayer: MapPlayer) {
+    getCount() {
+        let size = 0
+        this.forEach(() => size++)
+        return size
+    }
+
+    hasPlayer(whichPlayer: MapPlayer) {
         return IsPlayerInForce(whichPlayer.getHandle() as player, this.getHandle() as force)
     }
 
-    public has(whichPlayer: MapPlayer) {
+    has(whichPlayer: MapPlayer) {
         return BlzForceHasPlayer(this.getHandle() as force, whichPlayer.getHandle() as player)
     }
 
-    public removePlayer(whichPlayer: MapPlayer) {
+    removePlayer(whichPlayer: MapPlayer) {
         ForceRemovePlayer(this.getHandle() as force, whichPlayer.getHandle() as player)
+        this.cleared = --this.size == 0
+        return this
     }
 
-    public static fromHandle(handle: force) {
+    static fromHandle(handle: force) {
         return this.getObject(handle) as Force
     }
 }

@@ -37,7 +37,9 @@ declare function FogModifierStart(whichFogModifier: fogmodifier): void
 declare function FogModifierStop(whichFogModifier: fogmodifier): void
 
 export class FogModifier extends Handle<fogmodifier> {
-    public static createAtRect(
+    isStarted = false
+
+    static createAtRect(
         forWhichPlayer: MapPlayer,
         whichState: FogState,
         where: Rectangle,
@@ -55,7 +57,7 @@ export class FogModifier extends Handle<fogmodifier> {
         )
     }
 
-    public static createRadiusCoords(
+    static createRadiusCoords(
         forWhichPlayer: MapPlayer,
         whichState: FogState,
         centerX: real,
@@ -77,7 +79,7 @@ export class FogModifier extends Handle<fogmodifier> {
         )
     }
 
-    public static createRadiusPos(
+    static createRadiusPos(
         forWhichPlayer: MapPlayer,
         whichState: FogState,
         center: Position,
@@ -88,15 +90,15 @@ export class FogModifier extends Handle<fogmodifier> {
         return this.createRadiusCoords(
             forWhichPlayer,
             whichState,
-            center.getX(),
-            center.getY(),
+            center.x,
+            center.y,
             radius,
             useSharedVision,
             afterUnits
         )
     }
 
-    public static createRadiusLoc(
+    static createRadiusLoc(
         forWhichPlayer: MapPlayer,
         whichState: FogState,
         center: MapLocation,
@@ -116,22 +118,24 @@ export class FogModifier extends Handle<fogmodifier> {
         )
     }
 
-    public destroy() {
+    destroy() {
         DestroyFogModifier(this.getHandle() as fogmodifier)
-        return this
+        super.destroy()
     }
 
-    public start() {
+    start() {
         FogModifierStart(this.getHandle() as fogmodifier)
+        this.isStarted = true
         return this
     }
 
-    public stop() {
+    stop() {
         FogModifierStop(this.getHandle() as fogmodifier)
+        this.isStarted = false
         return this
     }
 
-    public static fromHandle(handle: fogmodifier) {
+    static fromHandle(handle: fogmodifier) {
         return this.getObject(handle) as FogModifier
     }
 }

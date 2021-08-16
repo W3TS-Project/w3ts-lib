@@ -14,7 +14,11 @@ declare function DialogAddQuitButton(
 declare function GetClickedButton(): button
 
 export class DialogButton extends Handle<button> {
-    public constructor(
+    text: string
+    hotkey: integer
+    doScoreScreen?: boolean
+
+    constructor(
         whichDialog: Dialog,
         buttonText: string,
         hotkey: integer = 0,
@@ -27,14 +31,17 @@ export class DialogButton extends Handle<button> {
             super(DialogAddButton(handle, buttonText, hotkey))
         } else {
             super(DialogAddQuitButton(handle, doScoreScreen, buttonText, hotkey))
+            this.doScoreScreen = doScoreScreen
         }
+        this.text = buttonText
+        this.hotkey = hotkey
     }
 
-    public static add(whichDialog: Dialog, buttonText: string, hotkey: integer = 0) {
+    static add(whichDialog: Dialog, buttonText: string, hotkey: integer = 0) {
         return new this(whichDialog, buttonText, hotkey)
     }
 
-    public static addQuit(
+    static addQuit(
         whichDialog: Dialog,
         doScoreScreen: boolean,
         buttonText: string,
@@ -43,11 +50,11 @@ export class DialogButton extends Handle<button> {
         return new this(whichDialog, buttonText, hotkey, true, doScoreScreen)
     }
 
-    public static fromHandle(handle: button) {
+    static fromHandle(handle: button) {
         return this.getObject(handle) as DialogButton
     }
 
-    public static getClicked() {
+    static getClicked() {
         return this.fromHandle(GetClickedButton())
     }
 }

@@ -466,11 +466,11 @@ export type EventType =
     | WidgetEvent
 
 export class HashTable extends Handle<hashtable> {
-    public constructor() {
+    constructor() {
         super(InitHashtable())
     }
 
-    public saveInt(parentKey: integer, childKey: integer, value: integer) {
+    saveInt(parentKey: integer, childKey: integer, value: integer) {
         SaveInteger(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -480,12 +480,12 @@ export class HashTable extends Handle<hashtable> {
         return this
     }
 
-    public saveReal(parentKey: integer, childKey: integer, value: real) {
+    saveReal(parentKey: integer, childKey: integer, value: real) {
         SaveReal(this.getHandle() as hashtable, Math.floor(parentKey), Math.floor(childKey), value)
         return this
     }
 
-    public saveBool(parentKey: integer, childKey: integer, value: boolean) {
+    saveBool(parentKey: integer, childKey: integer, value: boolean) {
         SaveBoolean(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -495,7 +495,7 @@ export class HashTable extends Handle<hashtable> {
         return this
     }
 
-    public saveStr(parentKey: integer, childKey: integer, value: string) {
+    saveStr(parentKey: integer, childKey: integer, value: string) {
         return SaveStr(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -504,7 +504,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public savePlayer(parentKey: integer, childKey: integer, whichPlayer: MapPlayer) {
+    savePlayer(parentKey: integer, childKey: integer, whichPlayer: MapPlayer) {
         return SavePlayerHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -513,7 +513,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveWidget(parentKey: integer, childKey: integer, whichWidget: Widget) {
+    saveWidget(parentKey: integer, childKey: integer, whichWidget: Widget) {
         return SaveWidgetHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -522,7 +522,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveDestructable(
+    saveDestructable(
         parentKey: integer,
         childKey: integer,
         whichDestructable: Destructable
@@ -535,7 +535,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveItem(parentKey: integer, childKey: integer, whichItem: Item) {
+    saveItem(parentKey: integer, childKey: integer, whichItem: Item) {
         return SaveItemHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -544,7 +544,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveUnit(parentKey: integer, childKey: integer, whichUnit: Unit) {
+    saveUnit(parentKey: integer, childKey: integer, whichUnit: Unit) {
         return SaveUnitHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -553,7 +553,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveAbility(parentKey: integer, childKey: integer, whichAbility: Ability) {
+    saveAbility(parentKey: integer, childKey: integer, whichAbility: Ability) {
         return SaveAbilityHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -562,7 +562,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveTimer(parentKey: integer, childKey: integer, whichTimer: Timer) {
+    saveTimer(parentKey: integer, childKey: integer, whichTimer: Timer) {
         return SaveTimerHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -571,7 +571,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveTrigger(parentKey: integer, childKey: integer, whichTrigger: Trigger) {
+    saveTrigger(parentKey: integer, childKey: integer, whichTrigger: Trigger) {
         return SaveTriggerHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -580,7 +580,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveTriggerCondition(
+    saveTriggerCondition(
         parentKey: integer,
         childKey: integer,
         whichTriggercondition: triggercondition
@@ -593,7 +593,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveTriggerAction(
+    saveTriggerAction(
         parentKey: integer,
         childKey: integer,
         whichTriggeraction: triggeraction
@@ -606,7 +606,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveTriggerEvent(parentKey: integer, childKey: integer, whichEvent: EventType) {
+    saveTriggerEvent(parentKey: integer, childKey: integer, whichEvent: EventType) {
         return SaveTriggerEventHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -615,7 +615,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveForce(parentKey: integer, childKey: integer, whichForce: Force) {
+    saveForce(parentKey: integer, childKey: integer, whichForce: Force) {
         return SaveForceHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -624,7 +624,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveGroup(parentKey: integer, childKey: integer, whichGroup: Group) {
+    saveGroup(parentKey: integer, childKey: integer, whichGroup: Group) {
         return SaveGroupHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -633,7 +633,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveLocation(parentKey: integer, childKey: integer, whichLocation: MapLocation) {
+    saveLocation(parentKey: integer, childKey: integer, whichLocation: MapLocation) {
         return SaveLocationHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -642,7 +642,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveRect(parentKey: integer, childKey: integer, whichRect: Rectangle) {
+    saveRect(parentKey: integer, childKey: integer, whichRect: Rectangle) {
         return SaveRectHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -651,7 +651,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveBooleanExpr(parentKey: integer, childKey: integer, whichBoolexpr: boolexpr) {
+    saveBooleanExpr(parentKey: integer, childKey: integer, whichBoolexpr: boolexpr) {
         return SaveBooleanExprHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -660,7 +660,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveSound(parentKey: integer, childKey: integer, whichSound: Sound) {
+    saveSound(parentKey: integer, childKey: integer, whichSound: Sound) {
         return SaveSoundHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -669,7 +669,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveEffect(parentKey: integer, childKey: integer, whichEffect: SpecialEffect) {
+    saveEffect(parentKey: integer, childKey: integer, whichEffect: SpecialEffect) {
         return SaveEffectHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -678,7 +678,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveUnitPool(parentKey: integer, childKey: integer, whichUnitpool: unitpool) {
+    saveUnitPool(parentKey: integer, childKey: integer, whichUnitpool: unitpool) {
         return SaveUnitPoolHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -687,7 +687,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveItemPool(parentKey: integer, childKey: integer, whichItempool: itempool) {
+    saveItemPool(parentKey: integer, childKey: integer, whichItempool: itempool) {
         return SaveItemPoolHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -696,7 +696,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveQuest(parentKey: integer, childKey: integer, whichQuest: Quest) {
+    saveQuest(parentKey: integer, childKey: integer, whichQuest: Quest) {
         return SaveQuestHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -705,7 +705,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveQuestItem(parentKey: integer, childKey: integer, whichQuestitem: QuestItem) {
+    saveQuestItem(parentKey: integer, childKey: integer, whichQuestitem: QuestItem) {
         return SaveQuestItemHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -714,7 +714,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveDefeatCondition(
+    saveDefeatCondition(
         parentKey: integer,
         childKey: integer,
         whichDefeatcondition: defeatcondition
@@ -727,7 +727,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveTimerDialog(parentKey: integer, childKey: integer, whichTimerdialog: TimerDialog) {
+    saveTimerDialog(parentKey: integer, childKey: integer, whichTimerdialog: TimerDialog) {
         return SaveTimerDialogHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -736,7 +736,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveLeaderboard(parentKey: integer, childKey: integer, whichLeaderboard: LeaderBoard) {
+    saveLeaderboard(parentKey: integer, childKey: integer, whichLeaderboard: LeaderBoard) {
         return SaveLeaderboardHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -745,7 +745,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveMultiboard(parentKey: integer, childKey: integer, whichMultiboard: MultiBoard) {
+    saveMultiboard(parentKey: integer, childKey: integer, whichMultiboard: MultiBoard) {
         return SaveMultiboardHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -754,7 +754,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveMultiboardItem(
+    saveMultiboardItem(
         parentKey: integer,
         childKey: integer,
         whichMultiboardItem: MultiboardItem
@@ -767,7 +767,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveTrackable(parentKey: integer, childKey: integer, whichTrackable: Trackable) {
+    saveTrackable(parentKey: integer, childKey: integer, whichTrackable: Trackable) {
         return SaveTrackableHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -776,7 +776,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveDialog(parentKey: integer, childKey: integer, whichDialog: Dialog) {
+    saveDialog(parentKey: integer, childKey: integer, whichDialog: Dialog) {
         return SaveDialogHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -785,7 +785,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveButton(parentKey: integer, childKey: integer, whichButton: DialogButton) {
+    saveButton(parentKey: integer, childKey: integer, whichButton: DialogButton) {
         return SaveButtonHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -794,7 +794,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveTextTag(parentKey: integer, childKey: integer, whichTexttag: TextTag) {
+    saveTextTag(parentKey: integer, childKey: integer, whichTexttag: TextTag) {
         return SaveTextTagHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -803,7 +803,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveLightning(parentKey: integer, childKey: integer, whichLightning: Lightning) {
+    saveLightning(parentKey: integer, childKey: integer, whichLightning: Lightning) {
         return SaveLightningHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -812,7 +812,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveImage(parentKey: integer, childKey: integer, whichImage: Image) {
+    saveImage(parentKey: integer, childKey: integer, whichImage: Image) {
         return SaveImageHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -821,7 +821,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveUbersplat(parentKey: integer, childKey: integer, whichUbersplat: Ubersplat) {
+    saveUbersplat(parentKey: integer, childKey: integer, whichUbersplat: Ubersplat) {
         return SaveUbersplatHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -830,7 +830,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveRegion(parentKey: integer, childKey: integer, whichRegion: Region) {
+    saveRegion(parentKey: integer, childKey: integer, whichRegion: Region) {
         return SaveRegionHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -839,7 +839,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveFogState(parentKey: integer, childKey: integer, whichFogState: FogState) {
+    saveFogState(parentKey: integer, childKey: integer, whichFogState: FogState) {
         return SaveFogStateHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -848,7 +848,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveFogModifier(parentKey: integer, childKey: integer, whichFogModifier: FogModifier) {
+    saveFogModifier(parentKey: integer, childKey: integer, whichFogModifier: FogModifier) {
         return SaveFogModifierHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -857,7 +857,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveAgent(parentKey: integer, childKey: integer, whichAgent: agent) {
+    saveAgent(parentKey: integer, childKey: integer, whichAgent: agent) {
         return SaveAgentHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -866,7 +866,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveHashtable(parentKey: integer, childKey: integer, whichHashtable: HashTable) {
+    saveHashtable(parentKey: integer, childKey: integer, whichHashtable: HashTable) {
         return SaveHashtableHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -875,7 +875,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public saveFrame(parentKey: integer, childKey: integer, whichFrameHandle: Frame) {
+    saveFrame(parentKey: integer, childKey: integer, whichFrameHandle: Frame) {
         return SaveFrameHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -884,7 +884,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadInt(parentKey: integer, childKey: integer): integer {
+    loadInt(parentKey: integer, childKey: integer): integer {
         return LoadInteger(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -892,11 +892,11 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadReal(parentKey: integer, childKey: integer): real {
+    loadReal(parentKey: integer, childKey: integer): real {
         return LoadReal(this.getHandle() as hashtable, Math.floor(parentKey), Math.floor(childKey))
     }
 
-    public loadBool(parentKey: integer, childKey: integer): boolean {
+    loadBool(parentKey: integer, childKey: integer): boolean {
         return LoadBoolean(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -904,11 +904,11 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadStr(parentKey: integer, childKey: integer): string {
+    loadStr(parentKey: integer, childKey: integer): string {
         return LoadStr(this.getHandle() as hashtable, Math.floor(parentKey), Math.floor(childKey))
     }
 
-    public loadPlayer(parentKey: integer, childKey: integer): MapPlayer {
+    loadPlayer(parentKey: integer, childKey: integer): MapPlayer {
         return MapPlayer.fromHandle(
             LoadPlayerHandle(
                 this.getHandle() as hashtable,
@@ -918,7 +918,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadWidget(parentKey: integer, childKey: integer): Widget {
+    loadWidget(parentKey: integer, childKey: integer): Widget {
         return Widget.fromHandle(
             LoadWidgetHandle(
                 this.getHandle() as hashtable,
@@ -928,7 +928,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadDestructable(parentKey: integer, childKey: integer): Destructable {
+    loadDestructable(parentKey: integer, childKey: integer): Destructable {
         return Destructable.fromHandle(
             LoadDestructableHandle(
                 this.getHandle() as hashtable,
@@ -938,7 +938,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadItem(parentKey: integer, childKey: integer): Item {
+    loadItem(parentKey: integer, childKey: integer): Item {
         return Item.fromHandle(
             LoadItemHandle(
                 this.getHandle() as hashtable,
@@ -948,7 +948,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadUnit(parentKey: integer, childKey: integer): Unit {
+    loadUnit(parentKey: integer, childKey: integer): Unit {
         return Unit.fromHandle(
             LoadUnitHandle(
                 this.getHandle() as hashtable,
@@ -958,7 +958,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadAbility(parentKey: integer, childKey: integer): Ability {
+    loadAbility(parentKey: integer, childKey: integer): Ability {
         return Ability.fromHandle(
             LoadAbilityHandle(
                 this.getHandle() as hashtable,
@@ -968,7 +968,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadTimer(parentKey: integer, childKey: integer): Timer {
+    loadTimer(parentKey: integer, childKey: integer): Timer {
         return Timer.fromHandle(
             LoadTimerHandle(
                 this.getHandle() as hashtable,
@@ -978,7 +978,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadTrigger(parentKey: integer, childKey: integer): Trigger {
+    loadTrigger(parentKey: integer, childKey: integer): Trigger {
         return Trigger.fromHandle(
             LoadTriggerHandle(
                 this.getHandle() as hashtable,
@@ -988,7 +988,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadTriggerCondition(parentKey: integer, childKey: integer): triggercondition {
+    loadTriggerCondition(parentKey: integer, childKey: integer): triggercondition {
         return LoadTriggerConditionHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -996,7 +996,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadTriggerAction(parentKey: integer, childKey: integer): triggeraction {
+    loadTriggerAction(parentKey: integer, childKey: integer): triggeraction {
         return LoadTriggerActionHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1004,7 +1004,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadTriggerEvent(parentKey: integer, childKey: integer): EventType | undefined {
+    loadTriggerEvent(parentKey: integer, childKey: integer): EventType | undefined {
         const handle = LoadTriggerEventHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1020,7 +1020,7 @@ export class HashTable extends Handle<hashtable> {
         error("Не удалось найти подходящий объект Event", 2)
     }
 
-    public loadForce(parentKey: integer, childKey: integer): Force {
+    loadForce(parentKey: integer, childKey: integer): Force {
         return Force.fromHandle(
             LoadForceHandle(
                 this.getHandle() as hashtable,
@@ -1030,7 +1030,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadGroup(parentKey: integer, childKey: integer): Group {
+    loadGroup(parentKey: integer, childKey: integer): Group {
         return Group.fromHandle(
             LoadGroupHandle(
                 this.getHandle() as hashtable,
@@ -1040,7 +1040,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadLocation(parentKey: integer, childKey: integer): MapLocation {
+    loadLocation(parentKey: integer, childKey: integer): MapLocation {
         return MapLocation.fromHandle(
             LoadLocationHandle(
                 this.getHandle() as hashtable,
@@ -1050,7 +1050,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadRect(parentKey: integer, childKey: integer): Rectangle {
+    loadRect(parentKey: integer, childKey: integer): Rectangle {
         return Rectangle.fromHandle(
             LoadRectHandle(
                 this.getHandle() as hashtable,
@@ -1060,7 +1060,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadBoolExpr(parentKey: integer, childKey: integer): boolexpr {
+    loadBoolExpr(parentKey: integer, childKey: integer): boolexpr {
         return LoadBooleanExprHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1068,7 +1068,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadSound(parentKey: integer, childKey: integer): Sound {
+    loadSound(parentKey: integer, childKey: integer): Sound {
         return Sound.fromHandle(
             LoadSoundHandle(
                 this.getHandle() as hashtable,
@@ -1078,7 +1078,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadSpecialEffect(parentKey: integer, childKey: integer): SpecialEffect {
+    loadSpecialEffect(parentKey: integer, childKey: integer): SpecialEffect {
         return SpecialEffect.fromHandle(
             LoadEffectHandle(
                 this.getHandle() as hashtable,
@@ -1088,7 +1088,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadSpellEffect(parentKey: integer, childKey: integer): SpellEffect {
+    loadSpellEffect(parentKey: integer, childKey: integer): SpellEffect {
         return SpellEffect.fromHandle(
             LoadEffectHandle(
                 this.getHandle() as hashtable,
@@ -1098,7 +1098,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadUnitPool(parentKey: integer, childKey: integer): UnitPool {
+    loadUnitPool(parentKey: integer, childKey: integer): UnitPool {
         return UnitPool.fromHandle(
             LoadUnitPoolHandle(
                 this.getHandle() as hashtable,
@@ -1108,7 +1108,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadItemPool(parentKey: integer, childKey: integer): ItemPool {
+    loadItemPool(parentKey: integer, childKey: integer): ItemPool {
         return ItemPool.fromHandle(
             LoadItemPoolHandle(
                 this.getHandle() as hashtable,
@@ -1118,11 +1118,11 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadQuest(parentKey: integer, childKey: integer): Quest {
+    loadQuest(parentKey: integer, childKey: integer): Quest {
         return Quest.fromHandle(LoadQuestHandle(this.getHandle() as hashtable, parentKey, childKey))
     }
 
-    public loadDefeatCondition(parentKey: integer, childKey: integer): defeatcondition {
+    loadDefeatCondition(parentKey: integer, childKey: integer): defeatcondition {
         return LoadDefeatConditionHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1130,7 +1130,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadTimerDialog(parentKey: integer, childKey: integer): TimerDialog {
+    loadTimerDialog(parentKey: integer, childKey: integer): TimerDialog {
         return TimerDialog.fromHandle(
             LoadTimerDialogHandle(
                 this.getHandle() as hashtable,
@@ -1140,7 +1140,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadLeaderboard(parentKey: integer, childKey: integer): LeaderBoard {
+    loadLeaderboard(parentKey: integer, childKey: integer): LeaderBoard {
         return LeaderBoard.fromHandle(
             LoadLeaderboardHandle(
                 this.getHandle() as hashtable,
@@ -1150,7 +1150,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadMultiboard(parentKey: integer, childKey: integer): MultiBoard {
+    loadMultiboard(parentKey: integer, childKey: integer): MultiBoard {
         return MultiBoard.fromHandle(
             LoadMultiboardHandle(
                 this.getHandle() as hashtable,
@@ -1160,7 +1160,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadMultiboardItem(parentKey: integer, childKey: integer): MultiboardItem {
+    loadMultiboardItem(parentKey: integer, childKey: integer): MultiboardItem {
         return MultiboardItem.getObject(
             LoadMultiboardItemHandle(
                 this.getHandle() as hashtable,
@@ -1170,7 +1170,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadTrackable(parentKey: integer, childKey: integer): Trackable {
+    loadTrackable(parentKey: integer, childKey: integer): Trackable {
         return Trackable.getObject(
             LoadTrackableHandle(
                 this.getHandle() as hashtable,
@@ -1180,7 +1180,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadDialog(parentKey: integer, childKey: integer): Dialog {
+    loadDialog(parentKey: integer, childKey: integer): Dialog {
         return Dialog.fromHandle(
             LoadDialogHandle(
                 this.getHandle() as hashtable,
@@ -1190,7 +1190,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadButton(parentKey: integer, childKey: integer): DialogButton {
+    loadButton(parentKey: integer, childKey: integer): DialogButton {
         return DialogButton.fromHandle(
             LoadButtonHandle(
                 this.getHandle() as hashtable,
@@ -1200,7 +1200,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadTextTag(parentKey: integer, childKey: integer): TextTag {
+    loadTextTag(parentKey: integer, childKey: integer): TextTag {
         return TextTag.getObject(
             LoadTextTagHandle(
                 this.getHandle() as hashtable,
@@ -1210,7 +1210,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadLightning(parentKey: integer, childKey: integer): Lightning {
+    loadLightning(parentKey: integer, childKey: integer): Lightning {
         return Lightning.getObject(
             LoadLightningHandle(
                 this.getHandle() as hashtable,
@@ -1220,7 +1220,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadImage(parentKey: integer, childKey: integer): Image {
+    loadImage(parentKey: integer, childKey: integer): Image {
         return Image.fromHandle(
             LoadImageHandle(
                 this.getHandle() as hashtable,
@@ -1230,7 +1230,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadUbersplat(parentKey: integer, childKey: integer): Ubersplat {
+    loadUbersplat(parentKey: integer, childKey: integer): Ubersplat {
         return Ubersplat.fromHandle(
             LoadUbersplatHandle(
                 this.getHandle() as hashtable,
@@ -1240,7 +1240,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadRegion(parentKey: integer, childKey: integer): Region {
+    loadRegion(parentKey: integer, childKey: integer): Region {
         return Region.fromHandle(
             LoadRegionHandle(
                 this.getHandle() as hashtable,
@@ -1250,7 +1250,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadFogState(parentKey: integer, childKey: integer): FogState {
+    loadFogState(parentKey: integer, childKey: integer): FogState {
         return FogState.fromHandle(
             LoadFogStateHandle(
                 this.getHandle() as hashtable,
@@ -1260,7 +1260,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadFogModifier(parentKey: integer, childKey: integer): FogModifier {
+    loadFogModifier(parentKey: integer, childKey: integer): FogModifier {
         return FogModifier.fromHandle(
             LoadFogModifierHandle(
                 this.getHandle() as hashtable,
@@ -1270,7 +1270,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadHashtable(parentKey: integer, childKey: integer): HashTable {
+    loadHashtable(parentKey: integer, childKey: integer): HashTable {
         return HashTable.getObject(
             LoadHashtableHandle(
                 this.getHandle() as hashtable,
@@ -1280,7 +1280,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public loadFrameHandle(parentKey: integer, childKey: integer): Frame {
+    loadFrameHandle(parentKey: integer, childKey: integer): Frame {
         return Frame.fromHandle(
             LoadFrameHandle(
                 this.getHandle() as hashtable,
@@ -1290,7 +1290,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public haveInt(parentKey: integer, childKey: integer): boolean {
+    haveInt(parentKey: integer, childKey: integer): boolean {
         return HaveSavedInteger(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1298,7 +1298,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public haveReal(parentKey: integer, childKey: integer): boolean {
+    haveReal(parentKey: integer, childKey: integer): boolean {
         return HaveSavedReal(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1306,7 +1306,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public haveBool(parentKey: integer, childKey: integer): boolean {
+    haveBool(parentKey: integer, childKey: integer): boolean {
         return HaveSavedBoolean(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1314,7 +1314,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public haveStr(parentKey: integer, childKey: integer): boolean {
+    haveStr(parentKey: integer, childKey: integer): boolean {
         return HaveSavedString(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1322,7 +1322,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public haveHandle(parentKey: integer, childKey: integer): boolean {
+    haveHandle(parentKey: integer, childKey: integer): boolean {
         return HaveSavedHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1330,7 +1330,7 @@ export class HashTable extends Handle<hashtable> {
         )
     }
 
-    public removeInt(parentKey: integer, childKey: integer) {
+    removeInt(parentKey: integer, childKey: integer) {
         RemoveSavedInteger(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1339,12 +1339,12 @@ export class HashTable extends Handle<hashtable> {
         return this
     }
 
-    public removeReal(parentKey: integer, childKey: integer) {
+    removeReal(parentKey: integer, childKey: integer) {
         RemoveSavedReal(this.getHandle() as hashtable, Math.floor(parentKey), Math.floor(childKey))
         return this
     }
 
-    public removeBool(parentKey: integer, childKey: integer) {
+    removeBool(parentKey: integer, childKey: integer) {
         RemoveSavedBoolean(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1353,7 +1353,7 @@ export class HashTable extends Handle<hashtable> {
         return this
     }
 
-    public removeStr(parentKey: integer, childKey: integer) {
+    removeStr(parentKey: integer, childKey: integer) {
         RemoveSavedString(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1362,7 +1362,7 @@ export class HashTable extends Handle<hashtable> {
         return this
     }
 
-    public removeHandle(parentKey: integer, childKey: integer) {
+    removeHandle(parentKey: integer, childKey: integer) {
         RemoveSavedHandle(
             this.getHandle() as hashtable,
             Math.floor(parentKey),
@@ -1371,17 +1371,17 @@ export class HashTable extends Handle<hashtable> {
         return this
     }
 
-    public flush() {
+    flush() {
         FlushParentHashtable(this.getHandle() as hashtable)
         return this
     }
 
-    public flushChild(parentKey: integer) {
+    flushChild(parentKey: integer) {
         FlushChildHashtable(this.getHandle() as hashtable, Math.floor(parentKey))
         return this
     }
 
-    public static fromHandle(handle: hashtable): HashTable {
+    static fromHandle(handle: hashtable): HashTable {
         return this.getObject(handle) as HashTable
     }
 }

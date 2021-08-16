@@ -1,9 +1,11 @@
+export type OrderArgType = Order | order
+
 export class Order {
-    protected readonly id: integer
-    protected readonly str: string
+    readonly id: integer
+    readonly str: string
     protected static readonly map: Map<integer, Order> = new Map<integer, Order>()
 
-    public constructor(id: order) {
+    constructor(id: order) {
         this.id = Order.toId(id)
         this.str = Order.toStr(id)
         if (!Order.map.has(this.id)) {
@@ -11,15 +13,7 @@ export class Order {
         }
     }
 
-    public getId() {
-        return this.id
-    }
-
-    public getStr() {
-        return this.str
-    }
-
-    public static get(id: order) {
+    static get(id: order) {
         id = this.toId(id)
         if (this.map.has(id)) {
             return this.map.get(id) as Order
@@ -28,23 +22,23 @@ export class Order {
         }
     }
 
-    public static toId(id: Order | order) {
-        if (id instanceof Order) {
-            return id.getId()
-        } else if (typeof id === "number") {
+    static toId(id: OrderArgType) {
+        if (typeof id === "number") {
             return Math.floor(id)
-        } else {
+        } else if (typeof id === "string") {
             return OrderId(id)
+        } else {
+            return id.id
         }
     }
 
-    public static toStr(id: Order | order) {
-        if (id instanceof Order) {
-            return id.getStr()
-        } else if (typeof id === "string") {
+    static toStr(id: OrderArgType) {
+        if (typeof id === "string") {
             return id
+        } else if (typeof id === "number") {
+            return OrderId2String(id)
         } else {
-            return OrderId2String(Math.floor(id))
+            return id.str
         }
     }
 }

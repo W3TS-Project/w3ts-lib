@@ -17,7 +17,11 @@ export class Handle<T extends handle> {
         map.set(handle, this)
     }
 
-    public getHandleId(): integer {
+    protected destroy() {
+        map.delete(this.handle)
+    }
+
+    getHandleId(): integer {
         return GetHandleId(this.getHandle)
     }
 
@@ -30,7 +34,7 @@ export class Handle<T extends handle> {
         }
     }
 
-    public getHandle() {
+    getHandle() {
         return this.handle
     }
 }

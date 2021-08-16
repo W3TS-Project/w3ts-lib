@@ -17,6 +17,8 @@ const metadata = compiletime(() => {
     return metadata
 })
 
+export const SETTING_SOME_PROPERTIES = true
+
 export const init = () => {
     Constants.init()
 
@@ -39,8 +41,4 @@ export const init = () => {
         print(response.killer.getName())
         print(response.unit.getName())
     })
-
-    // trigger.addAction(() => {
-    //     print(Unit.fromEvent().getName())
-    // })
 }

@@ -1,7 +1,8 @@
 /** @noSelfInFile **/
 //@ts-nocheck
 
-import { Position } from "../Package"
+import { Position, SETTING_SOME_PROPERTIES } from "../Package"
+import { Point } from "./Point"
 import { DestructableRawCode, DestructableRawCodeType } from "./rawCode/DestructableRawCode"
 import { Widget } from "./Widget"
 
@@ -64,19 +65,30 @@ declare function GetFilterDestructable(): destructable
 declare function GetEnumDestructable(): destructable
 
 export class Destructable extends Widget {
-    invulnerable = this.isInvulnerable()
-    life: real = this.getLife()
-    maxLife: real = this.getMaxLife()
-    name = this.getName()
-    occluderHeight: real = this.getOccluderHeight()
-    rawCode = this.getRawCode()
-    x: real = this.getX()
-    y: real = this.getY()
-    removed = false
+    invulnerable?: boolean
+    life?: real
+    maxLife?: real
+    name?: string
+    occluderHeight?: real
+    rawCode?: DestructableRawCode
+    point?: Point
     isKilled = false
     animation = "stand"
     animationSpeed: real = 1.0
     isHidden = false
+
+    constructor(handle: destructable) {
+        super(handle)
+        if (SETTING_SOME_PROPERTIES) {
+            this.invulnerable = this.isInvulnerable()
+            this.life = this.getLife()
+            this.maxLife = this.getMaxLife()
+            this.name = this.getName()
+            this.occluderHeight = this.getOccluderHeight()
+            this.rawCode = this.getRawCode()
+            this.point = this.getPoint()
+        }
+    }
 
     static createCoords(
         rawCode: DestructableRawCodeType,
@@ -184,7 +196,7 @@ export class Destructable extends Widget {
 
     setInvulnerable(flag: boolean) {
         SetDestructableInvulnerable(this.getHandle() as destructable, flag)
-        this.invulnerable = flag
+        if (SETTING_SOME_PROPERTIES) this.invulnerable = flag
         return this
     }
 
@@ -198,7 +210,7 @@ export class Destructable extends Widget {
 
     setLife(value: real) {
         SetDestructableLife(this.getHandle() as destructable, value)
-        this.life = value
+        if (SETTING_SOME_PROPERTIES) this.life = value
         return this
     }
 
@@ -208,7 +220,7 @@ export class Destructable extends Widget {
 
     setMaxLife(value: real) {
         SetDestructableMaxLife(this.getHandle() as destructable, value)
-        this.maxLife = value
+        if (SETTING_SOME_PROPERTIES) this.maxLife = value
         return this
     }
 
@@ -222,7 +234,7 @@ export class Destructable extends Widget {
 
     setOccluderHeight(value: real) {
         SetDestructableOccluderHeight(this.getHandle() as destructable, value)
-        this.occluderHeight = value
+        if (SETTING_SOME_PROPERTIES) this.occluderHeight = value
         return this
     }
 
@@ -242,15 +254,18 @@ export class Destructable extends Widget {
         return GetDestructableY(this.getHandle() as destructable)
     }
 
+    getPoint() {
+        return new Point(this.getX(), this.getY())
+    }
+
     remove() {
         RemoveDestructable(this.getHandle() as destructable)
-        this.removed = true
-        return this
+        super.destroy()
     }
 
     restoreLife(life: real, birth: boolean) {
         DestructableRestoreLife(this.getHandle() as destructable, life, birth)
-        this.life = life
+        if (SETTING_SOME_PROPERTIES) this.life = life
         return this
     }
 

@@ -69,34 +69,34 @@ declare function LeaderboardSetItemValueColor(
 ): void
 
 export class LeaderBoard extends Handle<leaderboard> {
-    public constructor() {
+    constructor() {
         super(CreateLeaderboard())
     }
 
-    public destroy() {
+    destroy() {
         DestroyLeaderboard(this.getHandle() as leaderboard)
-        return this
+        super.destroy()
     }
 
-    public display(flag: boolean = true) {
+    display(flag: boolean = true) {
         LeaderboardDisplay(this.getHandle() as leaderboard, flag)
         return this
     }
 
-    public isDisplayed(): boolean {
+    isDisplayed(): boolean {
         return IsLeaderboardDisplayed(this.getHandle() as leaderboard)
     }
 
-    public getItemCount(): integer {
+    getItemCount(): integer {
         return LeaderboardGetItemCount(this.getHandle() as leaderboard)
     }
 
-    public setItemCount(count: integer) {
+    setItemCount(count: integer) {
         LeaderboardSetSizeByItemCount(this.getHandle() as leaderboard, Math.floor(count))
         return this
     }
 
-    public addItem(label: string, value: integer, p: MapPlayer) {
+    addItem(label: string, value: integer, p: MapPlayer) {
         LeaderboardAddItem(
             this.getHandle() as leaderboard,
             label,
@@ -106,54 +106,54 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public removeItem(index: integer) {
+    removeItem(index: integer) {
         LeaderboardRemoveItem(this.getHandle() as leaderboard, Math.floor(index))
         return this
     }
 
-    public removePlayerItem(p: MapPlayer) {
+    removePlayerItem(p: MapPlayer) {
         LeaderboardRemovePlayerItem(this.getHandle() as leaderboard, p.getHandle() as player)
         return this
     }
 
-    public clear() {
+    clear() {
         LeaderboardClear(this.getHandle() as leaderboard)
         return this
     }
 
-    public sortByValue(ascending: boolean = true) {
+    sortByValue(ascending: boolean = true) {
         LeaderboardSortItemsByValue(this.getHandle() as leaderboard, ascending)
         return this
     }
 
-    public sortByPlayer(ascending: boolean = true) {
+    sortByPlayer(ascending: boolean = true) {
         LeaderboardSortItemsByPlayer(this.getHandle() as leaderboard, ascending)
         return this
     }
 
-    public sortByLabel(ascending: boolean = true) {
+    sortByLabel(ascending: boolean = true) {
         LeaderboardSortItemsByLabel(this.getHandle() as leaderboard, ascending)
         return this
     }
 
-    public hasPlayerItem(p: MapPlayer): boolean {
+    hasPlayerItem(p: MapPlayer): boolean {
         return LeaderboardHasPlayerItem(this.getHandle() as leaderboard, p.getHandle() as player)
     }
 
-    public getPlayerIndex(p: MapPlayer): integer {
+    getPlayerIndex(p: MapPlayer): integer {
         return LeaderboardGetPlayerIndex(this.getHandle() as leaderboard, p.getHandle() as player)
     }
 
-    public setLabel(value: string) {
+    setLabel(value: string) {
         LeaderboardSetLabel(this.getHandle() as leaderboard, value)
         return this
     }
 
-    public getLabelText(): string {
+    getLabelText(): string {
         return LeaderboardGetLabelText(this.getHandle() as leaderboard)
     }
 
-    public setLabelColor(red: integer, green: integer, blue: integer, alpha: integer) {
+    setLabelColor(red: integer, green: integer, blue: integer, alpha: integer) {
         LeaderboardSetLabelColor(
             this.getHandle() as leaderboard,
             Math.floor(red),
@@ -164,7 +164,7 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
+    setValueColor(red: integer, green: integer, blue: integer, alpha: integer) {
         LeaderboardSetValueColor(
             this.getHandle() as leaderboard,
             Math.floor(red),
@@ -175,7 +175,7 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public setStyle(
+    setStyle(
         showLabel: boolean = true,
         showNames: boolean = true,
         showValues: boolean = true,
@@ -191,7 +191,7 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public setItemValue(item: integer, value: integer) {
+    setItemValue(item: integer, value: integer) {
         LeaderboardSetItemValue(
             this.getHandle() as leaderboard,
             Math.floor(item),
@@ -200,12 +200,12 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public setItemLabel(item: integer, label: string) {
+    setItemLabel(item: integer, label: string) {
         LeaderboardSetItemLabel(this.getHandle() as leaderboard, Math.floor(item), label)
         return this
     }
 
-    public setItemStyle(
+    setItemStyle(
         item: integer,
         showLabel: boolean = true,
         showValues: boolean = true,
@@ -221,7 +221,7 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public setItemLabelColor(
+    setItemLabelColor(
         item: integer,
         red: integer,
         green: integer,
@@ -239,7 +239,7 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public setItemValueColor(
+    setItemValueColor(
         item: integer,
         red: integer,
         green: integer,
@@ -257,7 +257,7 @@ export class LeaderBoard extends Handle<leaderboard> {
         return this
     }
 
-    public static fromHandle(handle: leaderboard) {
+    static fromHandle(handle: leaderboard) {
         return this.getObject(handle) as LeaderBoard
     }
 }

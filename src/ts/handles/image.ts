@@ -3,6 +3,7 @@
 
 import { Position } from "../Package"
 import { Handle } from "./Handle"
+import { Point } from "./Point"
 
 declare function CreateImage(
     file: string,
@@ -40,8 +41,54 @@ export enum ImageType {
     Ubersplat = 4
 }
 
+let var_file: string
+let var_sizeX: real
+let var_sizeY: real
+let var_sizeZ: real
+let var_posX: real
+let var_posY: real
+let var_posZ: real
+let var_originX: real
+let var_originY: real
+let var_originZ: real
+let var_imageType: ImageType
+
 export class Image extends Handle<image> {
-    public constructor(
+    isHidden = false
+    constantHeight: real = 0
+    heightIsConstant = false
+    colorRed: integer = 255
+    colorGreen: integer = 255
+    colorBlue: integer = 255
+    colorAlpha: integer = 0
+    isRender = false
+    isRenderAlways = false
+    isAboveWater = false
+    useWaterAlpha = false
+    file: string
+    sizeX: real
+    sizeY: real
+    sizeZ: real
+    point: Point
+    originX: real
+    originY: real
+    originZ: real
+    imageType: ImageType
+
+    constructor(handle: image) {
+        super(handle)
+        this.file = var_file
+        this.sizeX = var_sizeX
+        this.sizeY = var_sizeY
+        this.sizeZ = var_sizeZ
+        this.point = new Point(var_posX, var_posY, var_posZ)
+        this.originX = var_originX
+        this.originY = var_originY
+        this.originZ = var_originZ
+        this.imageType = var_imageType
+    }
+
+    static coordsCreate(
         file: string,
         sizeX: real,
         sizeY: real,
@@ -54,7 +101,18 @@ export class Image extends Handle<image> {
         originZ: real,
         imageType: ImageType
     ) {
-        super(
+        var_file = file
+        var_sizeX = sizeX
+        var_sizeY = sizeY
+        var_sizeZ = sizeZ
+        var_posX = posX
+        var_posY = posY
+        var_posZ = posZ
+        var_originX = originX
+        var_originY = originY
+        var_originZ = originZ
+        var_imageType = imageType
+        return new this(
             CreateImage(
                 file,
                 sizeX,
@@ -71,35 +129,7 @@ export class Image extends Handle<image> {
         )
     }
 
-    public static coordsCreate(
-        file: string,
-        sizeX: real,
-        sizeY: real,
-        sizeZ: real,
-        posX: real,
-        posY: real,
-        posZ: real,
-        originX: real,
-        originY: real,
-        originZ: real,
-        imageType: ImageType
-    ) {
-        return new this(
-            file,
-            sizeX,
-            sizeY,
-            sizeZ,
-            posX,
-            posY,
-            posZ,
-            originX,
-            originY,
-            originZ,
-            imageType
-        )
-    }
-
-    public static posCreate(
+    static posCreate(
         file: string,
         size: Position,
         pos: Position,
@@ -108,75 +138,92 @@ export class Image extends Handle<image> {
     ) {
         return this.coordsCreate(
             file,
-            size.getX(),
-            size.getY(),
-            size.getZ(),
-            pos.getX(),
-            pos.getY(),
-            pos.getZ(),
-            originPos.getX(),
-            originPos.getY(),
-            originPos.getZ(),
+            size.x,
+            size.y,
+            size.z,
+            pos.x,
+            pos.y,
+            pos.z,
+            originPos.x,
+            originPos.y,
+            originPos.z,
             imageType
         )
     }
 
-    public destroy() {
+    destroy() {
         DestroyImage(this.getHandle() as image)
-        return this
+        super.destroy()
     }
 
-    public show(flag: boolean) {
+    show(flag: boolean) {
         ShowImage(this.getHandle() as image, flag)
+        this.isHidden = !flag
         return this
     }
 
-    public setConstantHeight(flag: boolean, height: real) {
+    setConstantHeight(flag: boolean, height: real) {
         SetImageConstantHeight(this.getHandle() as image, flag, height)
+        this.constantHeight = height
+        this.heightIsConstant = flag
         return this
     }
 
-    public setCoords(x: real, y: real, z: real) {
+    setCoords(x: real, y: real, z: real) {
         SetImagePosition(this.getHandle() as image, x, y, z)
+        this.point.setCoords(x, y, z)
         return this
     }
 
-    public setPos(pos: Position) {
-        return this.setCoords(pos.getX(), pos.getY(), pos.getZ())
+    setPos(pos: Position) {
+        return this.setCoords(pos.x, pos.y, pos.z)
     }
 
-    public setColor(red: integer, green: integer, blue: integer, alpha: integer) {
+    setColor(red: integer, green: integer, blue: integer, alpha: integer) {
+        red = Math.floor(red)
+        green = Math.floor(green)
+        blue = Math.floor(blue)
+        alpha = Math.floor(alpha)
         SetImageColor(
             this.getHandle() as image,
-            Math.floor(red),
-            Math.floor(green),
-            Math.floor(blue),
-            Math.floor(alpha)
+            red,
+            green,
+            blue,
+            alpha
         )
+        this.colorRed = red
+        this.colorGreen = green
+        this.colorBlue = blue
+        this.colorAlpha = alpha
         return this
     }
 
-    public setRender(flag: boolean) {
+    setRender(flag: boolean) {
         SetImageRender(this.getHandle() as image, flag)
+        this.isRender = flag
         return this
     }
 
-    public setRenderAlways(flag: boolean) {
+    setRenderAlways(flag: boolean) {
         SetImageRenderAlways(this.getHandle() as image, flag)
+        this.isRenderAlways = flag
         return this
     }
 
-    public setAboveWater(flag: boolean, useWaterAlpha: boolean) {
+    setAboveWater(flag: boolean, useWaterAlpha: boolean) {
         SetImageAboveWater(this.getHandle() as image, flag, useWaterAlpha)
+        this.isAboveWater = flag
+        this.useWaterAlpha = useWaterAlpha
         return this
     }
 
-    public setType(imageType: ImageType) {
+    setType(imageType: ImageType) {
         SetImageType(this.getHandle() as image, imageType)
+        this.imageType = imageType
         return this
     }
 
-    public static fromHandle(handle: image): Image {
+    static fromHandle(handle: image): Image {
         return this.getObject(handle) as Image
     }
 }
